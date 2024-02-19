@@ -1,0 +1,125 @@
+<!--allrecords--><div id="allrecords" data-tilda-export="yes" class="t-records" data-hook="blocks-collection-content-node" data-tilda-project-id="2183029" data-tilda-page-id="41289048" data-tilda-page-alias="calculator" data-tilda-formskey="2a884372888e6253726f9d7e24035f8a" data-tilda-lazy="yes" data-tilda-project-lang="RU" data-tilda-project-headcode="yes" ><div id="rec667511577" class="r t-rec" style=" " data-animationappear="off" data-record-type="131" ><!-- T123 --><div class="t123" ><div class="t-container_100 "><div class="t-width t-width_100 ">
+
+			<style>
+.seo-roi-calculator {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 100%;
+    margin: auto;
+}
+
+.seo-roi-calculator label {
+    display: block;
+    margin-top: 10px;
+}
+
+.seo-roi-calculator input[type=range] {
+    width: 100%;
+}
+
+.seo-roi-calculator .value {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.seo-roi-calculator .explanation {
+    font-size: 0.8em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.seo-roi-calculator button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.seo-roi-calculator button:hover {
+    background-color: #45a049;
+}
+</style>
+
+<div class="seo-roi-calculator">
+    <h2>Калькулятор ROI для SEO</h2>
+
+    <label for="totalTraffic">Текущий общий трафик на сайт:</label>
+    <input type="range" id="totalTraffic" value="1000" min="100" max="10000" step="100" oninput="updateValue('totalTraffic', 'totalTrafficValue')">
+    <div class="value" id="totalTrafficValue">1000</div>
+    <div class="explanation">Обычный трафик варьируется от 100 до 10,000 посетителей в месяц.</div>
+    <label for="organicTrafficPercent">Процент трафика из органического поиска (%):</label>
+<input type="range" id="organicTrafficPercent" value="50" min="0" max="100" step="1" oninput="updateValue('organicTrafficPercent', 'organicTrafficPercentValue')">
+<div class="value" id="organicTrafficPercentValue">50</div>
+<div class="explanation">Обычно органический трафик составляет от 0% до 100%.</div>
+
+<label for="conversionRate">Средняя конверсия сайта (%):</label>
+<input type="range" id="conversionRate" value="2" min="0" max="15" step="0.1" oninput="updateValue('conversionRate', 'conversionRateValue')">
+<div class="value" id="conversionRateValue">2</div>
+<div class="explanation">Средняя конверсия варьируется от 0% до 15%.</div>
+
+<label for="averageRevenuePerLead">Средний доход на лид/сделку:</label>
+<input type="range" id="averageRevenuePerLead" value="100" min="10" max="1000" step="10" oninput="updateValue('averageRevenuePerLead', 'averageRevenuePerLeadValue')">
+<div class="value" id="averageRevenuePerLeadValue">100</div>
+<div class="explanation">Средний доход на лид может быть от 10 до 1000 единиц валюты.</div>
+
+<label for="seoBudget">Ежемесячный бюджет на SEO:</label>
+<input type="range" id="seoBudget" value="500" min="100" max="10000" step="100" oninput="updateValue('seoBudget', 'seoBudgetValue')">
+<div class="value" id="seoBudgetValue">500</div>
+<div class="explanation">Бюджет на SEO варьируется от 100 до 10,000 единиц валюты в месяц.</div>
+
+<label for="campaignDuration">Продолжительность кампании (в месяцах):</label>
+<input type="range" id="campaignDuration" value="6" min="1" max="24" step="1" oninput="updateValue('campaignDuration', 'campaignDurationValue')">
+<div class="value" id="campaignDurationValue">6</div>
+<div class="explanation">Продолжительность SEO кампании может варьироваться от 1 до 24 месяцев.</div>
+
+    
+
+    <!-- Повторите вышеуказанный блок для каждого параметра, адаптируя его к своим нуждам -->
+
+    <button onclick="calculateROI()">Рассчитать ROI</button>
+    <h3>Результаты:</h3>
+    <div id="results">
+    </div>
+</div>
+			 
+			
+</div> </div></div></div><div id="rec667516356" class="r t-rec" style=" " data-animationappear="off" data-record-type="131" ><!-- T123 --><div class="t123" ><div class="t-container_100 "><div class="t-width t-width_100 ">
+
+			<script>
+function updateValue(id, valueId) {
+    var value = document.getElementById(id).value;
+    document.getElementById(valueId).innerText = value;
+}
+
+function calculateROI() {
+    var totalTraffic = parseInt(document.getElementById('totalTraffic').value);
+    var organicTrafficPercent = parseInt(document.getElementById('organicTrafficPercent').value) / 100;
+    var conversionRate = parseInt(document.getElementById('conversionRate').value) / 100;
+    var averageRevenuePerLead = parseInt(document.getElementById('averageRevenuePerLead').value);
+    var seoBudget = parseInt(document.getElementById('seoBudget').value);
+    var campaignDuration = parseInt(document.getElementById('campaignDuration').value);
+
+    // Расчет общего количества лидов из органического трафика
+    var totalLeads = totalTraffic * organicTrafficPercent * conversionRate;
+
+    // Расчет общего дохода от SEO
+    var totalRevenue = totalLeads * averageRevenuePerLead;
+
+    // Расчет общих затрат на SEO
+    var totalCost = seoBudget * campaignDuration;
+
+    // Расчет ROI
+    var roi = ((totalRevenue - totalCost) / totalCost) * 100;
+
+    document.getElementById('results').innerHTML = 'ROI: ' + roi.toFixed(2) + '%';
+}
+</script>
+
+			 
+			
+</div> </div></div></div></div><!--/allrecords-->

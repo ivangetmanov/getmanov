@@ -1,0 +1,423 @@
+<!--allrecords--><div id="allrecords" data-tilda-export="yes" class="t-records" data-hook="blocks-collection-content-node" data-tilda-project-id="2183029" data-tilda-page-id="41319704" data-tilda-page-alias="calculator2" data-tilda-formskey="2a884372888e6253726f9d7e24035f8a" data-tilda-lazy="yes" data-tilda-project-lang="RU" data-tilda-project-headcode="yes" ><div id="rec667996498" class="r t-rec" style=" " data-animationappear="off" data-record-type="131" ><!-- T123 --><div class="t123" ><div class="t-container_100 "><div class="t-width t-width_100 ">
+
+			<style>
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.overlay {
+    position: fixed; /* Фиксированное позиционирование */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+    display: flex;
+    align-items: center; /* Центрирование по вертикали */
+    justify-content: center; /* Центрирование по горизонтали */
+    visibility: hidden; /* Скрыть оверлей по умолчанию */
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease; /* Плавное исчезновение и появление */
+}
+
+.overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.overlay .content {
+    font-size: 2em; /* Большой шрифт для ROI */
+    color: white;
+    animation: pop 0.5s ease;
+}
+
+.seo-roi-calculator {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 100%;
+    margin: auto;
+    overflow-x: hidden; /* Убираем горизонтальную прокрутку */
+}
+
+.seo-roi-calculator label {
+    display: block;
+    margin-top: 10px;
+}
+.seo-roi-calculator h2 {
+    text-align: center; /* Выравнивание по центру */
+    font-size: 24px; /* Увеличение размера шрифта */
+    margin-top: 20px; /* Добавление верхнего отступа */
+    margin-bottom: 20px; /* Добавление нижнего отступа */
+
+/* Стили для ползунка */
+.seo-roi-calculator input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.seo-roi-calculator input[type=range]:focus {
+    outline: none;
+}
+
+.seo-roi-calculator input[type=range]::-webkit-slider-runnable-track {
+    background: #4CAF50;
+    border-radius: 1rem;
+    height: 8px;
+}
+
+.seo-roi-calculator input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 1px solid #4CAF50;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    margin-top: -4px;
+}
+
+.seo-roi-calculator .value {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.seo-roi-calculator .explanation {
+    font-size: 0.8em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.seo-roi-calculator button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.seo-roi-calculator button:hover {
+    background-color: #45a049;
+}
+</style>
+
+<div id="overlay" class="overlay">
+    <div id="overlayContent" class="content"></div>
+</div>
+
+    <div class="seo-roi-calculator">
+    <h2>Калькулятор ROI для SEO</h2>
+
+    <label for="totalTraffic">Текущий общий трафик на сайт в месяц:</label>
+    <input type="range" id="totalTraffic" value="1000" min="10" max="10000" step="10" oninput="updateValue('totalTraffic', 'totalTrafficValue')">
+    <div class="value" id="totalTrafficValue">1000</div>
+    <div class="explanation">Обычный трафик варьируется от 100 до 10,000 посетителей в месяц.</div>
+    <input type="checkbox" id="defaultTotalTraffic" onclick="setDefault('totalTraffic', 400)"> Поставить среднее значение для B2B сайтов
+    
+    <label for="organicTrafficPercent">Процент трафика из органического поиска (%):</label>
+    <input type="range" id="organicTrafficPercent" value="50" min="0" max="100" step="1" oninput="updateValue('organicTrafficPercent', 'organicTrafficPercentValue')">
+    <div class="value" id="organicTrafficPercentValue">50</div>
+    <div class="explanation">Обычно органический трафик составляет от 0% до 100%.</div>
+    <input type="checkbox" id="defaultOrganicTrafficPercent" onclick="setDefault('organicTrafficPercent', 50)"> Поставить среднее значение для B2B сайтов
+
+    <label for="conversionRate">Средняя конверсия сайта (%):</label>
+    <input type="range" id="conversionRate" value="5" min="0" max="15" step="0.1" oninput="updateValue('conversionRate', 'conversionRateValue')">
+    <div class="value" id="conversionRateValue">2</div>
+    <div class="explanation">Средняя конверсия варьируется от 0% до 15%.</div>
+    <input type="checkbox" id="defaultConversionRate" onclick="setDefault('conversionRate', 2)"> Поставить среднее значение для B2B сайтов
+
+    <label for="costPerLead">Стоимость за заявку (CPL):</label>
+    <input type="range" id="costPerLead" value="500" min="100" max="5000" step="1" oninput="updateValue('costPerLead', 'costPerLeadValue')">
+    <div class="value" id="costPerLeadValue">50</div>
+    <div class="explanation">Средний CPL варьируется от 500 до 5000.</div>
+    <input type="checkbox" id="defaultCostPerLead" onclick="setDefault('costPerLead', 1000)"> Поставить среднее значение для B2B сайтов
+
+    <label for="averageRevenuePerLead">Средний доход на сделку в рублях:</label>
+    <input type="range" id="averageRevenuePerLead" value="50000" min="1000" max="1000000" step="10" oninput="updateValue('averageRevenuePerLead', 'averageRevenuePerLeadValue')">
+    <div class="value" id="averageRevenuePerLeadValue">100</div>
+    <div class="explanation">Средний доход на сделку может быть очень разным в зависимости от бизнеса</div>
+    <input type="checkbox" id="defaultRevenuePerLead" onclick="setDefault('averageRevenuePerLead', 9000)"> Поставить среднее значение для B2B сайтов
+
+    <label for="lifetimeValue">LTV (сколько денег в рублях в среднем принесет один клиент за все время работы с вами):</label>
+    <input type="range" id="lifetimeValue" value="10" min="1000" max="100000" step="100" oninput="updateValue('lifetimeValue', 'lifetimeValueValue')">
+    <div class="value" id="lifetimeValueValue">10</div>
+    <div class="explanation">Средний LTV варьируется от 5000 до 100000.</div>
+    <input type="checkbox" id="defaultLifetimeValue" onclick="setDefault('lifetimeValue', 10)"> Поставить среднее значение для B2B сайтов
+
+    <label for="campaignDuration">Продолжительность кампании (в месяцах):</label>
+    <input type="range" id="campaignDuration" value="6" min="1" max="24" step="1" oninput="updateValue('campaignDuration', 'campaignDurationValue')">
+    <div class="value" id="campaignDurationValue">6</div>
+    <div class="explanation">Продолжительность SEO кампании может варьироваться от 1 до 24 месяцев.</div>
+    <input type="checkbox" id="defaultCampaignDuration" onclick="setDefault('campaignDuration', 8)"> Поставить среднее значение для B2B сайтов
+
+    <label for="seoBudget">Бюджет SEO (в рублях):</label>
+    <select id="seoBudget" onchange="updateSeoBudget()">
+        <option value="40000">40000 рублей/месяц</option>
+        <option value="70000">70000 рублей/месяц</option>
+        <option value="100000">100000 рублей/месяц</option>
+    </select>
+    <div class="explanation">Выберите один из предложенных бюджетов.</div>
+    
+    <!-- Раздел "Advanced" -->
+<button id="toggleAdvanced">Расширенные настройки</button>
+<div id="advancedOptions" style="display:none;">
+    <label for="keywordCount">Количество ключевых запросов:</label>
+    <input type="number" id="keywordCount" min="0">
+
+    <label for="siteSections">Количество разделов сайта:</label>
+    <input type="number" id="siteSections" min="0">
+
+    <label for="promotionGeo">География продвижения:</label>
+    <select id="promotionGeo">
+        <option value="local">Локально</option>
+        <option value="national">Национально</option>
+        <option value="international">Международно</option>
+    </select>
+
+    <label for="competitionLevel">Уровень конкуренции в тематике:</label>
+    <select id="competitionLevel">
+        <option value="low">Низкий</option>
+        <option value="medium">Средний</option>
+        <option value="high">Высокий</option>
+    </select>
+
+    <label for="contentLanguages">Количество языков контента:</label>
+    <input type="number" id="contentLanguages" min="1">
+
+    <label for="seoLevel">Текущий уровень SEO:</label>
+    <select id="seoLevel">
+        <option value="none">Нет</option>
+        <option value="basic">Базовый</option>
+        <option value="advanced">Продвинутый</option>
+    </select>
+
+    <label for="siteSpeed">Скорость загрузки сайта:</label>
+    <input type="number" id="siteSpeed" min="0" placeholder="В секундах">
+
+    <label for="cmsSystem">CMS система сайта:</label>
+    <select id="cmsSystem">
+        <option value="common">Часто используемая CMS</option>
+        <option value="custom">Специализированная CMS</option>
+    </select>
+
+    <label for="hasCopywriter">Есть свой копирайтер?</label>
+    <input type="checkbox" id="hasCopywriter">
+
+    <label for="hasProgrammer">Есть свой программист?</label>
+    <input type="checkbox" id="hasProgrammer">
+
+    <label for="underFilter">Сайт под фильтром?</label>
+    <input type="checkbox" id="underFilter">
+
+    <label for="isResponsive">Адаптивность:</label>
+    <input type="checkbox" id="isResponsive" checked>
+
+    <label for="googleMapsPromotion">Продвижение в Google-картах:</label>
+    <input type="checkbox" id="googleMapsPromotion">
+    
+</div>
+
+
+    <button onclick="calculateROI()">Рассчитать ROI</button>
+    <h3>Результаты:</h3>
+    <div id="results"></div>
+</div>
+
+			 
+			
+</div> </div></div></div><div id="rec667996499" class="r t-rec" style=" " data-animationappear="off" data-record-type="131" ><!-- T123 --><div class="t123" ><div class="t-container_100 "><div class="t-width t-width_100 ">
+
+			<script>
+// Глобальный объект для сохранения предыдущих значений
+var previousValues = {};
+
+document.getElementById('toggleAdvanced').addEventListener('click', function() {
+    var advancedOptions = document.getElementById('advancedOptions');
+    advancedOptions.style.transition = 'display 0.5s ease';
+    if (advancedOptions.style.display === 'none') {
+        advancedOptions.style.display = 'block';
+    } else {
+        advancedOptions.style.display = 'none';
+    }
+});
+
+function updateValue(id, valueId) {
+    var value = document.getElementById(id).value;
+    document.getElementById(valueId).innerText = value;
+    document.getElementById('keywordCount').addEventListener('change', calculateROI);
+    document.getElementById('siteSections').addEventListener('change', calculateROI);
+    document.getElementById('promotionGeo').addEventListener('change', calculateROI);
+    document.getElementById('competitionLevel').addEventListener('change', calculateROI);
+    document.getElementById('contentLanguages').addEventListener('change', calculateROI);
+    document.getElementById('seoLevel').addEventListener('change', calculateROI);
+    document.getElementById('siteSpeed').addEventListener('change', calculateROI);
+    document.getElementById('cmsSystem').addEventListener('change', calculateROI);
+    document.getElementById('hasCopywriter').addEventListener('change', calculateROI);
+    document.getElementById('hasProgrammer').addEventListener('change', calculateROI);
+    document.getElementById('underFilter').addEventListener('change', calculateROI);
+    document.getElementById('isResponsive').addEventListener('change', calculateROI);
+    document.getElementById('googleMapsPromotion').addEventListener('change', calculateROI);
+
+
+    // Сохраняем текущее значение
+    if (!previousValues.hasOwnProperty(id)) {
+        previousValues[id] = value;
+    }
+}
+
+function calculateROI() {
+    var totalTraffic = parseInt(document.getElementById('totalTraffic').value);
+    var organicTrafficPercent = parseInt(document.getElementById('organicTrafficPercent').value) / 100;
+    var conversionRate = parseFloat(document.getElementById('conversionRate').value) / 100;
+    var averageRevenuePerLead = parseInt(document.getElementById('averageRevenuePerLead').value);
+    var seoBudget = parseInt(document.getElementById('seoBudget').value);
+    var campaignDuration = parseInt(document.getElementById('campaignDuration').value);
+
+
+    // Учитываем влияние бюджета SEO на увеличение трафика
+    var trafficIncreaseRate = 0;
+    if (seoBudget === 40000) {
+        trafficIncreaseRate = 0.05;
+    } else if (seoBudget === 70000) {
+        trafficIncreaseRate = 0.15;
+    } else if (seoBudget === 100000) {
+        trafficIncreaseRate = 0.25;
+    }
+    for (var month = 0; month < campaignDuration; month++) {
+        totalTraffic += totalTraffic * trafficIncreaseRate;
+    }
+
+    // Расчет общего количества лидов из органического трафика
+    var totalLeads = totalTraffic * organicTrafficPercent * conversionRate;
+
+    // Расчет общего дохода от SEO
+    var totalRevenue = totalLeads * averageRevenuePerLead;
+
+    // Расчет общих затрат на SEO
+    var totalCost = seoBudget * campaignDuration;
+
+    // Расчет ROI
+    var roi = ((totalRevenue - totalCost) / totalCost) * 100;
+    
+            // Получаем значения расширенных настроек
+    var keywordCount = parseInt(document.getElementById('keywordCount').value);
+    var siteSections = parseInt(document.getElementById('siteSections').value);
+    var promotionGeo = document.getElementById('promotionGeo').value;
+    var competitionLevel = document.getElementById('competitionLevel').value;
+    var contentLanguages = parseInt(document.getElementById('contentLanguages').value);
+    var seoLevel = document.getElementById('seoLevel').value;
+    var siteSpeed = parseInt(document.getElementById('siteSpeed').value);
+    var cmsSystem = document.getElementById('cmsSystem').value;
+    var hasCopywriter = document.getElementById('hasCopywriter').checked;
+    var hasProgrammer = document.getElementById('hasProgrammer').checked;
+    var underFilter = document.getElementById('underFilter').checked;
+    var isResponsive = document.getElementById('isResponsive').checked;
+    var googleMapsPromotion = document.getElementById('googleMapsPromotion').checked;
+
+    // Применяем логику влияния на расчеты
+    if (keywordCount > 50) {
+        totalTraffic *= 1.1; 
+    }
+        // ... существующий код ...
+
+    if (siteSections > 20) {
+        totalTraffic *= 1.05;
+    }
+
+    if (promotionGeo === 'international') {
+        totalTraffic *= 1.15;
+    }
+
+    if (competitionLevel === 'high') {
+        totalTraffic *= 0.9;
+    }
+
+    if (contentLanguages > 1) {
+        totalTraffic *= 1.1;
+    }
+
+    if (seoLevel === 'advanced') {
+        totalTraffic *= 1.2;
+    } else if (seoLevel === 'none') {
+        totalTraffic *= 0.8;
+    }
+
+    if (siteSpeed > 3) {
+        totalTraffic *= 0.95;
+    }
+
+    if (cmsSystem === 'custom') {
+        totalTraffic *= 1.05;
+    }
+
+    if (hasCopywriter) {
+        totalTraffic *= 1.1;
+    }
+
+    if (hasProgrammer) {
+        totalTraffic *= 1.05;
+    }
+
+    if (underFilter) {
+        totalTraffic *= 0.7;
+    }
+
+    if (!isResponsive) {
+        totalTraffic *= 0.85;
+    }
+
+    if (googleMapsPromotion) {
+        totalTraffic *= 1.05;
+    }
+
+    // Расчет общего количества лидов из органического трафика
+    var totalLeads = totalTraffic * organicTrafficPercent * conversionRate;
+
+    var totalRevenue = totalLeads * averageRevenuePerLead;
+    var totalCost = seoBudget * campaignDuration;
+    var roi = ((totalRevenue - totalCost) / totalCost) * 100;
+    
+    var resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = 'ROI: ' + roi.toFixed(2) + '%';
+
+    var overlay = document.getElementById('overlay');
+    var content = document.getElementById('overlayContent');
+    content.innerHTML = 'ROI: ' + roi.toFixed(2) + '%';
+
+    // Показываем оверлей
+    overlay.classList.add('show');
+
+    // Скрываем оверлей после 0.5 секунды
+    setTimeout(function() {
+        overlay.classList.remove('show');
+    }, 1350); // 1350 мс - продолжительность анимации и показа
+}
+
+function setDefault(id, defaultValue) {
+    var checkbox = document.getElementById('default' + id.charAt(0).toUpperCase() + id.slice(1));
+    var slider = document.getElementById(id);
+
+    if (checkbox.checked) {
+        // Сохраняем текущее значение перед изменением
+        previousValues[id] = slider.value;
+
+        // Устанавливаем дефолтное значение
+        slider.value = defaultValue;
+        updateValue(id, id + 'Value');
+    } else {
+        // Возвращаем предыдущее значение
+        slider.value = previousValues[id] || slider.value;
+        updateValue(id, id + 'Value');
+    }
+}
+</script>
+
+			 
+			
+</div> </div></div></div></div><!--/allrecords-->
