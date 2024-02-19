@@ -3,7 +3,7 @@ ErrorDocument 404 /404.html
 
 DirectoryIndex page15108854.html
 
-RewriteEngine On
+RewriteEngine Off
 
 RewriteCond %{REQUEST_FILENAME} /robots.txt
 RewriteCond "%{DOCUMENT_ROOT}/robots_%{HTTP_HOST}.txt" -f
