@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - ChatGPT Session Saver</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Privacy Policy for ChatGPT Session Saver</h1>
+        </header>
+        <section>
+            <p>This Privacy Policy describes how the ChatGPT Session Saver extension (hereafter referred to as "we", "our", or "us") collects, uses, and safeguards the information you provide when using our extension available on the Chrome Web Store.</p>
+            <h2>Information Collection and Use</h2>
+            <p>The ChatGPT Session Saver extension is designed to enhance your interaction with ChatGPT by enabling you to save your ChatGPT conversation sessions directly from your browser. In providing this functionality, we collect the following types of information:</p>
+            <ul>
+                <li><strong>Website Content:</strong> We temporarily access the content of your ChatGPT sessions, including the questions you ask and the responses provided by ChatGPT, solely for the purpose of saving this content at your request. This data is processed locally on your device and is not transmitted to any external servers or third parties.</li>
+            </ul>
+            <h2>Data Storage</h2>
+            <p>All data collected by the ChatGPT Session Saver extension is stored locally on your device. We do not store, transmit, or share any of your data with third parties.</p>
+            <h2>Permissions</h2>
+            <p>To function effectively, the ChatGPT Session Saver extension requires the following browser permissions:</p>
+            <ul>
+                <li><strong>activeTab:</strong> To access the content of the active tab where the ChatGPT session is ongoing.</li>
+                <li><strong>scripting:</strong> To inject scripts into the ChatGPT webpage for extracting chat content.</li>
+                <li><strong>storage:</strong> To save your ChatGPT session data locally on your device.</li>
+            </ul>
+            <h2>User Control and Rights</h2>
+            <p>You have full control over your data. At any time, you can:</p>
+            <ul>
+                <li>View your saved ChatGPT sessions.</li>
+                <li>Delete any sessions you no longer wish to keep.</li>
+            </ul>
+            <h2>Changes to This Privacy Policy</h2>
+            <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Effective Date" at the top.</p>
+            <h2>Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us at ivangetmanov@icloud.com or ivangetmanov123@gmail.com.</p>
+        </section>
+    </div>
+</body>
+</html>
