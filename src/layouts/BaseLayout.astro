@@ -1,0 +1,75 @@
+---
+const {
+  title = "getmanov.com",
+  description = "Experiments, case-based research, tools, and notes.",
+  canonical = "https://getmanov.com/",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index,follow" />
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="/styles/global.css" />
+
+    <!-- Optional: keep your existing verification tags if you still need them -->
+    <!-- <meta name="google-site-verification" content="..." /> -->
+    <!-- <meta name="yandex-verification" content="..." /> -->
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark">GETMANOV</span>
+        </a>
+
+        <nav class="nav">
+          <a href="/java-script/track-email-copy">Tools</a>
+          <a href="#projects">Projects</a>
+          <a href="#notes">Notes</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="content" class="site-main">
+      <slot />
+    </main>
+
+    <footer id="contact" class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="footer-title">Contact</div>
+          <div class="footer-text">
+            <a href="mailto:ivangetmanov@mail.ru">ivangetmanov@mail.ru</a><br />
+            <a href="https://t.me/getmanov_marketing" target="_blank" rel="noreferrer">t.me/getmanov_marketing</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-title">What this is</div>
+          <div class="footer-text">
+            A personal lab: experiments, case-based research, and tools.<br />
+            Built to be fast, clean, and easy to extend.
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-title">Status</div>
+          <div class="footer-text">
+            Astro migration in progress.
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
