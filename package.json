@@ -8,5 +8,6 @@
   },
   "dependencies": {
     "astro": "^4.16.0"
+    "@astrojs/sitemap": "^3.0.0"
   }
 }
