@@ -7,27 +7,23 @@ const {
 
 const canonicalUrl = canonical ?? `https://getmanov.com${Astro.url.pathname}`;
 ---
-<link rel="canonical" href={canonicalUrl} />
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index,follow" />
 
     <!-- Global styles -->
     <link rel="stylesheet" href="/styles/global.css" />
     <link rel="stylesheet" href="/styles/markdown.css" />
-
-
-    <!-- Optional: keep your existing verification tags if you still need them -->
-    <!-- <meta name="google-site-verification" content="..." /> -->
-    <!-- <meta name="yandex-verification" content="..." /> -->
   </head>
+
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
 
@@ -47,7 +43,10 @@ const canonicalUrl = canonical ?? `https://getmanov.com${Astro.url.pathname}`;
     </header>
 
     <main id="content" class="site-main">
-      <slot />
+      <!-- ВАЖНО: markdown-контент ОБЁРНУТ в .prose -->
+      <article class="prose">
+        <slot />
+      </article>
     </main>
 
     <footer id="contact" class="site-footer">
@@ -56,7 +55,13 @@ const canonicalUrl = canonical ?? `https://getmanov.com${Astro.url.pathname}`;
           <div class="footer-title">Contact</div>
           <div class="footer-text">
             <a href="mailto:ivangetmanov@mail.ru">ivangetmanov@mail.ru</a><br />
-            <a href="https://t.me/getmanov_marketing" target="_blank" rel="noreferrer">t.me/getmanov_marketing</a>
+            <a
+              href="https://t.me/getmanov_marketing"
+              target="_blank"
+              rel="noreferrer"
+            >
+              t.me/getmanov_marketing
+            </a>
           </div>
         </div>
 
