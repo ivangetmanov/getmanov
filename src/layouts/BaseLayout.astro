@@ -2,9 +2,12 @@
 const {
   title = "getmanov.com",
   description = "Experiments, case-based research, tools, and notes.",
-  canonical = "https://getmanov.com/",
+  canonical,
 } = Astro.props;
+
+const canonicalUrl = canonical ?? `https://getmanov.com${Astro.url.pathname}`;
 ---
+<link rel="canonical" href={canonicalUrl} />
 
 <!doctype html>
 <html lang="en">
@@ -33,10 +36,9 @@ const {
         </a>
 
         <nav class="nav">
-          <a href="/java-script/track-email-copy">Tools</a>
-          <a href="#projects">Projects</a>
-          <a href="#notes">Notes</a>
-          <a href="#contact">Contact</a>
+          <a href="/tools/">Tools</a>
+          <a href="/projects/">Projects</a>
+          <a href="/case-studies/">Case studies</a>
         </nav>
       </div>
     </header>
