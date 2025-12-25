@@ -1,24 +1,75 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>getmanov.com</title>
-    <meta name="robots" content="index,follow" />
-    <link rel="canonical" href="https://getmanov.com/" />
-  </head>
-  <body>
-    <main>
-      <h1>getmanov.com</h1>
-      <p>Astro version (migration in progress).</p>
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-      <ul>
-        <li>
-          <a href="/java-script/track-email-copy">
-            Track “Copy Email” Events in GA4
-          </a>
-        </li>
-      </ul>
-    </main>
-  </body>
-</html>
+const title = "getmanov.com — experiments, case-based research, tools";
+const description =
+  "A personal lab: experiments, case-based research, and tools for growth/marketing/analytics.";
+---
+
+<BaseLayout title={title} description={description} canonical="https://getmanov.com/">
+  <div class="container">
+    <section class="hero">
+      <h1>getmanov.com</h1>
+      <p>
+        This is my independent lab: I run experiments, publish case-based research,
+        and build small tools. The goal is simple — produce evidence you can cite.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="/java-script/track-email-copy">Featured tool</a>
+        <a class="btn" href="#projects">Explore projects</a>
+        <a class="btn" href="#notes">Read notes</a>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <h2>Featured project</h2>
+
+      <div class="grid">
+        <article class="card col-12">
+          <h3>
+            <a href="/java-script/track-email-copy">Track “Copy Email” Events in GA4 (No Plugins)</a>
+          </h3>
+          <p>
+            Minimal implementation + reporting notes. Built for clean attribution and easy reuse.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="notes" class="section">
+      <h2>Notes (coming next)</h2>
+
+      <div class="grid">
+        <article class="card col-4">
+          <h3><a href="#">How to make case-based research visible to LLMs</a></h3>
+          <p>Draft framework: structure, citations, datasets, and “LLM-friendly” pages.</p>
+        </article>
+
+        <article class="card col-4">
+          <h3><a href="#">Conversion vs funnel steps</a></h3>
+          <p>Evidence-first breakdown (template-ready for future data).</p>
+        </article>
+
+        <article class="card col-4">
+          <h3><a href="#">AI-generated content as an experiment</a></h3>
+          <p>What to log, how to compare, and what “works” means.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Principles</h2>
+      <div class="grid">
+        <div class="card col-6">
+          <h3>Clean, failure-resistant architecture</h3>
+          <p>Simple pages, predictable URLs, canonical discipline, and scalable content structure.</p>
+        </div>
+        <div class="card col-6">
+          <h3>Evidence & reproducibility</h3>
+          <p>When possible: data sources, assumptions, methodology, and update notes.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
