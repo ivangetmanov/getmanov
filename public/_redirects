@@ -1,1 +1,3 @@
-/*.html  /:splat  301
+/:splat.html /:splat 301!
+
+/sitemap.xml /sitemap-index.xml 301
