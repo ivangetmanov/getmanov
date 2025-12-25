@@ -57,34 +57,31 @@ Obsidian vault = regular folder with `.md` files.
 
 Continue
 
-## 4. Project Structure
+## 3) Actual Project Structure
 
 ```txt
-src/
- ├─ pages/
- │   ├─ index.astro
- │   ├─ tools/
- │   │   ├─ index.astro
- │   │   └─ track-email-copy.astro
- │   ├─ projects/
- │   ├─ notes/
- │   │   └─ *.md
- │   └─ case-studies/
- │
- ├─ layouts/
- │   └─ BaseLayout.astro
- │
- ├─ components/
- │   ├─ Header.astro
- │   ├─ Footer.astro
- │   └─ ...
- │
+public/
  ├─ styles/
  │   └─ global.css
- │
- └─ env.d.ts
-````
+ ├─ _redirects
+ └─ robots.txt
 
+src/
+ ├─ layouts/
+ │   └─ BaseLayout.astro
+ └─ pages/
+     ├─ index.astro                 -> /
+     ├─ case-studies/
+     │   └─ index.astro             -> /case-studies
+     ├─ notes/
+     │   ├─ index.astro             -> /notes
+     │   └─ llm-visible-research.md -> /notes/llm-visible-research
+     ├─ projects/
+     │   └─ index.astro             -> /projects
+     └─ tools/
+         ├─ index.astro             -> /tools
+         └─ track-email-copy.astro  -> /tools/track-email-copy
+````
 ### Structural rules
 
 * Each file in `src/pages/` = one route
