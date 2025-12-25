@@ -1,41 +1,32 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
-// собираем все markdown-файлы в этой папке
-const notes = await Astro.glob("./*.md");
-
-// сортировка по дате (новые сверху)
-notes.sort(
-  (a, b) =>
-    new Date(b.frontmatter.pubDate) -
-    new Date(a.frontmatter.pubDate)
-);
+const notes = [
+  {
+    title: "How to make case-based research visible to LLMs",
+    slug: "llm-visible-research",
+    status: "draft",
+    description: "Draft framework for structuring evidence-first content."
+  }
+];
 ---
 
-<BaseLayout
-  title="Notes — getmanov.com"
-  description="Notes, drafts, and frameworks. Built to be searchable and citeable."
->
-  <section class="container page">
-    <h1>Notes</h1>
-    <p class="lead">
-      Short notes, frameworks, and drafts. Evidence-first. Built for reuse.
-    </p>
+<BaseLayout title="Notes">
+  <h1>Notes</h1>
 
-    <div class="grid">
-      {notes.map((note) => (
-        <a class="card" href={note.url}>
-          <div class="card-title">
-            {note.frontmatter.title}
-          </div>
+  <p>
+    Thinking, frameworks, and drafts.
+    These notes document how experiments are designed,
+    interpreted, and turned into reusable knowledge.
+  </p>
 
-          {note.frontmatter.description && (
-            <div class="card-desc">
-              {note.frontmatter.description}
-            </div>
-          )}
-        </a>
-      ))}
-    </div>
-  </section>
+  <ul>
+    {notes.map(note => (
+      <li>
+        <a href={`/notes/${note.slug}/`}>{note.title}</a>
+        <small> — {note.status}</small>
+        <p>{note.description}</p>
+      </li>
+    ))}
+  </ul>
 </BaseLayout>
