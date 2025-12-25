@@ -1,4 +1,3 @@
-````md
 # Project Context & LLM Operating Manual
 
 This repository contains a static website built with Astro and deployed to Netlify.
