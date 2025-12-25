@@ -1,5 +1,3 @@
-### 📄 СОДЕРЖИМОЕ README.md (копируй целиком)
-
 ````md
 # Project Context & LLM Operating Manual
 
