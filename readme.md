@@ -206,5 +206,3 @@ When working with this repository, use the following constraints:
 - Explicitly documented Obsidian as editor-only
 - Documented Netlify Linux environment
 ```
-
----
