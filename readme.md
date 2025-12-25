@@ -203,22 +203,3 @@ Continue
 * Added unified LLM project context
 * Explicitly documented Obsidian as editor-only
 * Documented Netlify Linux environment
-
-````
-
-Continue
-
-## 3️⃣ ЧТО НЕ ДОЛЖНО БЫТЬ В ФАЙЛЕ (проверь)
-
-❌ `Continue`  
-❌ ```md  
-❌ YAML  
-❌ Frontmatter  
-❌ Любые строки **вне** этого блока  
-
-Continue
-
-### Если после этого **ещё раз** будет ошибка — значит файл **НЕ README.md**, а `.md` внутри `src/pages/`.
-
-В этом случае скажи **где лежит файл**, и я дам **другую версию под Astro**.
-````
