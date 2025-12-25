@@ -1,1 +1,38 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const notes = [
+  {
+    title: "How to make case-based research visible to LLMs",
+    href: "/notes/llm-visible-research",
+    desc: "Draft framework: structure, citations, datasets, and LLM-friendly pages.",
+  },
+  {
+    title: "Conversion vs funnel steps",
+    href: "/notes/conversion-vs-steps",
+    desc: "Evidence-first breakdown (template-ready for future data).",
+  },
+  {
+    title: "AI-generated content as an experiment",
+    href: "/notes/ai-content-experiment",
+    desc: "What to log, how to compare, and what “works” means.",
+  },
+];
+---
+
+<BaseLayout title="Notes — getmanov.com" description="Notes and frameworks.">
+  <section class="container page">
+    <h1>Notes</h1>
+    <p class="lead">Short notes, frameworks, and drafts. Built to be searchable and citeable.</p>
+
+    <div class="grid">
+      {notes.map((n) => (
+        <a class="card" href={n.href}>
+          <div class="card-title">{n.title}</div>
+          <div class="card-desc">{n.desc}</div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
 
