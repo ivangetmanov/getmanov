@@ -208,10 +208,3 @@ When working with this repository, use the following constraints:
 ```
 
 ---
-
-```
-
----
-
-Скажи, в каком направлении идём дальше.
-```
