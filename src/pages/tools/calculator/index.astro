@@ -1,129 +1,292 @@
 ---
-import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
-const title = "Калькулятор";
-const description = "ROI калькулятор для SEO";
+const title = "SEO ROI Calculator (LTV/CAC + ROI) — getmanov.com";
+const description =
+  "Calculate SEO ROI using customer-based metrics (LTV, CAC, churn, margin, discount rate). Built for clear, evidence-first planning.";
+
+const canonical = "https://getmanov.com/tools/seo-roi-calculator/";
 ---
 
-<BaseLayout title={title} description={description} canonical="https://getmanov.com/tools/calculator/">
-  <div class="container markdown">
-    <h1>Калькулятор ROI для SEO</h1>
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <div class="container">
+    <header class="hero">
+      <h1>SEO ROI Calculator</h1>
+      <p class="lead">
+        Customer-based model: <strong>LTV</strong>, <strong>NPV of LTV</strong>, <strong>CAC</strong>,
+        <strong>LTV:CAC</strong>, and <strong>ROI</strong>.
+      </p>
+      <p class="muted">
+        This mirrors the “enterprise SEO ROI” framing: costs → customers → LTV/CAC → ROI. (Great for
+        exec conversations.)
+      </p>
+    </header>
 
-    <div class="card" style="padding:16px;">
-      <label style="display:block; margin-bottom:12px;">
-        Текущий общий трафик на сайт (в месяц):
-        <input id="traffic" type="number" min="0" step="1" value="1000" style="width:140px; margin-left:8px;" />
-        <div style="opacity:.75; font-size:14px; margin-top:4px;">
-          Обычно трафик варьируется от 100 до 10,000 посетителей в месяц.
+    <section class="section">
+      <h2>Inputs</h2>
+
+      <div class="grid">
+        <div class="card col-6">
+          <label class="field">
+            <span>Total SEO Costs (USD)</span>
+            <input id="seoCost" type="number" min="0" step="100" value="6000" />
+            <small>All SEO expenses for the period (agency, content, tools, salaries, links, etc.).</small>
+          </label>
+
+          <label class="field">
+            <span>Customers acquired from SEO (count)</span>
+            <input id="customers" type="number" min="0" step="1" value="60" />
+            <small>How many paying customers you attribute to SEO in the same period.</small>
+          </label>
+
+          <label class="field">
+            <span>Average revenue per customer (ARPC, USD)</span>
+            <input id="arpc" type="number" min="0" step="10" value="300" />
+            <small>Average revenue per customer (not per lead).</small>
+          </label>
+
+          <label class="field">
+            <span>Gross margin (%)</span>
+            <input id="margin" type="range" min="0" max="100" step="1" value="70" />
+            <div class="range-meta"><span id="marginVal">70%</span></div>
+            <small>Only profit portion should drive LTV (margin-adjusted).</small>
+          </label>
         </div>
-      </label>
 
-      <label style="display:block; margin-bottom:12px;">
-        Процент трафика из органического поиска (%):
-        <input id="organicPct" type="number" min="0" max="100" step="1" value="50" style="width:90px; margin-left:8px;" />
-        <div style="opacity:.75; font-size:14px; margin-top:4px;">
-          Обычно органический трафик составляет от 0% до 100%.
+        <div class="card col-6">
+          <label class="field">
+            <span>Annual churn rate (%)</span>
+            <input id="churn" type="range" min="1" max="100" step="1" value="20" />
+            <div class="range-meta"><span id="churnVal">20%</span></div>
+            <small>Used to estimate retention period: retention = 1 / churn.</small>
+          </label>
+
+          <label class="field">
+            <span>Discount rate (%)</span>
+            <input id="discount" type="range" min="0" max="30" step="1" value="5" />
+            <div class="range-meta"><span id="discountVal">5%</span></div>
+            <small>Discount future value to present value (simple NPV approximation).</small>
+          </label>
+
+          <label class="field">
+            <span>Timeframe label</span>
+            <input id="timeframe" type="text" value="12 months" />
+            <small>For your own reporting context (doesn’t change math).</small>
+          </label>
+
+          <div class="actions">
+            <button class="btn primary" id="calcBtn" type="button">Calculate</button>
+            <button class="btn" id="resetBtn" type="button">Reset</button>
+          </div>
         </div>
-      </label>
-
-      <label style="display:block; margin-bottom:12px;">
-        Средняя конверсия сайта (%):
-        <input id="convPct" type="number" min="0" max="100" step="0.1" value="2" style="width:90px; margin-left:8px;" />
-        <div style="opacity:.75; font-size:14px; margin-top:4px;">
-          Средняя конверсия варьируется от 0% до 15%.
-        </div>
-      </label>
-
-      <label style="display:block; margin-bottom:12px;">
-        Средний доход на лид/сделку:
-        <input id="revPerLead" type="number" min="0" step="1" value="100" style="width:140px; margin-left:8px;" />
-        <div style="opacity:.75; font-size:14px; margin-top:4px;">
-          Средний доход на лид может быть от 10 до 1000 единиц валюты.
-        </div>
-      </label>
-
-      <label style="display:block; margin-bottom:12px;">
-        Ежемесячный бюджет на SEO:
-        <input id="seoBudget" type="number" min="0" step="1" value="500" style="width:140px; margin-left:8px;" />
-        <div style="opacity:.75; font-size:14px; margin-top:4px;">
-          Бюджет на SEO варьируется от 100 до 10,000 единиц валюты в месяц.
-        </div>
-      </label>
-
-      <label style="display:block; margin-bottom:16px;">
-        Продолжительность кампании (в месяцах):
-        <input id="months" type="number" min="1" step="1" value="6" style="width:90px; margin-left:8px;" />
-        <div style="opacity:.75; font-size:14px; margin-top:4px;">
-          Продолжительность SEO кампании может варьироваться от 1 до 24 месяцев.
-        </div>
-      </label>
-
-      <button id="calcBtn" class="btn primary" type="button">Рассчитать ROI</button>
-
-      <hr style="margin:16px 0;" />
-
-      <h3 style="margin:0 0 8px;">Результаты</h3>
-
-      <div id="results" style="display:grid; gap:6px;">
-        <div><strong>Органический трафик:</strong> <span id="organicTraffic">—</span> / мес</div>
-        <div><strong>Лиды:</strong> <span id="leads">—</span> / мес</div>
-        <div><strong>Доход:</strong> <span id="revenue">—</span> / мес</div>
-        <div><strong>Прибыль (доход − SEO бюджет):</strong> <span id="profit">—</span> / мес</div>
-        <div><strong>ROI:</strong> <span id="roi">—</span></div>
-        <div><strong>Итог за период:</strong> <span id="total">—</span></div>
       </div>
-    </div>
+    </section>
+
+    <section class="section">
+      <h2>Results</h2>
+
+      <div class="grid">
+        <div class="card col-6">
+          <div class="kpi">
+            <div class="kpi-label">Retention period (years)</div>
+            <div class="kpi-value" id="retentionYears">—</div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-label">LTV (margin-adjusted)</div>
+            <div class="kpi-value" id="ltv">—</div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-label">NPV of LTV (simple)</div>
+            <div class="kpi-value" id="npvLtv">—</div>
+          </div>
+        </div>
+
+        <div class="card col-6">
+          <div class="kpi">
+            <div class="kpi-label">CAC</div>
+            <div class="kpi-value" id="cac">—</div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-label">LTV : CAC</div>
+            <div class="kpi-value" id="ltvCac">—</div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-label">ROI</div>
+            <div class="kpi-value" id="roi">—</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted">
+        Notes: LTV = ARPC × retentionYears × grossMargin. RetentionYears = 1 / churnRate.
+        NPV(LTV) = LTV / (1 + discountRate). CAC = totalCost / customers. ROI = ((NPV(LTV) − CAC)/CAC)×100.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Benchmarks & supporting notes</h2>
+      <ul>
+        <li><a href="/notes/">Benchmarks index</a> (add: B2B vs B2C conversion rates, typical churn ranges, etc.)</li>
+        <li><a href="/notes/llm-visible-research/">How to make case-based research visible to LLMs</a></li>
+      </ul>
+      <p class="muted">
+        You can keep this calculator “evidence-first” by linking each input to a note that explains how to estimate it.
+      </p>
+    </section>
   </div>
 
-  <script is:inline>
-    const fmt = (n) => {
-      if (!Number.isFinite(n)) return "—";
-      return new Intl.NumberFormat("ru-RU").format(Math.round(n));
-    };
+  <script>
+    const $ = (id) => document.getElementById(id);
 
-    function getNum(id) {
-      const el = document.getElementById(id);
-      return Number(String(el.value).replace(",", ".")) || 0;
+    const fmtMoney = (n) =>
+      new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+
+    const fmtNum = (n) =>
+      new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(n);
+
+    function readInputs() {
+      const seoCost = Number($("seoCost").value || 0);
+      const customers = Number($("customers").value || 0);
+      const arpc = Number($("arpc").value || 0);
+
+      const marginPct = Number($("margin").value || 0);
+      const churnPct = Number($("churn").value || 0);
+      const discountPct = Number($("discount").value || 0);
+
+      return {
+        seoCost,
+        customers,
+        arpc,
+        margin: marginPct / 100,
+        churn: churnPct / 100,
+        discount: discountPct / 100,
+      };
     }
 
     function calc() {
-      const traffic = getNum("traffic");
-      const organicPct = Math.min(100, Math.max(0, getNum("organicPct")));
-      const convPct = Math.min(100, Math.max(0, getNum("convPct")));
-      const revPerLead = getNum("revPerLead");
-      const seoBudget = getNum("seoBudget");
-      const months = Math.max(1, Math.floor(getNum("months")));
+      const { seoCost, customers, arpc, margin, churn, discount } = readInputs();
 
-      const organicTraffic = traffic * (organicPct / 100);
-      const leads = organicTraffic * (convPct / 100);
-      const revenue = leads * revPerLead;
+      $("marginVal").textContent = Math.round(margin * 100) + "%";
+      $("churnVal").textContent = Math.round(churn * 100) + "%";
+      $("discountVal").textContent = Math.round(discount * 100) + "%";
 
-      const profit = revenue - seoBudget;
-      const roi = seoBudget > 0 ? ((profit / seoBudget) * 100) : NaN;
+      if (customers <= 0 || seoCost <= 0) {
+        $("retentionYears").textContent = "—";
+        $("ltv").textContent = "—";
+        $("npvLtv").textContent = "—";
+        $("cac").textContent = "—";
+        $("ltvCac").textContent = "—";
+        $("roi").textContent = "—";
+        return;
+      }
 
-      const totalRevenue = revenue * months;
-      const totalCost = seoBudget * months;
-      const totalProfit = totalRevenue - totalCost;
-      const totalRoi = totalCost > 0 ? ((totalProfit / totalCost) * 100) : NaN;
+      // retentionYears = 1 / churnRate (simple approximation)
+      const retentionYears = churn > 0 ? 1 / churn : Infinity;
 
-      document.getElementById("organicTraffic").textContent = fmt(organicTraffic);
-      document.getElementById("leads").textContent = fmt(leads);
-      document.getElementById("revenue").textContent = fmt(revenue);
+      // LTV = ARPC × retentionYears × grossMargin
+      const ltv = arpc * retentionYears * margin;
 
-      document.getElementById("profit").textContent = fmt(profit);
-      document.getElementById("roi").textContent = Number.isFinite(roi) ? `${roi.toFixed(1)}%` : "—";
+      // NPV(LTV) = LTV / (1 + discountRate)
+      const npvLtv = ltv / (1 + discount);
 
-      document.getElementById("total").textContent =
-        `Доход: ${fmt(totalRevenue)} • Затраты: ${fmt(totalCost)} • Прибыль: ${fmt(totalProfit)} • ROI: ${
-          Number.isFinite(totalRoi) ? totalRoi.toFixed(1) + "%" : "—"
-        }`;
+      // CAC = totalCost / customers
+      const cac = seoCost / customers;
+
+      // ROI = ((NPV(LTV) − CAC) / CAC) × 100
+      const roi = cac > 0 ? ((npvLtv - cac) / cac) * 100 : 0;
+
+      // LTV:CAC
+      const ltvCac = cac > 0 ? npvLtv / cac : 0;
+
+      $("retentionYears").textContent = Number.isFinite(retentionYears) ? fmtNum(retentionYears) : "∞";
+      $("ltv").textContent = fmtMoney(ltv);
+      $("npvLtv").textContent = fmtMoney(npvLtv);
+      $("cac").textContent = fmtMoney(cac);
+      $("ltvCac").textContent = fmtNum(ltvCac);
+      $("roi").textContent = fmtNum(roi) + "%";
     }
 
-    document.getElementById("calcBtn").addEventListener("click", calc);
-    // опционально: авто-пересчёт при вводе
-    ["traffic","organicPct","convPct","revPerLead","seoBudget","months"].forEach((id) => {
-      document.getElementById(id).addEventListener("input", calc);
-    });
+    function reset() {
+      $("seoCost").value = 6000;
+      $("customers").value = 60;
+      $("arpc").value = 300;
+      $("margin").value = 70;
+      $("churn").value = 20;
+      $("discount").value = 5;
+      $("timeframe").value = "12 months";
+      calc();
+    }
+
+    $("calcBtn").addEventListener("click", calc);
+    $("resetBtn").addEventListener("click", reset);
+
+    // live updates for ranges
+    $("margin").addEventListener("input", calc);
+    $("churn").addEventListener("input", calc);
+    $("discount").addEventListener("input", calc);
+
+    // initial render
     calc();
   </script>
+
+  <style>
+    .hero { padding: 1.25rem 0 0.5rem; }
+    .lead { font-size: 1.05rem; line-height: 1.5; }
+    .muted { opacity: 0.75; }
+
+    .section { margin-top: 2rem; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(12, 1fr); }
+    .col-6 { grid-column: span 6; }
+    .col-12 { grid-column: span 12; }
+
+    .card {
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 1rem;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .field { display: block; margin-bottom: 1rem; }
+    .field > span { display: block; font-weight: 600; margin-bottom: 0.35rem; }
+    .field input[type="number"],
+    .field input[type="text"] {
+      width: 100%;
+      padding: 0.6rem 0.7rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.18);
+      color: inherit;
+    }
+    .field input[type="range"] { width: 100%; }
+    .field small { display: block; margin-top: 0.35rem; opacity: 0.75; }
+
+    .range-meta { display: flex; justify-content: flex-end; margin-top: 0.25rem; opacity: 0.85; }
+
+    .actions { display: flex; gap: 0.6rem; margin-top: 1rem; }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 0.85rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      color: inherit;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn.primary { border-color: rgba(150, 110, 255, 0.55); background: rgba(150, 110, 255, 0.20); }
+
+    .kpi { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .kpi:last-child { border-bottom: none; }
+    .kpi-label { opacity: 0.8; font-size: 0.92rem; }
+    .kpi-value { font-size: 1.6rem; font-weight: 700; padding-top: 0.25rem; }
+
+    @media (max-width: 900px) {
+      .col-6 { grid-column: span 12; }
+    }
+  </style>
 </BaseLayout>
