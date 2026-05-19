@@ -1,0 +1,197 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+type Item = {
+  href: string;
+  title: string;
+  description?: string;
+};
+
+function toRoute(filePath: string) {
+  // "./case-studies/giorgio/index.md" -> "/case-studies/giorgio/"
+  return filePath.replace(/^\.\//, "/").replace(/\/index\.md$/, "/");
+}
+
+function toSlugTitle(href: string) {
+  // "/case-studies/seo-case-b2b/" -> "seo-case-b2b"
+  const parts = href.split("/").filter(Boolean);
+  return parts[parts.length - 1] ?? href;
+}
+
+function collect(glob: Record<string, any>): Item[] {
+  return Object.entries(glob).map(([path, mod]) => {
+    const href = toRoute(path);
+    const fm = mod?.frontmatter ?? {};
+    return {
+      href,
+      title: fm.title ?? toSlugTitle(href),
+      description: fm.description ?? "",
+    };
+  });
+}
+
+const caseStudies = collect(
+  import.meta.glob("./case-studies/**/index.md", { eager: true })
+).sort((a, b) => a.title.localeCompare(b.title));
+
+const notes = collect(
+  import.meta.glob("./notes/**/index.md", { eager: true })
+).sort((a, b) => a.title.localeCompare(b.title));
+
+const tools = collect(
+  import.meta.glob("./tools/**/index.md", { eager: true })
+).sort((a, b) => a.title.localeCompare(b.title));
+
+// Если захочешь — можно сюда же добавить ./projects/**/index.astro или любые другие разделы.
+---
+
+<BaseLayout
+  title="getmanov.com"
+  description="Experiments, case-based research, tools, and notes."
+>
+  <div class="home">
+    <h1 class="home__title">GETMANOV</h1>
+    <p class="home__subtitle">
+      A personal lab: experiments, case-based research, tools, and notes.
+    </p>
+
+    <section class="section">
+      <div class="section__head">
+        <h2>Case studies</h2>
+        <span class="section__count">{caseStudies.length}</span>
+      </div>
+
+      <div class="grid">
+        {caseStudies.map((it) => (
+          <a class="card" href={it.href}>
+            <div class="card__title">{it.title}</div>
+            {it.description && <div class="card__desc">{it.description}</div>}
+            <div class="card__meta">{it.href}</div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section__head">
+        <h2>Notes</h2>
+        <span class="section__count">{notes.length}</span>
+      </div>
+
+      <div class="grid">
+        {notes.map((it) => (
+          <a class="card" href={it.href}>
+            <div class="card__title">{it.title}</div>
+            {it.description && <div class="card__desc">{it.description}</div>}
+            <div class="card__meta">{it.href}</div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section__head">
+        <h2>Tools</h2>
+        <span class="section__count">{tools.length}</span>
+      </div>
+
+      <div class="grid">
+        {tools.map((it) => (
+          <a class="card" href={it.href}>
+            <div class="card__title">{it.title}</div>
+            {it.description && <div class="card__desc">{it.description}</div>}
+            <div class="card__meta">{it.href}</div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .home {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 16px 48px;
+    }
+    .home__title {
+      margin: 0 0 8px;
+      letter-spacing: 0.04em;
+    }
+    .home__subtitle {
+      margin: 0 0 28px;
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+
+    .section {
+      margin-top: 28px;
+    }
+    .section__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .section__head h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .section__count {
+      opacity: 0.6;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      display: block;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.08s ease, border-color 0.08s ease;
+      background: rgba(0, 0, 0, 0.01);
+    }
+    .card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(0, 0, 0, 0.18);
+    }
+    .card__title {
+      font-weight: 650;
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+    .card__desc {
+      opacity: 0.75;
+      line-height: 1.5;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .card__meta {
+      opacity: 0.5;
+      font-size: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 560px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>

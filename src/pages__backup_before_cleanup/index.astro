@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "getmanov.com — experiments, case-based research, tools";
+const description =
+  "A personal lab: experiments, case-based research, and tools for growth/marketing/analytics.";
+---
+
+<BaseLayout title={title} description={description} canonical="https://getmanov.com/">
+  <div class="container">
+    <section class="hero">
+      <h1>getmanov.com</h1>
+      <p>
+        This is my independent lab: I run experiments, publish case-based research,
+        and build small tools. The goal is simple — produce evidence you can cite.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="/tools/track-email-copy">Featured tool</a>
+        <a class="btn" href="/projects/">Explore projects</a>
+        <a class="btn" href="/notes/">Read notes</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Featured</h2>
+
+      <div class="grid">
+        <article class="card col-12">
+          <h3>
+            <a href="/tools/track-email-copy">Track “Copy Email” Events in GA4 (No Plugins)</a>
+          </h3>
+          <p>
+            Minimal implementation + reporting notes. Built for clean attribution and easy reuse.
+          </p>
+        </article>
+
+        <article class="card col-12">
+          <h3>
+            <a href="/case-studies/seo-case-b2b/">B2B SEO Case: Evidence-Based Growth</a>
+          </h3>
+                <p>
+            Case-based research with metrics, decisions, and outcomes. Built to be cited.
+                </p>
+            </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Sections</h2>
+
+      <div class="grid">
+        <article class="card col-4">
+          <h3><a href="/projects/">Projects</a></h3>
+          <p>Experiments and builds worth documenting.</p>
+        </article>
+
+        <article class="card col-4">
+          <h3><a href="/notes/">Notes</a></h3>
+          <p>Short research notes and frameworks.</p>
+        </article>
+
+        <article class="card col-4">
+          <h3><a href="/case-studies/">Case studies</a></h3>
+          <p>Structured outcomes and evidence you can cite.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Principles</h2>
+      <div class="grid">
+        <div class="card col-6">
+          <h3>Clean, failure-resistant architecture</h3>
+          <p>Simple pages, predictable URLs, canonical discipline, and scalable content structure.</p>
+        </div>
+        <div class="card col-6">
+          <h3>Evidence & reproducibility</h3>
+          <p>When possible: data sources, assumptions, methodology, and update notes.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

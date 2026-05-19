@@ -1,0 +1,33 @@
+/sitemap.xml /sitemap-index.xml 301
+# --- CASE STUDIES ---
+/seo-case-b2b.html                 /case-studies/seo-case-b2b/           301!
+/case-websites.html                /case-studies/websites/               301!
+/case-twine-section.html           /case-studies/twine-section/          301!
+/case-sip-houses.html              /case-studies/sip-houses/             301!
+/case-moretut.html                 /case-studies/moretut/                301!
+/case-massage.html                 /case-studies/massage/                301!
+/case-massage-en.html              /case-studies/massage-en/             301!
+/case-manicure.html                /case-studies/manicure/               301!
+/case-face-massage.html            /case-studies/face-massage/           301!
+/case-bulavin-spb.html             /case-studies/bulavin-spb/            301!
+/case-bulavin-tumen.html           /case-studies/bulavin-tumen/          301!
+/case-barakat.html                 /case-studies/barakat/                301!
+
+# --- NOTES (B2B SEO) ---
+/b2b-seo-agency.html                /notes/b2b-seo-agency/               301!
+/b2b-seo-audit.html                 /notes/b2b-seo-audit/                301!
+/b2b-seo-branding.html              /notes/b2b-seo-branding/             301!
+/b2b-seo-checklist.html             /notes/b2b-seo-checklist/            301!
+/b2b-seo-kpi.html                   /notes/b2b-seo-kpi/                  301!
+/b2b-seo-links.html                 /notes/b2b-seo-links/                301!
+/b2b-seo-mail.html                  /notes/b2b-seo-mail/                 301!
+/b2b-seo-smm.html                   /notes/b2b-seo-smm/                  301!
+/b2b-seo-technical.html             /notes/b2b-seo-technical/            301!
+/b2b-seo-trends.html                /notes/b2b-seo-trends/               301!
+/seo-b2b-2024.html                  /notes/seo-b2b-2024/                 301!
+
+# --- TOOLS ---
+/tool-calculator.html               /tools/calculator/                   301!
+/tool-calculator-copy.html          /tools/calculator-copy/              301!
+/java-script/track-email-copy.html  /tools/track-email-copy/             301!
+/java-script/track-email-copy  /tools/track-email-copy/                  301!

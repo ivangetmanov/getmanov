@@ -1,0 +1,40 @@
+/* markdown typography */
+.prose {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  line-height: 1.65;
+  font-size: 18px;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  line-height: 1.2;
+  margin: 1.6em 0 0.6em;
+}
+
+.prose p { margin: 1em 0; }
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
+
+.prose ul, .prose ol { padding-left: 1.2em; }
+.prose li { margin: 0.3em 0; }
+
+.prose blockquote {
+  border-left: 3px solid rgba(0,0,0,0.15);
+  padding-left: 14px;
+  margin: 1.2em 0;
+  opacity: 0.9;
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.05);
+}
+.prose code { font-size: 0.95em; }

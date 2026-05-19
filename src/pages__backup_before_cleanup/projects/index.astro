@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const notes = [
+  {
+    title: "How to make case-based research visible to LLMs",
+    slug: "llm-visible-research",
+    status: "draft",
+    description: "Draft framework for structuring evidence-first content."
+  }
+];
+---
+
+<BaseLayout title="Projects">
+  <h1>Notes</h1>
+
+  <p>
+    Thinking, frameworks, and drafts.
+    These notes document how experiments are designed,
+    interpreted, and turned into reusable knowledge.
+  </p>
+
+  <ul>
+    {notes.map(note => (
+      <li>
+        <a href={`/notes/${note.slug}/`}>{note.title}</a>
+        <small> — {note.status}</small>
+        <p>{note.description}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+
