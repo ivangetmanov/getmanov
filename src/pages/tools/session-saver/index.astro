@@ -1,0 +1,376 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const title = "ChatGPT Session Saver - Export ChatGPT Chats as Q&A Pairs";
+const description =
+  "ChatGPT Session Saver is a browser extension for saving long ChatGPT conversations as structured Q&A pairs and exporting them as TXT files.";
+const canonical = "https://getmanov.com/tools/session-saver/";
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <section class="session-saver-page">
+    <div class="hero-shell">
+      <div class="hero-copy">
+        <p class="eyebrow">Browser extension</p>
+        <h1>ChatGPT Session Saver</h1>
+        <p class="lead">
+          Save long ChatGPT conversations, split them into question-and-answer
+          pairs, search inside the extracted content, and export everything as a
+          clean TXT file.
+        </p>
+        <div class="hero-actions">
+          <a class="button button--primary" href="#how-it-works">How it works</a>
+          <a class="button" href="/tools/session-saver/privacy-policy/">Privacy Policy</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <img
+          src="/images/tools/session-saver/session-saver-hero.png"
+          alt="ChatGPT Session Saver promotional graphic showing Q&A export"
+          loading="eager"
+        />
+      </div>
+    </div>
+
+    <section class="trust-strip" aria-label="Core promises">
+      <div>
+        <span>100% local</span>
+        <strong>No external server for saved chats</strong>
+      </div>
+      <div>
+        <span>No login</span>
+        <strong>Runs inside your browser</strong>
+      </div>
+      <div>
+        <span>TXT export</span>
+        <strong>Structured questions and answers</strong>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="section two-column">
+      <div>
+        <p class="eyebrow">What it does</p>
+        <h2>Turn messy long chats into reusable notes</h2>
+        <p>
+          ChatGPT Session Saver extracts your conversation from the active
+          ChatGPT page and organizes it into separate Questions and Answers.
+          This makes long research sessions easier to save, search, review, and
+          reuse later.
+        </p>
+      </div>
+      <div class="feature-grid">
+        <article>
+          <h3>Save entire chats</h3>
+          <p>Export a long conversation without manually copying every message.</p>
+        </article>
+        <article>
+          <h3>Q&A pair structure</h3>
+          <p>Separate user questions from assistant answers for cleaner review.</p>
+        </article>
+        <article>
+          <h3>Search inside results</h3>
+          <p>Find specific questions or answers before exporting the session.</p>
+        </article>
+        <article>
+          <h3>One-click TXT export</h3>
+          <p>Save the extracted session as a simple text file.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="screenshot-section" aria-label="Extension interface preview">
+      <img
+        src="/images/tools/session-saver/session-saver-wide.png"
+        alt="ChatGPT Session Saver interface with export controls and extracted Q&A pairs"
+        loading="lazy"
+      />
+    </section>
+
+    <section class="section split-card">
+      <div>
+        <p class="eyebrow">Privacy-first by design</p>
+        <h2>Your saved chats stay on your device</h2>
+        <p>
+          The extension is designed to work locally in your browser. It does not
+          send your exported conversations to a backend server, analytics tool,
+          advertising network, or third party.
+        </p>
+        <a class="text-link" href="/tools/session-saver/privacy-policy/">Read the full Privacy Policy</a>
+      </div>
+      <img
+        src="/images/tools/session-saver/session-saver-ui.png"
+        alt="ChatGPT Session Saver extension UI showing export progress"
+        loading="lazy"
+      />
+    </section>
+
+    <section class="section faq">
+      <p class="eyebrow">FAQ</p>
+      <h2>Common questions</h2>
+      <details open>
+        <summary>Does it store my conversations on a server?</summary>
+        <p>No. Saved sessions are stored locally in your browser/device.</p>
+      </details>
+      <details>
+        <summary>What format does it export?</summary>
+        <p>The extension exports conversations as TXT files structured around question-and-answer pairs.</p>
+      </details>
+      <details>
+        <summary>Why does it need browser permissions?</summary>
+        <p>It needs access to the active ChatGPT tab to read the conversation you explicitly choose to save.</p>
+      </details>
+    </section>
+  </section>
+
+  <style>
+    :global(.prose:has(.session-saver-page)) {
+      max-width: none;
+      padding: 0;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .session-saver-page {
+      --ink: #091426;
+      --muted: #627085;
+      --line: #dce7f1;
+      --panel: rgba(255, 255, 255, 0.76);
+      --green: #36a873;
+      --green-dark: #147553;
+      --blue: #2f5eea;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 10%, rgba(54, 168, 115, 0.18), transparent 28%),
+        radial-gradient(circle at 90% 0%, rgba(47, 94, 234, 0.13), transparent 26%),
+        linear-gradient(180deg, #f7fbff 0%, #eef8f3 52%, #ffffff 100%);
+      margin: -34px 0;
+      padding: 48px 20px 72px;
+    }
+
+    .session-saver-page a {
+      color: inherit;
+    }
+
+    .hero-shell,
+    .trust-strip,
+    .section,
+    .screenshot-section {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1.18fr);
+      gap: 34px;
+      align-items: center;
+      padding: 34px 0 42px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green-dark);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    .hero-copy h1 {
+      margin-bottom: 20px;
+      font-size: clamp(56px, 9vw, 118px);
+      line-height: 0.9;
+      letter-spacing: -0.07em;
+    }
+
+    .lead {
+      max-width: 700px;
+      color: var(--muted);
+      font-size: clamp(21px, 2.4vw, 32px);
+      line-height: 1.2;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      display: inline-flex;
+      font-weight: 850;
+      padding: 12px 18px;
+      text-decoration: none;
+    }
+
+    .button--primary {
+      border-color: var(--green-dark);
+      background: var(--green-dark);
+      color: #fff;
+    }
+
+    .hero-visual img,
+    .screenshot-section img,
+    .split-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 30px;
+      box-shadow: 0 30px 80px rgba(9, 20, 38, 0.15);
+    }
+
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--line);
+    }
+
+    .trust-strip div {
+      background: var(--panel);
+      padding: 22px;
+    }
+
+    .trust-strip span {
+      color: var(--green-dark);
+      display: block;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .trust-strip strong {
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .section {
+      padding: 76px 0 0;
+    }
+
+    .two-column,
+    .split-card {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 34px;
+      align-items: start;
+    }
+
+    .section h2 {
+      margin-bottom: 18px;
+      font-size: clamp(36px, 5vw, 68px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .section p {
+      color: var(--muted);
+      font-size: 19px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .feature-grid article,
+    .split-card,
+    .faq details {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      padding: 22px;
+    }
+
+    .feature-grid h3 {
+      margin-bottom: 8px;
+      font-size: 21px;
+    }
+
+    .feature-grid p {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .screenshot-section {
+      padding-top: 76px;
+    }
+
+    .split-card {
+      align-items: center;
+      padding: 28px;
+    }
+
+    .text-link {
+      color: var(--green-dark);
+      font-weight: 850;
+      text-decoration-thickness: 2px;
+    }
+
+    .faq {
+      max-width: 860px;
+    }
+
+    .faq details {
+      margin-top: 12px;
+    }
+
+    .faq summary {
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    .faq details p {
+      margin: 12px 0 0;
+      font-size: 17px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-shell,
+      .two-column,
+      .split-card,
+      .trust-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-shell {
+        padding-top: 18px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .session-saver-page {
+        padding-inline: 14px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual img,
+      .screenshot-section img,
+      .split-card img {
+        border-radius: 20px;
+      }
+    }
+  </style>
+</BaseLayout>

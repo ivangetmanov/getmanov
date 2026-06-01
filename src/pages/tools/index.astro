@@ -1,24 +1,155 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const tools = [
+  {
+    href: "/tools/session-saver/",
+    eyebrow: "Browser extension",
+    title: "ChatGPT Session Saver",
+    description:
+      "Save long ChatGPT conversations as structured Q&A pairs and export them as TXT files.",
+  },
+  {
+    href: "/tools/calculator/",
+    eyebrow: "Growth model",
+    title: "SEO ROI Calculator",
+    description:
+      "Interactive CAC, LTV, payback, and ROI model for SEO programs.",
+  },
+  {
+    href: "/tools/track-email-copy/",
+    eyebrow: "Analytics snippet",
+    title: "Track Copy Email in GA4",
+    description:
+      "Client-side tracking for copy-email intent without plugins.",
+  },
+];
 ---
 
+<BaseLayout
+  title="Tools - getmanov.com"
+  description="Small tools and browser experiments for growth, analytics, and AI workflows."
+  canonical="https://getmanov.com/tools/"
+>
+  <section class="tools-page">
+    <div class="tools-hero">
+      <p class="eyebrow">Tools</p>
+      <h1>Small utilities for growth and AI workflows</h1>
+      <p>
+        Minimal, auditable tools built while solving real problems: exporting AI
+        sessions, modeling SEO returns, and tracking high-intent website actions.
+      </p>
+    </div>
 
-<BaseLayout title="Tools">
-  <h1>Tools</h1>
+    <div class="tools-grid">
+      {tools.map((tool) => (
+        <a class="tool-card" href={tool.href}>
+          <span>{tool.eyebrow}</span>
+          <h2>{tool.title}</h2>
+          <p>{tool.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
 
-  <p>
-    Small tools built during experiments.
-    Designed to be minimal, auditable, and easy to reuse.
-  </p>
+  <style>
+    :global(.prose:has(.tools-page)) {
+      max-width: none;
+      padding: 0;
+    }
 
-  <ul>
-    <li>
-      <a href="/tools/calculator/">SEO ROI Calculator</a>
-      <p>Interactive CAC, LTV, payback, and ROI model for SEO programs.</p>
-    </li>
-    <li>
-      <a href="/tools/track-email-copy/">Track “Copy Email” in GA4</a>
-      <p>Client-side tracking without plugins.</p>
-    </li>
-  </ul>
+    .tools-page {
+      --ink: #101318;
+      --muted: #657183;
+      --line: #dfe6ed;
+      --green: #147553;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(20, 117, 83, 0.12), transparent 26%),
+        linear-gradient(180deg, #fbfaf7 0%, #f4f8f5 100%);
+      margin: -34px 0;
+      padding: 72px 20px 86px;
+    }
+
+    .tools-hero,
+    .tools-grid {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .eyebrow,
+    .tool-card span {
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .tools-hero h1 {
+      max-width: 900px;
+      margin: 12px 0 20px;
+      font-size: clamp(52px, 8vw, 104px);
+      line-height: 0.92;
+      letter-spacing: -0.07em;
+    }
+
+    .tools-hero p {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: clamp(20px, 2.4vw, 30px);
+      line-height: 1.25;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 46px;
+    }
+
+    .tool-card {
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 22px 60px rgba(16, 19, 24, 0.07);
+      color: inherit;
+      padding: 24px;
+      text-decoration: none;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .tool-card:hover {
+      box-shadow: 0 28px 72px rgba(16, 19, 24, 0.11);
+      transform: translateY(-3px);
+    }
+
+    .tool-card h2 {
+      margin: 24px 0 0;
+      font-size: clamp(28px, 3vw, 44px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .tool-card p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.45;
+      margin: 22px 0 0;
+    }
+
+    @media (max-width: 900px) {
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tool-card {
+        min-height: 220px;
+      }
+    }
+  </style>
 </BaseLayout>
