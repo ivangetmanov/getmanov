@@ -69,7 +69,7 @@ canonical: "https://getmanov.com/b2b-seo-links"
 В B2B секторе построение ссылочного профиля — это мастерство, требующее глубокого понимания рынка и навыков коммуникации в интернете. Используя качественный контент и стратегические партнерства, B2B компании могут укрепить свои позиции и авторитет, создавая прочное основание для долгосрочного роста и успеха в SEO.  
 
 Спасибо, что дочитали статью до конца! Если ваш проект в сфере B2B и вы задумываетесь о SEO-продвижении, пишите мне напрямую: [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/  
-[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:mailto: ivangetmanov@mail.ru)  
+[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:ivangetmanov@icloud.com)  
 
 <img src="/images/tild3265-3363-4539-b233-383237393034__noroot.jpg" alt="" />
 

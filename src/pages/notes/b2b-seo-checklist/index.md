@@ -48,7 +48,7 @@ canonical: "https://getmanov.com/b2b-seo-checklist"
 Придерживайтесь этого SEO-чек-листа и вы увидите, как ваши усилия преобразуются в реальный бизнес-результат. Наши проекты показывают до 50% улучшение возврата инвестиций в SEO, когда следуют этому плану действий. Ставьте амбициозные цели и достигайте их, используя проверенные методы — ваш B2B-бизнес этого заслуживает.  
 
 Спасибо, что дочитали статью до конца! Если ваш проект в сфере B2B и вы задумываетесь о SEO-продвижении, пишите мне напрямую: [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/  
-[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:mailto: ivangetmanov@mail.ru)  
+[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:ivangetmanov@icloud.com)  
 
 <img src="/images/tild3265-3363-4539-b233-383237393034__noroot.jpg" alt="" />
 

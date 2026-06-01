@@ -61,7 +61,7 @@ canonical: "https://getmanov.com/b2b-seo-audit"
 SEO-аудит — это ваш шанс не только исправить ошибки, но и выделиться среди конкурентов. Он должен стать регулярной практикой, как учет расходов или инвентаризация склада. В конечном итоге, это дает вам полное понимание, как улучшить свой сайт и обеспечить себе лидерство в отрасли.  
 
 Спасибо, что дочитали статью до конца! Если ваш проект в сфере B2B и вы задумываетесь о SEO-продвижении, пишите мне напрямую: [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/  
-[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:mailto: ivangetmanov@mail.ru)  
+[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:ivangetmanov@icloud.com)  
 
 <img src="/images/tild3265-3363-4539-b233-383237393034__noroot.jpg" alt="" />
 

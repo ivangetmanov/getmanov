@@ -566,7 +566,7 @@
 <div style="text-align:left;" customstyle="yes">
 
 Спасибо, что дочитали статью до конца! Если ваш проект в сфере B2B и вы задумываетесь о SEO-продвижении, пишите мне напрямую: <a href="https://t.me/getmanov_marketing" style="noopener">Telegram</a>/<a href="https://wa.me/+79516682020" style="noopener">WhatsApp</a>/  
-<a href="https://www.linkedin.com/in/ivan-getmanov/" style="noopener">LinkedIn</a>/<a href="mailto:mailto:%20ivangetmanov@mail.ru" style="">Mail</a>  
+<a href="https://www.linkedin.com/in/ivan-getmanov/" style="noopener">LinkedIn</a>/<a href="mailto:ivangetmanov@icloud.com" style="">Mail</a>  
 
 </div>
 

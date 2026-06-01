@@ -74,7 +74,7 @@ canonical: "https://getmanov.com/b2b-seo-agency"
 Обращение к [опытному B2B SEO-агентству](http://getmanov.com/seo-case-b2b/free-consultation) может радикально улучшить ваше присутствие в интернете, притягивая не просто больше посетителей, но и целевую профессиональную аудиторию. Наши данные говорят сами за себя: клиенты, которые доверили нам своё SEO-продвижение, заметили прирост качественных обращений на 75% и выше. Вы можете убедиться в этом сами –[читайте самый подробный и откровенный кейс по SEO-продвижению в B2B сфере со всеми цифрами вплоть до чистой прибыли!](https://getmanov.com/seo-case-b2b)  
 
 Спасибо, что дочитали статью до конца! Если ваш проект в сфере B2B и вы задумываетесь о SEO-продвижении, пишите мне напрямую: [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/  
-[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:mailto: ivangetmanov@mail.ru)  
+[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:ivangetmanov@icloud.com)  
 
 <img src="/images/tild3265-3363-4539-b233-383237393034__noroot.jpg" alt="" />
 

@@ -53,7 +53,7 @@ canonical: "https://getmanov.com/b2b-seo-technical"
 Техническая оптимизация сайта для целей SEO-продвижения — это не просто часть вашего цифрового маркетинга, это основа, на которой строится весь процесс привлечения и удержания клиентов. Применяя стратегии, о которых я рассказал в этой статье, ваш B2B-сайт имеет высокие шансы на то, чтобы прочнее закрепиться в ТОПе поисковой выдачи и, как следствие, [подарить вашему бизнесу новый виток устойчивого бизнес-роста!](https://getmanov.com/seo-case-b2b/free-consultation)  
 
 Спасибо, что дочитали статью до конца! Если ваш проект в сфере B2B и вы задумываетесь о SEO-продвижении, пишите мне напрямую: [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/  
-[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:mailto: ivangetmanov@mail.ru)  
+[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:ivangetmanov@icloud.com)  
 
 <img src="/images/tild3265-3363-4539-b233-383237393034__noroot.jpg" alt="" />
 
