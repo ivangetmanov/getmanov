@@ -16,7 +16,9 @@ The company operated in a legacy B2B SaaS environment:
 - EU billing entity
 - Historically sales-led acquisition model
 
-Self-service was introduced as a growth experiment, not as a revenue channel.
+Self-service was introduced as a growth experiment.
+
+Not as a revenue channel.
 
 The goal was diagnostic:
 
@@ -46,19 +48,19 @@ Friction was structural, not cosmetic.
 
 The self-service layer was rebuilt around three principles.
 
-### Browser-First Logic
+### 1. Browser-first logic
 
 License creation and invoice visibility moved outside cabinet-only context.
 
-### Deterministic Payment Trigger
+### 2. Deterministic payment trigger
 
-An invoice is created strictly at the moment the user clicks `Pay`.
+Invoice is created strictly at the moment the user clicks `Pay`.
 
 Invoice creation = confirmed purchase intent.
 
-### Reduced State Branching
+### 3. Reduced state branching
 
-Dependency on legacy billing states in the early flow was minimized.
+Minimize dependency on legacy billing states during early flow.
 
 Implemented changes:
 
@@ -77,7 +79,7 @@ Cabinet-first -> Browser-first.
 
 ## 4. Observable Impact
 
-During the experiment period:
+Over the experiment period:
 
 - 413 accounts registered
 - 182 accounts created at least one invoice
@@ -87,8 +89,8 @@ During the experiment period:
 Payment layer activity:
 
 - 307 recorded payment attempts
-- 27 successful payment executions (across 25 unique accounts)
-- 259 invoice states remained `ordered` (did not transition to paid)
+- 27 successful payment executions across 25 unique accounts
+- 259 invoice states remained `ordered` and did not transition to paid
 - 63 accounts attempted payment more than once
 - 9 eventually succeeded
 - 54 never transitioned to paid
@@ -127,7 +129,7 @@ Deep analysis revealed:
 
 Self-service exposed what manual intervention previously absorbed.
 
-The constraint was architectural:
+The constraint was architectural.
 
 Not marketing.
 
@@ -179,17 +181,23 @@ If the same EUR 26k invoice volume converted within that range, collected revenu
 
 EUR 9k-EUR 13k
 
-This implies:
+This means:
 
-EUR 7k-EUR 11k unrealized revenue (excluding renewals and future LTV).
+EUR 7k-EUR 11k unrealized revenue, excluding renewals and future LTV.
 
 This shows a monetization leakage.
+
+Importantly, self-service represented only a very small share of total company revenue (~0.2%).
+
+However, self-service created a uniquely observable environment where payment-state failures became measurable without sales-assisted correction.
+
+This suggested that similar monetization leakage could potentially exist beyond the self-service experiment itself, partially hidden inside broader operational and sales-supported workflows.
 
 Adding more traffic would not solve it.
 
 ### Structural Implication
 
-If traffic is increased before billing is fixed:
+If we increase traffic without fixing billing:
 
 - More invoices will be created
 - More payment attempts will fail
@@ -229,10 +237,10 @@ It showed:
 
 The correct sequence is:
 
-- Fix invoice -> paid transition
-- Add payment-state telemetry
-- Remove structural leakage
-- Then scale acquisition
+1. Fix invoice -> paid transition
+2. Add payment-state telemetry
+3. Remove structural leakage
+4. Then scale acquisition
 
 Growth is not only about increasing traffic.
 

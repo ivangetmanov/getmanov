@@ -1,106 +1,185 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-type Item = {
-  href: string;
-  title: string;
-  description?: string;
+const featuredCases = [
+  {
+    eyebrow: "Part I",
+    href: "/case-studies/self-service-growth-diagnostics/",
+    title: "Rebuilding Self-Service in a Legacy B2B SaaS Infrastructure",
+    description:
+      "Compressed a fragmented 10-14 step cabinet-driven journey into a browser-first self-service flow, then used it to test whether demand could convert without sales.",
+    result: "413 registrations, 182 invoices, 25 paid accounts",
+    image:
+      "/images/case-studies/self-service-growth-diagnostics/self-service-funnel.webp",
+    imageAlt: "Self-service funnel chart",
+  },
+  {
+    eyebrow: "Part II",
+    href: "/case-studies/invoice-to-paid-billing-diagnostics/",
+    title: "Diagnosing Invoice-to-Paid State Constraints",
+    description:
+      "Separated accounts, invoices, and retry behavior to show that the bottleneck was not traffic, pricing, or weak intent, but invoice-state progression.",
+    result: "8.8% paid execution rate per created invoice",
+    image:
+      "/images/case-studies/invoice-to-paid-billing-diagnostics/invoice-to-paid-by-status.webp",
+    imageAlt: "Invoice-to-paid transition by billing status chart",
+  },
+  {
+    eyebrow: "Part III",
+    href: "/case-studies/payment-diagnostics-revenue-observability/",
+    title: "Payment Diagnostics and Revenue Observability",
+    description:
+      "Turned an opaque payment flow into a diagnostic system with observable stages, ownership boundaries, risk zones, and infrastructure-level debugging paths.",
+    result: "16-step payment state map and diagnostic framework",
+    image: "",
+    imageAlt: "",
+  },
+];
+
+const supportingCase = {
+  href: "/case-studies/seo-case-b2b/",
+  title: "B2B SEO: From Search Visibility to Revenue",
+  description:
+    "A long-form B2B SEO case showing how demand generation, technical cleanup, content structure, and niche research can translate into revenue impact.",
+  result: "Revenue-focused SEO case with real business outcomes",
+  image: "/images/tild3238-3430-4163-a562-653736626166__seo_growth_over_21_m.png",
+  imageAlt: "SEO growth chart",
 };
 
-function toRoute(filePath: string) {
-  // "./case-studies/giorgio/index.md" -> "/case-studies/giorgio/"
-  return filePath.replace(/^\.\//, "/").replace(/\/index\.md$/, "/");
-}
-
-function toSlugTitle(href: string) {
-  // "/case-studies/seo-case-b2b/" -> "seo-case-b2b"
-  const parts = href.split("/").filter(Boolean);
-  return parts[parts.length - 1] ?? href;
-}
-
-function collect(glob: Record<string, any>): Item[] {
-  return Object.entries(glob).map(([path, mod]) => {
-    const href = toRoute(path);
-    const fm = mod?.frontmatter ?? {};
-    return {
-      href,
-      title: fm.title ?? toSlugTitle(href),
-      description: fm.description ?? "",
-    };
-  });
-}
-
-const caseStudies = collect(
-  import.meta.glob("./case-studies/**/index.md", { eager: true })
-).sort((a, b) => a.title.localeCompare(b.title));
-
-const notes = collect(
-  import.meta.glob("./notes/**/index.md", { eager: true })
-).sort((a, b) => a.title.localeCompare(b.title));
-
-const tools = collect(
-  import.meta.glob("./tools/**/index.md", { eager: true })
-).sort((a, b) => a.title.localeCompare(b.title));
-
-// Если захочешь — можно сюда же добавить ./projects/**/index.astro или любые другие разделы.
+const archiveLinks = [
+  {
+    href: "/case-studies/",
+    title: "Case archive",
+    description:
+      "Older agency-era projects and migrated Tilda case studies. Kept for context, not the main Growth Lead narrative.",
+  },
+  {
+    href: "/notes/",
+    title: "Research notes",
+    description:
+      "SEO, B2B, LLM visibility, and content experiments. Some notes are archival and will gradually become English-first.",
+  },
+  {
+    href: "/tools/",
+    title: "Tools and experiments",
+    description:
+      "Small utilities and tracking experiments built around static-site workflows.",
+  },
+];
 ---
 
 <BaseLayout
-  title="getmanov.com"
-  description="Experiments, case-based research, tools, and notes."
+  title="Ivan Getmanov — Growth, Self-Service, and Revenue Diagnostics"
+  description="Growth portfolio focused on self-service monetization, revenue diagnostics, B2B SEO, and evidence-based growth systems."
 >
-  <div class="home">
-    <h1 class="home__title">GETMANOV</h1>
-    <p class="home__subtitle">
-      A personal lab: experiments, case-based research, tools, and notes.
-    </p>
+  <div class="portfolio-home">
+    <section class="hero">
+      <p class="kicker">Growth portfolio</p>
+      <h1>Ivan Getmanov</h1>
+      <p class="hero__lead">
+        I work on growth problems where acquisition, product flow, billing
+        logic, and revenue observability collide.
+      </p>
+      <p class="hero__note">
+        The core portfolio is a three-part self-service series: rebuild the
+        flow, diagnose the invoice-to-paid constraint, then make the payment
+        system observable enough to scale.
+      </p>
+      <div class="hero__actions" aria-label="Primary links">
+        <a class="button button--primary" href="#featured-cases">View cases</a>
+        <a class="button" href="mailto:ivangetmanov@mail.ru">Contact</a>
+      </div>
+    </section>
 
-    <section class="section">
-      <div class="section__head">
-        <h2>Case studies</h2>
-        <span class="section__count">{caseStudies.length}</span>
+    <section class="signal-strip" aria-label="Growth focus areas">
+      <div>
+        <span>Self-service</span>
+        <strong>Browser-first monetization flows</strong>
+      </div>
+      <div>
+        <span>Diagnostics</span>
+        <strong>Invoice, payment, and state constraints</strong>
+      </div>
+      <div>
+        <span>Growth systems</span>
+        <strong>Traffic that can actually turn into revenue</strong>
+      </div>
+    </section>
+
+    <section id="featured-cases" class="section">
+      <div class="section__intro">
+        <p class="kicker">Featured series</p>
+        <h2>Self-Service Growth and Revenue Diagnostics</h2>
+        <p>
+          These three cases belong together. They show the same growth problem
+          from different levels: user journey, billing state transitions, and
+          operational observability.
+        </p>
       </div>
 
-      <div class="grid">
-        {caseStudies.map((it) => (
-          <a class="card" href={it.href}>
-            <div class="card__title">{it.title}</div>
-            {it.description && <div class="card__desc">{it.description}</div>}
-            <div class="card__meta">{it.href}</div>
+      <div class="case-series">
+        {featuredCases.map((caseItem, index) => (
+          <a class="case-card" href={caseItem.href}>
+            <div class="case-card__media" data-empty={!caseItem.image}>
+              {caseItem.image ? (
+                <img src={caseItem.image} alt={caseItem.imageAlt} loading={index === 0 ? "eager" : "lazy"} />
+              ) : (
+                <div class="state-map" aria-hidden="true">
+                  <span>Intent</span>
+                  <span>Provider</span>
+                  <span>Billing</span>
+                  <span>Activation</span>
+                </div>
+              )}
+            </div>
+            <div class="case-card__body">
+              <p class="case-card__eyebrow">{caseItem.eyebrow}</p>
+              <h3>{caseItem.title}</h3>
+              <p>{caseItem.description}</p>
+              <strong>{caseItem.result}</strong>
+            </div>
           </a>
         ))}
       </div>
     </section>
 
-    <section class="section">
-      <div class="section__head">
-        <h2>Notes</h2>
-        <span class="section__count">{notes.length}</span>
+    <section class="section section--supporting">
+      <div class="section__intro">
+        <p class="kicker">Supporting case</p>
+        <h2>B2B SEO as demand generation</h2>
+        <p>
+          After the self-service series, this case shows a different growth
+          muscle: creating demand through niche research, content structure,
+          technical cleanup, and search visibility.
+        </p>
       </div>
 
-      <div class="grid">
-        {notes.map((it) => (
-          <a class="card" href={it.href}>
-            <div class="card__title">{it.title}</div>
-            {it.description && <div class="card__desc">{it.description}</div>}
-            <div class="card__meta">{it.href}</div>
-          </a>
-        ))}
-      </div>
+      <a class="supporting-case" href={supportingCase.href}>
+        <img src={supportingCase.image} alt={supportingCase.imageAlt} loading="lazy" />
+        <div>
+          <h3>{supportingCase.title}</h3>
+          <p>{supportingCase.description}</p>
+          <strong>{supportingCase.result}</strong>
+        </div>
+      </a>
     </section>
 
     <section class="section">
-      <div class="section__head">
-        <h2>Tools</h2>
-        <span class="section__count">{tools.length}</span>
+      <div class="section__intro">
+        <p class="kicker">Archive and lab</p>
+        <h2>Everything else has a place</h2>
+        <p>
+          The older Russian-language materials are still useful, but they should
+          not compete with the Growth Lead story. They live as archive, research,
+          and experimental work.
+        </p>
       </div>
 
-      <div class="grid">
-        {tools.map((it) => (
-          <a class="card" href={it.href}>
-            <div class="card__title">{it.title}</div>
-            {it.description && <div class="card__desc">{it.description}</div>}
-            <div class="card__meta">{it.href}</div>
+      <div class="archive-grid">
+        {archiveLinks.map((item) => (
+          <a class="archive-link" href={item.href}>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
           </a>
         ))}
       </div>
@@ -108,89 +187,309 @@ const tools = collect(
   </div>
 
   <style>
-    .home {
-      max-width: 980px;
+    :global(.prose:has(.portfolio-home)) {
+      max-width: none;
+      padding: 0;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .portfolio-home {
+      --ink: #101318;
+      --muted: #5c6675;
+      --line: #d9e0e8;
+      --paper: #fbfaf7;
+      --panel: #eef4f1;
+      --accent: #0d6b5f;
+      --accent-dark: #08483f;
+      --warm: #c95f35;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #fbfaf7 0%, #f3f7f4 52%, #ffffff 100%);
+      margin: -34px 0;
+      padding: 0 20px 72px;
+    }
+
+    .portfolio-home a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .hero,
+    .section,
+    .signal-strip {
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 32px 16px 48px;
     }
-    .home__title {
-      margin: 0 0 8px;
-      letter-spacing: 0.04em;
+
+    .hero {
+      min-height: 72vh;
+      display: grid;
+      align-content: center;
+      padding: 72px 0 56px;
+      border-bottom: 1px solid var(--line);
     }
-    .home__subtitle {
-      margin: 0 0 28px;
-      opacity: 0.8;
-      line-height: 1.6;
+
+    .kicker {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(58px, 12vw, 148px);
+      line-height: 0.92;
+      font-weight: 900;
+    }
+
+    .hero__lead {
+      max-width: 820px;
+      margin: 28px 0 0;
+      font-size: clamp(25px, 4vw, 48px);
+      line-height: 1.08;
+      font-weight: 780;
+    }
+
+    .hero__note {
+      max-width: 780px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 20px;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 46px;
+      padding: 11px 18px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      font-weight: 760;
+    }
+
+    .button--primary {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .signal-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--line);
+      transform: translateY(-28px);
+    }
+
+    .signal-strip div {
+      background: #fff;
+      padding: 18px;
+    }
+
+    .signal-strip span {
+      display: block;
+      color: var(--warm);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .signal-strip strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.25;
     }
 
     .section {
-      margin-top: 28px;
-    }
-    .section__head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-    .section__head h2 {
-      margin: 0;
-      font-size: 18px;
-    }
-    .section__count {
-      opacity: 0.6;
-      font-size: 14px;
+      padding: 48px 0;
+      border-top: 1px solid var(--line);
     }
 
-    .grid {
+    .section:first-of-type {
+      border-top: 0;
+    }
+
+    .section__intro {
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    .section__intro h2 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 64px);
+      line-height: 1.02;
+    }
+
+    .section__intro p:not(.kicker) {
+      color: var(--muted);
+      margin: 16px 0 0;
+      font-size: 19px;
+    }
+
+    .case-series {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
+      gap: 16px;
     }
 
-    .card {
-      display: block;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 14px;
-      padding: 14px 14px 12px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.08s ease, border-color 0.08s ease;
-      background: rgba(0, 0, 0, 0.01);
-    }
-    .card:hover {
-      transform: translateY(-1px);
-      border-color: rgba(0, 0, 0, 0.18);
-    }
-    .card__title {
-      font-weight: 650;
-      line-height: 1.35;
-      margin-bottom: 6px;
-    }
-    .card__desc {
-      opacity: 0.75;
-      line-height: 1.5;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-    .card__meta {
-      opacity: 0.5;
-      font-size: 12px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-        "Liberation Mono", "Courier New", monospace;
+    .case-card,
+    .supporting-case,
+    .archive-link {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      transition: transform 0.12s ease, border-color 0.12s ease;
     }
 
-    @media (max-width: 900px) {
-      .grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    .case-card:hover,
+    .supporting-case:hover,
+    .archive-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(13, 107, 95, 0.45);
     }
-    @media (max-width: 560px) {
-      .grid {
+
+    .case-card__media {
+      aspect-ratio: 16 / 10;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .case-card__media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      margin: 0;
+    }
+
+    .case-card__body {
+      padding: 18px;
+    }
+
+    .case-card__eyebrow {
+      margin: 0 0 8px;
+      color: var(--warm);
+      font-size: 13px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .case-card h3,
+    .supporting-case h3,
+    .archive-link h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.12;
+    }
+
+    .case-card p:not(.case-card__eyebrow),
+    .supporting-case p,
+    .archive-link p {
+      color: var(--muted);
+      margin: 12px 0 0;
+      font-size: 16px;
+    }
+
+    .case-card strong,
+    .supporting-case strong {
+      display: block;
+      margin-top: 14px;
+      color: var(--accent-dark);
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .state-map {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 18px;
+      background:
+        linear-gradient(135deg, rgba(13, 107, 95, 0.12), rgba(201, 95, 53, 0.12));
+    }
+
+    .state-map span {
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(13, 107, 95, 0.38);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.7);
+      font-weight: 800;
+      color: var(--accent-dark);
+    }
+
+    .supporting-case {
+      display: grid;
+      grid-template-columns: 0.9fr 1.2fr;
+      align-items: stretch;
+    }
+
+    .supporting-case img {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      object-fit: cover;
+      margin: 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .supporting-case div {
+      padding: 26px;
+      display: grid;
+      align-content: center;
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .archive-link {
+      padding: 20px;
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        min-height: auto;
+        padding-top: 56px;
+      }
+
+      .signal-strip,
+      .case-series,
+      .archive-grid,
+      .supporting-case {
         grid-template-columns: 1fr;
+      }
+
+      .signal-strip {
+        transform: none;
+        margin-top: 20px;
+      }
+
+      .supporting-case img {
+        min-height: 220px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
       }
     }
   </style>

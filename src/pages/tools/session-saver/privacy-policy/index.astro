@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+
+const title = "Privacy Policy for ChatGPT Session Saver - getmanov.com";
+const description =
+  "Privacy Policy for the ChatGPT Session Saver browser extension.";
+const canonical = "https://getmanov.com/tools/session-saver/privacy-policy/";
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <section class="policy-page">
+    <p class="eyebrow">ChatGPT Session Saver</p>
+    <h1>Privacy Policy</h1>
+    <p class="effective-date">Effective date: June 1, 2026</p>
+
+    <p>
+      This Privacy Policy explains how the ChatGPT Session Saver browser
+      extension handles information when you use it to save ChatGPT conversation
+      sessions from your browser.
+    </p>
+
+    <h2>Information Collection and Use</h2>
+    <p>
+      ChatGPT Session Saver is designed to help you save your ChatGPT
+      conversations locally. To provide this functionality, the extension may
+      access the visible content of the active ChatGPT page only when you choose
+      to save a session.
+    </p>
+    <p>
+      The extension does not send your conversation content to external servers,
+      analytics tools, advertising networks, or third parties.
+    </p>
+
+    <h2>Data Storage</h2>
+    <p>
+      Saved sessions are stored locally on your device using browser storage.
+      We do not operate a backend server for collecting, storing, transmitting,
+      or sharing your saved ChatGPT sessions.
+    </p>
+
+    <h2>Permissions</h2>
+    <p>The extension may request browser permissions required for its core functionality:</p>
+    <ul>
+      <li><strong>activeTab:</strong> to access the active ChatGPT tab when you save a session.</li>
+      <li><strong>scripting:</strong> to read page content needed for saving the current session.</li>
+      <li><strong>storage:</strong> to store saved sessions locally in your browser.</li>
+    </ul>
+
+    <h2>User Control</h2>
+    <p>You remain in control of your saved data. You can view or delete saved sessions from the extension interface or by clearing the extension's browser storage.</p>
+
+    <h2>Data Sharing</h2>
+    <p>
+      We do not sell, rent, trade, or share your saved ChatGPT sessions or
+      personal data with third parties.
+    </p>
+
+    <h2>Changes to This Policy</h2>
+    <p>
+      This Privacy Policy may be updated from time to time. Any updates will be
+      published on this page with a revised effective date.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      If you have questions about this Privacy Policy, contact:
+      <a href="mailto:ivangetmanov@icloud.com">ivangetmanov@icloud.com</a>.
+    </p>
+  </section>
+
+  <style>
+    .policy-page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #0d6b5f;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .effective-date {
+      color: #687384;
+      font-size: 15px;
+    }
+  </style>
+</BaseLayout>
