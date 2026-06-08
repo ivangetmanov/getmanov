@@ -69,7 +69,7 @@ Provider-level authorization attempts were not directly visible in this dataset.
 
 We are observing billing entities created after explicit payment intent and whether they transitioned into a paid state.
 
-![Observed invoice-to-paid transition by billing status](/images/case-studies/invoice-to-paid-billing-diagnostics/invoice-to-paid-by-status.webp)
+![Aggregate invoice-to-paid pattern across the analysis period](/images/case-studies/invoice-to-paid-billing-diagnostics/aggregate-invoice-to-paid-pattern.webp)
 
 ## 3. Retry Behavior: Strong Intent Signal
 

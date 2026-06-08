@@ -31,6 +31,8 @@ Decompose the end-to-end monetization flow into observable system stages and ide
 - event dependency mapping
 - diagnostic framework for Turkey pilot testing
 
+![Payment diagnostics: 16-step monetization flow with ownership layers and risk zones](/images/case-studies/payment-diagnostics-revenue-observability/payment-diagnostics-16-step-flow.webp)
+
 ## Key Insight
 
 The problem could not yet be attributed to a single bug.
