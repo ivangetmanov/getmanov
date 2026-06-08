@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "check:links": "node scripts/check-site-links.mjs",
+    "verify": "npm run build && npm run check:links"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.0.0",

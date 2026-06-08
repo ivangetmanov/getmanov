@@ -7,7 +7,26 @@ const notes = [
     slug: "llm-visible-research",
     status: "draft",
     description: "Draft framework for structuring evidence-first content."
+  },
+  {
+    title: "SEO for B2B in 2024",
+    slug: "seo-b2b-2024",
+    status: "archive",
+    description: "An earlier English-language note on B2B search strategy."
   }
+];
+
+const russianArchive = [
+  ["b2b-seo-agency", "Choosing a B2B SEO agency"],
+  ["b2b-seo-audit", "B2B website SEO audit"],
+  ["b2b-seo-branding", "Brand positioning through B2B SEO"],
+  ["b2b-seo-checklist", "B2B SEO checklist"],
+  ["b2b-seo-kpi", "KPIs for B2B SEO"],
+  ["b2b-seo-links", "Building a B2B backlink profile"],
+  ["b2b-seo-mail", "Email marketing and B2B SEO"],
+  ["b2b-seo-smm", "Social media signals for B2B SEO"],
+  ["b2b-seo-technical", "Technical SEO for B2B websites"],
+  ["b2b-seo-trends", "B2B SEO trends for 2024"],
 ];
 ---
 
@@ -26,6 +45,20 @@ const notes = [
         <a href={`/notes/${note.slug}/`}>{note.title}</a>
         <small> — {note.status}</small>
         <p>{note.description}</p>
+      </li>
+    ))}
+  </ul>
+
+  <h2>Legacy research archive</h2>
+  <p>
+    These source notes are still in Russian. They are kept discoverable for
+    reference, but are not part of the English-first portfolio narrative.
+  </p>
+  <ul>
+    {russianArchive.map(([slug, title]) => (
+      <li>
+        <a href={`/notes/${slug}/`}>{title}</a>
+        <small> — Russian original</small>
       </li>
     ))}
   </ul>

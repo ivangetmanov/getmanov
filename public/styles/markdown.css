@@ -38,3 +38,103 @@
   background: rgba(0,0,0,0.05);
 }
 .prose code { font-size: 0.95em; }
+
+.prose img[src="/images/ivan-getmanov.webp"] {
+  width: min(240px, 100%);
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  margin: 34px 0 14px;
+  border-radius: 18px;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose {
+  max-width: 940px;
+  padding-top: 40px;
+  color: #171a1e;
+  font-size: 19px;
+  line-height: 1.72;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose h1 {
+  max-width: 880px;
+  margin: 40px 0 30px;
+  font-size: clamp(48px, 8vw, 94px);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose h2 {
+  margin-top: 5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #d9dedb;
+  font-size: clamp(34px, 5vw, 58px);
+  letter-spacing: -0.04em;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose h3 {
+  margin-top: 3.4rem;
+  font-size: clamp(27px, 3.5vw, 40px);
+  letter-spacing: -0.025em;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose blockquote {
+  margin: 2.6rem 0;
+  padding: 1.5rem 1.7rem;
+  border: 0;
+  border-radius: 18px;
+  background: #eef5f1;
+  color: #174b3f;
+  font-size: clamp(23px, 3vw, 34px);
+  font-weight: 720;
+  line-height: 1.25;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose ol {
+  list-style: none;
+  counter-reset: tilda-list;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li {
+  counter-increment: tilda-list;
+  position: relative;
+  min-height: 58px;
+  margin: 12px 0;
+  padding: 17px 20px 17px 76px;
+  border: 1px solid #dce3df;
+  border-radius: 16px;
+  background: #fbfcfb;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li::before {
+  content: counter(tilda-list);
+  position: absolute;
+  top: 13px;
+  left: 16px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #126b5d;
+  color: white;
+  font-size: 16px;
+  font-weight: 850;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose img:not([src="/images/ivan-getmanov.webp"]) {
+  margin: 34px auto;
+  border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(19, 31, 27, 0.1);
+}
+
+@media (max-width: 700px) {
+  body[data-path="/case-studies/seo-case-b2b/"] .prose {
+    font-size: 17px;
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li {
+    padding-left: 64px;
+  }
+}

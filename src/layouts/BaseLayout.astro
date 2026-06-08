@@ -1,11 +1,15 @@
 ---
-const {
-  title = "getmanov.com",
-  description = "Experiments, case-based research, tools, and notes.",
-  canonical,
-} = Astro.props;
+const frontmatter = Astro.props.frontmatter ?? {};
+const title = Astro.props.title ?? frontmatter.title ?? "getmanov.com";
+const description =
+  Astro.props.description ??
+  frontmatter.description ??
+  "Experiments, case-based research, tools, and notes.";
+const canonical = Astro.props.canonical ?? frontmatter.canonical;
 
-const canonicalUrl = canonical ?? `https://getmanov.com${Astro.url.pathname}`;
+const canonicalUrl = canonical
+  ? new URL(canonical, "https://getmanov.com").href
+  : `https://getmanov.com${Astro.url.pathname}`;
 ---
 
 <!doctype html>
@@ -19,12 +23,26 @@ const canonicalUrl = canonical ?? `https://getmanov.com${Astro.url.pathname}`;
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index,follow" />
 
+    <!-- Google tag (gtag.js) -->
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-Q9Y8XEE6EF"
+    ></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-Q9Y8XEE6EF');
+    </script>
+
     <!-- Global styles -->
     <link rel="stylesheet" href="/styles/global.css" />
     <link rel="stylesheet" href="/styles/markdown.css" />
   </head>
 
-  <body>
+  <body data-path={Astro.url.pathname}>
     <a class="skip-link" href="#content">Skip to content</a>
 
     <header class="site-header">

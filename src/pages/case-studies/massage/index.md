@@ -1,134 +1,135 @@
 ---
 layout: ../../../layouts/BaseLayout.astro
-title: "Кейс по продвижению массажного салона"
-description: ""
-canonical: "https://getmanov.com/massage"
+title: "Filling an Empty Massage Salon: 1,129% ROI"
+description: "A Facebook Ads case study about building a repeatable acquisition flow for a local massage salon with no existing customer pipeline."
+canonical: "/case-studies/massage/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov Marketing" />](http://getmanov.com)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov Marketing" />](/)
 
-**ROI 1129% и 96 519 руб. для пустого массажного салона**
+# ROI of 1,129% and 96,519 rubles for an empty massage salon
 
-О проекте
+Let's start with the fact that this case is one of our favorites. Although it took a long time to "give birth" to it — we spent three months searching for the right formula, trying different offers, launching, and relaunching... But this is the beauty of true marketing — to find the right strategy when others can't! But let's go over everything in order...
 
-Начнём с того, что этот кейс является одним из наших самых любимых. Хотя «рождался» он долго — три месяца мы искали нужную формулу, пробовали разные офферы, запускали, перезапускали... Но в этом и заключается прелесть настоящего маркетинга — найти верную стратегию тогда, когда другие не могут! Но обо всем по порядку...  
-  
-К нам обратилась прекрасная девушка Татьяна. Ситуация была плачевной, если не сказать — критической! Ниша не самая простая: вакуумный массаж. Много ли вы читали о кейсах по продвижению noname массажного (вакуумного) салона? Вот и мы не очень-то их нашли... «За аренду плачу, клиентов нет вообще» — вот лозунг, с которого мы начали свою работу.
+## About the project
 
-**Особенности проекта**
+A woman named [Tatiana](https://vk.com/id2352769) approached me. The situation was disastrous, if not critical! The niche is not the easiest: vacuum massage. Have you read many case studies on promoting a noname massage (vacuum) salon? Well, I didn't find many of them... "I pay for rent, there are no clients at all" - that was the slogan with which I started my work.
 
-**Кроме того, что клиентов нет, а бизнес офлайн и очень локальный, была ещё пара моментов:**
+## Project features
 
-1
+**In addition to the fact that there are no clients, and the business is offline and very local, there were a couple more moments:**
 
-**Адекватных кейсов по этой тематике по Instagram и Facebook мы не нашли.** Обычно так бывает, когда тема ну совсем плохо заходит в Инстаграм. А ещё это может означать, что в принципе в соц сетях это продвигать тяжеловато.  
-  
+1. **As already mentioned, I did not find adequate cases on this topic on Instagram and Facebook.** Usually, this happens when the topic does not resonate well on Instagram. And it could also mean that promoting it on social media is challenging in general.
+2. **The task was complicated by the fact that there was not even a profile with content in Instagram.** And this is massage, beauty industry, where personal branding (or beauty salon branding) is VERY important. Because **trust** matters.
 
-2
+Some projects start like this...
 
-**Задача осложнялась тем, что не было даже начально наполненного контентом профиля в Инсте.** А ведь это — массаж, бьюти-индустрия, тут личный бренд (или бренд салона красоты ОЧЕНЬ важен). Потому что важно **доверие**.  
-  
+Initially, only one thing was clear - Tatiana would be able to handle processing requests (about 10-20 per day). And that means I won't get a bunch of questions like, "Why, when ordering promotion on Instagram, do I still need to CALL people afterwards??? "
 
-Изначально было ясно только одно — Татьяна сможет справиться с обработкой заявок (примерно 10-20 штук в день). А значит, мы не будем получать кучу вопросов: «Почему это, заказывая продвижение в Инстаграме, надо потом еще и людей ОБЗВАНИВАТЬ???»  
-  
-_А такое бывает :)_  
-  
-Тут все чётко: **хорошие заявки+хороший обзвон=profit!** С Татьяной мы были знакомы по другим её бизнес-проектам, поэтому примерно знали, чего ждать друг от друга. Перейдем к делу!
+And it happens :)
 
-**Стратегия и первые офферы**
+Everything is clear here: **good applications + good calls = profit!** I knew Tatiana from her other business projects, so we knew what to expect from each other. Let's get down to business!
 
-_Учитывая два обстоятельства описанные выше, работать с раскачкой бренда или использовать отзывы, которые неплохо заходят в таких тематиках, не приходилось._
+## Strategy and first offers
 
-Поэтому было только два варианта, на которых можно было играть с совсем-таки холодной аудиторией. Это **цена** и **боль**.
+Taking into account the two circumstances described above, I could not work with brand promotion or use reviews that work well in such topics.
 
-Цена
+Therefore, there were only two options on which I could play with a completely cold audience. It's **price** and **pain**.
 
-С ценой все ясно, надо изначально тестировать разные офферы: от нижней планки до наивысшей. Так мы поймем, по какой цене получаем самых адекватных клиентов, и выше какой планки не получим заявок вообще. То есть, протестируем **эластичность спроса** на эту услугу.
+### Price
 
-Боль
+With the price, everything is clear, I need to test different offers from the lower end to the highest. This way I will understand at what price I get the most adequate clients and above what price point I won't get any requests at all. That is, I will test **the elasticity of demand** for this service.
 
-А вот разных болей в тематике массажа много. Посему надо было пробовать разные и оптом.  
-  
-_Тут как Эдисон завещал: надо попробовать тысячу вариантов, которые не сработают. И только потом найти один искомый._  
-  
-Так и получилось. Месяца 2 мы тестировали разные офферы, которые не заходили (благо бюджета на каждый тратили не больше 1-2$). И в конце концов, нас **осенило!**  
-  
-Одна из главных болей, которая только может быть у женщин — это **целлюлит!** Даже у стройняшей он частенько бывает. Мы не медики, но слышали, что это всего лишь особенность женского организма, распиаренная масс-медиа как проблема (и вообще «никто за такую замуж не выйдет»).  
-  
-_Что ж, мы в мире маркетинга. Как бы ужасны ни были комплексы, взращённые самой же рекламой, давить надо было именно на это._  
-  
+### Pain
 
-**Продвижение и результативный оффер**
+There are many different types of pain in the massage theme. So I had to try different ones and in bulk.
+_
+As Edison said, you have to try a thousand options that won't work before finding the one you're looking for._
 
-Мы составил объявление. Четкий понятный оффер в 3 предложения с хвостиком. Всего 16 слов. Золотых слов. Да, мы усилили его ещё больше словом «корректирующий», чтоб уж точно никто не отвертелся. Главное, что это чистая правда — вакуумный массаж действительно корректирует фигуру!  
-  
-_Опустим те 2-3 месяца, в которые ни один оффер не заходил :)_  
-  
-И — первая заявка! Вторая, третья! «Наконец-то», думаем мы! Особенно учитывая, что до этого момента заявок не было от слова «совсем». Главное, было ясно — это не просто рабочая схема, это — бесконечный поток клиентов для этого конкретного бизнеса! Насколько бесконечный, это мы еще посмотрим, но с того момента прошло уже полгода, и мы продолжаем успешно работать и заполнять все «окошки» в расписании массажного салона!  
-  
+And that's exactly what happened. For two months, I tested various offers that didn't catch on (fortunately, I spent no more than $1-2 on each). And in the end, I had a **breakthrough**!
 
-Цифры и результаты
+One of the main pains that women can experience is **cellulite**! Even slim women often have it. I'm not medical professional, but I've heard that it's just a feature of the female body, hyped up by the mass media as a problem (and "no one will marry you" because of it).
 
-**Получено заявок (на оффер в 1190 рублей):** 109 заявок  
-  
-**Цена заявки:** 0.66$=~43 ₽  
-  
-**Потрачено бюджета:** 4 687 ₽+703 ₽=5390 ₽  
-  
-**Получено заявок (по цене 1290 рублей):** 16 заявок  
-  
-**Цена заявки:** 171.70 ₽  
-  
-**Потрачено бюджета:** 2 748 ₽+413 ₽ (комиссия сервиса для работы с ФБ)=3 161 ₽  
-  
-**Потрачено бюджета всего:** 8551 ₽
+_Well, we're in the world of marketing. No matter how awful the complexes nurtured by advertising are, we had to focus on this._
 
-**Прибыль и ROI**
+## Promotion and effective offer
 
-Далее пишу цифры, которые подсчитаны Татьяной за все время сотрудничества с нами по рекламе в Инстаграм.  
-  
-**Общее количество заявок:** ~140 заявок (некоторые девушки делились предложением, и поэтому заявок даже чуть больше по итогу)  
-  
-**Средняя прибыль с одного заявок:** ~1100 ₽ (в самом начале были заявки, которые проходили с еще небольшой скидкой, поэтому средняя цифра такая)  
-  
-**Конверсия из заявки в продажу:** 52%  
-  
-**Выручка:** 140\*52%\*1100 ₽=80 080 ₽  
-  
-**Постоянных клиентов получено на данный момент (думаю, будут и еще):** 6 человек, которые платят ~3 раза в месяц  
-  
-**Повторных продаж ТОЛЬКО от постоянных клиентов:** 6\*3.5=21 оплата  
-  
-**Дополнительно денег с повторных продаж:** 21\*1190 ₽ (средняя цена на данный момент)=24 990 ₽  
-  
-**Прибыль:** 80 080 ₽+24 990 ₽–8551 ₽=**96 519 ₽**  
-  
-**ROI (возвратность рекламных инвестиций):** 96 519 ₽/8551 ₽\*100 %=**1129 %**  
-  
-**Ежемесячный денежный поток после рекламы:** >25 000 ₽
+I came up with an ad. A clear and concise offer in three sentences with a tail. Only 16 golden words. Yes, I strengthened it even more with the word "correcting" to make sure that no one would back out. The main thing is that this is pure truth — vacuum massage really corrects the figure!
 
-**Послесловие**
+_Let's skip the 2-3 months when no offer caught on :)_
 
-Татьяна получила огромный приток НОВЫХ клиентов. Некоторые стали постоянными. В какой-то момент нас попросили вообще приостановить рекламу, потому что свободных мест на неделе **не было**.  
-  
-_Да, это лучший комплимент агенству: из убыточного бизнеса с 0 клиентов с помощью маркетинга сделать постоянно работающий массажный салон._
+And then, the first application! The second, third! "Finally," I thought! Especially considering that until that moment, there were no applications at all. The main thing was clear: this was not just a working scheme, but an endless stream of customers for this particular business! How endless it is, we will see, but six months have already passed since then, and I continue to work successfully and fill all the "windows" in the massage salon's schedule!
 
-мысль
 
-Конечно, с каждым клиентом мы стремимся именно к этому — к счастливому лозунгу «у меня нет отбоя от клиентов».
+That's the king offer :)
 
-**Наша задача: создать работающий инструмент получения заявок, этакий «краник», который всегда можно открыть, когда клиентов не хватает и закрыть — тогда, когда их слишком много.**  
-  
-_И в этом кейсе мы довольно подробно описали, как этого удалось достичь._
+## Numbers and results
 
-**П.С. Единственное, жду отзыв от Татьяны, однако она перфекционист и хочет, чтобы все было идеально — поэтому попросила написать отзыв за нее, чтобы она разместила ;)**  
-  
-Делать так мы, конечно, не будем.
+**Received applications (for an offer at 1190 rubles):** 109 applications
 
-**Спасибо, что прочитали наш кейс! Хотите так же и даже лучше? Оставляйте заявку или сразу приходите к нам в офис по адресу: Санкт-Петербург, м. Адмиралтейская, ТРК Адмирал, 5 этаж. Угостим кофе/чаем и бесплатной консультацией :)**
+**Cost per application:** $0.66 = ~43 ₽
 
-<img src="/images/tild6534-3464-4265-a534-633636313163__noroot.png" alt="" />
+**Budget spent:** 4,687 ₽ + 703 ₽ = 5390 ₽
 
-Иван Гетманов
+**Received applications (for an offer at 1290 rubles):** 16 applications
 
-Директор Getmanov Marketing
+**Cost per application:** 171.70 ₽
+
+**Budget spent:** 2,748 ₽ + 413 ₽ (service fee for working with FB) = 3,161 ₽
+
+**Total budget spent:** 8,551 ₽
+
+
+Screenshots 1 and 2 show a campaign for an offer priced at 1190₽, while screenshots 3 and 4 are for an offer priced at 1290₽. Interestingly, the video created for the stories (which we worked on for a week) performed worse than simple images.
+
+## Profit and ROI
+
+Next, I will list the figures that Tatiana calculated during her collaboration with us for advertising on Instagram.
+
+**Total number of inquiries:** ~140 inquiries (some girls shared the offer, so the total number of inquiries was slightly higher)
+
+**Average profit per inquiry:** ~1100 rubles (at the beginning, there were inquiries that went through with a small discount, so the average figure is like this)
+
+**Conversion from inquiry to sale:** 52%
+
+**Revenue:** 140\*52%\*1100 rubles=80,080 rubles
+
+**Permanent clients obtained to date (I think there will be more):** 6 people who pay approximately 3 times a month
+
+**Repeat sales ONLY from permanent clients:** 6\*3.5=21 payments
+
+**Additional income from repeat sales:** 21\*1190 rubles (current average price)=24,990 rubles
+
+**Profit:** 80,080 rubles+24,990 rubles–8551 rubles=**96,519 rubles**
+
+**ROI (return on advertising investment):** 96,519 rubles/8551 rubles\*100 %=**1129%**
+
+**Monthly cash flow after advertising:** \>25,000 rubles
+
+## Afterword
+
+Tatiana received a huge influx of NEW clients. Some of them became permanent. At some point, we were asked to completely stop advertising because there were **no more** available spots for the week.
+
+_Yes, this is the best compliment for an agency: to turn a loss-making business with 0 clients into a massage salon that constantly works with marketing._
+
+### The idea
+
+Of course, with every client, I strive for exactly this — the happy slogan "I have no shortage of clients."
+
+**My goal is to create a working tool for obtaining inquiries, such as a "tap," which can always be opened when there are not enough clients and closed when there are too many.**
+
+And in this case, I have described in quite detail how I managed to achieve this.
+
+**P.S. I am waiting for Tatiana's feedback, but she is a perfectionist and wants everything to be perfect, so she asked me to write a review for her to post ;)**
+
+I will not do that, of course.
+
+Thank you for reading this case! I hope it will help you achieve such great results!
+
+Thank you for reading my case! Do you want the same and even better? Leave a request and info of your project via [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/[Linkedin](https://www.linkedin.com/in/ivan-getmanov/)
+
+<img src="/images/ivan-getmanov.webp" alt="Ivan Getmanov" />
+
+Ivan Getmanov
+
+Director, Getmanov Marketing

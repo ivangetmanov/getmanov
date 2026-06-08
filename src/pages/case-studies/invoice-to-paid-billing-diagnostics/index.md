@@ -2,7 +2,7 @@
 layout: ../../../layouts/BaseLayout.astro
 title: "Diagnosing Invoice-to-Paid State Constraints in a Legacy Billing System"
 description: "A deep diagnostic of payment execution failures in a legacy billing architecture revealed how invoice state logic constrained monetization despite strong purchase intent."
-canonical: "https://getmanov.com/case-studies/invoice-to-paid-billing-diagnostics/"
+canonical: "/case-studies/invoice-to-paid-billing-diagnostics/"
 ---
 
 # Diagnosing Invoice-to-Paid State Constraints in a Legacy Billing System

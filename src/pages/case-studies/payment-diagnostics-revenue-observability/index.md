@@ -2,7 +2,7 @@
 layout: ../../../layouts/BaseLayout.astro
 title: "Payment Diagnostics and Revenue Observability"
 description: "How a partially opaque payment system was decomposed into observable stages, risk zones, and debugging paths for a self-service revenue pilot."
-canonical: "https://getmanov.com/case-studies/payment-diagnostics-revenue-observability/"
+canonical: "/case-studies/payment-diagnostics-revenue-observability/"
 ---
 
 # Payment Diagnostics and Revenue Observability

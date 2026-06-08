@@ -2,7 +2,7 @@
 layout: ../../../layouts/BaseLayout.astro
 title: "Track Copy Email Events in GA4"
 description: "A minimal JavaScript pattern for tracking copy-email intent in Google Analytics 4 without plugins."
-canonical: "https://getmanov.com/tools/track-email-copy/"
+canonical: "/tools/track-email-copy/"
 ---
 
 # Track Copy Email Events in GA4

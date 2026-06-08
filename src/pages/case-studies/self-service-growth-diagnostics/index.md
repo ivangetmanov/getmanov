@@ -2,7 +2,7 @@
 layout: ../../../layouts/BaseLayout.astro
 title: "Rebuilding Self-Service in a Legacy B2B SaaS Infrastructure"
 description: "How rebuilding a browser-first self-service flow exposed architectural constraints inside a legacy billing system and revealed why monetization must be fixed before scaling acquisition."
-canonical: "https://getmanov.com/case-studies/self-service-growth-diagnostics/"
+canonical: "/case-studies/self-service-growth-diagnostics/"
 ---
 
 # Rebuilding Self-Service in a Legacy B2B SaaS Infrastructure

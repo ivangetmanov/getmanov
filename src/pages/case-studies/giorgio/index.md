@@ -2,48 +2,48 @@
 layout: ../../../layouts/BaseLayout.astro
 title: "Case for the promotion of premium fur coats"
 description: ""
-canonical: "https://getmanov.com/giorgio"
+canonical: "/case-studies/giorgio/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov Marketing" />](http://getmanov.com)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov Marketing" />](/)
 
 How to turn 216,018 rubles into 900 applications and +980% to recognition?
 
 About the project
 
-[Giorgio Magnani Luxury](https://www.luxury-giorgiomagnani.com/) — the luxury line of Romagna Furs, which was founded in 1971 by Italian Giorgio Magnani and is currently one of the main players in the niche of premium natural fur.  
-  
-The company's factory is located in the Republic of San Marino, annually produces about 2000 models for three lines of Romagna Furs, Gimas and Giorgio Magnani, each of which is designed for its own segment from refined classic premium fur coats to bolder designs for a youth audience.  
+[Giorgio Magnani Luxury](https://www.luxury-giorgiomagnani.com/) — the luxury line of Romagna Furs, which was founded in 1971 by Italian Giorgio Magnani and is currently one of the main players in the niche of premium natural fur.
+
+The company's factory is located in the Republic of San Marino, annually produces about 2000 models for three lines of Romagna Furs, Gimas and Giorgio Magnani, each of which is designed for its own segment from refined classic premium fur coats to bolder designs for a youth audience.
 
 _In Russia, the brand is represented by a single store (located in St. Petersburg, initially on Konyushennaya Street), wealthy people come here from all over the country, including from Moscow._
 
-**The duration of the advertisement:** from May 2019 to the present day.  
-  
-**Audience (gender):** women 80%, men 20%. Usually women choose their own gift – they just know better what kind of gift they need :) But still, sometimes a man can see an advertisement that will hook him – and tell his wife about it.  
-  
-**Audience (geography):** residents of the Petrogradsky, Central and Admiralteysky districts in St. Petersburg (the main audience lives there). And also the whole of the Russian Federation with an emphasis on people with a high (highest) income level + very pointwise tuned to the whole world.  
-  
-**Goal:** to increase brand awareness. Instagram is the main platform for attracting people to the boutique (since the site is not optimized for promotion). Also, the audience is used to learning about new products through Instagram.  
+**The duration of the advertisement:** from May 2019 to the present day.
+
+**Audience (gender):** women 80%, men 20%. Usually women choose their own gift – they just know better what kind of gift they need :) But still, sometimes a man can see an advertisement that will hook him – and tell his wife about it.
+
+**Audience (geography):** residents of the Petrogradsky, Central and Admiralteysky districts in St. Petersburg (the main audience lives there). And also the whole of the Russian Federation with an emphasis on people with a high (highest) income level + very pointwise tuned to the whole world.
+
+**Goal:** to increase brand awareness. Instagram is the main platform for attracting people to the boutique (since the site is not optimized for promotion). Also, the audience is used to learning about new products through Instagram.
 
 Challenge
 
-We decided to change the approach that is usually offered in these (rather complex and expensive) niches. We refused to mindlessly waste budgets on a huge amount of advertising in all kinds of media (although it was also, just before the opening). We abandoned offline advertising at the first stage (although at the moment it is already quite possible to launch this direction).  
-  
-_We needed to show super-efficient budget spending – both to ourselves, because we wanted to prove that we could work effectively even in such a difficult niche, and to the brand to show that we can do much more serious things._  
+We decided to change the approach that is usually offered in these (rather complex and expensive) niches. We refused to mindlessly waste budgets on a huge amount of advertising in all kinds of media (although it was also, just before the opening). We abandoned offline advertising at the first stage (although at the moment it is already quite possible to launch this direction).
 
-**Strategy  
+_We needed to show super-efficient budget spending – both to ourselves, because we wanted to prove that we could work effectively even in such a difficult niche, and to the brand to show that we can do much more serious things._
+
+**Strategy
 **
 
 We have divided the global campaign into three areas to find out and measure the effectiveness of each:
 
 1
 
-**Setting up ads from Instagram itself.** There were already a certain number of subscribers (read – the target audience), so Facebook could figure out who we needed. Plus, it was decided to test the point adjustment of the audience (interests, age, etc.).  
-  
+**Setting up ads from Instagram itself.** There were already a certain number of subscribers (read – the target audience), so Facebook could figure out who we needed. Plus, it was decided to test the point adjustment of the audience (interests, age, etc.).
+
 
 2
 
-**Setting up ads from the Ads Manager dashboard.** There are a hundred times more settings here, it is thinner and more complex, but in our experience, launching ads from Manager is more expensive than directly from Insta (per 1000 impressions). Actually, we had to check that too.  
+**Setting up ads from the Ads Manager dashboard.** There are a hundred times more settings here, it is thinner and more complex, but in our experience, launching ads from Manager is more expensive than directly from Insta (per 1000 impressions). Actually, we had to check that too.
 
 3
 
@@ -51,9 +51,9 @@ We have divided the global campaign into three areas to find out and measure the
 
 The essence of the strategy
 
-We took the content from the profile as a basis (fortunately there was plenty to choose from). Thus, they promoted posts, "becoming familiar" with potential customers.  
-  
-The strategy worked on several levels at once:  
+We took the content from the profile as a basis (fortunately there was plenty to choose from). Thus, they promoted posts, "becoming familiar" with potential customers.
+
+The strategy worked on several levels at once:
 
 1 level:
 
@@ -109,38 +109,38 @@ Setting up ads from Instagram itself. Here, they mainly took videos for promotio
 
 **Reach, impressions, clicks:**
 
-**Budget for the period of the advertising campaign: 216,018  
-  
-Coverage: 1,005,092  
-  
-Impressions: 2,569,408  
-  
-Ad clicks: 75,646**  
+**Budget for the period of the advertising campaign: 216,018
+
+Coverage: 1,005,092
+
+Impressions: 2,569,408
+
+Ad clicks: 75,646**
 
 **Applications, appeals and their cost:**
 
-**Messages: 27 started correspondences**  
-  
-**Comments to find out the price: 324 comments**  
-  
-**Reposts of advertising publications: 712 times** people directly shared our advertising message with friends  
-  
-**Publication saves: 2436 saves**  
-  
-**Messages to Direct from an audience that did not write immediately** (people whose appeals have to be taken into account themselves, since Facebook itself does not record them, because they wrote to Direct after they became subscribers): **~550 appeals**  
-  
-**Total requests from potential customers: 901 requests  
-  
-Circulation price: 239 rubles**  
+**Messages: 27 started correspondences**
+
+**Comments to find out the price: 324 comments**
+
+**Reposts of advertising publications: 712 times** people directly shared our advertising message with friends
+
+**Publication saves: 2436 saves**
+
+**Messages to Direct from an audience that did not write immediately** (people whose appeals have to be taken into account themselves, since Facebook itself does not record them, because they wrote to Direct after they became subscribers): **~550 appeals**
+
+**Total requests from potential customers: 901 requests
+
+Circulation price: 239 rubles**
 
 **Recognition growth**
 
 One of our initial tasks was to increase brand awareness to a narrow over-paying audience. Here are statistics on audience and recognition growth:
 
-Starting brand awareness brand awareness specifically by our target audience is within 5-20% for each country,  
-**in the USA – 5%** (~2,700 Russian–speaking people are familiar with the brand),  
-**in Italy – 20%** (~608 Russian-speaking people are familiar with the brand),  
-**in Russia **–** 7%** (~101,150 Russian-speaking people are familiar with brand)  
+Starting brand awareness brand awareness specifically by our target audience is within 5-20% for each country,
+**in the USA – 5%** (~2,700 Russian–speaking people are familiar with the brand),
+**in Italy – 20%** (~608 Russian-speaking people are familiar with the brand),
+**in Russia **–** 7%** (~101,150 Russian-speaking people are familiar with brand)
 
 **By country:**
 
@@ -154,29 +154,29 @@ _We took the "hottest" part of them in order to collect quick appeals as much as
 
 Italy:
 
-There are 35791 Russian–speaking people here, of which the target audience according to our statistics is from 7 to 10%. There was no need for people to fly to St. Petersburg (the brand is Italian, well represented in their country). It was necessary to inform that we are expanding, and now you can visit our branch in St. Petersburg. **We count the audience: 35791\*8.5%=3043 people**  
-  
+There are 35791 Russian–speaking people here, of which the target audience according to our statistics is from 7 to 10%. There was no need for people to fly to St. Petersburg (the brand is Italian, well represented in their country). It was necessary to inform that we are expanding, and now you can visit our branch in St. Petersburg. **We count the audience: 35791\*8.5%=3043 people**
+
 **Recognition growth in Italy by our audience: +500%** (+3040 people)
 
 Russia:
 
-In our country, approximately 1% of our target audience is nationwide, with a preponderance in Moscow and St. Petersburg. **Audience: 144.5million\*1%=1,445,000 people  
-  
-Recognition growth in Russia by our audience: +989%** (+1 000 499 people)  
+In our country, approximately 1% of our target audience is nationwide, with a preponderance in Moscow and St. Petersburg. **Audience: 144.5million\*1%=1,445,000 people
+
+Recognition growth in Russia by our audience: +989%** (+1 000 499 people)
 
 **By regions within Russia:**
 
 Here we are interested in comparing St. Petersburg and Moscow - the regions with the highest concentration of wealthy people. Plus, we added other regions with the highest spending in them.
 
-Moscow is expected to give better results than St. Petersburg, even though the price per 1000 impressions is higher there! Moreover, Moscow bypasses St. Petersburg in almost all parameters.  
-  
-**Cost per click:** 3.67 rubles vs. 4.77 rubles. (23% lower!)  
-  
-**Conversion per click (CTR):** 5.58% vs. 3.78% (47% higher!)  
+Moscow is expected to give better results than St. Petersburg, even though the price per 1000 impressions is higher there! Moreover, Moscow bypasses St. Petersburg in almost all parameters.
+
+**Cost per click:** 3.67 rubles vs. 4.77 rubles. (23% lower!)
+
+**Conversion per click (CTR):** 5.58% vs. 3.78% (47% higher!)
 
 By age:
 
-Here I must say, our initial assumptions about the audience almost coincided with the figures that we saw in the course of advertising. The only thing that surprised us was the fact that **women 45-54 reacted more actively to advertising than 25-34 (9% more actively).** We thought it would be the opposite.  
+Here I must say, our initial assumptions about the audience almost coincided with the figures that we saw in the course of advertising. The only thing that surprised us was the fact that **women 45-54 reacted more actively to advertising than 25-34 (9% more actively).** We thought it would be the opposite.
 
 By placements (where the advertisement was placed):
 
@@ -184,13 +184,13 @@ In the News Feed, we recorded a clickability **94% higher** than in Stories and 
 
 Conclusions
 
-The right approach to business tasks – whatever the niche – can give exceptional results! **The growth of awareness for large brands is a subtle, but the most important of the goals!** Therefore, the setting should be spot-based. We tried to show how a specialist or an agency should actually work in such niches.  
+The right approach to business tasks – whatever the niche – can give exceptional results! **The growth of awareness for large brands is a subtle, but the most important of the goals!** Therefore, the setting should be spot-based. We tried to show how a specialist or an agency should actually work in such niches.
 
 _And also what kind of analytics should be carried out after – after all, **statistics will remain with you FOREVER** (even after the end of an advertising campaign or work with an agency)!_
 
 **Thank you for reading our case! Do you want the same and even better? Leave a request and info of your project via [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/[Linkedin](https://www.linkedin.com/in/ivan-getmanov/)**
 
-<img src="/images/tild6534-3464-4265-a534-633636313163__noroot.png" alt="" />
+<img src="/images/ivan-getmanov.webp" alt="Ivan Getmanov" />
 
 Ivan Getmanov
 

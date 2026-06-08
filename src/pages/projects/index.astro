@@ -1,33 +1,46 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
-const notes = [
+const projects = [
   {
-    title: "How to make case-based research visible to LLMs",
-    slug: "llm-visible-research",
-    status: "draft",
-    description: "Draft framework for structuring evidence-first content."
-  }
+    title: "ChatGPT Session Saver",
+    href: "/tools/session-saver/",
+    status: "browser extension",
+    description:
+      "A privacy-first browser extension for exporting long ChatGPT conversations as structured Q&A pairs.",
+  },
+  {
+    title: "SEO ROI Calculator",
+    href: "/tools/calculator/",
+    status: "interactive model",
+    description:
+      "A working CAC, LTV, payback, and ROI model for evaluating SEO programs.",
+  },
+  {
+    title: "Taekwondo Club Landing Page",
+    href: "/case-studies/taekwondo/",
+    status: "legacy project",
+    description:
+      "An archived Russian-language landing page built for a local sports club.",
+  },
 ];
 ---
 
 <BaseLayout title="Projects">
-  <h1>Notes</h1>
+  <h1>Projects</h1>
 
   <p>
-    Thinking, frameworks, and drafts.
-    These notes document how experiments are designed,
-    interpreted, and turned into reusable knowledge.
+    Things I built or operated. Client outcomes live in Case studies; reusable
+    utilities live in Tools.
   </p>
 
   <ul>
-    {notes.map(note => (
+    {projects.map(project => (
       <li>
-        <a href={`/notes/${note.slug}/`}>{note.title}</a>
-        <small> — {note.status}</small>
-        <p>{note.description}</p>
+        <a href={project.href}>{project.title}</a>
+        <small> — {project.status}</small>
+        <p>{project.description}</p>
       </li>
     ))}
   </ul>
 </BaseLayout>
-
