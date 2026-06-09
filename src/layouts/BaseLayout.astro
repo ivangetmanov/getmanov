@@ -10,6 +10,14 @@ const canonical = Astro.props.canonical ?? frontmatter.canonical;
 const canonicalUrl = canonical
   ? new URL(canonical, "https://getmanov.com").href
   : `https://getmanov.com${Astro.url.pathname}`;
+
+const galleryPages = new Set([
+  "/case-studies/seo-case-b2b/",
+  "/case-studies/massage/",
+  "/case-studies/giorgio/",
+  "/case-studies/websites/",
+]);
+const hasCaseGalleries = galleryPages.has(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -99,5 +107,9 @@ const canonicalUrl = canonical
         </div>
       </div>
     </footer>
+
+    {hasCaseGalleries && (
+      <script is:inline src="/scripts/case-gallery.js" defer></script>
+    )}
   </body>
 </html>
