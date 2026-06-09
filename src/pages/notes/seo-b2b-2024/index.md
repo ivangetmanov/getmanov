@@ -40,6 +40,12 @@ In addition, a study by HubSpot found that companies that prioritize blogging ar
 
 Overall, the data shows that SEO is crucial for B2B businesses to improve their online visibility, drive traffic, generate leads, and ultimately, increase revenue. By investing in SEO, B2B companies can gain a competitive advantage in the marketplace and achieve long-term benefits.
 
+<div class="case-gallery case-gallery--hero" aria-label="Visual references from the original B2B SEO draft">
+  <img src="/images/fc232794-269f-4b19-8a5d-ff7ecfd09c8c__2chrczlqsruvrmdnetts_unspash_003.jpg" alt="Landscape used as a visual reference in the original B2B SEO draft" loading="lazy" />
+  <img src="/images/2e861b28-8d14-4bfa-ac6e-41274bf45b56__3yngiu4yrto4ddifrefa__mg_2885.jpg" alt="Camera photograph used as a visual reference in the original B2B SEO draft" loading="lazy" />
+  <img src="/images/83e0a464-8c45-4585-bf4b-ad52de692ada__wpyap0tyq3melk0krbyn_lagunahike.jpg" alt="Mountain landscape used as a visual reference in the original B2B SEO draft" loading="lazy" />
+</div>
+
 
 
 EXAMPLE

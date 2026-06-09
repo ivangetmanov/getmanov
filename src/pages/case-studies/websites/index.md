@@ -47,6 +47,12 @@ We tested different people and found out that BM worked the best (apparently, th
 
 On the last screenshot, the price is 14900, but I did not work with this price at all (I started it for the test)
 
+<div class="case-gallery case-gallery--portraits" aria-label="Website development advertising creatives">
+  <img src="/images/tild3835-6266-4737-b265-396432366533__2023-04-13__170846.png" alt="Website development advertising creative with a 19,900-ruble offer" loading="lazy" />
+  <img src="/images/tild3864-3861-4831-a439-376230343636__2023-04-13__170854.png" alt="Website development Instagram advertising creative" loading="lazy" />
+  <img src="/images/tild3338-6164-4232-b936-333832316635__2023-04-13__170904.png" alt="Website development advertising creative with a 14,900-ruble test price" loading="lazy" />
+</div>
+
 Problems along the way:
 
 After 2 days, we already had 20 leads that the team physically couldn't handle. We consulted and stopped the advertising for a couple of days so that the team could gather and process the volume that was already there. At that time, I had some time to work on audience settings, improve creatives, and dive deeper into statistics.
@@ -58,6 +64,11 @@ Technical difficulties:
 I tested only 2 formats: Instagram Feed and Instagram Stories. Need I say that by August 2018 almost all advertisers rushed to try its miraculous advertising effect in Stories, which caused the auction price there to be even higher than in the feed? In general, Stories gave results that were 1.3-1.5 times worse than those in the feed. Soon I turned off advertising in Stories.
 
 I set up advertising from two ad accounts. Therefore, there will be two screenshots below. I don't remember exactly why I worked with two, maybe the first one was blocked for a while, and it was too long to wait for it to be unblocked or there were difficulties with paying for advertising by bank card.
+
+<div class="case-gallery case-gallery--hero" aria-label="Website development campaign dashboards">
+  <img src="/images/tild3231-6235-4933-a132-643063366234__aseritlkkeg.jpeg" alt="First Facebook Ads dashboard for the website development campaign" loading="lazy" />
+  <img src="/images/tild6431-3139-4261-b831-363231623930__jyfmzmydves.jpeg" alt="Second Facebook Ads dashboard for the website development campaign" loading="lazy" />
+</div>
 
 
 Numbers and results:
@@ -83,6 +94,10 @@ Out of 53 leads, they sold 7 sites in the first week, another 5 within the next 
 The budget was paid off just over 18 times ;-)**
 
 This brings us to the discussion about the importance of analyzing results from a distance. That's why I created this case study a little later :)
+
+<div class="case-gallery case-gallery--portraits" aria-label="Getmanov Marketing team">
+  <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.png" alt="Getmanov Marketing team at work" loading="lazy" />
+</div>
 
 **Thank you for reading my case! Do you want the same and even better? Leave a request and info of your project via [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/[Linkedin](https://www.linkedin.com/in/ivan-getmanov/)**
 

@@ -15,6 +15,11 @@ Let's start with the fact that this case is one of our favorites. Although it to
 
 A woman named [Tatiana](https://vk.com/id2352769) approached me. The situation was disastrous, if not critical! The niche is not the easiest: vacuum massage. Have you read many case studies on promoting a noname massage (vacuum) salon? Well, I didn't find many of them... "I pay for rent, there are no clients at all" - that was the slogan with which I started my work.
 
+<div class="case-gallery case-gallery--portraits" aria-label="Early customer conversations">
+  <img src="/images/tild3863-6366-4463-b736-366631626264__2020-11-10__132534.png" alt="Early customer conversation about the massage salon" loading="lazy" />
+  <img src="/images/tild3462-3632-4834-b937-306235343732__2020-11-10__132546.png" alt="Customer response during the initial massage campaign" loading="lazy" />
+</div>
+
 ## Project features
 
 **In addition to the fact that there are no clients, and the business is offline and very local, there were a couple more moments:**
@@ -23,6 +28,10 @@ A woman named [Tatiana](https://vk.com/id2352769) approached me. The situation w
 2. **The task was complicated by the fact that there was not even a profile with content in Instagram.** And this is massage, beauty industry, where personal branding (or beauty salon branding) is VERY important. Because **trust** matters.
 
 Some projects start like this...
+
+<div class="case-gallery case-gallery--portraits" aria-label="Original massage campaign">
+  <img src="/images/tild6534-3331-4435-a134-636433373333__2020-11-10__132604.png" alt="Original social media post for the massage salon" loading="lazy" />
+</div>
 
 Initially, only one thing was clear - Tatiana would be able to handle processing requests (about 10-20 per day). And that means I won't get a bunch of questions like, "Why, when ordering promotion on Instagram, do I still need to CALL people afterwards??? "
 
@@ -63,6 +72,10 @@ And then, the first application! The second, third! "Finally," I thought! Especi
 
 That's the king offer :)
 
+<div class="case-gallery case-gallery--portraits" aria-label="Winning massage offer">
+  <img src="/images/tild3134-6636-4264-b638-373130363536__2020-11-10__143654.png" alt="Winning massage offer used in the Facebook campaign" loading="lazy" />
+</div>
+
 ## Numbers and results
 
 **Received applications (for an offer at 1190 rubles):** 109 applications
@@ -81,6 +94,13 @@ That's the king offer :)
 
 
 Screenshots 1 and 2 show a campaign for an offer priced at 1190₽, while screenshots 3 and 4 are for an offer priced at 1290₽. Interestingly, the video created for the stories (which we worked on for a week) performed worse than simple images.
+
+<div class="case-gallery case-gallery--portraits" aria-label="Massage advertising campaign results">
+  <img src="/images/tild3562-3439-4135-b562-393636393236__2020-11-10__143712.png" alt="Facebook campaign results for the 1190-ruble massage offer" loading="lazy" />
+  <img src="/images/tild3230-3136-4133-b762-663661623436__2020-11-10__143722.png" alt="Facebook campaign breakdown for the 1190-ruble massage offer" loading="lazy" />
+  <img src="/images/tild3033-6464-4631-a362-306533393466__2020-11-10__143733.png" alt="Facebook campaign results for the 1290-ruble massage offer" loading="lazy" />
+  <img src="/images/tild3436-3037-4537-a164-343631653338__2020-11-10__143741.png" alt="Facebook campaign breakdown for the 1290-ruble massage offer" loading="lazy" />
+</div>
 
 ## Profit and ROI
 
@@ -125,6 +145,10 @@ And in this case, I have described in quite detail how I managed to achieve this
 I will not do that, of course.
 
 Thank you for reading this case! I hope it will help you achieve such great results!
+
+<div class="case-gallery case-gallery--portraits" aria-label="Getmanov Marketing team">
+  <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.png" alt="Getmanov Marketing team at work" loading="lazy" />
+</div>
 
 Thank you for reading my case! Do you want the same and even better? Leave a request and info of your project via [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/[Linkedin](https://www.linkedin.com/in/ivan-getmanov/)
 
