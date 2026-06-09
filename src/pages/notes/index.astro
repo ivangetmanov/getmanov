@@ -16,17 +16,57 @@ const notes = [
   }
 ];
 
-const russianArchive = [
-  ["b2b-seo-agency", "Choosing a B2B SEO agency"],
-  ["b2b-seo-audit", "B2B website SEO audit"],
-  ["b2b-seo-branding", "Brand positioning through B2B SEO"],
-  ["b2b-seo-checklist", "B2B SEO checklist"],
-  ["b2b-seo-kpi", "KPIs for B2B SEO"],
-  ["b2b-seo-links", "Building a B2B backlink profile"],
-  ["b2b-seo-mail", "Email marketing and B2B SEO"],
-  ["b2b-seo-smm", "Social media signals for B2B SEO"],
-  ["b2b-seo-technical", "Technical SEO for B2B websites"],
-  ["b2b-seo-trends", "B2B SEO trends for 2024"],
+const b2bSeoPlaybook = [
+  {
+    slug: "b2b-seo-agency",
+    title: "How to Choose a B2B SEO Partner",
+    description: "Evaluate agency, consultant, in-house, and hybrid models."
+  },
+  {
+    slug: "b2b-seo-audit",
+    title: "B2B SEO Audit",
+    description: "Find technical, content, authority, and measurement constraints."
+  },
+  {
+    slug: "b2b-seo-branding",
+    title: "Brand Positioning Through B2B SEO",
+    description: "Use search to make expertise and market position visible."
+  },
+  {
+    slug: "b2b-seo-checklist",
+    title: "B2B SEO Checklist",
+    description: "Run the channel from business baseline to revenue."
+  },
+  {
+    slug: "b2b-seo-kpi",
+    title: "B2B SEO KPIs",
+    description: "Connect rankings and traffic to pipeline and revenue."
+  },
+  {
+    slug: "b2b-seo-links",
+    title: "B2B Link Building",
+    description: "Build authority through evidence, relevance, and relationships."
+  },
+  {
+    slug: "b2b-seo-mail",
+    title: "How Email Supports B2B SEO",
+    description: "Extend search discovery through distribution and nurturing."
+  },
+  {
+    slug: "b2b-seo-smm",
+    title: "How Social Distribution Supports B2B SEO",
+    description: "Help useful expertise reach people who can reference it."
+  },
+  {
+    slug: "b2b-seo-technical",
+    title: "Technical SEO for B2B Websites",
+    description: "Crawling, indexation, performance, and site architecture."
+  },
+  {
+    slug: "b2b-seo-trends",
+    title: "B2B SEO Trends",
+    description: "AI search, authority, UX, and changing discovery surfaces."
+  },
 ];
 ---
 
@@ -49,16 +89,16 @@ const russianArchive = [
     ))}
   </ul>
 
-  <h2>Legacy research archive</h2>
+  <h2>B2B SEO playbook</h2>
   <p>
-    These source notes are still in Russian. They are kept discoverable for
-    reference, but are not part of the English-first portfolio narrative.
+    Ten connected guides for building B2B organic growth as a commercial
+    system, supported by the <a href="/case-studies/seo-case-b2b/">full case study</a>.
   </p>
   <ul>
-    {russianArchive.map(([slug, title]) => (
+    {b2bSeoPlaybook.map(note => (
       <li>
-        <a href={`/notes/${slug}/`}>{title}</a>
-        <small> — Russian original</small>
+        <a href={`/notes/${note.slug}/`}>{note.title}</a>
+        <p>{note.description}</p>
       </li>
     ))}
   </ul>

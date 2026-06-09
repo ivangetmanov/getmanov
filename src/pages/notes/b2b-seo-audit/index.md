@@ -1,70 +1,111 @@
 ---
 layout: ../../../layouts/BaseLayout.astro
-title: "Аудит B2B-Сайта для SEO-Продвижения: Ключевые Шаги, Которые Выведут Вас в Лидеры"
-description: ""
+title: "B2B SEO Audit: Technical, Content, Authority, and Measurement"
+description: "A practical B2B SEO audit framework for finding the constraints that block qualified demand, conversion, and revenue."
 canonical: "/notes/b2b-seo-audit/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov Marketing" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
 
-# **Аудит B2B-Сайта для SEO-продвижения: Ключевые шаги, которые выведут вас в ТОП выдачи
-**
+# B2B SEO Audit: Technical, Content, Authority, and Measurement
 
-В мире B2B, где каждая деталь влияет на принятие решений, SEO-аудит не менее важен, чем финансовый отчет перед советом директоров. Он выявляет слабые звенья в вашей digital-стратегии, открывает новые возможности для роста и помогает вашему сайту стать заметным среди тысячи похожих. На примере нашего клиента, производителя резиновых втулок, мы покажем, как правильный SEO-аудит может приводить к увеличению органического трафика минимум на 70%.
+A useful B2B SEO audit is not a 100-page export of warnings. It is a diagnosis of why qualified buyers cannot reliably discover, understand, or act on a company's offer.
 
-## [Технический SEO-аудит:](/notes/b2b-seo-technical/) Что именно проверять?
+The audit should connect search performance to business outcomes. That means evaluating the website as a technical system, a knowledge base, a conversion path, and a source of evidence for both buyers and search engines.
 
-1
+## 1. Establish the business baseline
 
-**Скорость загрузки:** Ваш сайт загружается дольше 3 секунд? Вынуждены огорчить – вы теряете потенциальных клиентов. Наш опыт с сайтом по продаже резиновых изделий показал, что сокращение времени загрузки страницы с 5 до 2 секунд увеличивает конверсию в среднем на 25%.
+Before opening an SEO tool, document:
 
-2
+- priority products, markets, and customer segments;
+- average deal value and sales-cycle length;
+- what counts as a qualified lead;
+- current organic leads, opportunities, and revenue;
+- branded versus non-branded demand;
+- known website and publishing constraints.
 
-**Мобильная оптимизация:** Даже в самой сложной и узкоспециализированной B2B нише, не меньше 30% посетителей сайтов используют мобильные устройства. Вы готовы от них отказаться из-за того, что сайт просто не оптимизирован под просмотр на мобильном? Если ваш сайт не адаптирован под мобильные экраны, то это добровольный отказ от серьезной доли рынка.
+Without this baseline, the audit cannot distinguish a high-impact problem from an interesting but commercially irrelevant one. Use the [B2B SEO KPI framework](/notes/b2b-seo-kpi/) to define the measurement hierarchy.
 
-3
+## 2. Audit crawlability and indexation
 
-**Индексация и краулинг:** Все ли ваши важные страницы находятся в индексе поисковых систем? У одного из наших клиентов были страницы, которые в течение 5 лет (!!!) игнорировались поисковыми системами – то есть просто не появлялись в поисковой выдаче по запросам, для которых эти страницы были созданы. Мы исправили ситуацию, страницы "ожили" и до сих пор приносят трафик!
+Check whether search engines can discover and index the pages that matter:
 
-### [On-page SEO:](/notes/b2b-seo-checklist/) Как поднять качество страниц?
+- robots.txt and meta robots directives;
+- XML sitemaps;
+- canonical tags;
+- redirect chains and broken internal links;
+- duplicate or near-duplicate pages;
+- orphan pages;
+- faceted navigation and URL parameters;
+- index coverage in Google Search Console.
 
-1
+This is the foundation of a broader [technical SEO review](/notes/b2b-seo-technical/). A page that is not discoverable cannot generate demand, regardless of its content quality.
 
-**Контент и ключевые слова:** Публикуйте материалы, отражающие глубокую экспертизу в вашей области. Например, кейс по оптимизации процессов изготовления резиновых втулок привлек более внимательное отношение со стороны клиентов: инженеров ОТК и сотрудников конструкторских отделов различных российских производств.
+## 3. Review information architecture
 
-2
+The site should reflect how customers understand the market, not merely the company's internal organization. Map important queries and use cases to:
 
-**Мета-теги и описания:** Они должны быть ясными и точными, как технические характеристики продукции. Включите в них уникальные преимущества вашей продукции. И следите за кликабельностью Ваших сниппетов (это то, как отображается ссылка на ваш сайт в поисковой системе) с течением времени – не забывайте постоянно их оптимизировать.
+- product and service pages;
+- industry or application pages;
+- comparison and alternative pages;
+- technical resources;
+- case studies and proof;
+- commercial conversion pages.
 
-### [Off-page SEO:](/notes/b2b-seo-links/) Как укрепить авторитетность сайта?
+Then review the internal linking between these layers. Buyers should be able to move from a problem to a solution, supporting evidence, and a next step without returning to the navigation menu.
 
-1
+The [B2B SEO checklist](/notes/b2b-seo-checklist/) turns this architecture into an ongoing operating process.
 
-**Анализ обратных ссылок:** Наличие ссылок с авторитетных отраслевых ресурсов, наподобие сайтов профессиональных ассоциаций, говорит о вашей репутации. Одно лишь простое увеличения количества качественных ссылок на сайт способно увеличить поисковую видимость сайта минимум на 20-30%!
+## 4. Evaluate content against buyer intent
 
-2
+For each important page, ask:
 
-**[Социальные сигналы:](/notes/b2b-seo-smm/)** Ваши успехи в социальных сетях могут повлиять на SEO. Например, один наш клиент поделился историей о внедрении конкретной экологичной технологии на своем производстве, благодаря чему его сайт получил значительный прирост внешних ссылок!
+- Does the page answer the actual query?
+- Is the intended audience and use case clear?
+- Does it contain original expertise, examples, or data?
+- Does it explain limitations and tradeoffs?
+- Does it lead naturally to a relevant commercial action?
+- Is the content current and factually supported?
 
-### Аудит контента: Почему это важно?
+Thin content is not only short content. A long page can still be thin if it repeats generic advice without helping a specialist make a decision.
 
-1
+## 5. Review authority and distribution
 
-**Пересмотр структуры контента:** Время идет, контент требует доработки, модификации, изменений. Разбивайте информацию на части, делайте акцент на практические аспекты. Как пример, одному из клиентов мы добавили видео-инструкции по выбору резиновых втулок – и время, которое средний посетитель проводил на сайте увеличилось в 1.9 раза! Не говоря уже о росте коэффициента конверсий с сайта.
+Analyze which pages attract relevant links, mentions, referrals, and branded searches. The goal is not to maximize an abstract domain score. It is to build credible signals around the topics where the company needs to be trusted.
 
-2
+Review the [B2B link-building strategy](/notes/b2b-seo-links/) and the role of [social distribution](/notes/b2b-seo-smm/) in helping useful research reach journalists, partners, customers, and industry communities.
 
-**Обновление устаревшей информации:** Технологии не стоят на месте, и ваш контент тоже не должен. Обновление технических данных и кейсов поднимет ваш авторитет в глазах клиентов и поисковых систем.
+## 6. Audit conversion and measurement
 
-Заключение
+Organic traffic can grow while commercial performance remains flat. Verify:
 
-SEO-аудит — это ваш шанс не только исправить ошибки, но и выделиться среди конкурентов. Он должен стать регулярной практикой, как учет расходов или инвентаризация склада. В конечном итоге, это дает вам полное понимание, как улучшить свой сайт и обеспечить себе лидерство в отрасли.
+- form, email, call, and demo tracking;
+- CRM source and campaign attribution;
+- conversion rate by landing page and intent;
+- lead quality by page group;
+- assisted conversions and longer buying journeys;
+- reporting consistency between analytics and sales systems.
 
-Спасибо, что дочитали статью до конца! Если ваш проект в сфере B2B и вы задумываетесь о SEO-продвижении, пишите мне напрямую: [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/
-[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:ivangetmanov@icloud.com)
+In complex B2B funnels, the most useful finding may sit after the click. My [full B2B SEO case study](/case-studies/seo-case-b2b/) shows how technical repair, site structure, content expansion, and commercial measurement worked together.
+
+## 7. Turn findings into a decision queue
+
+Prioritize every recommendation by:
+
+1. expected commercial impact;
+2. confidence in the diagnosis;
+3. implementation cost;
+4. dependency on other work;
+5. time required to observe a result.
+
+The output should be a short, sequenced plan with owners and success criteria. If everything is a priority, the audit has not done its job.
+
+## Conclusion
+
+A strong B2B SEO audit reduces uncertainty. It identifies the few constraints that prevent the current website, content, and authority from becoming qualified demand. That makes it a growth instrument rather than a compliance exercise.
+
+Questions about a B2B growth system? Contact me via [LinkedIn](https://www.linkedin.com/in/ivan-getmanov/), [Telegram](https://t.me/getmanov_marketing), or [email](mailto:ivangetmanov@icloud.com).
 
 <img src="/images/ivan-getmanov.webp" alt="Ivan Getmanov" />
 
-Иван Гетманов
-
-Директор Getmanov SEO Agency
+Ivan Getmanov, Growth and B2B SEO

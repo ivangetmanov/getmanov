@@ -1,53 +1,106 @@
 ---
 layout: ../../../layouts/BaseLayout.astro
-title: "KPI для SEO в B2B: Ключевые Показатели для Оценки Успеха SEO-Продвижения"
-description: ""
+title: "B2B SEO KPIs: Measure Pipeline and Revenue, Not Rankings"
+description: "A measurement framework connecting B2B search visibility to qualified leads, pipeline, revenue, and operating efficiency."
 canonical: "/notes/b2b-seo-kpi/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov Marketing" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
 
-# **KPI для SEO в B2B: Как измерять успех SEO-продвижения?**
+# B2B SEO KPIs: Measure Pipeline and Revenue, Not Rankings
 
-Когда дело доходит до SEO в B2B, каждая цифра и процент должны быть подкреплены данными. Умение измерять успех - это искусство, а определение KPI - его канва. [На примере наших клиентов](/case-studies/seo-case-b2b/) мы увидели, как правильно подобранные показатели могут изменить игру в пользу бизнеса.
+B2B SEO measurement becomes confusing when every available metric is treated as a KPI. Impressions, rankings, traffic, leads, pipeline, and revenue describe different layers of the system. They should not be mixed into one flat report.
 
-## Основные KPI для SEO в B2B
+A useful model connects early signals to commercial outcomes.
 
-1
+## Level 1: Business outcomes
 
-**Рост органического трафика.** По нашим наблюдениям, компании, сфокусированные на увеличении органического трафика, часто видят [рост лидов на 90-350%](/case-studies/seo-case-b2b/#chapter-5). Это результат не только превосходного качества контента, но и точной настройки на потребности целевой аудитории. Успешное SEO приводит к тому, что ваш сайт появляется в топе поисковых запросов именно тогда, когда потенциальные клиенты ищут продукты или услуги, которые вы предлагаете. Таким образом, органический трафик становится не просто дополнительным источников кликов на сайт, но и источником качественных лидов и реальных сделок.
+These are the metrics leadership ultimately cares about:
 
-2
+- organic-sourced qualified pipeline;
+- closed revenue from organic acquisition;
+- influenced pipeline for longer, multi-touch journeys;
+- customer acquisition cost;
+- payback period;
+- revenue and gross profit by target segment.
 
-**Позиции по ключевым словам.** Занимая высокие позиции по ключевым словам, бренды видят увеличение трафика: в среднем рост [может достигать двухкратных или даже трехкратных показателей в течение года с начала работ.](/case-studies/seo-case-b2b/#chapter-4) Поэтому ставить KPI на SEO-продвижение можно и из желаемого изменения позиций вашего сайта по ряду ключевых слов.
+SEO should not be judged only by last-click revenue, especially when several stakeholders research a solution before a sales conversation. But the program still needs a credible connection to commercial value.
 
-3
+## Level 2: Conversion quality
 
-**Коэффициенты конверсии.** Конверсия - это финишная прямая SEO-марафона. Одна из компаний, с которой мы работали, увеличила усредненную конверсию группы сайтов на 58% после того, как оптимизировала свои лендинги под целевые запросы рынка B2B! Рост конверсии возможен всегда, и грамотная работа по SEO-продвижению обязательно должна затрагивать и этот аспект тоже!
+These metrics show whether organic visibility is attracting the right audience:
 
-### Второстепенные, но важные KPI
+- qualified leads and opportunities;
+- visitor-to-lead conversion rate;
+- lead-to-opportunity conversion rate;
+- conversion by landing page and query intent;
+- average deal value by acquisition source;
+- disqualification reasons;
+- sales-cycle length.
 
-1
+Traffic growth without quality is not a success. The [B2B SEO audit](/notes/b2b-seo-audit/) should verify that analytics and CRM data can support this layer.
 
-**Качество лидов.** Не все лиды одинаково полезны. На примере нашей работы с производителем промышленного оборудования, мы увидели, что качественные лиды увеличились на 70% после переориентации контента на специфические запросы целевой аудитории, а также благодаря более качественной "отфильтровке" мелких заказчиков с помощью дополнительной информации на каждой странице сайта!
+## Level 3: Demand and visibility
 
-2
+These metrics explain how discovery is changing:
 
-**Метрики обратных ссылок.** [Обратные ссылки](/notes/b2b-seo-links/) - это доказательство доверия рынка. Наши клиенты замечают улучшение своего доменного авторитета после запуска кампании по получению качественных ссылок. Важно отметить, что это не быстрый процесс и требует дополнительных вложений. Во многих B2B проектах задача по наработке ссылочного веса не является первостепенной!
+- non-branded organic clicks;
+- visibility for priority topic clusters;
+- ranking distribution across target queries;
+- click-through rate by page and query;
+- new versus returning organic visitors;
+- branded search demand;
+- share of traffic reaching strategic commercial pages.
 
-3
+Do not report an average ranking across unrelated keywords. Group visibility by product, segment, use case, and buying stage.
 
-**Скорость загрузки страницы.** Скорость загрузки влияет на вовлечённость и показатели отказов. Как показывает опыт, ускорение загрузки сайта на 1 секунду приносит снижает показатель отказов на в среднем на 17%! [Бесплатно проверьте скорость загрузки ВАШЕГО сайта тут!](https://pagespeed.web.dev/?hl=ru)
+## Level 4: Delivery and technical health
 
-Заключение
+These are leading indicators that show whether the system can improve:
 
-Измерять успех в SEO - значит быть честным перед собой и клиентами. KPI - это не просто цифры, это индикаторы здоровья вашего бизнеса в цифровом пространстве. Используя их правильно, можно не просто наблюдать за успехом, но и уверенно шагать к нему, как это делаем мы в нашей работе с клиентами по всему миру. А чтобы понять, как же мы реально достигаем таких результатов, можете [прочитать наш самый подробный и откровенный кейс по SEO-продвижению в B2B сфере со всеми цифрами вплоть до чистой прибыли!](/case-studies/seo-case-b2b/)
+- strategic pages published or upgraded;
+- indexation of important pages;
+- crawl and rendering errors;
+- internal-link coverage;
+- content refresh velocity;
+- relevant referring domains and mentions;
+- page performance on important templates.
 
-Спасибо, что дочитали статью до конца! Если ваш проект в сфере B2B и вы задумываетесь о SEO-продвижении, пишите мне напрямую: [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/
-[LinkedIn](https://www.linkedin.com/in/ivan-getmanov/)/[Mail](mailto:ivangetmanov@icloud.com)
+They are not business outcomes, but they help explain why outcomes may change later.
+
+## Build a KPI tree
+
+Start with one commercial objective and work backward. For example:
+
+1. Increase qualified pipeline from a priority product.
+2. Increase qualified opportunities from relevant organic landing pages.
+3. Improve conversion and non-branded visibility for that product cluster.
+4. Repair technical constraints and publish the missing decision-stage pages.
+
+Every delivery metric now has a reason to exist.
+
+## Account for time lag
+
+SEO effects do not arrive on a single schedule. Technical fixes may be observed quickly, while a new topic cluster, authority program, or enterprise sales cycle can take much longer to affect revenue.
+
+Use explicit review windows and record the intervention date. Compare cohorts where possible. Avoid attributing every movement to the most recent change.
+
+## Reporting for different audiences
+
+- **Leadership:** pipeline, revenue, cost, strategic risk, and major constraints.
+- **Growth and marketing:** conversion, segment performance, demand, and experiment results.
+- **SEO and content teams:** query clusters, page performance, indexation, links, and delivery.
+
+One dashboard does not need to show every metric to every stakeholder.
+
+## Example in practice
+
+My [B2B SEO case study](/case-studies/seo-case-b2b/) follows the chain from structural and technical changes to organic traffic, leads, and financial results. It also shows why the mechanism matters: without understanding what changed, a result is difficult to repeat.
+
+For implementation, use this KPI model together with the [B2B SEO checklist](/notes/b2b-seo-checklist/) and [authority-building guide](/notes/b2b-seo-links/).
+
+Questions about a B2B growth system? Contact me via [LinkedIn](https://www.linkedin.com/in/ivan-getmanov/), [Telegram](https://t.me/getmanov_marketing), or [email](mailto:ivangetmanov@icloud.com).
 
 <img src="/images/ivan-getmanov.webp" alt="Ivan Getmanov" />
 
-Иван Гетманов
-
-Директор Getmanov SEO Agency
+Ivan Getmanov, Growth and B2B SEO

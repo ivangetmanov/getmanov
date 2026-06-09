@@ -400,7 +400,116 @@ body[data-path="/case-studies/seo-case-b2b/"] .prose .case-gallery img {
   margin: 0;
 }
 
+.prose .b2b-seo-map {
+  width: min(1120px, calc(100vw - 40px));
+  margin: 72px 50% 12px;
+  padding: 36px;
+  transform: translateX(-50%);
+  border: 1px solid #d7dfdb;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(34, 143, 116, 0.14), transparent 34%),
+    #f6f9f7;
+  color: #17211e;
+}
+
+.prose .b2b-seo-map h2 {
+  margin: 4px 0 10px;
+  padding: 0;
+  border: 0;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+.prose .b2b-seo-map p {
+  max-width: 720px;
+  margin: 0;
+}
+
+.prose .b2b-seo-map__eyebrow {
+  color: #126b5d;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.prose .b2b-seo-map__case {
+  margin: 28px 0 14px;
+}
+
+.prose .b2b-seo-map__case a,
+.prose .b2b-seo-map__case span,
+.prose .b2b-seo-map__item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 18px;
+  border: 1px solid #d7dfdb;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.84);
+  color: #17211e;
+  text-decoration: none;
+}
+
+.prose .b2b-seo-map__case a,
+.prose .b2b-seo-map__case span {
+  padding: 22px;
+  border-color: #126b5d;
+}
+
+.prose .b2b-seo-map__case a:hover,
+.prose a.b2b-seo-map__item:hover {
+  border-color: #126b5d;
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.prose .b2b-seo-map__case a,
+.prose a.b2b-seo-map__item {
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.prose .b2b-seo-map__case strong,
+.prose .b2b-seo-map__item strong {
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.prose .b2b-seo-map__case small,
+.prose .b2b-seo-map__item small {
+  color: #5f6e68;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.prose .b2b-seo-map__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.prose .b2b-seo-map__item[aria-current="page"],
+.prose .b2b-seo-map__case span[aria-current="page"] {
+  background: #e4efe9;
+}
+
 @media (max-width: 700px) {
+  .prose .b2b-seo-map {
+    width: calc(100vw - 20px);
+    margin-top: 52px;
+    padding: 24px 16px;
+    border-radius: 18px;
+  }
+
+  .prose .b2b-seo-map__grid {
+    grid-template-columns: 1fr;
+  }
+
   .prose .case-gallery-shell {
     width: calc(100vw - 20px);
     margin-top: 34px;
