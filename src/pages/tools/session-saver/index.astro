@@ -1,28 +1,62 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 
-const title = "ChatGPT Session Saver - Export ChatGPT Chats as Q&A Pairs";
+const title = "ChatGPT Session Saver — Export Long ChatGPT Conversations";
 const description =
-  "ChatGPT Session Saver is a browser extension for saving long ChatGPT conversations as structured Q&A pairs and exporting them as TXT files.";
+  "Save and export long ChatGPT conversations as clean Q&A pairs. Download a free demo or get the full lifetime version.";
 const canonical = "/tools/session-saver/";
+
+const faqItems = [
+  {
+    question: "What is the difference between the demo and full version?",
+    answer:
+      "The demo exports the last 10, 20, or 30 Q&A pairs. The full version supports unlimited long conversations and advanced export modes.",
+  },
+  {
+    question: "Does it upload my conversations?",
+    answer: "No. Processing happens locally in your browser.",
+  },
+  {
+    question: "Do I need a ChatGPT API key?",
+    answer: "No. The extension works with the conversation open in your browser.",
+  },
+  {
+    question: "Does it work with long chats?",
+    answer: "Yes. The full version is built for long ChatGPT conversations.",
+  },
+  {
+    question: "Is it a subscription?",
+    answer:
+      "No. The full version is planned as a one-time $9 lifetime license.",
+  },
+];
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical}>
   <section class="session-saver-page">
     <div class="hero-shell">
       <div class="hero-copy">
-        <p class="eyebrow">Browser extension</p>
-        <h1>ChatGPT Session Saver</h1>
+        <p class="eyebrow">Chrome extension · Free demo 2.47</p>
+        <h1>Export Long ChatGPT Conversations as Clean Q&A Pairs</h1>
         <p class="lead">
-          Save long ChatGPT conversations, split them into question-and-answer
-          pairs, search inside the extracted content, and export everything as a
-          clean TXT file.
+          Save a ChatGPT conversation without manual copy-paste. Extract
+          questions and answers, search inside the session, and create a clean
+          ChatGPT TXT export you can keep and reuse.
         </p>
         <div class="hero-actions">
-          <a class="button button--primary" href="#how-it-works">How it works</a>
-          <a class="button" href="/notes/export-long-chatgpt-chats/">Export guide</a>
-          <a class="button" href="/tools/session-saver/privacy-policy/">Privacy Policy</a>
+          <a
+            class="button button--primary"
+            href="/downloads/chatgpt-session-saver-demo.zip"
+            download
+          >
+            Download Free Demo
+          </a>
+          <a class="button button--buy" href="#buy">Buy Full Version — $9</a>
         </div>
+        <p class="hero-note">
+          Free Demo exports the last 10, 20, or 30 Q&A pairs. Full version
+          supports unlimited long chats.
+        </p>
       </div>
 
       <div class="hero-visual">
@@ -49,15 +83,82 @@ const canonical = "/tools/session-saver/";
       </div>
     </section>
 
+    <section id="pricing" class="section pricing-section">
+      <div class="section-heading">
+        <p class="eyebrow">Simple pricing</p>
+        <h2>Try the workflow free. Unlock unlimited exports for $9.</h2>
+        <p>
+          Use the demo as a ChatGPT conversation exporter for shorter sessions,
+          then upgrade when you need to save a whole ChatGPT chat.
+        </p>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="pricing-card">
+          <div class="pricing-card__header">
+            <div>
+              <span class="plan-label">Free Demo</span>
+              <h3>Test the complete Q&A workflow</h3>
+            </div>
+            <strong class="price">$0</strong>
+          </div>
+          <ul class="check-list">
+            <li>Choose the last 10, 20, or 30 Q&A pairs</li>
+            <li>TXT export</li>
+            <li>Search Questions &amp; Answers</li>
+            <li>Copy Questions</li>
+            <li>Copy Answers</li>
+            <li>Local processing</li>
+            <li>No account required</li>
+          </ul>
+          <a
+            class="button button--primary button--wide"
+            href="/downloads/chatgpt-session-saver-demo.zip"
+            download
+          >
+            Download Free Demo
+          </a>
+          <small>ZIP · Version 2.47 · 33 KB</small>
+        </article>
+
+        <article class="pricing-card pricing-card--featured">
+          <div class="pricing-card__header">
+            <div>
+              <span class="plan-label">Full Version</span>
+              <h3>Unlimited exports for long conversations</h3>
+            </div>
+            <div class="price-wrap">
+              <strong class="price">$9</strong>
+              <small>Lifetime</small>
+            </div>
+          </div>
+          <ul class="check-list">
+            <li>Unlimited Q&A pairs</li>
+            <li>Export entire long ChatGPT conversations</li>
+            <li>Export selected sections</li>
+            <li>Start from current position</li>
+            <li>TXT export</li>
+            <li>Search Questions &amp; Answers</li>
+            <li>Future updates included</li>
+            <li>One-time payment, no subscription</li>
+          </ul>
+          <a class="button button--buy button--wide" href="#buy">
+            Buy Full Version — $9
+          </a>
+          <small>Early access available while payment is being connected</small>
+        </article>
+      </div>
+    </section>
+
     <section id="how-it-works" class="section two-column">
       <div>
         <p class="eyebrow">What it does</p>
         <h2>Turn messy long chats into reusable notes</h2>
         <p>
-          ChatGPT Session Saver extracts your conversation from the active
-          ChatGPT page and organizes it into separate Questions and Answers.
-          This makes long research sessions easier to save, search, review, and
-          reuse later.
+          ChatGPT Session Saver is a local ChatGPT conversation exporter. It
+          reads the active conversation and organizes it into separate
+          Questions and Answers, making long research sessions easier to save,
+          search, review, and reuse.
         </p>
       </div>
       <div class="feature-grid">
@@ -80,12 +181,74 @@ const canonical = "/tools/session-saver/";
       </div>
     </section>
 
-    <section class="screenshot-section" aria-label="Extension interface preview">
-      <img
-        src="/images/tools/session-saver/session-saver-wide.webp"
-        alt="ChatGPT Session Saver interface with export controls and extracted Q&A pairs"
-        loading="lazy"
-      />
+    <section id="workflow" class="section workflow-section">
+      <div class="section-heading">
+        <p class="eyebrow">See the workflow</p>
+        <h2>From a long ChatGPT thread to a local TXT file</h2>
+        <p>
+          Choose the export scope, watch the Q&A pairs appear, review the
+          result, and save the structured conversation locally.
+        </p>
+      </div>
+      <div class="case-gallery product-workflow-gallery" aria-label="ChatGPT Session Saver export workflow">
+        <img src="/images/tools/session-saver/workflow/01-choose-export-scope.webp" alt="Choose whether to export the entire chat, the last 10, 20, or 30 Q&A pairs, or start from the current position" width="1280" height="765" loading="lazy" />
+        <img src="/images/tools/session-saver/workflow/02-extraction-in-progress.webp" alt="ChatGPT Session Saver extracting questions and answers from a long active conversation" width="1280" height="768" loading="lazy" />
+        <img src="/images/tools/session-saver/workflow/03-review-qa-pairs.webp" alt="Review extracted ChatGPT questions and answers before exporting" width="1280" height="768" loading="lazy" />
+        <img src="/images/tools/session-saver/workflow/04-export-txt.webp" alt="TXT export completed and downloaded from ChatGPT Session Saver" width="1230" height="800" loading="lazy" />
+        <img src="/images/tools/session-saver/workflow/05-open-local-txt.webp" alt="The exported ChatGPT conversation opened as a local structured TXT file" width="1280" height="744" loading="lazy" />
+      </div>
+    </section>
+
+    <section id="install" class="section installation-section">
+      <div class="section-heading">
+        <p class="eyebrow">Free demo</p>
+        <h2>How to install the demo</h2>
+        <p>
+          The demo is installed as an unpacked Chrome extension while the Chrome
+          Web Store version is under review.
+        </p>
+      </div>
+      <ol class="installation-steps">
+        <li><span>1</span><p>Download the ZIP file.</p></li>
+        <li><span>2</span><p>Unzip it.</p></li>
+        <li><span>3</span><p>Open Chrome and go to <code>chrome://extensions</code>.</p></li>
+        <li><span>4</span><p>Enable Developer Mode.</p></li>
+        <li><span>5</span><p>Click <strong>Load unpacked</strong>.</p></li>
+        <li><span>6</span><p>Select the unzipped <code>chatgpt-session-saver-demo</code> folder.</p></li>
+      </ol>
+      <div class="installation-note">
+        <strong>Note:</strong> The Chrome Web Store version is currently under review.
+      </div>
+    </section>
+
+    <section id="buy" class="section buy-section">
+      <div>
+        <p class="eyebrow">Lifetime license</p>
+        <h2>Buy Full Version</h2>
+        <p>
+          The full version will be available as a one-time $9 lifetime license.
+          Payment is being connected; early access is available directly.
+        </p>
+      </div>
+      <div class="buy-panel">
+        <ul class="check-list">
+          <li>Unlimited exports</li>
+          <li>Built for very long ChatGPT conversations</li>
+          <li>Future updates included</li>
+          <li>No subscription</li>
+        </ul>
+        <div class="buy-actions">
+          <a
+            class="button button--buy button--wide"
+            href="mailto:ivangetmanov@icloud.com?subject=ChatGPT%20Session%20Saver%20early%20access"
+          >
+            Contact for Early Access
+          </a>
+          <a class="text-link" href="https://t.me/getmanov_marketing">
+            Or contact me on Telegram
+          </a>
+        </div>
+      </div>
     </section>
 
     <section class="section guide-card">
@@ -122,18 +285,12 @@ const canonical = "/tools/session-saver/";
     <section class="section faq">
       <p class="eyebrow">FAQ</p>
       <h2>Common questions</h2>
-      <details open>
-        <summary>Does it store my conversations on a server?</summary>
-        <p>No. Saved sessions are stored locally in your browser/device.</p>
-      </details>
-      <details>
-        <summary>What format does it export?</summary>
-        <p>The extension exports conversations as TXT files structured around question-and-answer pairs.</p>
-      </details>
-      <details>
-        <summary>Why does it need browser permissions?</summary>
-        <p>It needs access to the active ChatGPT tab to read the conversation you explicitly choose to save.</p>
-      </details>
+      {faqItems.map((item, index) => (
+        <details open={index === 0}>
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
     </section>
   </section>
 
@@ -169,17 +326,22 @@ const canonical = "/tools/session-saver/";
     .hero-shell,
     .trust-strip,
     .section,
-    .screenshot-section {
+    .workflow-section {
       max-width: 1180px;
       margin: 0 auto;
     }
 
     .hero-shell {
       display: grid;
-      grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1.18fr);
+      grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
       gap: 34px;
       align-items: center;
       padding: 34px 0 42px;
+    }
+
+    .hero-copy,
+    .hero-visual {
+      min-width: 0;
     }
 
     .eyebrow {
@@ -200,9 +362,11 @@ const canonical = "/tools/session-saver/";
 
     .hero-copy h1 {
       margin-bottom: 20px;
-      font-size: clamp(56px, 9vw, 118px);
-      line-height: 0.9;
-      letter-spacing: -0.07em;
+      max-width: 620px;
+      font-size: clamp(44px, 4.9vw, 70px);
+      line-height: 0.94;
+      letter-spacing: -0.06em;
+      text-wrap: balance;
     }
 
     .lead {
@@ -219,7 +383,17 @@ const canonical = "/tools/session-saver/";
       margin-top: 28px;
     }
 
+    .hero-note {
+      max-width: 660px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
     .button {
+      align-items: center;
+      justify-content: center;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: #fff;
@@ -228,16 +402,36 @@ const canonical = "/tools/session-saver/";
       font-weight: 850;
       padding: 12px 18px;
       text-decoration: none;
+      transition:
+        transform 150ms ease,
+        box-shadow 150ms ease,
+        background-color 150ms ease;
     }
 
-    .button--primary {
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .session-saver-page .button--primary {
       border-color: var(--green-dark);
       background: var(--green-dark);
       color: #fff;
     }
 
+    .session-saver-page .button--buy {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(9, 20, 38, 0.18);
+    }
+
+    .button--wide {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: auto;
+    }
+
     .hero-visual img,
-    .screenshot-section img,
     .split-card img {
       display: block;
       width: 100%;
@@ -280,6 +474,10 @@ const canonical = "/tools/session-saver/";
       padding: 76px 0 0;
     }
 
+    .section-heading {
+      max-width: 840px;
+    }
+
     .two-column,
     .split-card {
       display: grid;
@@ -298,6 +496,104 @@ const canonical = "/tools/session-saver/";
     .section p {
       color: var(--muted);
       font-size: 19px;
+    }
+
+    .pricing-section {
+      padding-top: 58px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .pricing-card {
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 24px 70px rgba(9, 20, 38, 0.08);
+      padding: clamp(24px, 4vw, 36px);
+    }
+
+    .pricing-card--featured {
+      border: 2px solid var(--green-dark);
+      background:
+        radial-gradient(circle at 100% 0, rgba(54, 168, 115, 0.16), transparent 34%),
+        #fff;
+    }
+
+    .pricing-card__header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .plan-label {
+      color: var(--green-dark);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .pricing-card h3 {
+      max-width: 420px;
+      margin: 10px 0 0;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+    }
+
+    .price {
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 0.9;
+      letter-spacing: -0.06em;
+    }
+
+    .price-wrap {
+      text-align: right;
+    }
+
+    .price-wrap small,
+    .pricing-card > small {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pricing-card > small {
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 12px;
+      margin: 28px 0 30px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      position: relative;
+      margin: 0;
+      padding-left: 30px;
+      line-height: 1.4;
+    }
+
+    .check-list li::before {
+      content: "✓";
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: var(--green-dark);
+      font-weight: 950;
     }
 
     .feature-grid {
@@ -334,8 +630,116 @@ const canonical = "/tools/session-saver/";
       font-size: 16px;
     }
 
-    .screenshot-section {
-      padding-top: 76px;
+    .workflow-section .section-heading {
+      margin-bottom: 30px;
+    }
+
+    .workflow-section :global(.case-gallery-shell) {
+      width: 100%;
+      margin: 0;
+      transform: none;
+    }
+
+    .workflow-section :global(.case-gallery.case-gallery--carousel) {
+      background: #0b1019;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .workflow-section :global(.case-gallery.case-gallery--carousel .case-gallery__image) {
+      height: min(72vh, 720px);
+      min-height: 460px;
+      padding: 18px;
+      object-fit: contain;
+    }
+
+    .installation-section {
+      max-width: 980px;
+    }
+
+    .installation-steps {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 30px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .installation-steps li {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--panel);
+      padding: 18px;
+    }
+
+    .installation-steps span {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green-dark);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .installation-steps p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 17px;
+    }
+
+    .installation-note {
+      margin-top: 16px;
+      border-radius: 18px;
+      background: #e7f3ed;
+      color: var(--green-dark);
+      padding: 16px 18px;
+    }
+
+    .buy-section {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      gap: 34px;
+      align-items: center;
+      scroll-margin-top: 28px;
+    }
+
+    .buy-panel {
+      border-radius: 30px;
+      background: var(--ink);
+      color: #fff;
+      padding: clamp(24px, 4vw, 38px);
+      box-shadow: 0 28px 80px rgba(9, 20, 38, 0.2);
+    }
+
+    .buy-panel .check-list {
+      margin-top: 0;
+    }
+
+    .buy-panel .check-list li::before {
+      color: #72d1ae;
+    }
+
+    .session-saver-page .buy-panel .button--buy {
+      border-color: #fff;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .buy-actions {
+      display: grid;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .buy-actions .text-link {
+      color: #9ee2ca;
     }
 
     .split-card {
@@ -371,12 +775,18 @@ const canonical = "/tools/session-saver/";
       .hero-shell,
       .two-column,
       .split-card,
-      .trust-strip {
+      .trust-strip,
+      .pricing-grid,
+      .buy-section {
         grid-template-columns: 1fr;
       }
 
       .hero-shell {
         padding-top: 18px;
+      }
+
+      .pricing-card {
+        min-height: 0;
       }
     }
 
@@ -389,8 +799,28 @@ const canonical = "/tools/session-saver/";
         grid-template-columns: 1fr;
       }
 
+      .installation-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        display: grid;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .pricing-card__header {
+        display: grid;
+      }
+
+      .price-wrap {
+        text-align: left;
+      }
+
       .hero-visual img,
-      .screenshot-section img,
       .split-card img {
         border-radius: 20px;
       }

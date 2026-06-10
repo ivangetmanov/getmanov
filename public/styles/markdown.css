@@ -21,6 +21,65 @@
   margin: 20px auto;
 }
 
+.prose h2,
+.prose h3 {
+  scroll-margin-top: 96px;
+}
+
+.prose .article-visual {
+  width: min(920px, calc(100vw - 32px));
+  margin: 34px 50%;
+  transform: translateX(-50%);
+}
+
+.prose .article-visual img {
+  width: 100%;
+  margin: 0;
+  border: 1px solid #e0e7e3;
+  border-radius: 18px;
+  background: #f7faf8;
+  box-shadow: 0 20px 54px rgba(19, 31, 27, 0.1);
+}
+
+.prose .article-visual figcaption {
+  margin-top: 10px;
+  color: #68706c;
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.prose .qa-example {
+  margin: 30px 0;
+  padding: 24px;
+  border: 1px solid #cfe0d8;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(18, 107, 93, 0.1), transparent 36%),
+    #f5f9f7;
+}
+
+.prose .qa-example__label {
+  display: inline-block;
+  min-width: 34px;
+  margin-right: 8px;
+  color: #126b5d;
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.prose .qa-example p {
+  margin: 0;
+}
+
+.prose .qa-example p + p {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid #d8e5df;
+}
+
 .prose ul, .prose ol { padding-left: 1.2em; }
 .prose li { margin: 0.3em 0; }
 
@@ -577,6 +636,10 @@ body[data-path="/case-studies/seo-case-b2b/"] .prose .case-gallery img {
 }
 
 @media (max-width: 700px) {
+  .prose .article-visual {
+    width: calc(100vw - 20px);
+  }
+
   .prose .b2b-seo-map {
     width: calc(100vw - 20px);
     margin-top: 52px;

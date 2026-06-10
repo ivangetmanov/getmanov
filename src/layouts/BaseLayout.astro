@@ -18,6 +18,8 @@ const galleryPages = new Set([
   "/case-studies/massage/",
   "/case-studies/giorgio/",
   "/case-studies/websites/",
+  "/notes/export-long-chatgpt-chats/",
+  "/tools/session-saver/",
 ]);
 const hasCaseGalleries = galleryPages.has(Astro.url.pathname);
 
@@ -83,6 +85,8 @@ const b2bSeoGuides = [
 const currentPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`;
+const hasArticleNavigation =
+  currentPath.startsWith("/notes/") && currentPath !== "/notes/";
 const b2bSeoPaths = new Set([
   b2bSeoCase.href,
   ...b2bSeoGuides.map((guide) => guide.href),
@@ -138,6 +142,12 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
   </head>
 
   <body data-path={Astro.url.pathname}>
+    {hasArticleNavigation && (
+      <div class="reading-progress" aria-hidden="true">
+        <span class="reading-progress__bar"></span>
+      </div>
+    )}
+
     <a class="skip-link" href="#content">Skip to content</a>
 
     <header class="site-header">
@@ -156,52 +166,70 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
     </header>
 
     <main id="content" class="site-main">
-      <!-- Markdown content is wrapped in .prose. -->
-      <article class="prose">
-        <slot />
-        {hasB2BSeoMap && (
-          <aside class="b2b-seo-map" aria-labelledby="b2b-seo-map-title">
-            <div class="b2b-seo-map__intro">
-              <p class="b2b-seo-map__eyebrow">B2B SEO knowledge map</p>
-              <h2 id="b2b-seo-map-title">Continue through the system</h2>
-              <p>
-                The case study shows the work in practice. These guides break
-                the operating system into reusable decisions.
-              </p>
-            </div>
+      <div
+        class:list={[
+          "article-layout",
+          { "article-layout--with-toc": hasArticleNavigation },
+        ]}
+      >
+        <!-- Markdown content is wrapped in .prose. -->
+        <article id="article-content" class="prose">
+          <slot />
+          {hasB2BSeoMap && (
+            <aside class="b2b-seo-map" aria-labelledby="b2b-seo-map-title">
+              <div class="b2b-seo-map__intro">
+                <p class="b2b-seo-map__eyebrow">B2B SEO knowledge map</p>
+                <h2 id="b2b-seo-map-title">Continue through the system</h2>
+                <p>
+                  The case study shows the work in practice. These guides break
+                  the operating system into reusable decisions.
+                </p>
+              </div>
 
-            <div class="b2b-seo-map__case">
-              {currentPath === b2bSeoCase.href ? (
-                <span aria-current="page">
-                  <strong>{b2bSeoCase.title}</strong>
-                  <small>{b2bSeoCase.description}</small>
-                </span>
-              ) : (
-                <a href={b2bSeoCase.href}>
-                  <strong>{b2bSeoCase.title}</strong>
-                  <small>{b2bSeoCase.description}</small>
-                </a>
-              )}
-            </div>
-
-            <div class="b2b-seo-map__grid">
-              {b2bSeoGuides.map((guide) => (
-                currentPath === guide.href ? (
-                  <span class="b2b-seo-map__item" aria-current="page">
-                    <strong>{guide.title}</strong>
-                    <small>{guide.description}</small>
+              <div class="b2b-seo-map__case">
+                {currentPath === b2bSeoCase.href ? (
+                  <span aria-current="page">
+                    <strong>{b2bSeoCase.title}</strong>
+                    <small>{b2bSeoCase.description}</small>
                   </span>
                 ) : (
-                  <a class="b2b-seo-map__item" href={guide.href}>
-                    <strong>{guide.title}</strong>
-                    <small>{guide.description}</small>
+                  <a href={b2bSeoCase.href}>
+                    <strong>{b2bSeoCase.title}</strong>
+                    <small>{b2bSeoCase.description}</small>
                   </a>
-                )
-              ))}
-            </div>
+                )}
+              </div>
+
+              <div class="b2b-seo-map__grid">
+                {b2bSeoGuides.map((guide) => (
+                  currentPath === guide.href ? (
+                    <span class="b2b-seo-map__item" aria-current="page">
+                      <strong>{guide.title}</strong>
+                      <small>{guide.description}</small>
+                    </span>
+                  ) : (
+                    <a class="b2b-seo-map__item" href={guide.href}>
+                      <strong>{guide.title}</strong>
+                      <small>{guide.description}</small>
+                    </a>
+                  )
+                ))}
+              </div>
+            </aside>
+          )}
+        </article>
+
+        {hasArticleNavigation && (
+          <aside class="article-toc" aria-labelledby="article-toc-title">
+            <nav>
+              <p id="article-toc-title" class="article-toc__title">
+                Table of contents
+              </p>
+              <ol class="article-toc__list"></ol>
+            </nav>
           </aside>
         )}
-      </article>
+      </div>
     </main>
 
     <footer id="contact" class="site-footer">
@@ -239,6 +267,9 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
 
     {hasCaseGalleries && (
       <script is:inline src="/scripts/case-gallery.js" defer></script>
+    )}
+    {hasArticleNavigation && (
+      <script is:inline src="/scripts/article-navigation.js" defer></script>
     )}
   </body>
 </html>

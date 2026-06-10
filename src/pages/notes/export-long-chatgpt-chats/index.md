@@ -7,6 +7,11 @@ canonical: "/notes/export-long-chatgpt-chats/"
 
 # How to Export Long ChatGPT Chats Without Losing Context
 
+<figure class="article-visual">
+  <img src="/images/notes/export-long-chatgpt-chats/hero-chat-to-qa-txt.webp" alt="A messy long chat transformed into structured question and answer notes and a local TXT file" width="1672" height="941" fetchpriority="high" />
+  <figcaption>From a long conversational thread to structured Q&A notes you can keep locally.</figcaption>
+</figure>
+
 Long ChatGPT conversations are useful until you need to save, search, reuse, or share them.
 
 A short chat can be copied manually. A long chat is different. Once a conversation grows into dozens or hundreds of messages, copy-paste becomes slow, formatting breaks, context gets messy, and it becomes hard to separate your questions from ChatGPT's answers.
@@ -26,6 +31,11 @@ For long conversations, the most useful export is usually not a screenshot or PD
 Exporting a short ChatGPT conversation is easy. You select the text, copy it, and paste it somewhere else.
 
 Long chats create different problems.
+
+<figure class="article-visual">
+  <img src="/images/notes/export-long-chatgpt-chats/long-chat-export-problem.webp" alt="Diagram showing a long ChatGPT chat becoming hard to reuse after manual copy-paste causes missing messages, broken formatting, and lost context" width="1448" height="1086" loading="lazy" />
+  <figcaption>The problem is not only downloading the chat. It is preserving enough structure to reuse it later.</figcaption>
+</figure>
 
 ### 1. Manual copy-paste becomes painful
 
@@ -96,6 +106,11 @@ Here is the practical comparison.
 | Print to PDF | Human-readable archive | Harder to reuse, edit, or structure |
 | Browser extension or local exporter | Saving one active long chat | Depends on extension quality and permissions |
 | ChatGPT Session Saver | Long chats, Q&A structure, TXT export, local saving | TXT-first, not a full account archive |
+
+<figure class="article-visual">
+  <img src="/images/notes/export-long-chatgpt-chats/export-methods-compared.webp" alt="Visual comparison of OpenAI data export, shared links, copy-paste, PDF, browser extensions, and Session Saver" width="1448" height="1086" loading="lazy" />
+  <figcaption>Different export methods solve different jobs. Session Saver focuses on one active chat, local reuse, and Q&A structure.</figcaption>
+</figure>
 
 There is no single best method for everyone. The right method depends on what you want to do with the chat after exporting it.
 
@@ -308,6 +323,14 @@ Use this if you want one long active ChatGPT conversation saved as reusable text
 6. Export the result as a clean TXT file.
 7. Store it in your notes, project folder, knowledge base, or local archive.
 
+<div class="case-gallery" aria-label="ChatGPT Session Saver export workflow">
+  <img src="/images/tools/session-saver/workflow/01-choose-export-scope.webp" alt="Choose whether to export the entire chat, the last 10, 20, or 30 Q&A pairs, or start from the current position" width="1280" height="765" loading="lazy" />
+  <img src="/images/tools/session-saver/workflow/02-extraction-in-progress.webp" alt="ChatGPT Session Saver extracting questions and answers from a long active conversation" width="1280" height="768" loading="lazy" />
+  <img src="/images/tools/session-saver/workflow/03-review-qa-pairs.webp" alt="Review extracted ChatGPT questions and answers before exporting" width="1280" height="768" loading="lazy" />
+  <img src="/images/tools/session-saver/workflow/04-export-txt.webp" alt="TXT export completed and downloaded from ChatGPT Session Saver" width="1230" height="800" loading="lazy" />
+  <img src="/images/tools/session-saver/workflow/05-open-local-txt.webp" alt="The exported ChatGPT conversation opened as a local structured TXT file" width="1280" height="744" loading="lazy" />
+</div>
+
 Best for: long conversations, structured notes, local saving, and reuse.
 
 ## What format should you choose: TXT, Markdown, PDF, or JSON?
@@ -320,6 +343,11 @@ The export format matters because it changes how useful the saved conversation w
 | Markdown | Notes, documentation, Obsidian, developer workflows | Requires cleaner formatting |
 | PDF | Reading, sharing, visual preservation | Harder to edit and reuse |
 | JSON | Developers, data processing, automation | Not comfortable for normal reading |
+
+<figure class="article-visual">
+  <img src="/images/notes/export-long-chatgpt-chats/export-formats-by-use-case.webp" alt="Four cards comparing TXT, Markdown, PDF, and JSON export formats by their best use cases" width="1448" height="1086" loading="lazy" />
+  <figcaption>Choose the format based on what you plan to do after the export, not only how it looks today.</figcaption>
+</figure>
 
 ### TXT
 
@@ -399,6 +427,11 @@ A cloud export or cloud backup may be convenient, but it also means your convers
 
 For sensitive chats, local-first tools are usually safer and easier to reason about. ChatGPT Session Saver's data handling is described in its [Privacy Policy](/tools/session-saver/privacy-policy/).
 
+<figure class="article-visual">
+  <img src="/images/notes/export-long-chatgpt-chats/privacy-local-vs-cloud.webp" alt="Privacy diagram comparing a local browser-to-device TXT export with a cloud export that passes through an external server" width="1448" height="1086" loading="lazy" />
+  <figcaption>A local-first workflow keeps the conversation inside your browser and writes the export directly to your device.</figcaption>
+</figure>
+
 ### Shared links are not backups
 
 A shared link is useful, but it is not the same as owning a local copy.
@@ -415,8 +448,15 @@ A ChatGPT answer without the original question can become confusing later. You m
 
 A Q&A structure preserves the reasoning path.
 
-> **Question:** How can I export a long ChatGPT conversation?  
-> **Answer:** You can use official data export for full account history, a shared link for sharing, PDF for reading, or a local exporter for saving one active long chat as reusable text.
+<div class="qa-example" aria-label="Example of a structured question and answer export">
+  <p><span class="qa-example__label">Question</span>How can I export a long ChatGPT conversation?</p>
+  <p><span class="qa-example__label">Answer</span>You can use official data export for full account history, a shared link for sharing, PDF for reading, or a local exporter for saving one active long chat as reusable text.</p>
+</div>
+
+<figure class="article-visual">
+  <img src="/images/tools/session-saver/workflow/03-review-qa-pairs.webp" alt="Before export, ChatGPT Session Saver presents the conversation as separate searchable question and answer columns" width="1280" height="768" loading="lazy" />
+  <figcaption>The original conversation becomes separate, searchable question and answer columns before it is saved.</figcaption>
+</figure>
 
 This format is easier to:
 
