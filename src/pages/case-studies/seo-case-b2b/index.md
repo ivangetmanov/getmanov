@@ -448,21 +448,23 @@ And here I don't even take into account repeat sales to these new customers – 
 
 <h2 id="chapter-6">Chapter 6: Thoughts After the First Year of Work</h2>
 
-_**First of all,** I hoped that I could push this website to results faster! Yeah, I red a lot of articles about timing in SEO — that it starts from 6 months and might even take longer period of time for first results to be seen. So, that was happened… As you saw on the screenshots whatever I tried to do, I only met the 6-month standard period...
+<aside class="case-reflection">
+  <p><strong>First of all,</strong> I hoped that I could push this website to results faster! Yeah, I red a lot of articles about timing in SEO — that it starts from 6 months and might even take longer period of time for first results to be seen. So, that was happened… As you saw on the screenshots whatever I tried to do, I only met the 6-month standard period...</p>
 
-**Second thing is I really understood for sure:** finding YOUR client, which wants to make a result and not tell me what to do. So, I really can't thank Denis enough for trust in me and giving me complete freedom in each project what I am doing for him. Of course, he has also a great return on investments working with me, but nevertheless, thank Denis, client one of a thousands!
+  <p><strong>Second thing is I really understood for sure:</strong> finding YOUR client, which wants to make a result and not tell me what to do. So, I really can't thank Denis enough for trust in me and giving me complete freedom in each project what I am doing for him. Of course, he has also a great return on investments working with me, but nevertheless, thank Denis, client one of a thousands!</p>
 
-**SEO for B2B is unique compared to B2C.** And you need to deep understand the vibe of B2B markets at least, and your particular B2B niche as well. Sometimes it requires deep understanding of technical information of your product in addition to SEO-knowledges which you also need to have.
+  <p><strong>SEO for B2B is unique compared to B2C.</strong> And you need to deep understand the vibe of B2B markets at least, and your particular B2B niche as well. Sometimes it requires deep understanding of technical information of your product in addition to SEO-knowledges which you also need to have.</p>
 
-**Marketing principles is similar** from Facebook Ads (which I had been working for 6 years) to making YouTube videos for companies to SEO in B2B or B2C markets. \[I have an article about these principles here.\]
-**I studied a lot of articles during my work on this project,** I watched tons of videos, and have to say: 95% of them are bullshit, really. Real specialists, professionals usually don't have 100k subscribers on their channels and rarely getting to the search results page on Google or YouTube. And that's your chance — to study strategies how to find and work successfully with professionals ([like this guy](https://www.youtube.com/@TopicalAuthority)). That will bring you astonishing results you can't even imagine. But difference between aka "marketing factories" and "unique specialists" I will show in my next article: «something like Human of FreeWorkdom — the specialist of new Era".
-_
+  <p><strong>Marketing principles is similar</strong> from Facebook Ads (which I had been working for 6 years) to making YouTube videos for companies to SEO in B2B or B2C markets. [I have an article about these principles here.]</p>
+
+  <p><strong>I studied a lot of articles during my work on this project,</strong> I watched tons of videos, and have to say: 95% of them are bullshit, really. Real specialists, professionals usually don't have 100k subscribers on their channels and rarely getting to the search results page on Google or YouTube. And that's your chance — to study strategies how to find and work successfully with professionals (<a href="https://www.youtube.com/@TopicalAuthority">like this guy</a>). That will bring you astonishing results you can't even imagine. But difference between aka "marketing factories" and "unique specialists" I will show in my next article: «something like Human of FreeWorkdom — the specialist of new Era".</p>
+</aside>
 
 <h2 id="bonus">Bonus: B2B SEO Tactics I Discovered</h2>
 
 If you are looking for MORE things, which most likely no one of your B2B competitors do – have a look at my ideas!
 
-**Trick 1: Manipulating Search Result**
+<h3 class="case-trick">Trick 1: Manipulating Search Result</h3>
 
 When I made YouTube channel for myself and for one of my clients, I used techniques for boost performance of the video. Here you can do the same thing — just open in couple of days Google and write down keyword which you're currently working on, and try to pretend that you are a real user. Have a look on competitors websites and after this go to your own website from search results.
 
@@ -476,13 +478,13 @@ When I made YouTube channel for myself and for one of my clients, I used techniq
 
 4\. It works for B2B only. May be for some B2C niches also — but it requires low-frequency keywords with low competition there.
 
-**Trick 2: Email at the Head**
+<h3 class="case-trick">Trick 2: Email at the Head</h3>
 
 If you receive 95% of leads through mailing, why are you making standard forms with number, name etc? From different B2B projects which I worked with, I saw one pattern — through mail you get real clients. 99% chance. Use this hint to make more conversations through greater emphasis in any forms or design on the ability to send an email!
 
 **Don't forget:** [use this JavaScript tracking guide](/tools/track-email-copy/) to measure when a person copies an email address and opens their own mail client.
 
-**3 trick: crush your opponents with power of... IMAGES SEO. And your images will get you more traffic from GOOGLE IMAGES also**
+<h3 class="case-trick">3 trick: crush your opponents with power of... IMAGES SEO. And your images will get you more traffic from GOOGLE IMAGES also</h3>
 
 Almost nobody think about traffic which you can get through proper seo for images. But this might become powerful instrument, especially if you use it right!
 
@@ -490,12 +492,11 @@ For implementation, use descriptive filenames, useful alt text, correct dimensio
 
 <h2 id="conclusions">Conclusions</h2>
 
-_Wow! Have you really read up to this point? Cool! Thank you, and I hope that this case will help you in your work or business!
+<aside class="case-reflection case-reflection--cta">
+  <p>Wow! Have you really read up to this point? Cool! Thank you, and I hope that this case will help you in your work or business!</p>
 
-And since you have mastered all these 5782 words, here is a free gift from me personally...
-If you need a CEO that your competitors do not have...
-If you are looking for unique solutions that your competitors did not think of...
-If you want to aggressively squeeze the market share of your competitors (and you like my approach to solving problems of this kind), [write to me](mailto:ivangetmanov@icloud.com)._
+  <p>And since you have mastered all these 5782 words, here is a free gift from me personally… If you need an SEO specialist that your competitors do not have… If you are looking for unique solutions that your competitors did not think of… If you want to aggressively squeeze the market share of your competitors (and you like my approach to solving problems of this kind), <a href="mailto:ivangetmanov@icloud.com">write to me</a>.</p>
+</aside>
 
 <div class="case-gallery case-gallery--portraits" aria-label="Getmanov Marketing team">
   <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.webp" alt="Getmanov Marketing team at work" loading="lazy" />

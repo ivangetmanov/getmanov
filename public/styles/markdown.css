@@ -39,6 +39,31 @@
 }
 .prose code { font-size: 0.95em; }
 
+.prose table {
+  width: 100%;
+  display: block;
+  margin: 1.6em 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 16px;
+}
+
+.prose th,
+.prose td {
+  min-width: 150px;
+  padding: 12px 14px;
+  border: 1px solid #dce3df;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background: #f1f5f3;
+  color: #17211e;
+  font-weight: 800;
+}
+
 .prose img[src="/images/ivan-getmanov.webp"] {
   width: min(240px, 100%);
   aspect-ratio: 3 / 4;
@@ -356,6 +381,56 @@ body[data-path="/case-studies/seo-case-b2b/"] .prose blockquote {
   line-height: 1.25;
 }
 
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-reflection {
+  margin: 2.8rem 0;
+  padding: clamp(22px, 4vw, 38px);
+  border: 1px solid #cfded7;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(18, 107, 93, 0.12), transparent 34%),
+    #f2f7f4;
+  box-shadow: 0 20px 52px rgba(19, 31, 27, 0.08);
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-reflection p {
+  margin: 0;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-reflection p + p {
+  margin-top: 1.15em;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-reflection strong {
+  color: #126b5d;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-reflection--cta {
+  background:
+    radial-gradient(circle at 100% 0, rgba(72, 191, 159, 0.2), transparent 38%),
+    #171f1d;
+  border-color: #171f1d;
+  color: #f7faf8;
+  font-size: clamp(20px, 2.6vw, 27px);
+  line-height: 1.5;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-reflection--cta a {
+  color: #8ee0c8;
+  font-weight: 800;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose h3.case-trick {
+  margin: 3.5rem 0 1.3rem;
+  padding: 18px 22px;
+  border-left: 6px solid #126b5d;
+  border-radius: 0 16px 16px 0;
+  background: #eef5f1;
+  color: #174b3f;
+  font-size: clamp(25px, 3vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
 body[data-path="/case-studies/seo-case-b2b/"] .prose ol {
   list-style: none;
   counter-reset: tilda-list;
@@ -366,12 +441,15 @@ body[data-path="/case-studies/seo-case-b2b/"] .prose ol {
 body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li {
   counter-increment: tilda-list;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
   min-height: 58px;
   margin: 12px 0;
   padding: 17px 20px 17px 76px;
   border: 1px solid #dce3df;
   border-radius: 16px;
   background: #fbfcfb;
+  overflow-wrap: anywhere;
 }
 
 body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li::before {
@@ -557,6 +635,16 @@ body[data-path="/case-studies/seo-case-b2b/"] .prose .case-gallery img {
   }
 
   body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li {
-    padding-left: 64px;
+    min-height: 54px;
+    padding: 15px 14px 15px 58px;
+    border-radius: 14px;
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li::before {
+    top: 13px;
+    left: 12px;
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
   }
 }
