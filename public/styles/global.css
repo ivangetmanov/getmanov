@@ -21,7 +21,7 @@ a:hover{opacity:.85}
 .skip-link:focus{left:20px;top:20px;width:auto;height:auto;background:#fff;padding:10px;border:1px solid var(--line);border-radius:10px;z-index:10}
 
 .site-header{
-  position:sticky;top:0;background:rgba(255,255,255,.9);
+  position:sticky;z-index:90;top:0;background:rgba(255,255,255,.9);
   backdrop-filter:saturate(180%) blur(10px);
   border-bottom:1px solid var(--line);
 }
