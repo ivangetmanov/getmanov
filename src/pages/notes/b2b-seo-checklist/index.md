@@ -5,7 +5,7 @@ description: "A practical checklist for building and operating a B2B SEO program
 canonical: "/notes/b2b-seo-checklist/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov" />](/)
 
 # B2B SEO Checklist: From Baseline to Revenue
 

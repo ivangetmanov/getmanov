@@ -5,12 +5,12 @@ description: "A long-form B2B SEO case connecting technical improvements, niche 
 canonical: "/case-studies/seo-case-b2b/"
 ---
 
-[<img src="/images/tild3639-3865-4435-b133-353933313234__2020-11-17__1616.png" alt="Getmanov Marketing" />](/)
+[<img src="/images/tild3639-3865-4435-b133-353933313234__2020-11-17__1616.webp" alt="Getmanov Marketing" />](/)
 
 # Make Your Competitors Suffer: SEO for B2B Full Case Study
 
 <div class="case-gallery case-gallery--hero" aria-label="B2B SEO case study cover">
-  <img src="/images/tild3765-3162-4334-b337-336639663863___.png" alt="3D render of rubber bushings produced by the client" loading="lazy" />
+  <img src="/images/tild3765-3162-4334-b337-336639663863___.webp" alt="3D render of rubber bushings produced by the client" loading="lazy" />
 </div>
 
 As a marketing professional, I'm always on the lookout for a new challenge to push my skills to the limit. And when I decided to tackle the world of website SEO, I knew I was in for an exciting ride. In this independent case study, I'll be sharing with you how I helped a Russian B2B client achieve significant success through SEO promotion. And even show you REAL figures! I could not find a single similar case in the B2B sphere with concrete ROI and revenue growth numbers from SEO improvements.
@@ -46,8 +46,8 @@ The goal this time was straightforward: Rentgen aimed to explore a new profitabl
 
 <div class="case-gallery case-gallery--hero" aria-label="Examples of rubber bushings">
   <img src="/images/tild6638-6365-4366-b366-326130383836__1430082368_898989898.jpeg" alt="Collection of industrial rubber bushings" loading="lazy" />
-  <img src="/images/tild3239-3935-4164-b733-653132336234__.png" alt="Assorted rubber bushings in a product tray" loading="lazy" />
-  <img src="/images/tild3030-3734-4763-a531-353361623965__.png" alt="Individual black rubber bushing" loading="lazy" />
+  <img src="/images/tild3239-3935-4164-b733-653132336234__.webp" alt="Assorted rubber bushings in a product tray" loading="lazy" />
+  <img src="/images/tild3030-3734-4763-a531-353361623965__.webp" alt="Individual black rubber bushing" loading="lazy" />
   <img src="/images/tild3936-6634-4136-a435-363564656462__imgonline-com-ua-res.jpg" alt="White industrial bushings" loading="lazy" />
 </div>
 
@@ -85,7 +85,7 @@ The thing is – of course, if you want to make really great results, you need f
 
 So, after few weeks of weighing all the pros and cons, I made a strategy:
 
-<img src="/images/tild3539-3162-4465-a363-306261646261__2023-05-25__232336.png" alt="" />
+<img src="/images/tild3539-3162-4465-a363-306261646261__2023-05-25__232336.webp" alt="" />
 
 We discussed in detail the strategy that I came up with. Then I prescribed all the works that need to be included in the contract in order to achieve the desired goals, signed it and I started working.
 
@@ -210,11 +210,11 @@ Yandex Search
 Of course, not with every product it goes so smoothly. Sometimes there are competitors :)
 
 <div class="case-gallery case-gallery--hero" aria-label="New SEO landing pages and their search positions">
-  <img src="/images/tild3831-3039-4534-b434-613234316639__2023-04-02__231249.png" alt="New SEO landing pages in the site structure" loading="lazy" />
-  <img src="/images/tild3439-6238-4437-b261-666464303737__2023-04-02__231343.png" alt="Expanded product page structure for SEO" loading="lazy" />
-  <img src="/images/tild3164-3031-4865-b963-663131353139__2023-04-04__134836.png" alt="New page ranking in Google search" loading="lazy" />
-  <img src="/images/tild3039-3634-4535-b332-346136643836__2023-04-04__134847.png" alt="Additional page ranking in Google search" loading="lazy" />
-  <img src="/images/tild3930-6362-4366-b637-313631313766__2023-04-04__135410.png" alt="New page ranking in Yandex search" loading="lazy" />
+  <img src="/images/tild3831-3039-4534-b434-613234316639__2023-04-02__231249.webp" alt="New SEO landing pages in the site structure" loading="lazy" />
+  <img src="/images/tild3439-6238-4437-b261-666464303737__2023-04-02__231343.webp" alt="Expanded product page structure for SEO" loading="lazy" />
+  <img src="/images/tild3164-3031-4865-b963-663131353139__2023-04-04__134836.webp" alt="New page ranking in Google search" loading="lazy" />
+  <img src="/images/tild3039-3634-4535-b332-346136643836__2023-04-04__134847.webp" alt="Additional page ranking in Google search" loading="lazy" />
+  <img src="/images/tild3930-6362-4366-b637-313631313766__2023-04-04__135410.webp" alt="New page ranking in Yandex search" loading="lazy" />
 </div>
 
 ### Technique 2: Repair What Is Broken
@@ -249,9 +249,9 @@ Now we have these figures :)
 
 <div class="case-gallery case-gallery--hero" aria-label="CTR experiment results">
   <img src="/images/tild3564-3039-4934-a437-386631656132__photo-output_4.jpg" alt="CTR before the title and description update" loading="lazy" />
-  <img src="/images/tild3631-3038-4665-b032-343332383536__2023-04-03__214430.png" alt="CTR experiment result after the update" loading="lazy" />
-  <img src="/images/tild6231-6361-4332-b661-373531623363__2023-04-03__214455.png" alt="Continued CTR growth after the experiment" loading="lazy" />
-  <img src="/images/tild6265-6638-4635-a437-346333303839__2023-04-04__142203.png" alt="Search snippet performance after optimization" loading="lazy" />
+  <img src="/images/tild3631-3038-4665-b032-343332383536__2023-04-03__214430.webp" alt="CTR experiment result after the update" loading="lazy" />
+  <img src="/images/tild6231-6361-4332-b661-373531623363__2023-04-03__214455.webp" alt="Continued CTR growth after the experiment" loading="lazy" />
+  <img src="/images/tild6265-6638-4635-a437-346333303839__2023-04-04__142203.webp" alt="Search snippet performance after optimization" loading="lazy" />
 </div>
 
 ### Technique 6: Refresh Industry Directory Links
@@ -261,9 +261,9 @@ Yeah, excluding the fact these link is free, easy to set, also they could just g
 Results:** unclear, can say for sure right now, but I made this only on couple websites and need more time to collect data!
 
 <div class="case-gallery case-gallery--hero" aria-label="Industry directory backlink updates">
-  <img src="/images/tild6666-6533-4262-b962-656333643066__2023-04-03__225349.png" alt="Updated company listing in an industry directory" loading="lazy" />
-  <img src="/images/tild3833-6166-4639-b764-313463326266__2023-04-03__225007.png" alt="Updated product information in an industry directory" loading="lazy" />
-  <img src="/images/tild3234-3531-4238-b162-333932323866__2023-04-03__224641.png" alt="Directory backlink and company profile update" loading="lazy" />
+  <img src="/images/tild6666-6533-4262-b962-656333643066__2023-04-03__225349.webp" alt="Updated company listing in an industry directory" loading="lazy" />
+  <img src="/images/tild3833-6166-4639-b764-313463326266__2023-04-03__225007.webp" alt="Updated product information in an industry directory" loading="lazy" />
+  <img src="/images/tild3234-3531-4238-b162-333932323866__2023-04-03__224641.webp" alt="Directory backlink and company profile update" loading="lazy" />
 </div>
 
 ### Technique 7: Build SEO Silos
@@ -279,9 +279,9 @@ First of all, I made these 3 categories
 And after that I made others – and I'll continue this process of making new pages for other keywords as well
 
 <div class="case-gallery case-gallery--hero" aria-label="SEO silo category structure">
-  <img src="/images/tild6664-3066-4862-b737-643063396239__2023-04-04__002115.png" alt="Product structure before SEO categories were added" loading="lazy" />
-  <img src="/images/tild3735-6632-4962-a564-386135366133__2023-04-04__002045.png" alt="First three SEO product categories" loading="lazy" />
-  <img src="/images/tild6632-6265-4663-a339-346139353439__2023-04-04__002100.png" alt="Expanded SEO silo with additional categories" loading="lazy" />
+  <img src="/images/tild6664-3066-4862-b737-643063396239__2023-04-04__002115.webp" alt="Product structure before SEO categories were added" loading="lazy" />
+  <img src="/images/tild3735-6632-4962-a564-386135366133__2023-04-04__002045.webp" alt="First three SEO product categories" loading="lazy" />
+  <img src="/images/tild6632-6265-4663-a339-346139353439__2023-04-04__002100.webp" alt="Expanded SEO silo with additional categories" loading="lazy" />
 </div>
 
 ### Technique 8: Add Products to Search Feeds
@@ -305,7 +305,7 @@ Use this in B2B niches, it's really convenient for the user and better for perfo
 May be 3,26% of raising the characteristic is not something huge, but multiply each small improvement of the site by one fifty (yeah, it's possible to find so many little things to improve) and you will already get very interesting figures
 
 <div class="case-gallery case-gallery--hero" aria-label="Product comparison engagement result">
-  <img src="/images/tild3137-3061-4462-a531-643266386433__2023-04-04__112702.png" alt="Engagement metrics after improving product comparison links" loading="lazy" />
+  <img src="/images/tild3137-3061-4462-a531-643266386433__2023-04-04__112702.webp" alt="Engagement metrics after improving product comparison links" loading="lazy" />
 </div>
 
 ### Technique 11: Create Product Videos and Optimize Them for Search
@@ -321,8 +321,8 @@ Video for the page of Category
 Videos about different rubber products he produces
 
 <div class="case-gallery case-gallery--hero" aria-label="Product video implementation">
-  <img src="/images/tild3865-3632-4232-b161-306436353664__2023-04-04__115231.png" alt="Product video embedded on a rubber bushing category page" loading="lazy" />
-  <img src="/images/tild3463-3136-4335-b332-643738386363__2023-04-04__115252.png" alt="Video library covering different rubber products" loading="lazy" />
+  <img src="/images/tild3865-3632-4232-b161-306436353664__2023-04-04__115231.webp" alt="Product video embedded on a rubber bushing category page" loading="lazy" />
+  <img src="/images/tild3463-3136-4335-b332-643738386363__2023-04-04__115252.webp" alt="Video library covering different rubber products" loading="lazy" />
 </div>
 
 <h2 id="chapter-4">Chapter 4: How Online Visibility Grew Over Time</h2>
@@ -344,17 +344,17 @@ Here you can see the gradual growth of positions on low-frequency queries in Yan
 And here... The difference in the algorithms of different search engines... In fact, gradual growth is also visible, but some pages sometimes fly out of the index, and there are many other problems that have yet to be investigated and eliminated
 
 <div class="case-gallery case-gallery--hero" aria-label="Search visibility growth">
-  <img src="/images/tild3266-6266-4664-a339-353339353036__2023-04-04__140335.png" alt="Gradual ranking growth for low-frequency queries in Yandex" loading="lazy" />
-  <img src="/images/tild3230-3666-4634-b036-333939346338__2023-04-04__140417.png" alt="Search visibility changes across different search engines" loading="lazy" />
+  <img src="/images/tild3266-6266-4664-a339-353339353036__2023-04-04__140335.webp" alt="Gradual ranking growth for low-frequency queries in Yandex" loading="lazy" />
+  <img src="/images/tild3230-3666-4634-b036-333939346338__2023-04-04__140417.webp" alt="Search visibility changes across different search engines" loading="lazy" />
 </div>
 
 ### Positions Growing
 
 <div class="case-gallery case-gallery--hero" aria-label="Keyword position growth">
-  <img src="/images/tild3135-3739-4065-a139-316666336163__2023-04-04__141854.png" alt="Keyword position growth report, first period" loading="lazy" />
-  <img src="/images/tild6134-3936-4136-a634-326236616232__2023-04-04__141834.png" alt="Keyword position growth report, second period" loading="lazy" />
-  <img src="/images/tild3939-6364-4361-b661-303836636265__2023-04-04__141759.png" alt="Keyword position growth report, third period" loading="lazy" />
-  <img src="/images/tild3532-3036-4332-b238-663265306332__2023-04-04__141717.png" alt="Keyword position growth report, fourth period" loading="lazy" />
+  <img src="/images/tild3135-3739-4065-a139-316666336163__2023-04-04__141854.webp" alt="Keyword position growth report, first period" loading="lazy" />
+  <img src="/images/tild6134-3936-4136-a634-326236616232__2023-04-04__141834.webp" alt="Keyword position growth report, second period" loading="lazy" />
+  <img src="/images/tild3939-6364-4361-b661-303836636265__2023-04-04__141759.webp" alt="Keyword position growth report, third period" loading="lazy" />
+  <img src="/images/tild3532-3036-4332-b238-663265306332__2023-04-04__141717.webp" alt="Keyword position growth report, fourth period" loading="lazy" />
 </div>
 
 ### Search Engine Traffic Growing
@@ -372,8 +372,8 @@ The most delicious chapter. Did all these things, some of which even different f
 1\. **All leads come in commercial Mailbox**. Every Mail message are tagged by employees. Sometimes potencial clients call first – but employees ask them to send a mail anyway.
 
 <div class="case-gallery case-gallery--hero" aria-label="Lead collection through the commercial mailbox">
-  <img src="/images/tild3166-6638-4266-a363-323666323262__2023-03-29__155809.png" alt="Commercial mailbox used to collect incoming B2B leads" loading="lazy" />
-  <img src="/images/tild3938-3866-4431-a666-623262366530__2023-03-29__155817.png" alt="Tagged incoming leads in the commercial mailbox" loading="lazy" />
+  <img src="/images/tild3166-6638-4266-a363-323666323262__2023-03-29__155809.webp" alt="Commercial mailbox used to collect incoming B2B leads" loading="lazy" />
+  <img src="/images/tild3938-3866-4431-a666-623262366530__2023-03-29__155817.webp" alt="Tagged incoming leads in the commercial mailbox" loading="lazy" />
 </div>
 
 2\. **To understand, which leads are new** — we use AMOCRM. There we carefully write potential cost of the deal. Also we tag every unsuccessful deal by reason, why it was not succeeded.
@@ -386,10 +386,10 @@ The most delicious chapter. Did all these things, some of which even different f
 3\. **To assess the full impact of SEO** across all categories (even those that were not the focus of my work), all other inquiries from the website were additionally tagged, as I also conducted overall website optimization, including all pages.
 
 <div class="case-gallery case-gallery--hero" aria-label="Lead tagging and CRM analysis">
-  <img src="/images/tild3230-6430-4238-a266-613732623234__2023-05-27__235754.png" alt="Tagged B2B leads in the CRM, first segment" loading="lazy" />
-  <img src="/images/tild3763-3835-4763-b064-386437353665__2023-05-27__235805.png" alt="Tagged B2B leads in the CRM, second segment" loading="lazy" />
-  <img src="/images/tild3263-6162-4562-b162-316632663563__2023-05-27__235948.png" alt="Tagged B2B leads in the CRM, third segment" loading="lazy" />
-  <img src="/images/tild3233-3037-4235-b963-333034393134__2023-05-28__000012.png" alt="Tagged B2B leads in the CRM, fourth segment" loading="lazy" />
+  <img src="/images/tild3230-6430-4238-a266-613732623234__2023-05-27__235754.webp" alt="Tagged B2B leads in the CRM, first segment" loading="lazy" />
+  <img src="/images/tild3763-3835-4763-b064-386437353665__2023-05-27__235805.webp" alt="Tagged B2B leads in the CRM, second segment" loading="lazy" />
+  <img src="/images/tild3263-6162-4562-b162-316632663563__2023-05-27__235948.webp" alt="Tagged B2B leads in the CRM, third segment" loading="lazy" />
+  <img src="/images/tild3233-3037-4235-b963-333034393134__2023-05-28__000012.webp" alt="Tagged B2B leads in the CRM, fourth segment" loading="lazy" />
 </div>
 
 ### Results and Analysis
@@ -397,9 +397,9 @@ The most delicious chapter. Did all these things, some of which even different f
 We have carefully separated all bushing transactions from old customers from all bushing transactions from new customers who came thanks to my work. New customers in the green column: successfully implemented. Almost all other leads in different columns also will go in "successfully implemented" column.
 
 <div class="case-gallery case-gallery--hero" aria-label="SEO-generated customers and revenue analysis">
-  <img src="/images/tild6661-3732-4539-b538-666235656266__2023-05-28__065644.png" alt="New customers generated through SEO in the CRM" loading="lazy" />
-  <img src="/images/tild6464-3030-4466-a135-363331636633__2023-05-28__065742.png" alt="Revenue distribution for SEO-generated customers" loading="lazy" />
-  <img src="/images/tild6665-3530-4736-b239-386365663538__2023-03-29__163142.png" alt="Successful SEO-generated deal in the CRM" loading="lazy" />
+  <img src="/images/tild6661-3732-4539-b538-666235656266__2023-05-28__065644.webp" alt="New customers generated through SEO in the CRM" loading="lazy" />
+  <img src="/images/tild6464-3030-4466-a135-363331636633__2023-05-28__065742.webp" alt="Revenue distribution for SEO-generated customers" loading="lazy" />
+  <img src="/images/tild6665-3530-4736-b239-386365663538__2023-03-29__163142.webp" alt="Successful SEO-generated deal in the CRM" loading="lazy" />
 </div>
 
 the contract was for 1 yearDue to the fact that the client is ready to share any information on the project, I can provide accurate financial data on the project.
@@ -421,7 +421,7 @@ Out of those, there were **41 new clients** and **47** **closed deals**
 (816 199 – 510 000)/510 000\*100% = 60.04% currently
 
 <div class="case-gallery case-gallery--hero" aria-label="Current SEO ROI metrics">
-  <img src="/images/tild6131-6232-4335-b261-306166373434__2023-06-12__014015.png" alt="Current SEO revenue and ROI metrics" loading="lazy" />
+  <img src="/images/tild6131-6232-4335-b261-306166373434__2023-06-12__014015.webp" alt="Current SEO revenue and ROI metrics" loading="lazy" />
 </div>
 
 **But that's not all!** Let's calculate the return on investment until the end to understand the actual ROI of the SEO work.
@@ -436,14 +436,14 @@ Thus, **Potential revenue during the period after SEO optimization:**
 **ROI Fina****l: (2 448 598 – 510 000)/510 000 \* 100% = 380%**
 
 <div class="case-gallery case-gallery--hero" aria-label="Projected SEO ROI metrics">
-  <img src="/images/tild3036-3435-4530-b331-663764643638__2023-06-12__013703.png" alt="Projected long-term SEO revenue and ROI metrics" loading="lazy" />
+  <img src="/images/tild3036-3435-4530-b331-663764643638__2023-06-12__013703.webp" alt="Projected long-term SEO revenue and ROI metrics" loading="lazy" />
 </div>
 
 And here I don't even take into account repeat sales to these new customers – and in the B2B market, the percentage of repeat purchases after the first one, as you know, is much higher than in the B2C market.
 
 <div class="case-gallery case-gallery--hero" aria-label="Long-term SEO growth">
-  <img src="/images/tild3238-3430-4163-a562-653736626166__seo_growth_over_21_m.png" alt="Tenfold growth in organic visibility over 21 months" loading="lazy" />
-  <img src="/images/tild3064-3533-4335-a461-623336326337__2024-01-12__154345.png" alt="Five-hundred-percent growth in referral traffic after B2B SEO work" loading="lazy" />
+  <img src="/images/tild3238-3430-4163-a562-653736626166__seo_growth_over_21_m.webp" alt="Tenfold growth in organic visibility over 21 months" loading="lazy" />
+  <img src="/images/tild3064-3533-4335-a461-623336326337__2024-01-12__154345.webp" alt="Five-hundred-percent growth in referral traffic after B2B SEO work" loading="lazy" />
 </div>
 
 <h2 id="chapter-6">Chapter 6: Thoughts After the First Year of Work</h2>
@@ -498,7 +498,7 @@ If you are looking for unique solutions that your competitors did not think of..
 If you want to aggressively squeeze the market share of your competitors (and you like my approach to solving problems of this kind), [write to me](mailto:ivangetmanov@icloud.com)._
 
 <div class="case-gallery case-gallery--portraits" aria-label="Getmanov Marketing team">
-  <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.png" alt="Getmanov Marketing team at work" loading="lazy" />
+  <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.webp" alt="Getmanov Marketing team at work" loading="lazy" />
 </div>
 
 **Thank you for reading my case! Do you want the same and even better? Leave a request and info of your project via [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/[Linkedin](https://www.linkedin.com/in/ivan-getmanov/)**

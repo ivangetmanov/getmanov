@@ -5,7 +5,7 @@ description: "How email distribution and lead nurturing extend the commercial va
 canonical: "/notes/b2b-seo-mail/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov" />](/)
 
 # How Email Supports B2B SEO and Demand Capture
 

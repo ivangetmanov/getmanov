@@ -5,7 +5,7 @@ description: "Durable changes shaping B2B organic discovery, from AI-assisted se
 canonical: "/notes/b2b-seo-trends/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov" />](/)
 
 # B2B SEO Trends: AI Search, Authority, UX, and SERP Visibility
 

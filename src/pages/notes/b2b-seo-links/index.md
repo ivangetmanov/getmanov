@@ -5,7 +5,7 @@ description: "A practical B2B link-building strategy focused on relevance, refer
 canonical: "/notes/b2b-seo-links/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov" />](/)
 
 # B2B Link Building: Authority, Referrals, and Market Evidence
 

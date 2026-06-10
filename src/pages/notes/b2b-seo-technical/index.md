@@ -5,7 +5,7 @@ description: "A practical guide to crawlability, indexation, performance, site a
 canonical: "/notes/b2b-seo-technical/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov" />](/)
 
 # Technical SEO for B2B Websites
 

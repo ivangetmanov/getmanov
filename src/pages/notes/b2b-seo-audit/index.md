@@ -5,7 +5,7 @@ description: "A practical B2B SEO audit framework for finding the constraints th
 canonical: "/notes/b2b-seo-audit/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov" />](/)
 
 # B2B SEO Audit: Technical, Content, Authority, and Measurement
 

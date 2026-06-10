@@ -5,7 +5,7 @@ description: ""
 canonical: "/case-studies/websites/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov Marketing" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov Marketing" />](/)
 
 **339,718 rubles on website creation during the "dead" season**
 
@@ -48,9 +48,9 @@ We tested different people and found out that BM worked the best (apparently, th
 On the last screenshot, the price is 14900, but I did not work with this price at all (I started it for the test)
 
 <div class="case-gallery case-gallery--portraits" aria-label="Website development advertising creatives">
-  <img src="/images/tild3835-6266-4737-b265-396432366533__2023-04-13__170846.png" alt="Website development advertising creative with a 19,900-ruble offer" loading="lazy" />
-  <img src="/images/tild3864-3861-4831-a439-376230343636__2023-04-13__170854.png" alt="Website development Instagram advertising creative" loading="lazy" />
-  <img src="/images/tild3338-6164-4232-b936-333832316635__2023-04-13__170904.png" alt="Website development advertising creative with a 14,900-ruble test price" loading="lazy" />
+  <img src="/images/tild3835-6266-4737-b265-396432366533__2023-04-13__170846.webp" alt="Website development advertising creative with a 19,900-ruble offer" loading="lazy" />
+  <img src="/images/tild3864-3861-4831-a439-376230343636__2023-04-13__170854.webp" alt="Website development Instagram advertising creative" loading="lazy" />
+  <img src="/images/tild3338-6164-4232-b936-333832316635__2023-04-13__170904.webp" alt="Website development advertising creative with a 14,900-ruble test price" loading="lazy" />
 </div>
 
 Problems along the way:
@@ -96,7 +96,7 @@ The budget was paid off just over 18 times ;-)**
 This brings us to the discussion about the importance of analyzing results from a distance. That's why I created this case study a little later :)
 
 <div class="case-gallery case-gallery--portraits" aria-label="Getmanov Marketing team">
-  <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.png" alt="Getmanov Marketing team at work" loading="lazy" />
+  <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.webp" alt="Getmanov Marketing team at work" loading="lazy" />
 </div>
 
 **Thank you for reading my case! Do you want the same and even better? Leave a request and info of your project via [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/[Linkedin](https://www.linkedin.com/in/ivan-getmanov/)**

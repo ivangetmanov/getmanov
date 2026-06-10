@@ -5,7 +5,7 @@ description: "A measurement framework connecting B2B search visibility to qualif
 canonical: "/notes/b2b-seo-kpi/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov" />](/)
 
 # B2B SEO KPIs: Measure Pipeline and Revenue, Not Rankings
 

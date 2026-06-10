@@ -1,4 +1,6 @@
 ---
+import { readFile } from "node:fs/promises";
+
 const frontmatter = Astro.props.frontmatter ?? {};
 const title = Astro.props.title ?? frontmatter.title ?? "getmanov.com";
 const description =
@@ -86,6 +88,12 @@ const b2bSeoPaths = new Set([
   ...b2bSeoGuides.map((guide) => guide.href),
 ]);
 const hasB2BSeoMap = b2bSeoPaths.has(currentPath);
+
+const [globalStyles, markdownStyles] = await Promise.all([
+  readFile(new URL("../../public/styles/global.css", import.meta.url), "utf8"),
+  readFile(new URL("../../public/styles/markdown.css", import.meta.url), "utf8"),
+]);
+const criticalStyles = `${globalStyles}\n${markdownStyles}`;
 ---
 
 <!doctype html>
@@ -98,6 +106,18 @@ const hasB2BSeoMap = b2bSeoPaths.has(currentPath);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#211d1e" />
+    <meta name="apple-mobile-web-app-title" content="Getmanov" />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Google tag (gtag.js) -->
     <script
@@ -113,9 +133,8 @@ const hasB2BSeoMap = b2bSeoPaths.has(currentPath);
       gtag('config', 'G-Q9Y8XEE6EF');
     </script>
 
-    <!-- Global styles -->
-    <link rel="stylesheet" href="/styles/global.css" />
-    <link rel="stylesheet" href="/styles/markdown.css" />
+    <!-- The small shared stylesheets are inlined to avoid render-blocking requests. -->
+    <style is:inline set:html={criticalStyles}></style>
   </head>
 
   <body data-path={Astro.url.pathname}>

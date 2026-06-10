@@ -5,7 +5,7 @@ description: "A practical framework for using social channels to distribute expe
 canonical: "/notes/b2b-seo-smm/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov" />](/)
 
 # How Social Distribution Supports B2B SEO
 

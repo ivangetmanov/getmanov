@@ -5,7 +5,7 @@ description: "How search strategy can clarify a B2B brand, demonstrate expertise
 canonical: "/notes/b2b-seo-branding/"
 ---
 
-[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.png" alt="Getmanov" />](/)
+[<img src="/images/tild6166-3833-4964-b663-643936373932__noroot.webp" alt="Getmanov" />](/)
 
 # Brand Positioning Through B2B SEO
 
