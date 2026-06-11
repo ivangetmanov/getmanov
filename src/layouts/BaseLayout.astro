@@ -86,7 +86,9 @@ const currentPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`;
 const hasArticleNavigation =
-  currentPath.startsWith("/notes/") && currentPath !== "/notes/";
+  (currentPath.startsWith("/notes/") && currentPath !== "/notes/") ||
+  (currentPath.startsWith("/case-studies/") &&
+    currentPath !== "/case-studies/");
 const b2bSeoPaths = new Set([
   b2bSeoCase.href,
   ...b2bSeoGuides.map((guide) => guide.href),

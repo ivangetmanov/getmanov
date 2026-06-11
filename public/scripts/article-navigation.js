@@ -5,9 +5,27 @@
 
   if (!article || !progressBar || !tocList) return;
 
-  const headings = [
+  let headings = [
     ...article.querySelectorAll(":scope > h2, :scope > h3"),
   ];
+
+  if (!headings.length) {
+    const fallbackLabels = [...article.querySelectorAll(":scope > p")].filter(
+      (paragraph) =>
+        paragraph.children.length === 1 &&
+        paragraph.firstElementChild?.tagName === "STRONG" &&
+        paragraph.textContent.trim().length <= 90,
+    );
+
+    headings = [
+      ...article.querySelectorAll(":scope > h1"),
+      ...fallbackLabels,
+    ].sort((first, second) =>
+      first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING
+        ? -1
+        : 1,
+    );
+  }
 
   if (!headings.length) {
     document.body.classList.add("article-toc-empty");
@@ -49,6 +67,24 @@
   });
 
   const tocLinks = [...tocList.querySelectorAll("a")];
+  const tocNav = tocList.closest("nav");
+  let currentActiveId = "";
+
+  const keepActiveLinkInPlace = (link) => {
+    if (!tocNav) return;
+
+    const title = tocNav.querySelector(".article-toc__title");
+    const titleHeight = title?.offsetHeight ?? 0;
+    const availableHeight = Math.max(0, tocNav.clientHeight - titleHeight);
+    const anchorLine = titleHeight + Math.min(availableHeight * 0.38, 220);
+    const linkCenter = link.offsetTop + link.offsetHeight / 2;
+    const maxScroll = Math.max(0, tocNav.scrollHeight - tocNav.clientHeight);
+
+    tocNav.scrollTop = Math.min(
+      maxScroll,
+      Math.max(0, linkCenter - anchorLine),
+    );
+  };
 
   const updateReadingState = () => {
     const articleTop = article.getBoundingClientRect().top + window.scrollY;
@@ -68,20 +104,15 @@
       if (headingTop <= viewportMarker) activeId = heading.id;
     });
 
+    const activeChanged = activeId !== currentActiveId;
+    currentActiveId = activeId;
+
     tocLinks.forEach((link) => {
       const isActive = link.dataset.headingId === activeId;
       link.classList.toggle("is-active", isActive);
       if (isActive) {
         link.setAttribute("aria-current", "location");
-        const nav = tocList.closest("nav");
-        const linkTop = link.offsetTop;
-        const linkBottom = linkTop + link.offsetHeight;
-
-        if (linkTop < nav.scrollTop) {
-          nav.scrollTop = linkTop - 8;
-        } else if (linkBottom > nav.scrollTop + nav.clientHeight) {
-          nav.scrollTop = linkBottom - nav.clientHeight + 8;
-        }
+        if (activeChanged) keepActiveLinkInPlace(link);
       } else {
         link.removeAttribute("aria-current");
       }
