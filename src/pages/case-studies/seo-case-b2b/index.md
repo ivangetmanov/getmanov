@@ -65,7 +65,7 @@ Therefore, the goal was simple: generate more leads from SEO and fix problems wh
 
 <h2 id="chapter-1">Chapter 1: Recalling Previous Experience</h2>
 
-The goal is clear, but how do we achieve it? This project is my first venture into website SEO, but I do have prior experience with YouTube SEO. I created my own channel for a [Taekwondo Club](https://www.youtube.com/channel/UCkq9aA5IwsSAxU2NEAuAr9w) in Saint-Petersburg and also managed a [channel for a custom broker who is also my client](https://www.youtube.com/@interways). Over the past three years, I have learned how to create videos targeting specific keywords that users search for. However, website SEO was a new challenge for me. I needed to adapt my skills and knowledge to this different platform.
+The goal is clear, but how do we achieve it? This project is my first venture into website SEO, but I do have prior experience with YouTube SEO. I created my own channel for a [local martial arts club](https://www.youtube.com/channel/UCkq9aA5IwsSAxU2NEAuAr9w) in Saint-Petersburg and also managed a [channel for a custom broker who is also my client](https://www.youtube.com/@interways). Over the past three years, I have learned how to create videos targeting specific keywords that users search for. However, website SEO was a new challenge for me. I needed to adapt my skills and knowledge to this different platform.
 
 So I start thinking. Yeah, SEO for YouTube have quite similar rules to make it effective:
 
@@ -502,7 +502,7 @@ For implementation, use descriptive filenames, useful alt text, correct dimensio
   <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.webp" alt="Getmanov Marketing team at work" loading="lazy" />
 </div>
 
-**Thank you for reading my case! Do you want the same and even better? Leave a request and info of your project via [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/[Linkedin](https://www.linkedin.com/in/ivan-getmanov/)**
+**Thank you for reading my case! Do you want the same and even better? Leave a request and info about your project via [Telegram](https://t.me/getmanov_marketing) or [LinkedIn](https://www.linkedin.com/in/ivan-getmanov/).**
 
 <img src="/images/ivan-getmanov.webp" alt="Ivan Getmanov" />
 

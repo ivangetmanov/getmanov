@@ -362,6 +362,8 @@ Q&A structure preserves the relationship between each user question and each ass
 ## Related guides
 
 * [How to Export Long ChatGPT Chats Without Losing Context](/notes/export-long-chatgpt-chats/)
+* [How to Export a Single ChatGPT Conversation](/notes/export-single-chatgpt-conversation/)
+* [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/)
 * [Why Copy-Paste Fails for Long ChatGPT Conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
 * [ChatGPT Session Saver](/tools/session-saver/)
 * [ChatGPT Session Saver Privacy Policy](/tools/session-saver/privacy-policy/)

@@ -1,11 +1,20 @@
 /sitemap.xml /sitemap-index.xml 301
+
+# Permanently retired page. Keep these URLs as explicit 404 responses so
+# crawlers can remove them from their indexes instead of following a redirect.
+/case-studies/taekwondo             /404.html                            404!
+/case-studies/taekwondo/            /404.html                            404!
+/case-studies/taekwondo/*           /404.html                            404!
+/taekwondo                          /404.html                            404!
+/taekwondo/                         /404.html                            404!
+/taekwondo.html                     /404.html                            404!
+
 # --- CASE STUDIES ---
 /seo-case-b2b                      /case-studies/seo-case-b2b/           301!
 /case-websites                     /case-studies/websites/               301!
 /case-massage                      /case-studies/massage/                301!
 /massage                           /case-studies/massage/                301!
 /giorgio                           /case-studies/giorgio/                301!
-/taekwondo                         /case-studies/taekwondo/              301!
 /seo-case-b2b.html                 /case-studies/seo-case-b2b/           301!
 /case-websites.html                /case-studies/websites/               301!
 /case-twine-section.html           /case-studies/massage/                301!

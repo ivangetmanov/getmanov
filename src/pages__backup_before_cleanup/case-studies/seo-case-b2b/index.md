@@ -5426,7 +5426,7 @@ If you want to aggressively squeeze the market share of your competitors (and yo
 
 <div class="t090__text t-descr" field="text">
 
-**Thank you for reading my case! Do you want the same and even better? Leave a request and info of your project via <a href="https://t.me/getmanov_marketing" target="_blank" style="" data-redactor-tag="a">Telegram</a>/<a href="https://wa.me/+79516682020" target="_blank" style="noopener">WhatsApp</a>/<a href="https://www.linkedin.com/in/ivan-getmanov/" target="_blank" style="">Linkedin</a>**
+**Thank you for reading my case! Do you want the same and even better? Leave a request and info of your project via <a href="https://t.me/getmanov_marketing" target="_blank" style="" data-redactor-tag="a">Telegram</a>/<a href="https://www.linkedin.com/in/ivan-getmanov/" target="_blank" style="">Linkedin</a>**
 
 </div>
 

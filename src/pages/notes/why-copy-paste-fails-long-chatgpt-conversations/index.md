@@ -334,6 +334,8 @@ Use ChatGPT Session Saver when you want to save one long active ChatGPT conversa
 ## Related guides
 
 * [How to Export Long ChatGPT Chats Without Losing Context](/notes/export-long-chatgpt-chats/)
+* [How to Export a Single ChatGPT Conversation](/notes/export-single-chatgpt-conversation/)
+* [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/)
 * [How to Save a Long ChatGPT Conversation Without Scrolling Forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
 * [ChatGPT Session Saver](/tools/session-saver/)
 * [ChatGPT Session Saver Privacy Policy](/tools/session-saver/privacy-policy/)

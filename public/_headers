@@ -1,0 +1,17 @@
+/case-studies/taekwondo
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/case-studies/taekwondo/
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/case-studies/taekwondo/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/taekwondo
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/taekwondo/
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+/taekwondo.html
+  X-Robots-Tag: noindex, nofollow, noarchive

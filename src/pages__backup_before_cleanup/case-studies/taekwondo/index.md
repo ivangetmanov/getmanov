@@ -52,7 +52,7 @@
 
 <div class="t-btnwrapper">
 
-<a href="tel:+79516682020" class="t-btn t-btn_md" target="" style="color:#ffffff;background-color:#ff5136;border-radius:10px; -moz-border-radius:10px; -webkit-border-radius:10px;" data-buttonfieldset="button"></a>
+<a href="#" class="t-btn t-btn_md" target="" style="color:#ffffff;background-color:#ff5136;border-radius:10px; -moz-border-radius:10px; -webkit-border-radius:10px;" data-buttonfieldset="button"></a>
 
 |                               |
 |-------------------------------|
@@ -1440,7 +1440,7 @@ YouTube
 
 <div class="t-text t-descr_sm" field="text">
 
-<a href="tel:+79516682020" style="">+7 951 668 20 20<br />
+<a href="#" style=""><br />
 </a>  
 Санкт-Петербург, ул. Народная, д. 1  
 (10 мин от метро Ломоносовская)

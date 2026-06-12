@@ -150,7 +150,7 @@ Thank you for reading this case! I hope it will help you achieve such great resu
   <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.webp" alt="Getmanov Marketing team at work" loading="lazy" />
 </div>
 
-Thank you for reading my case! Do you want the same and even better? Leave a request and info of your project via [Telegram](https://t.me/getmanov_marketing)/[WhatsApp](https://wa.me/+79516682020)/[Linkedin](https://www.linkedin.com/in/ivan-getmanov/)
+Thank you for reading my case! Do you want the same and even better? Leave a request and info about your project via [Telegram](https://t.me/getmanov_marketing) or [LinkedIn](https://www.linkedin.com/in/ivan-getmanov/).
 
 <img src="/images/ivan-getmanov.webp" alt="Ivan Getmanov" />
 

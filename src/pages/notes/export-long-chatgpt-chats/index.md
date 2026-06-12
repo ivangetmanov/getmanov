@@ -666,6 +666,8 @@ No. Shared links are useful for showing a conversation to someone else, but they
 
 ## Related guides
 
+- [How to Export a Single ChatGPT Conversation](/notes/export-single-chatgpt-conversation/)
+- [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/)
 - [How to Save a Long ChatGPT Conversation Without Scrolling Forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
 - [Why Copy-Paste Fails for Long ChatGPT Conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
 - [ChatGPT Session Saver](/tools/session-saver/)

@@ -3260,7 +3260,7 @@ The right approach to business tasks – whatever the niche – can give excepti
 
 <div class="t090__text t-descr" field="text">
 
-**Thank you for reading our case! Do you want the same and even better? Leave a request and info of your project via <a href="https://t.me/getmanov_marketing" data-redactor-tag="a" style="noopener">Telegram</a>/<a href="https://wa.me/+79516682020" style="noopener">WhatsApp</a>/<a href="https://www.linkedin.com/in/ivan-getmanov/" style="noopener">Linkedin</a>**
+**Thank you for reading our case! Do you want the same and even better? Leave a request and info of your project via <a href="https://t.me/getmanov_marketing" data-redactor-tag="a" style="noopener">Telegram</a>/<a href="https://www.linkedin.com/in/ivan-getmanov/" style="noopener">Linkedin</a>**
 
 </div>
 
