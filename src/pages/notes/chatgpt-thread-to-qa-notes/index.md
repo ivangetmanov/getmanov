@@ -40,6 +40,8 @@ A clean Q&A format keeps the original structure:
 
 This makes the conversation easier to search, review, quote, summarize, and reuse in notes, documents, research, or a personal knowledge base.
 
+> **Difference in one sentence:** Q&A notes preserve the relationship between each prompt and each answer; a raw transcript only preserves message order.
+
 <figure class="article-visual">
   <img src="/images/notes/chatgpt-thread-to-qa-notes/messy-chatgpt-thread-to-clean-qa-notes.webp" alt="Messy ChatGPT-style thread transformed into clean Q&A notes" width="1600" height="900" loading="eager" fetchpriority="high" />
   <figcaption>The goal is not just to save a ChatGPT thread. The goal is to preserve it in a structure you can use later.</figcaption>
@@ -121,6 +123,31 @@ This structure keeps the relationship between each prompt and each response.
 That is the main value.
 
 Q&A notes are not just cleaner-looking transcripts. They preserve the logic of the conversation.
+
+## The difference in one example
+
+Before:
+
+```text
+User: Make this shorter.
+Assistant: Sure - here is a shorter version...
+User: Make it more professional.
+Assistant: Here is a more professional version...
+```
+
+Without the user prompts, the saved answers are hard to interpret because you cannot see what changed between versions.
+
+After:
+
+```text
+Q1: Make this shorter.
+A1: ...
+
+Q2: Make it more professional.
+A2: ...
+```
+
+The Q&A version makes the editing path visible.
 
 ## Before and after: messy thread vs. clean Q&A notes
 
@@ -217,6 +244,23 @@ A simple structure is often better than a complicated one.
   <figcaption>A simple structure is usually enough: title, date, question, answer, and optional tags or source link.</figcaption>
 </figure>
 
+## What Q&A notes should not include
+
+Clean Q&A notes do not need to preserve every piece of interface noise.
+
+They usually should not include:
+
+* sidebar text;
+* buttons;
+* timestamps unless useful;
+* duplicated regenerated answers unless they matter;
+* unrelated UI labels;
+* empty messages;
+* repeated boilerplate;
+* broken copied formatting.
+
+The goal is to preserve the useful conversation, not the entire visual interface.
+
 ## A simple Q&A note template
 
 You can use this template when saving a ChatGPT conversation manually:
@@ -310,6 +354,17 @@ TXT and Markdown are usually the best formats for Q&A notes because they are eas
 
 PDF is useful if you only want to read or share the conversation. It is less useful if you want to reuse the content.
 
+## Q&A notes vs. final answer only
+
+| Saving style | What you keep | What you lose |
+| --- | --- | --- |
+| Final answer only | The polished result | Original prompt, constraints, rejected options |
+| Raw transcript | Everything in order | Easy scanning and reuse |
+| Summary | Main conclusion | Detailed context and exact prompts |
+| Q&A notes | Prompt-answer structure | Some visual formatting |
+
+For important conversations, Q&A notes usually give the best balance between completeness and usability.
+
 ## Why Q&A notes are useful for AI reuse
 
 Q&A notes are also useful if you want to bring old ChatGPT work back into a new AI conversation.
@@ -329,7 +384,7 @@ A clean export turns that thinking into something portable.
 
 ## How ChatGPT Session Saver helps
 
-[ChatGPT Session Saver](/tools/session-saver/) is built for one specific job: saving one active ChatGPT conversation as clean local Q&A-style TXT notes.
+[ChatGPT Session Saver](/tools/session-saver/) is a local-first browser tool for saving one active ChatGPT conversation as clean Q&A-style TXT notes.
 
 It is useful when you want to turn a messy or long ChatGPT thread into reusable notes without manually copying and cleaning every message.
 
@@ -440,14 +495,18 @@ No. ChatGPT Session Saver is focused on saving the active conversation as clean 
 
 Use ChatGPT Session Saver when you want to save one active ChatGPT conversation locally as clean, searchable, reusable Q&A-style TXT notes.
 
-## Related guides
+## Part of the ChatGPT Export Guides
 
-* [How to Export Long ChatGPT Chats Without Losing Context](/notes/export-long-chatgpt-chats/)
-* [How to Export a Single ChatGPT Conversation](/notes/export-single-chatgpt-conversation/)
-* [How to Save a Long ChatGPT Conversation Without Scrolling Forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
-* [Why Copy-Paste Fails for Long ChatGPT Conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
-* [ChatGPT Session Saver](/tools/session-saver/)
-* [ChatGPT Session Saver Privacy Policy](/tools/session-saver/privacy-policy/)
+This guide is part of a practical series about saving, exporting, structuring, and reusing ChatGPT conversations.
+
+* [Compare all long-chat export methods](/notes/export-long-chatgpt-chats/)
+* [Understand why copy-paste creates messy transcripts](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
+* [Save a long conversation without scrolling forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
+* [Export one specific ChatGPT conversation](/notes/export-single-chatgpt-conversation/)
+* [Review the ChatGPT export glossary](/notes/chatgpt-export-glossary/)
+* [Understand why saved long chats are hard to reuse](/notes/why-long-chatgpt-chats-are-hard-to-reuse-later/)
+* [Install ChatGPT Session Saver](/tools/session-saver/)
+* [Read the Session Saver privacy policy](/tools/session-saver/privacy-policy/)
 
 <!-- Future supporting guides:
   /notes/chatgpt-export-formats/

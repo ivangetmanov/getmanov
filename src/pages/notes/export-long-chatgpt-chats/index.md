@@ -56,6 +56,21 @@ If you want your full account archive, use [ChatGPT's official data export](http
 
 For long conversations, the most useful export is usually not a screenshot or PDF. It is a clean text-based export that preserves the flow of questions and answers.
 
+> **Difference in one sentence:** Long-chat export is not only about downloading a conversation; it is about preserving enough structure to search, understand, and reuse the chat later.
+
+## Start here: choose your export goal
+
+| If you want to... | Start with |
+| --- | --- |
+| Save one active conversation | [How to Export a Single ChatGPT Conversation](/notes/export-single-chatgpt-conversation/) |
+| Save a very long chat without scrolling forever | [How to Save a Long ChatGPT Conversation Without Scrolling Forever](/notes/save-long-chatgpt-conversation-without-scrolling/) |
+| Understand why manual copying breaks | [Why Copy-Paste Fails for Long ChatGPT Conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/) |
+| Turn a messy thread into reusable notes | [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/) |
+| Understand the core export terms | [ChatGPT Export Glossary: Key Terms Explained](/notes/chatgpt-export-glossary/) |
+| Make saved long chats reusable later | [Why Long ChatGPT Chats Are Hard to Reuse Later](/notes/why-long-chatgpt-chats-are-hard-to-reuse-later/) |
+
+<!-- Future guides can extend this router with format comparison and extension safety pages. -->
+
 ## Key terms
 
 Before comparing export methods, it helps to separate a few related ideas.
@@ -69,6 +84,23 @@ Before comparing export methods, it helps to separate a few related ideas.
 **Local export** means the conversation is processed and saved on your device without sending the chat content to another backend or cloud storage service.
 
 These terms matter because different export methods solve different problems.
+
+## What this guide covers and what it does not cover
+
+This guide covers practical ways to save, export, structure, and reuse long ChatGPT conversations.
+
+It covers:
+
+* official account export;
+* shared links;
+* manual copy-paste;
+* PDF;
+* local browser-based export;
+* Q&A-style TXT notes;
+* format trade-offs;
+* privacy basics.
+
+It does not try to make one method look best for every case. Official data export is better for account backup. Shared links are better for quick sharing. PDF is better for reading. A local Q&A-style TXT export is better when you want to reuse one active long conversation as notes.
 
 ## Why long ChatGPT chats are hard to export
 
@@ -155,6 +187,8 @@ To compare export methods fairly, this guide uses practical criteria:
 - Does it require trusting a third-party server?
 
 The best method depends on what you want to do after export. A full account archive, a shared link, a PDF, and a local TXT export are different tools for different jobs.
+
+This comparison is based on the job after export: backup, sharing, reading, reuse, privacy, or structured notes.
 
 ## Best methods to export long ChatGPT chats
 
@@ -580,7 +614,7 @@ This turns ChatGPT from a temporary chat interface into a reusable research and 
 
 ## When to use ChatGPT Session Saver
 
-[ChatGPT Session Saver](/tools/session-saver/) is a good fit when you want to save one long active ChatGPT conversation and turn it into clean, reusable notes.
+[ChatGPT Session Saver](/tools/session-saver/) is a local-first browser tool for saving one active ChatGPT conversation as clean Q&A-style TXT notes.
 
 Use it when you need to:
 
@@ -609,6 +643,10 @@ Use another method if you need:
 - a cloud backup that syncs across devices automatically.
 
 Session Saver is focused on one specific job: saving one active long ChatGPT conversation as clean, local, reusable Q&A-style TXT notes.
+
+## Recommended next guide
+
+If you are not sure where to go next, start with the most common failure mode: [manual copy-paste](/notes/why-copy-paste-fails-long-chatgpt-conversations/). It explains why long ChatGPT conversations often lose context when saved by hand. Then read [why saved long chats are hard to reuse](/notes/why-long-chatgpt-chats-are-hard-to-reuse-later/) and the [Q&A notes guide](/notes/chatgpt-thread-to-qa-notes/) if your goal is reuse rather than simple storage.
 
 ## FAQ
 
@@ -664,14 +702,18 @@ Q&A export saves a conversation as pairs of user questions and assistant answers
 
 No. Shared links are useful for showing a conversation to someone else, but they are not a private local backup. If you need long-term control, save the conversation as a local file.
 
-## Related guides
+## Part of the ChatGPT Export Guides
 
-- [How to Export a Single ChatGPT Conversation](/notes/export-single-chatgpt-conversation/)
-- [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/)
-- [How to Save a Long ChatGPT Conversation Without Scrolling Forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
-- [Why Copy-Paste Fails for Long ChatGPT Conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
-- [ChatGPT Session Saver](/tools/session-saver/)
-- [ChatGPT Session Saver Privacy Policy](/tools/session-saver/privacy-policy/)
+This guide is part of a practical series about saving, exporting, structuring, and reusing ChatGPT conversations.
+
+* [Export one specific ChatGPT conversation](/notes/export-single-chatgpt-conversation/)
+* [Understand why copy-paste fails for long conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
+* [Save a long conversation without scrolling forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
+* [Turn a messy thread into clean Q&A notes](/notes/chatgpt-thread-to-qa-notes/)
+* [Review the ChatGPT export glossary](/notes/chatgpt-export-glossary/)
+* [Understand why saved long chats are hard to reuse](/notes/why-long-chatgpt-chats-are-hard-to-reuse-later/)
+* [Install ChatGPT Session Saver](/tools/session-saver/)
+* [Read the Session Saver privacy policy](/tools/session-saver/privacy-policy/)
 
 <!-- Future supporting guides:
   /notes/chatgpt-data-export-vs-single-chat-export/
