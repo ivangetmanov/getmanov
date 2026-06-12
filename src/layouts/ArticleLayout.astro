@@ -1,0 +1,105 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+const frontmatter = Astro.props.frontmatter ?? {};
+const canonicalUrl = new URL(
+  frontmatter.canonical ?? Astro.url.pathname,
+  "https://getmanov.com",
+).href;
+const heroImageUrl = frontmatter.heroImage
+  ? new URL(frontmatter.heroImage, "https://getmanov.com").href
+  : undefined;
+const faqItems = frontmatter.faq ?? [];
+
+const articleSchema = {
+  "@type": "Article",
+  "@id": `${canonicalUrl}#article`,
+  headline: frontmatter.title,
+  description: frontmatter.description,
+  url: canonicalUrl,
+  mainEntityOfPage: canonicalUrl,
+  ...(heroImageUrl ? { image: heroImageUrl } : {}),
+  datePublished: frontmatter.datePublished,
+  dateModified: frontmatter.dateModified,
+  author: {
+    "@type": "Person",
+    name: "Ivan Getmanov",
+    url: "https://getmanov.com/",
+  },
+  publisher: {
+    "@type": "Person",
+    name: "Ivan Getmanov",
+    url: "https://getmanov.com/",
+  },
+  mentions: {
+    "@id": "https://getmanov.com/tools/session-saver/#software",
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    articleSchema,
+    {
+      "@type": "FAQPage",
+      "@id": `${canonicalUrl}#faq`,
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumbs`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://getmanov.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Notes",
+          item: "https://getmanov.com/notes/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: frontmatter.title,
+          item: canonicalUrl,
+        },
+      ],
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://getmanov.com/tools/session-saver/#software",
+      name: "ChatGPT Session Saver",
+      applicationCategory: "BrowserApplication",
+      operatingSystem: "Chrome",
+      url: "https://getmanov.com/tools/session-saver/",
+      installUrl:
+        "https://chromewebstore.google.com/detail/chatgpt-session-saver/negkdfmbiophoipcalliiemalkghlidj/",
+      author: {
+        "@type": "Person",
+        name: "Ivan Getmanov",
+        url: "https://getmanov.com/",
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  canonical={frontmatter.canonical}
+  structuredData={structuredData}
+>
+  <slot />
+</BaseLayout>

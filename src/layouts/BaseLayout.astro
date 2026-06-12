@@ -8,6 +8,7 @@ const description =
   frontmatter.description ??
   "Experiments, case-based research, tools, and notes.";
 const canonical = Astro.props.canonical ?? frontmatter.canonical;
+const structuredData = Astro.props.structuredData;
 
 const canonicalUrl = canonical
   ? new URL(canonical, "https://getmanov.com").href
@@ -141,6 +142,14 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
 
     <!-- The small shared stylesheets are inlined to avoid render-blocking requests. -->
     <style is:inline set:html={criticalStyles}></style>
+
+    {structuredData && (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(structuredData)}
+      ></script>
+    )}
   </head>
 
   <body data-path={Astro.url.pathname}>

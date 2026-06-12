@@ -50,7 +50,9 @@
 }
 
 .article-layout--with-toc .prose .article-visual,
-.article-layout--with-toc .prose .case-gallery-shell {
+.article-layout--with-toc .prose .case-gallery,
+.article-layout--with-toc .prose .case-gallery-shell,
+.article-layout--with-toc .prose .b2b-seo-map {
   width: 100%;
   margin-right: 0;
   margin-left: 0;
@@ -522,12 +524,13 @@ body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li {
 body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li::before {
   content: counter(tilda-list);
   position: absolute;
-  top: 13px;
+  top: 50%;
   left: 16px;
   width: 42px;
   height: 42px;
   display: grid;
   place-items: center;
+  transform: translateY(-50%);
   border-radius: 50%;
   background: #126b5d;
   color: white;
