@@ -5,7 +5,7 @@ description: "A practical glossary of ChatGPT export terms, including single-cha
 canonical: "/notes/chatgpt-export-glossary/"
 heroImage: "/images/notes/chatgpt-export-glossary/chatgpt-export-glossary.webp"
 datePublished: "2026-06-12"
-dateModified: "2026-06-12"
+dateModified: "2026-06-13"
 faq:
   - question: "What does ChatGPT export mean?"
     answer: "ChatGPT export means saving conversation content outside the ChatGPT interface. It can mean a single-chat export, full account export, shared link, PDF, TXT, Markdown, JSON, or another format."
@@ -187,7 +187,7 @@ Q&A export is useful for:
 * debugging conversations;
 * personal knowledge bases.
 
-Related guide: [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/)
+Related guides: [How to Export ChatGPT Conversations as Question-Answer Pairs](/notes/export-chatgpt-question-answer-pairs/) and [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/).
 
 ## Local export
 
@@ -243,6 +243,8 @@ A shared link is not the same as a local export.
 
 Use shared links for sharing. Use local export for ownership, editing, and long-term reuse.
 
+Related guide: [ChatGPT Shared Links vs Local Export: What's the Difference?](/notes/chatgpt-shared-links-vs-local-export/)
+
 <figure class="article-visual">
   <img src="/images/notes/chatgpt-export-glossary/single-chat-vs-account-export-vs-shared-link.webp" alt="Comparison diagram showing single-chat export, account export, and shared links as different ChatGPT export workflows" width="1600" height="900" loading="lazy" />
   <figcaption>Single-chat export, account export, and shared links solve different jobs: saving one conversation, backing up account data, or sharing a chat.</figcaption>
@@ -275,6 +277,8 @@ TXT is not ideal for:
 For many ChatGPT conversations, TXT is enough because the most important thing is the text structure: prompts, answers, order, and context.
 
 A clean TXT export is especially useful when the conversation becomes a reusable note rather than a visual document.
+
+Related guide: [How to Export ChatGPT Chats as TXT](/notes/export-chatgpt-chats-as-txt/)
 
 ## Markdown export
 
@@ -353,6 +357,10 @@ Use JSON when the goal is automation. Use TXT or Markdown when the goal is human
 
 **Browser extension permissions** are the capabilities a browser extension requests so it can perform specific actions.
 
+For a technical walkthrough of content scripts, the DOM, `activeTab`, and host permissions, read [How Browser Extensions Read an Active ChatGPT Page](/notes/how-browser-extensions-read-active-chatgpt-page/).
+
+For the maintenance implications of changing page structure, read [Why ChatGPT Export Extensions Break When OpenAI Updates the Interface](/notes/why-chatgpt-export-extensions-break-interface-updates/).
+
 For a ChatGPT export extension, permissions may relate to:
 
 * reading the active page;
@@ -380,6 +388,8 @@ Examples of permission-related concepts:
 For ChatGPT export tools, permissions matter because the extension may need to read conversation content from the active ChatGPT page.
 
 A good tool should be clear about what it reads, what it saves, and whether anything is uploaded.
+
+For a practical review workflow, use the [ChatGPT export extension safety checklist](/notes/is-chatgpt-export-extension-safe/).
 
 <figure class="article-visual">
   <img src="/images/notes/chatgpt-export-glossary/browser-extension-permissions-map.webp" alt="Privacy-friendly diagram of browser extension permissions including active tab, scripting, storage, host permissions, and permission warnings" width="1600" height="900" loading="lazy" />
@@ -558,6 +568,8 @@ The export method and the export format are related, but they are not the same t
 
 For example, a browser extension is an export method. TXT is an export format.
 
+Related guide: [TXT vs Markdown vs PDF vs JSON for ChatGPT Export](/notes/chatgpt-export-formats-txt-markdown-pdf-json/).
+
 <figure class="article-visual">
   <img src="/images/notes/chatgpt-export-glossary/export-method-vs-export-format.webp" alt="Diagram explaining the difference between ChatGPT export methods and export formats such as TXT, Markdown, PDF, and JSON" width="1600" height="900" loading="lazy" />
   <figcaption>An export method is the workflow you use. An export format is the file or structure you get at the end.</figcaption>
@@ -641,6 +653,9 @@ For a practical path through the topic, start here:
 3. [Why Copy-Paste Fails for Long ChatGPT Conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
 4. [How to Save a Long ChatGPT Conversation Without Scrolling Forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
 5. [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/)
+6. [How to Export ChatGPT Conversations as Question-Answer Pairs](/notes/export-chatgpt-question-answer-pairs/)
+7. [TXT vs Markdown vs PDF vs JSON for ChatGPT Export](/notes/chatgpt-export-formats-txt-markdown-pdf-json/)
+8. [Is It Safe to Use a ChatGPT Export Extension?](/notes/is-chatgpt-export-extension-safe/)
 
 ## FAQ
 
@@ -684,19 +699,26 @@ Reusable notes are exported conversation files that are easy to search, review, 
 
 This guide is part of a practical series about saving, exporting, structuring, and reusing ChatGPT conversations.
 
+* [Compare shared links and local export](/notes/chatgpt-shared-links-vs-local-export/)
+* [Export ChatGPT chats as durable TXT notes](/notes/export-chatgpt-chats-as-txt/)
+
 * [How to Export Long ChatGPT Chats Without Losing Context](/notes/export-long-chatgpt-chats/)
 * [How to Export a Single ChatGPT Conversation](/notes/export-single-chatgpt-conversation/)
 * [How to Save a Long ChatGPT Conversation Without Scrolling Forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
 * [Why Copy-Paste Fails for Long ChatGPT Conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
 * [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/)
+* [How to Export ChatGPT Conversations as Question-Answer Pairs](/notes/export-chatgpt-question-answer-pairs/)
+* [How Writers Can Archive ChatGPT Brainstorming Sessions](/notes/writers-archive-chatgpt-brainstorming-sessions/)
+* [TXT vs Markdown vs PDF vs JSON for ChatGPT Export](/notes/chatgpt-export-formats-txt-markdown-pdf-json/)
 * [Why Long ChatGPT Chats Are Hard to Reuse Later](/notes/why-long-chatgpt-chats-are-hard-to-reuse-later/)
+* [Save research conversations as structured notes](/notes/researchers-save-chatgpt-conversations-structured-notes/)
+* [Turn ChatGPT chats into study notes](/notes/students-turn-chatgpt-chats-into-study-notes/)
+* [Archive developer debugging conversations](/notes/developers-save-chatgpt-debugging-conversations/)
+* [Understand how browser extensions read the active page](/notes/how-browser-extensions-read-active-chatgpt-page/)
+* [Understand why export extensions break after interface updates](/notes/why-chatgpt-export-extensions-break-interface-updates/)
+* [Is It Safe to Use a ChatGPT Export Extension?](/notes/is-chatgpt-export-extension-safe/)
 * [ChatGPT Session Saver](/tools/session-saver/)
 * [ChatGPT Session Saver Privacy Policy](/tools/session-saver/privacy-policy/)
-
-<!-- Future supporting guides:
-  /notes/chatgpt-export-formats/
-  /notes/chatgpt-export-extension-safety/
--->
 
 ## Final thought
 

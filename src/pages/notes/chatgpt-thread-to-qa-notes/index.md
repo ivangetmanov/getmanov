@@ -5,7 +5,7 @@ description: "Learn how to turn a messy ChatGPT conversation into clean Q&A note
 canonical: "/notes/chatgpt-thread-to-qa-notes/"
 heroImage: "/images/notes/chatgpt-thread-to-qa-notes/messy-chatgpt-thread-to-clean-qa-notes.webp"
 datePublished: "2026-06-12"
-dateModified: "2026-06-12"
+dateModified: "2026-06-13"
 faq:
   - question: "What are ChatGPT Q&A notes?"
     answer: "ChatGPT Q&A notes are exported conversation notes where user questions and assistant answers are preserved as pairs. This keeps the context of each answer clear."
@@ -124,6 +124,8 @@ That is the main value.
 
 Q&A notes are not just cleaner-looking transcripts. They preserve the logic of the conversation.
 
+The companion guide explains the format itself: [how to export ChatGPT conversations as question-answer pairs](/notes/export-chatgpt-question-answer-pairs/).
+
 ## The difference in one example
 
 Before:
@@ -197,6 +199,8 @@ You can save research questions, source ideas, comparisons, explanations, and fo
 ### Writing
 
 You can preserve drafts, rewrites, headline options, feedback, and final versions while keeping the original instructions visible.
+
+For a writing-specific workflow, see how to [archive ChatGPT brainstorming sessions as an editorial trail](/notes/writers-archive-chatgpt-brainstorming-sessions/).
 
 ### Coding
 
@@ -499,19 +503,26 @@ Use ChatGPT Session Saver when you want to save one active ChatGPT conversation 
 
 This guide is part of a practical series about saving, exporting, structuring, and reusing ChatGPT conversations.
 
+* [Compare shared links and local export](/notes/chatgpt-shared-links-vs-local-export/)
+* [Export ChatGPT chats as durable TXT notes](/notes/export-chatgpt-chats-as-txt/)
+
 * [Compare all long-chat export methods](/notes/export-long-chatgpt-chats/)
 * [Understand why copy-paste creates messy transcripts](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
 * [Save a long conversation without scrolling forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
 * [Export one specific ChatGPT conversation](/notes/export-single-chatgpt-conversation/)
+* [Export a conversation as question-answer pairs](/notes/export-chatgpt-question-answer-pairs/)
+* [Archive writing brainstorms and editorial trails](/notes/writers-archive-chatgpt-brainstorming-sessions/)
+* [Compare TXT, Markdown, PDF, and JSON](/notes/chatgpt-export-formats-txt-markdown-pdf-json/)
 * [Review the ChatGPT export glossary](/notes/chatgpt-export-glossary/)
 * [Understand why saved long chats are hard to reuse](/notes/why-long-chatgpt-chats-are-hard-to-reuse-later/)
+* [Save research conversations as structured notes](/notes/researchers-save-chatgpt-conversations-structured-notes/)
+* [Turn ChatGPT chats into study notes](/notes/students-turn-chatgpt-chats-into-study-notes/)
+* [Archive developer debugging conversations](/notes/developers-save-chatgpt-debugging-conversations/)
+* [Understand how browser extensions read the active page](/notes/how-browser-extensions-read-active-chatgpt-page/)
+* [Understand why export extensions break after interface updates](/notes/why-chatgpt-export-extensions-break-interface-updates/)
+* [Check ChatGPT export extension safety](/notes/is-chatgpt-export-extension-safe/)
 * [Install ChatGPT Session Saver](/tools/session-saver/)
 * [Read the Session Saver privacy policy](/tools/session-saver/privacy-policy/)
-
-<!-- Future supporting guides:
-  /notes/chatgpt-export-formats/
-  /notes/chatgpt-export-extension-safety/
--->
 
 ## Final thought
 

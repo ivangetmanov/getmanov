@@ -5,7 +5,7 @@ description: "Compare official data export, shared links, PDF, copy-paste, and l
 canonical: "/notes/export-long-chatgpt-chats/"
 heroImage: "/images/notes/export-long-chatgpt-chats/hero-chat-to-qa-txt.webp"
 datePublished: "2026-06-10"
-dateModified: "2026-06-12"
+dateModified: "2026-06-13"
 faq:
   - question: "Can I export a single ChatGPT conversation?"
     answer: "Yes. You can save a single conversation manually, share it as a link, print it as PDF, or use a browser-based exporter to save the active chat as a file."
@@ -66,10 +66,21 @@ For long conversations, the most useful export is usually not a screenshot or PD
 | Save a very long chat without scrolling forever | [How to Save a Long ChatGPT Conversation Without Scrolling Forever](/notes/save-long-chatgpt-conversation-without-scrolling/) |
 | Understand why manual copying breaks | [Why Copy-Paste Fails for Long ChatGPT Conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/) |
 | Turn a messy thread into reusable notes | [How to Turn a Messy ChatGPT Thread into Clean Q&A Notes](/notes/chatgpt-thread-to-qa-notes/) |
+| Preserve prompts and answers as pairs | [How to Export ChatGPT Conversations as Question-Answer Pairs](/notes/export-chatgpt-question-answer-pairs/) |
+| Archive writing brainstorms, rewrites, and final copy | [How Writers Can Archive ChatGPT Brainstorming Sessions](/notes/writers-archive-chatgpt-brainstorming-sessions/) |
+| Archive errors, attempted fixes, and final solutions | [How Developers Can Save ChatGPT Debugging Conversations](/notes/developers-save-chatgpt-debugging-conversations/) |
+| Save research questions, hypotheses, and source ideas | [How Researchers Can Save ChatGPT Conversations as Structured Notes](/notes/researchers-save-chatgpt-conversations-structured-notes/) |
+| Turn learning chats into reviewable study notes | [How Students Can Turn ChatGPT Chats into Study Notes](/notes/students-turn-chatgpt-chats-into-study-notes/) |
+| Choose between sharing and keeping a local copy | [ChatGPT Shared Links vs Local Export: What's the Difference?](/notes/chatgpt-shared-links-vs-local-export/) |
+| Export one chat as durable TXT notes | [How to Export ChatGPT Chats as TXT](/notes/export-chatgpt-chats-as-txt/) |
+| Compare TXT, Markdown, PDF, and JSON | [TXT vs Markdown vs PDF vs JSON for ChatGPT Export](/notes/chatgpt-export-formats-txt-markdown-pdf-json/) |
 | Understand the core export terms | [ChatGPT Export Glossary: Key Terms Explained](/notes/chatgpt-export-glossary/) |
 | Make saved long chats reusable later | [Why Long ChatGPT Chats Are Hard to Reuse Later](/notes/why-long-chatgpt-chats-are-hard-to-reuse-later/) |
+| Understand how an extension reads the active page | [How Browser Extensions Read an Active ChatGPT Page](/notes/how-browser-extensions-read-active-chatgpt-page/) |
+| Understand why active-page exporters need maintenance | [Why ChatGPT Export Extensions Break When OpenAI Updates the Interface](/notes/why-chatgpt-export-extensions-break-interface-updates/) |
+| Check extension permissions and privacy | [Is It Safe to Use a ChatGPT Export Extension?](/notes/is-chatgpt-export-extension-safe/) |
 
-<!-- Future guides can extend this router with format comparison and extension safety pages. -->
+<!-- Future guides can extend this router with additional export workflows. -->
 
 ## Key terms
 
@@ -544,7 +555,7 @@ Before installing an export extension, check:
 - whether it works without a separate account;
 - whether it has a clear privacy policy.
 
-Permissions do not automatically mean a tool is unsafe, but unnecessary permissions are a reason to be careful. Chrome explains how extension and host access work in its official [permissions documentation](https://developer.chrome.com/docs/extensions/develop/concepts/declare-permissions).
+Permissions do not automatically mean a tool is unsafe, but unnecessary permissions are a reason to be careful. Chrome explains how extension and host access work in its official [permissions documentation](https://developer.chrome.com/docs/extensions/develop/concepts/declare-permissions). Use the [ChatGPT export extension safety checklist](/notes/is-chatgpt-export-extension-safe/) to review permissions, local and cloud processing, backend uploads, and privacy policies together.
 
 ### Local export vs. cloud export
 
@@ -706,20 +717,30 @@ No. Shared links are useful for showing a conversation to someone else, but they
 
 This guide is part of a practical series about saving, exporting, structuring, and reusing ChatGPT conversations.
 
+* [Compare shared links and local export](/notes/chatgpt-shared-links-vs-local-export/)
+* [Export ChatGPT chats as durable TXT notes](/notes/export-chatgpt-chats-as-txt/)
+
 * [Export one specific ChatGPT conversation](/notes/export-single-chatgpt-conversation/)
 * [Understand why copy-paste fails for long conversations](/notes/why-copy-paste-fails-long-chatgpt-conversations/)
 * [Save a long conversation without scrolling forever](/notes/save-long-chatgpt-conversation-without-scrolling/)
 * [Turn a messy thread into clean Q&A notes](/notes/chatgpt-thread-to-qa-notes/)
+* [Export a conversation as question-answer pairs](/notes/export-chatgpt-question-answer-pairs/)
+* [Archive writing brainstorms and editorial trails](/notes/writers-archive-chatgpt-brainstorming-sessions/)
+* [Compare TXT, Markdown, PDF, and JSON](/notes/chatgpt-export-formats-txt-markdown-pdf-json/)
 * [Review the ChatGPT export glossary](/notes/chatgpt-export-glossary/)
 * [Understand why saved long chats are hard to reuse](/notes/why-long-chatgpt-chats-are-hard-to-reuse-later/)
+* [Save research conversations as structured notes](/notes/researchers-save-chatgpt-conversations-structured-notes/)
+* [Turn ChatGPT chats into study notes](/notes/students-turn-chatgpt-chats-into-study-notes/)
+* [Archive developer debugging conversations](/notes/developers-save-chatgpt-debugging-conversations/)
+* [Understand how browser extensions read the active page](/notes/how-browser-extensions-read-active-chatgpt-page/)
+* [Understand why export extensions break after interface updates](/notes/why-chatgpt-export-extensions-break-interface-updates/)
+* [Check ChatGPT export extension safety](/notes/is-chatgpt-export-extension-safe/)
 * [Install ChatGPT Session Saver](/tools/session-saver/)
 * [Read the Session Saver privacy policy](/tools/session-saver/privacy-policy/)
 
 <!-- Future supporting guides:
   /notes/chatgpt-data-export-vs-single-chat-export/
   /notes/what-is-qa-export/
-  /notes/chatgpt-export-formats/
-  /notes/chatgpt-export-extension-safety/
   /notes/chatgpt-export-extension-permissions/
   /notes/chatgpt-export-methods-compared/
 -->
