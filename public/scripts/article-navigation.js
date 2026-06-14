@@ -70,6 +70,14 @@
   const tocNav = tocList.closest("nav");
   let currentActiveId = "";
 
+  const moveActiveIndicator = (link) => {
+    tocList.style.setProperty("--toc-active-y", `${link.offsetTop}px`);
+    tocList.style.setProperty(
+      "--toc-active-height",
+      `${link.offsetHeight}px`,
+    );
+  };
+
   const keepActiveLinkInPlace = (link) => {
     if (!tocNav) return;
 
@@ -80,10 +88,17 @@
     const linkCenter = link.offsetTop + link.offsetHeight / 2;
     const maxScroll = Math.max(0, tocNav.scrollHeight - tocNav.clientHeight);
 
-    tocNav.scrollTop = Math.min(
+    const targetTop = Math.min(
       maxScroll,
       Math.max(0, linkCenter - anchorLine),
     );
+
+    tocNav.scrollTo({
+      top: targetTop,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
   };
 
   const updateReadingState = () => {
@@ -112,6 +127,7 @@
       link.classList.toggle("is-active", isActive);
       if (isActive) {
         link.setAttribute("aria-current", "location");
+        moveActiveIndicator(link);
         if (activeChanged) keepActiveLinkInPlace(link);
       } else {
         link.removeAttribute("aria-current");
@@ -127,5 +143,20 @@
 
   window.addEventListener("scroll", requestUpdate, { passive: true });
   window.addEventListener("resize", requestUpdate);
+  tocLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const heading = document.getElementById(link.dataset.headingId);
+      if (!heading) return;
+
+      event.preventDefault();
+      heading.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+        block: "start",
+      });
+      history.replaceState(null, "", link.hash);
+    });
+  });
   updateReadingState();
 })();

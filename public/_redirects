@@ -72,9 +72,10 @@
 /seo-b2b-2024.html                  /notes/seo-b2b-2024/                 301!
 
 # --- TOOLS ---
-/tool-calculator.html               /tools/calculator/                   301!
-/tool-calculator-copy.html          /tools/calculator/                   301!
-/tools/calculator-copy/             /tools/calculator/                   301!
+/tool-calculator.html               /tools/seo-roi-calculator/           301!
+/tool-calculator-copy.html          /tools/seo-roi-calculator/           301!
+/tools/calculator-copy/             /tools/seo-roi-calculator/           301!
+/tools/calculator/                  /tools/seo-roi-calculator/           301!
 /java-script/track-email-copy.html  /tools/track-email-copy/             301!
 /java-script/track-email-copy  /tools/track-email-copy/                  301!
 /java-script/track-email-copy/      /tools/track-email-copy/             301!

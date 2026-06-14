@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "B2B SEO KPIs: Measure Pipeline and Revenue, Not Rankings"
 description: "Learn how to measure B2B SEO with a KPI tree that connects delivery, technical health, search and AI visibility, conversion quality, pipeline, CAC, payback, and revenue."
 canonical: "/notes/b2b-seo-kpi/"
-heroImage: "/images/blog/b2b-seo-kpis-measure-pipeline-revenue-not-rankings/b2b-seo-kpis-pipeline-revenue-hero.webp"
+heroImage: "/images/blog/b2b-seo-kpis-measure-pipeline-revenue-not-rankings/b2b-seo-kpis-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -45,7 +45,7 @@ The better approach is to build a KPI tree: start with a commercial goal, then w
 > **Difference in one sentence:** rankings show where you appear; B2B SEO KPIs should show whether that visibility creates qualified buying demand and commercial value.
 
 <figure class="article-visual">
-  <img src="/images/blog/b2b-seo-kpis-measure-pipeline-revenue-not-rankings/b2b-seo-kpis-pipeline-revenue-hero.webp" alt="Illustration of a B2B SEO KPI system connecting SEO inputs, search and AI visibility, conversions, pipeline, and revenue" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/b2b-seo-kpis-measure-pipeline-revenue-not-rankings/b2b-seo-kpis-2026-hero.webp" alt="B2B SEO KPI model connecting rankings and traffic to pipeline and revenue" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>A useful B2B SEO KPI system connects delivery, visibility, conversion quality, pipeline, and revenue instead of reporting rankings in isolation.</figcaption>
 </figure>
 
@@ -408,7 +408,7 @@ An SEO calculator is not only a lead magnet.
 
 It can also connect the KPI tree to customer economics that leadership understands.
 
-The [SEO ROI Calculator](/tools/calculator/) uses six inputs:
+The [SEO ROI Calculator](/tools/seo-roi-calculator/) uses six inputs:
 
 * total SEO investment;
 * customers acquired from SEO;
@@ -437,7 +437,7 @@ That is fine.
 
 The goal is not fake precision. The goal is to make assumptions visible and review them against CRM results.
 
-> Want to connect SEO investment with CAC, LTV, ROI, and payback? Try the [SEO ROI Calculator](/tools/calculator/).
+> Want to connect SEO investment with CAC, LTV, ROI, and payback? Try the [SEO ROI Calculator](/tools/seo-roi-calculator/).
 
 ## Account for time lag
 
@@ -846,7 +846,7 @@ Use this KPI model together with:
 * [B2B SEO checklist](/notes/b2b-seo-checklist/);
 * [B2B SEO authority-building guide](/notes/b2b-seo-links/);
 * [B2B SEO case study](/case-studies/seo-case-b2b/);
-* [SEO ROI Calculator](/tools/calculator/).
+* [SEO ROI Calculator](/tools/seo-roi-calculator/).
 
 ## FAQ
 

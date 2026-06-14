@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "B2B SEO Checklist: From Baseline to Revenue"
 description: "Use this B2B SEO checklist to connect business outcomes, measurement, audits, content, technical SEO, authority, conversion, AI search visibility, and revenue."
 canonical: "/notes/b2b-seo-checklist/"
-heroImage: "/images/blog/b2b-seo-checklist/b2b-seo-checklist-baseline-to-revenue-hero.webp"
+heroImage: "/images/blog/b2b-seo-checklist/b2b-seo-checklist-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -45,7 +45,7 @@ It should start with the commercial system:
 The goal is not to complete SEO tasks for their own sake. The goal is to create a repeatable system that turns qualified search demand into pipeline, revenue, and learning.
 
 <figure class="article-visual">
-  <img src="/images/blog/b2b-seo-checklist/b2b-seo-checklist-baseline-to-revenue-hero.webp" alt="B2B SEO checklist workflow from business baseline to diagnosis, execution, and revenue" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/b2b-seo-checklist/b2b-seo-checklist-2026-hero.webp" alt="B2B SEO checklist for running the channel from business baseline to revenue" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>A useful B2B SEO checklist connects baseline, diagnosis, execution, and revenue instead of treating SEO as a disconnected task list.</figcaption>
 </figure>
 
@@ -132,7 +132,7 @@ Instead of asking “Which keywords have volume?”, you ask:
 
 Use the [B2B SEO KPI framework](/notes/b2b-seo-kpi/) to connect the outcome to leading indicators.
 
-Use the [SEO ROI Calculator](/tools/calculator/) to test whether the proposed investment and expected customer economics can produce acceptable CAC, LTV:CAC, ROI, and payback.
+Use the [SEO ROI Calculator](/tools/seo-roi-calculator/) to test whether the proposed investment and expected customer economics can produce acceptable CAC, LTV:CAC, ROI, and payback.
 
 ## 2. Confirm measurement
 
@@ -414,7 +414,7 @@ Review every important organic landing page for conversion clarity:
 
 This is where a calculator can be useful.
 
-The [SEO ROI Calculator](/tools/calculator/) is not only a tool for engagement. It acts as a decision-stage economics check: buyers can enter a proposed SEO investment, customers acquired, annual revenue per customer, gross margin, churn, and discount rate, then review CAC, LTV, LTV:CAC, ROI, payback, and expected lifetime.
+The [SEO ROI Calculator](/tools/seo-roi-calculator/) is not only a tool for engagement. It acts as a decision-stage economics check: buyers can enter a proposed SEO investment, customers acquired, annual revenue per customer, gross margin, churn, and discount rate, then review CAC, LTV, LTV:CAC, ROI, payback, and expected lifetime.
 
 It does not forecast traffic, leads, close rates, or pipeline. Keep those funnel assumptions in the KPI model and use the calculator to test the customer economics that result.
 
@@ -559,7 +559,7 @@ Use it with:
 - the [B2B link-building guide](/notes/b2b-seo-links/) for authority;
 - the [social distribution framework](/notes/b2b-seo-smm/) for distribution;
 - the [B2B SEO case study](/case-studies/seo-case-b2b/) for a practical example;
-- the [SEO ROI Calculator](/tools/calculator/) for decision-stage economics.
+- the [SEO ROI Calculator](/tools/seo-roi-calculator/) for decision-stage economics.
 
 External references used for current AI search context:
 

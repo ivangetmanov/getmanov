@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "How to Choose a B2B SEO Partner"
 description: "Learn how to choose a B2B SEO agency, consultant, or hybrid partner by evaluating business model fit, technical execution, content systems, AI search readiness, measurement, pipeline, and revenue impact."
 canonical: "/notes/b2b-seo-agency/"
-heroImage: "/images/blog/how-to-choose-a-b2b-seo-partner/how-to-choose-b2b-seo-partner-hero.webp"
+heroImage: "/images/blog/how-to-choose-a-b2b-seo-partner/how-to-choose-b2b-seo-partner-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -51,7 +51,7 @@ Those can be useful inputs, but they are not the business outcome.
 > **Difference in one sentence:** a consumer SEO partner may optimize for traffic; a strong B2B SEO partner optimizes for qualified discovery, buyer trust, pipeline, and revenue influence.
 
 <figure class="article-visual">
-  <img src="/images/blog/how-to-choose-a-b2b-seo-partner/how-to-choose-b2b-seo-partner-hero.webp" alt="Illustration of choosing a B2B SEO partner by connecting search systems, partner evaluation, and commercial results" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/how-to-choose-a-b2b-seo-partner/how-to-choose-b2b-seo-partner-2026-hero.webp" alt="How to choose a B2B SEO partner across agency, consultant, in-house, and hybrid models" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>A strong B2B SEO partner connects search visibility, AI discovery, conversion paths, and CRM outcomes instead of treating SEO as a ranking project.</figcaption>
 </figure>
 
@@ -290,7 +290,7 @@ The goal is a consistent model that connects organic discovery to commercial out
 
 If you already have a cost model, connect it to the work plan.
 
-Related tool: [SEO ROI Calculator](/tools/calculator/)
+Related tool: [SEO ROI Calculator](/tools/seo-roi-calculator/)
 
 ## 4. Evidence and uncertainty
 
@@ -653,7 +653,7 @@ The question is not whether SEO is cheap.
 
 The question is whether the investment can be justified by pipeline, revenue, gross profit, CAC, and payback.
 
-This is where the [SEO ROI Calculator](/tools/calculator/) helps.
+This is where the [SEO ROI Calculator](/tools/seo-roi-calculator/) helps.
 
 Use it to compare a proposed investment with the customer economics the program must produce. Enter:
 
@@ -672,7 +672,7 @@ The forecast will not be perfect.
 
 But the assumptions will be visible, and that is exactly what you want before choosing a long-term B2B SEO partner.
 
-Use the calculator: [SEO ROI Calculator](/tools/calculator/)
+Use the calculator: [SEO ROI Calculator](/tools/seo-roi-calculator/)
 
 ## FAQ
 

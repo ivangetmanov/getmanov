@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "B2B SEO Trends: AI Search, Authority, UX, and SERP Visibility"
 description: "A practical guide to durable B2B SEO trends: AI search, original evidence, authority, brand identity, technical reliability, SERP visibility, distribution, UX, and revenue-focused measurement."
 canonical: "/notes/b2b-seo-trends/"
-heroImage: "/images/blog/b2b-seo-trends/b2b-seo-trends-hero.webp"
+heroImage: "/images/blog/b2b-seo-trends/b2b-seo-trends-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -49,7 +49,7 @@ The practical implication is clear:
 > B2B SEO is moving away from generic volume and toward evidence, identity, clarity, technical reliability, and connected customer journeys.
 
 <figure class="article-visual">
-  <img src="/images/blog/b2b-seo-trends/b2b-seo-trends-hero.webp" alt="Illustration of B2B SEO trends connecting AI search, authority, UX, SERP visibility, and commercial outcomes" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/b2b-seo-trends/b2b-seo-trends-2026-hero.webp" alt="B2B SEO trends covering AI search, authority, UX, and changing discovery surfaces" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>B2B SEO trends point in one direction: less value in generic volume, more value in evidence, identity, reliability, and connected buyer journeys.</figcaption>
 </figure>
 
@@ -321,7 +321,7 @@ That means it needs:
 - conversion tracking;
 - a next step.
 
-Related tool: [SEO Cost Calculator](/tools/calculator/)
+Related tool: [SEO Cost Calculator](/tools/seo-roi-calculator/)
 
 ## Trend 7: Distribution becomes part of content strategy
 

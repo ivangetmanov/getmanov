@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "How Email Supports B2B SEO and Demand Capture"
 description: "Learn how email supports B2B SEO by turning organic discovery into segmented nurturing, returning visits, branded demand, pipeline influence, and customer learning."
 canonical: "/notes/b2b-seo-mail/"
-heroImage: "/images/blog/how-email-supports-b2b-seo-and-demand-capture/email-supports-b2b-seo-hero.webp"
+heroImage: "/images/blog/how-email-supports-b2b-seo-and-demand-capture/email-supports-b2b-seo-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -44,7 +44,7 @@ In a B2B growth system, email can support SEO by:
 The important distinction is simple: **email does not replace SEO, and SEO does not replace nurturing. Search creates discovery. Email creates continuity.**
 
 <figure class="article-visual">
-  <img src="/images/blog/how-email-supports-b2b-seo-and-demand-capture/email-supports-b2b-seo-hero.webp" alt="Illustration showing organic search discovery leading to a newsletter, benchmark, return visits, and B2B pipeline influence" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/how-email-supports-b2b-seo-and-demand-capture/email-supports-b2b-seo-2026-hero.webp" alt="How email supports B2B SEO through distribution, nurturing, return visits, and demand capture" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>Search creates the first useful touchpoint; email helps preserve attention until the buyer is ready to evaluate or act.</figcaption>
 </figure>
 
@@ -126,7 +126,7 @@ Useful CTA matching can look like this:
 
 A B2B SEO program becomes stronger when each strategic page offers the next step that matches the buyer’s current intent.
 
-For example, a decision-stage page about SEO investment can naturally point to an [SEO ROI Calculator](/tools/calculator/). The tool lets buyers test investment, customers acquired, revenue, margin, churn, CAC, LTV, ROI, and payback. An email follow-up can then discuss pipeline expectations and implementation tradeoffs separately.
+For example, a decision-stage page about SEO investment can naturally point to an [SEO ROI Calculator](/tools/seo-roi-calculator/). The tool lets buyers test investment, customers acquired, revenue, margin, churn, CAC, LTV, ROI, and payback. An email follow-up can then discuss pipeline expectations and implementation tradeoffs separately.
 
 Related guide: [B2B SEO Checklist: From Baseline to Revenue](/notes/b2b-seo-checklist/)
 

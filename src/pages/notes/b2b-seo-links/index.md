@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "B2B Link Building: Authority, Referrals, and Market Evidence"
 description: "Learn how to build B2B links through authority, referrals, expert-led digital PR, linkable assets, market evidence, and AI-search-ready source visibility instead of generic link volume."
 canonical: "/notes/b2b-seo-links/"
-heroImage: "/images/blog/b2b-link-building/b2b-link-building-market-evidence-hero.webp"
+heroImage: "/images/blog/b2b-link-building/b2b-link-building-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -43,7 +43,7 @@ The goal is not a higher third-party domain score.
 The goal is to make your company easier to discover, verify, cite, and trust in the market where you need to win.
 
 <figure class="article-visual">
-  <img src="/images/blog/b2b-link-building/b2b-link-building-market-evidence-hero.webp" alt="B2B link building illustration showing links, mentions, referrals, and AI-citable sources as market evidence around an evidence-rich asset" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/b2b-link-building/b2b-link-building-2026-hero.webp" alt="B2B link building through evidence, relevance, relationships, referrals, and authority" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>The strongest B2B links are not just SEO signals. They are proof that the market can find, cite, and trust your work.</figcaption>
 </figure>
 
@@ -191,7 +191,7 @@ The best assets usually help someone else explain a problem better.
 
 For example, a B2B SEO agency, consultant, or in-house team could earn stronger references from:
 
-- a public [SEO ROI Calculator](/tools/calculator/) that lets buyers test a proposed investment against CAC, LTV, ROI, and payback;
+- a public [SEO ROI Calculator](/tools/seo-roi-calculator/) that lets buyers test a proposed investment against CAC, LTV, ROI, and payback;
 - a transparent [B2B SEO case study](/case-studies/seo-case-b2b/) that explains what changed and why;
 - a [B2B SEO audit framework](/notes/b2b-seo-audit/) that gives teams a useful diagnostic model;
 - a comparison page that helps buyers understand tradeoffs;
@@ -306,7 +306,7 @@ Examples:
 
 This helps both buyers and search systems understand which parts of the site are authoritative for which topics.
 
-For an article about cost planning, the [SEO ROI Calculator](/tools/calculator/) is a stronger destination than the homepage because the reference and the buyer’s next step match.
+For an article about cost planning, the [SEO ROI Calculator](/tools/seo-roi-calculator/) is a stronger destination than the homepage because the reference and the buyer’s next step match.
 
 ## Avoid common failure modes
 
@@ -454,6 +454,6 @@ Publish evidence. Maintain real professional relationships. Make important knowl
 
 Search authority then becomes a by-product of genuine usefulness and relevance.
 
-For implementation, connect this guide with the [2026 B2B SEO strategy guide](/notes/seo-b2b-2024/), the [B2B SEO audit framework](/notes/b2b-seo-audit/), the [B2B SEO checklist](/notes/b2b-seo-checklist/), the [B2B SEO KPI model](/notes/b2b-seo-kpi/), and the [SEO ROI Calculator](/tools/calculator/).
+For implementation, connect this guide with the [2026 B2B SEO strategy guide](/notes/seo-b2b-2024/), the [B2B SEO audit framework](/notes/b2b-seo-audit/), the [B2B SEO checklist](/notes/b2b-seo-checklist/), the [B2B SEO KPI model](/notes/b2b-seo-kpi/), and the [SEO ROI Calculator](/tools/seo-roi-calculator/).
 
 Questions about a B2B growth system? Contact me via [LinkedIn](https://www.linkedin.com/in/ivan-getmanov/), [Telegram](https://t.me/getmanov_marketing), or [email](mailto:ivangetmanov@icloud.com).

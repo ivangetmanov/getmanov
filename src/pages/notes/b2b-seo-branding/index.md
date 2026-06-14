@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "Brand Positioning Through B2B SEO"
 description: "Learn how B2B SEO shapes brand positioning through search touchpoints, market territory, evidence-rich content, branded demand, AI visibility, and commercial measurement."
 canonical: "/notes/b2b-seo-branding/"
-heroImage: "/images/blog/brand-positioning-through-b2b-seo/brand-positioning-through-b2b-seo-hero.webp"
+heroImage: "/images/blog/brand-positioning-through-b2b-seo/brand-positioning-b2b-seo-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -53,7 +53,7 @@ The job of SEO is not just to make the brand visible. It is to make the brand un
 > **Difference in one sentence:** SEO captures demand when buyers search for a solution, but it shapes positioning when every search-visible page reinforces the same market territory, expertise, and proof.
 
 <figure class="article-visual">
-  <img src="/images/blog/brand-positioning-through-b2b-seo/brand-positioning-through-b2b-seo-hero.webp" alt="Illustration showing B2B SEO search touchpoints shaping brand positioning and buyer memory" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/brand-positioning-through-b2b-seo/brand-positioning-b2b-seo-2026-hero.webp" alt="Brand positioning through B2B SEO using search to make expertise and market position visible" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>B2B SEO does not just capture demand. It can teach the market where the brand belongs.</figcaption>
 </figure>
 
@@ -368,7 +368,7 @@ Positioning becomes stronger when the company gives buyers a useful way to act o
 
 That is where tools can support SEO.
 
-For example, an [SEO ROI calculator](/tools/calculator/) is not just a conversion widget.
+For example, an [SEO ROI calculator](/tools/seo-roi-calculator/) is not just a conversion widget.
 
 It can support positioning by showing how the company thinks about:
 
@@ -523,7 +523,7 @@ Use this article together with:
 - [B2B SEO Checklist: From Baseline to Revenue](/notes/b2b-seo-checklist/)
 - [B2B Link Building: Authority, Referrals, and Market Evidence](/notes/b2b-seo-links/)
 - [How to Choose a B2B SEO Partner](/notes/b2b-seo-agency/)
-- [SEO Cost Calculator](/tools/calculator/)
+- [SEO Cost Calculator](/tools/seo-roi-calculator/)
 
 ## FAQ
 

@@ -32,6 +32,11 @@ const b2bSeoCase = {
 
 const b2bSeoGuides = [
   {
+    href: "/notes/seo-b2b-2024/",
+    title: "SEO in B2B: Do You Really Need It?",
+    description: "AI search, buyer enablement, ROI, and pipeline strategy.",
+  },
+  {
     href: "/notes/b2b-seo-agency/",
     title: "Choosing a B2B SEO Partner",
     description: "Agency, consultant, in-house, and hybrid evaluation.",
@@ -95,6 +100,21 @@ const b2bSeoPaths = new Set([
   ...b2bSeoGuides.map((guide) => guide.href),
 ]);
 const hasB2BSeoMap = b2bSeoPaths.has(currentPath);
+const articleCta = hasB2BSeoMap
+  ? {
+      href: "/tools/seo-roi-calculator/",
+      eyebrow: "Free planning tool",
+      title: "Try the SEO ROI Calculator",
+      description: "Estimate CAC, LTV, payback, and ROI with your own numbers.",
+    }
+  : currentPath.startsWith("/notes/")
+    ? {
+        href: "/tools/session-saver/",
+        eyebrow: "Free browser tool",
+        title: "Try ChatGPT Session Saver",
+        description: "Turn one active ChatGPT conversation into clean local Q&A notes.",
+      }
+    : null;
 
 const [globalStyles, markdownStyles] = await Promise.all([
   readFile(new URL("../../public/styles/global.css", import.meta.url), "utf8"),
@@ -169,7 +189,6 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
 
         <nav class="nav">
           <a href="/tools/">Tools</a>
-          <a href="/projects/">Projects</a>
           <a href="/case-studies/">Case studies</a>
           <a href="/notes/">Notes</a>
         </nav>
@@ -232,12 +251,35 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
 
         {hasArticleNavigation && (
           <aside class="article-toc" aria-labelledby="article-toc-title">
+            <a class="article-author" href="/" aria-label="About Ivan Getmanov">
+              <img
+                src="/images/ivan-getmanov.webp"
+                alt=""
+                width="1200"
+                height="1600"
+                loading="eager"
+              />
+              <span>
+                <small>Written by</small>
+                <strong>Ivan Getmanov</strong>
+              </span>
+            </a>
+
             <nav>
               <p id="article-toc-title" class="article-toc__title">
                 Table of contents
               </p>
               <ol class="article-toc__list"></ol>
             </nav>
+
+            {articleCta && (
+              <a class="article-tool-cta" href={articleCta.href}>
+                <small>{articleCta.eyebrow}</small>
+                <strong>{articleCta.title}</strong>
+                <span>{articleCta.description}</span>
+                <b aria-hidden="true">Open tool →</b>
+              </a>
+            )}
           </aside>
         )}
       </div>
@@ -270,7 +312,7 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
         <div>
           <div class="footer-title">Status</div>
           <div class="footer-text">
-            Astro migration in progress.
+            Site is live. I actively publish and update articles.
           </div>
         </div>
       </div>

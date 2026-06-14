@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "How Social Distribution Supports B2B SEO"
 description: "Learn how social distribution supports B2B SEO by helping expert content earn attention, conversations, referrals, links, branded demand, AI-search visibility, and pipeline influence."
 canonical: "/notes/b2b-seo-smm/"
-heroImage: "/images/blog/how-social-distribution-supports-b2b-seo/social-distribution-b2b-seo-hero.webp"
+heroImage: "/images/blog/how-social-distribution-supports-b2b-seo/social-distribution-b2b-seo-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -48,7 +48,7 @@ It is:
 > Publish evidence on an owned page, adapt the useful insight to the right channel, join the conversation, learn from the response, and connect the journey back to business outcomes.
 
 <figure class="article-visual">
-  <img src="/images/blog/how-social-distribution-supports-b2b-seo/social-distribution-b2b-seo-hero.webp" alt="Illustration showing a B2B source page distributed through social posts, specialist communities, video, newsletters, branded searches, mentions, and links" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/how-social-distribution-supports-b2b-seo/social-distribution-b2b-seo-2026-hero.webp" alt="How social distribution supports B2B SEO by helping useful expertise reach people who can reference it" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>Social does not replace SEO. It gives important content a path into the market before search alone can carry it.</figcaption>
 </figure>
 
@@ -280,7 +280,7 @@ Paid social should not be judged only by cheap clicks.
 
 The question is whether it helps the right audience reach the right source asset and take a meaningful next step.
 
-For example, an [SEO ROI calculator](/tools/calculator/) can be a better paid-social destination than a generic blog post when the audience is already evaluating investment, CAC, LTV, ROI, or payback.
+For example, an [SEO ROI calculator](/tools/seo-roi-calculator/) can be a better paid-social destination than a generic blog post when the audience is already evaluating investment, CAC, LTV, ROI, or payback.
 
 ## Turn one research asset into a distribution system
 

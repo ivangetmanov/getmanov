@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "Technical SEO for B2B Websites"
 description: "Learn how to prioritize technical SEO for B2B websites around crawlability, indexation, rendering, information architecture, structured data, migrations, monitoring, AI search readiness, and commercial impact."
 canonical: "/notes/b2b-seo-technical/"
-heroImage: "/images/blog/technical-seo-for-b2b-websites/technical-seo-b2b-hero.webp"
+heroImage: "/images/blog/technical-seo-for-b2b-websites/technical-seo-b2b-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -48,7 +48,7 @@ The practical rule is simple: prioritize technical work by **commercial impact**
 A missing canonical on a low-value archive page is not the same as a blocked product page, a broken comparison page, or a lead-generation template that fails on mobile.
 
 <figure class="article-visual">
-  <img src="/images/blog/technical-seo-for-b2b-websites/technical-seo-b2b-hero.webp" alt="Illustration showing technical SEO as the operating foundation for B2B pages to be discovered, rendered, understood, and maintained" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/technical-seo-for-b2b-websites/technical-seo-b2b-2026-hero.webp" alt="Technical SEO for B2B websites covering crawling, indexation, performance, and site architecture" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>Technical SEO keeps strategic B2B pages discoverable, renderable, understandable, measurable, and stable while the website evolves.</figcaption>
 </figure>
 
@@ -499,7 +499,7 @@ A calculator should not be an isolated widget.
 
 It should be a page with context, use cases, assumptions, limitations, and a next step.
 
-Related tool: [SEO Cost Calculator](/tools/calculator/)
+Related tool: [SEO Cost Calculator](/tools/seo-roi-calculator/)
 
 ## Migration and release controls
 

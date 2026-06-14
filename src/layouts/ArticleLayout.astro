@@ -10,6 +10,26 @@ const heroImageUrl = frontmatter.heroImage
   ? new URL(frontmatter.heroImage, "https://getmanov.com").href
   : undefined;
 const faqItems = frontmatter.faq ?? [];
+const b2bSeoPaths = new Set([
+  "/notes/seo-b2b-2024/",
+  "/notes/b2b-seo-agency/",
+  "/notes/b2b-seo-audit/",
+  "/notes/b2b-seo-branding/",
+  "/notes/b2b-seo-checklist/",
+  "/notes/b2b-seo-kpi/",
+  "/notes/b2b-seo-links/",
+  "/notes/b2b-seo-mail/",
+  "/notes/b2b-seo-smm/",
+  "/notes/b2b-seo-technical/",
+  "/notes/b2b-seo-trends/",
+]);
+const currentPath = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+const isB2BSeoArticle = b2bSeoPaths.has(currentPath);
+const mentionedToolId = isB2BSeoArticle
+  ? "https://getmanov.com/tools/seo-roi-calculator/#application"
+  : "https://getmanov.com/tools/session-saver/#software";
 
 const articleSchema = {
   "@type": "Article",
@@ -32,9 +52,44 @@ const articleSchema = {
     url: "https://getmanov.com/",
   },
   mentions: {
-    "@id": "https://getmanov.com/tools/session-saver/#software",
+    "@id": mentionedToolId,
   },
 };
+
+const toolSchema = isB2BSeoArticle
+  ? {
+      "@type": "WebApplication",
+      "@id": "https://getmanov.com/tools/seo-roi-calculator/#application",
+      name: "Free SEO ROI Calculator Online",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Any",
+      url: "https://getmanov.com/tools/seo-roi-calculator/",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      author: {
+        "@type": "Person",
+        name: "Ivan Getmanov",
+        url: "https://getmanov.com/",
+      },
+    }
+  : {
+      "@type": "SoftwareApplication",
+      "@id": "https://getmanov.com/tools/session-saver/#software",
+      name: "ChatGPT Session Saver",
+      applicationCategory: "BrowserApplication",
+      operatingSystem: "Chrome",
+      url: "https://getmanov.com/tools/session-saver/",
+      installUrl:
+        "https://chromewebstore.google.com/detail/chatgpt-session-saver/negkdfmbiophoipcalliiemalkghlidj/",
+      author: {
+        "@type": "Person",
+        name: "Ivan Getmanov",
+        url: "https://getmanov.com/",
+      },
+    };
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -76,21 +131,7 @@ const structuredData = {
         },
       ],
     },
-    {
-      "@type": "SoftwareApplication",
-      "@id": "https://getmanov.com/tools/session-saver/#software",
-      name: "ChatGPT Session Saver",
-      applicationCategory: "BrowserApplication",
-      operatingSystem: "Chrome",
-      url: "https://getmanov.com/tools/session-saver/",
-      installUrl:
-        "https://chromewebstore.google.com/detail/chatgpt-session-saver/negkdfmbiophoipcalliiemalkghlidj/",
-      author: {
-        "@type": "Person",
-        name: "Ivan Getmanov",
-        url: "https://getmanov.com/",
-      },
-    },
+    toolSchema,
   ],
 };
 ---

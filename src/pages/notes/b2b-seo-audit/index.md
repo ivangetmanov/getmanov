@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "B2B SEO Audit: Technical, Content, Authority, and Measurement"
 description: "Learn how to run a B2B SEO audit that connects technical health, content quality, authority, AI search readiness, conversion paths, and measurement to qualified pipeline and revenue."
 canonical: "/notes/b2b-seo-audit/"
-heroImage: "/images/blog/b2b-seo-audit/b2b-seo-audit-hero.webp"
+heroImage: "/images/blog/b2b-seo-audit/b2b-seo-audit-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -49,7 +49,7 @@ The output should not be a flat checklist.
 The output should be a short decision queue: what to fix first, why it matters commercially, who owns it, and how you will know whether it worked.
 
 <figure class="article-visual">
-  <img src="/images/blog/b2b-seo-audit/b2b-seo-audit-hero.webp" alt="Illustration of a B2B SEO audit connecting technical health, content, authority, measurement, and pipeline outcomes" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/b2b-seo-audit/b2b-seo-audit-2026-hero.webp" alt="B2B SEO audit covering technical, content, authority, and measurement constraints" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>A useful B2B SEO audit connects technical health, content quality, authority signals, and measurement to qualified pipeline and revenue.</figcaption>
 </figure>
 
@@ -172,7 +172,7 @@ At the same time, a low-traffic comparison page may be commercially important if
 
 Use the [B2B SEO KPI framework](/notes/b2b-seo-kpi/) to define the measurement hierarchy before prioritizing audit findings.
 
-If CAC, LTV, and payback are part of the baseline, test the current economics with the [SEO ROI Calculator](/tools/calculator/) before estimating the upside from new SEO work.
+If CAC, LTV, and payback are part of the baseline, test the current economics with the [SEO ROI Calculator](/tools/seo-roi-calculator/) before estimating the upside from new SEO work.
 
 ## 2. Audit crawlability and indexation
 
@@ -378,7 +378,7 @@ Not every page should push the same action.
 
 A comparison page may lead to a demo.
 
-A cost page may lead to the [SEO ROI Calculator](/tools/calculator/).
+A cost page may lead to the [SEO ROI Calculator](/tools/seo-roi-calculator/).
 
 A technical guide may lead to a checklist, template, or implementation consultation.
 
@@ -483,7 +483,7 @@ Audit whether the site has assets such as:
 - product tours;
 - self-assessment tools.
 
-For example, the [SEO ROI Calculator](/tools/calculator/) can support several jobs at once.
+For example, the [SEO ROI Calculator](/tools/seo-roi-calculator/) can support several jobs at once.
 
 It can:
 

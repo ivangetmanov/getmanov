@@ -3,7 +3,7 @@ layout: ../../../layouts/ArticleLayout.astro
 title: "SEO in B2B: Do You Really Need It?"
 description: "B2B SEO still matters in 2026, but it has changed. Learn when SEO is worth investing in, how AI search and LLM visibility affect B2B buying, and how to measure SEO with pipeline, CAC, and payback."
 canonical: "/notes/seo-b2b-2024/"
-heroImage: "/images/blog/seo-in-b2b-do-you-really-need-it/b2b-seo-ai-search-hero.webp"
+heroImage: "/images/blog/seo-in-b2b-do-you-really-need-it/seo-in-b2b-2026-hero.webp"
 datePublished: "2026-06-14"
 dateModified: "2026-06-14"
 faq:
@@ -51,11 +51,11 @@ The better question is:
 If the answer is no, SEO is not just a traffic channel. It is a missing part of your buying journey.
 
 <figure class="article-visual">
-  <img src="/images/blog/seo-in-b2b-do-you-really-need-it/b2b-seo-ai-search-hero.webp" alt="Illustration of B2B SEO assets being discovered through search and AI answers before converting through a calculator and sales pipeline" width="1600" height="900" loading="eager" fetchpriority="high" />
+  <img src="/images/blog/seo-in-b2b-do-you-really-need-it/seo-in-b2b-2026-hero.webp" alt="SEO in B2B strategy covering AI search, buyer enablement, ROI, and pipeline" width="1672" height="941" loading="eager" fetchpriority="high" />
   <figcaption>B2B SEO is no longer only about ranking. It is about being found, cited, trusted, and converted across search, AI answers, and buyer self-service journeys.</figcaption>
 </figure>
 
-> **Model the commercial case:** Use the [SEO ROI Calculator](/tools/calculator/) to test how investment, acquired customers, revenue, margin, churn, and discount assumptions affect CAC, LTV, payback, and ROI.
+> **Model the commercial case:** Use the [SEO ROI Calculator](/tools/seo-roi-calculator/) to test how investment, acquired customers, revenue, margin, churn, and discount assumptions affect CAC, LTV, payback, and ROI.
 
 ## What changed since the old B2B SEO playbook
 
@@ -207,7 +207,7 @@ Examples:
 * lead requirement calculators;
 * CAC and LTV scenarios.
 
-This is where an [SEO ROI calculator](/tools/calculator/) can become a central conversion asset.
+This is where an [SEO ROI calculator](/tools/seo-roi-calculator/) can become a central conversion asset.
 
 ### 5. Reduce implementation risk
 
@@ -430,7 +430,7 @@ A calculator is not just a CRO widget.
 
 For B2B SEO, it can become a search asset, sales asset, and AI-search asset at the same time.
 
-The current [SEO ROI Calculator](/tools/calculator/) lets you test total SEO investment, customers acquired, annual revenue per customer, gross margin, churn, and discount rate. It then estimates CAC, LTV, LTV:CAC, ROI, payback, and expected customer lifetime.
+The current [SEO ROI Calculator](/tools/seo-roi-calculator/) lets you test total SEO investment, customers acquired, annual revenue per customer, gross margin, churn, and discount rate. It then estimates CAC, LTV, LTV:CAC, ROI, payback, and expected customer lifetime.
 
 A calculator model can support questions like:
 
@@ -489,7 +489,7 @@ That is much more useful than saying “SEO has great ROI over time.”
   <figcaption>An SEO cost calculator can turn high-intent informational traffic into a measurable conversion path: budget clarity, qualified leads, sales context, and pipeline attribution.</figcaption>
 </figure>
 
-> **Run the model:** [Calculate SEO CAC, LTV, payback, and ROI](/tools/calculator/) using your own assumptions.
+> **Run the model:** [Calculate SEO CAC, LTV, payback, and ROI](/tools/seo-roi-calculator/) using your own assumptions.
 
 ## How to optimize B2B SEO for AI search and LLM visibility
 
@@ -853,7 +853,7 @@ An SEO cost calculator is a strong bottom-of-funnel asset. It helps buyers exami
 
 ## Related guides and tools
 
-* [SEO ROI Calculator](/tools/calculator/)
+* [SEO ROI Calculator](/tools/seo-roi-calculator/)
 * [B2B SEO Audit](/notes/b2b-seo-audit/)
 * [B2B SEO Checklist](/notes/b2b-seo-checklist/)
 * [B2B SEO KPIs](/notes/b2b-seo-kpi/)
