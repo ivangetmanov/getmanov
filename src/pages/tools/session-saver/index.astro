@@ -125,7 +125,7 @@ const structuredData = {
   <section class="session-saver-page">
     <div class="hero-shell">
       <div class="hero-copy">
-        <a class="store-status" href={storeUrl} target="_blank" rel="noreferrer">
+        <a class="store-status" href={storeUrl} target="_blank" rel="noreferrer" data-cta-location="hero_store_status">
           <span aria-hidden="true">✓</span>
           Available on Chrome Web Store
         </a>
@@ -141,6 +141,7 @@ const structuredData = {
             href={storeUrl}
             target="_blank"
             rel="noreferrer"
+            data-cta-location="hero_install"
           >
             Install from Chrome Web Store
             <span aria-hidden="true">↗</span>
@@ -166,7 +167,7 @@ const structuredData = {
     </div>
 
     <section class="trust-strip" aria-label="Product trust signals">
-      <a href={storeUrl} target="_blank" rel="noreferrer">
+      <a href={storeUrl} target="_blank" rel="noreferrer" data-cta-location="trust_strip_listing">
         <span>Official listing</span>
         <strong>Available on Chrome Web Store</strong>
       </a>
@@ -270,6 +271,9 @@ const structuredData = {
       <a class="text-link" href="/notes/export-long-chatgpt-chats/">
         Read the complete ChatGPT export guide
       </a>
+      <a class="text-link" href="/notes/export-single-chatgpt-conversation/" data-cta-location="single_chat_export_guide">
+        Learn how to export a single ChatGPT conversation
+      </a>
     </section>
 
     <section class="section faq">
@@ -298,6 +302,7 @@ const structuredData = {
         href={reviewUrl}
         target="_blank"
         rel="noreferrer"
+        data-cta-location="review_request"
       >
         Leave a Chrome Web Store Review
       </a>
@@ -313,7 +318,7 @@ const structuredData = {
           difference. A direct support option may be added here later.
         </p>
       </div>
-      <a class="text-link" href={reviewUrl} target="_blank" rel="noreferrer">
+      <a class="text-link" href={reviewUrl} target="_blank" rel="noreferrer" data-cta-location="support_review">
         Support with a review
       </a>
     </section>

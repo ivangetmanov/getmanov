@@ -159,6 +159,40 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
 
       gtag('config', 'G-Q9Y8XEE6EF');
     </script>
+    <script is:inline>
+      document.addEventListener('click', (event) => {
+        if (!(event.target instanceof Element)) return;
+
+        const link = event.target.closest('a[href]');
+        if (!link || typeof window.gtag !== 'function') return;
+
+        const targetUrl = new URL(link.href, window.location.href);
+        const ctaText = (link.textContent || '').replace(/\s+/g, ' ').trim();
+        const articleHeading = Array.from(document.querySelectorAll('article h2[id], article h3[id]'))
+          .filter((heading) => heading.getBoundingClientRect().top <= link.getBoundingClientRect().top)
+          .at(-1)?.id;
+        const ctaLocation =
+          link.dataset.ctaLocation ||
+          articleHeading ||
+          link.closest('[id]')?.id ||
+          link.closest('section')?.className ||
+          'content_link';
+        const parameters = {
+          source_page: window.location.pathname,
+          cta_location: String(ctaLocation).slice(0, 100),
+          cta_text: ctaText.slice(0, 150),
+          target_url: targetUrl.href,
+        };
+
+        if (targetUrl.origin === window.location.origin && targetUrl.pathname === '/tools/session-saver/') {
+          window.gtag('event', 'session_saver_cta_click', parameters);
+        }
+
+        if (targetUrl.hostname === 'chromewebstore.google.com') {
+          window.gtag('event', 'chrome_store_click', parameters);
+        }
+      });
+    </script>
 
     <!-- The small shared stylesheets are inlined to avoid render-blocking requests. -->
     <style is:inline set:html={criticalStyles}></style>
