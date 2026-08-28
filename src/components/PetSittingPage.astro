@@ -1,0 +1,165 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PetSittingCalendar from "./PetSittingCalendar.astro";
+import { petSittingConfig, petSittingPages, telegramUrl, type PetSittingPageKind } from "../data/pet-sitting";
+
+const { kind } = Astro.props as { kind: PetSittingPageKind };
+const page = petSittingPages[kind];
+const isDogs = kind === "dogs";
+const isCats = kind === "cats";
+const telegram = telegramUrl();
+const related = ["main", "dogs", "cats"].filter((item) => item !== kind) as PetSittingPageKind[];
+const faq = [
+  ["А если мой питомец не подружится с вашими котами?", "Это возможно и совершенно нормально: дружба не является целью. До первого проживания можно познакомиться, а в квартире есть три изолированные комнаты, поэтому животных можно разделить. У гостя всё равно будет своё спокойное место и человеческое внимание."],
+  ["Нормально ли, что на передержке уже есть другие животные?", "Да, если знакомство проходит спокойно и у каждого есть личное пространство. Наши коты уже жили рядом с собаками и кошками, но мы не заставляем животных общаться: если кому-то комфортнее отдельно, так и будет."],
+  ["Моя собака любит гоняться за кошками. Вы её возьмёте?", "Сначала важно понять, что именно происходит. Любопытство или желание поиграть можно оценить на знакомстве. При серьёзной погоне, агрессии или выраженной реакции добычи честнее выбрать ситтера без домашних кошек."],
+  ["Моя кошка не любит других кошек. Это проблема?", "Не обязательно. Гостевая кошка может жить в отдельном спокойном пространстве, а наших кошек можно разделить. Контакт не будет принудительным."],
+  ["Можно сначала посмотреть, где будет жить питомец?", "Да. Перед первым проживанием можно бесплатно прийти примерно на 30 минут: познакомиться, посмотреть квартиру и спокойно оценить реакцию питомца на новое место."],
+  ["Можно сначала оставить питомца ненадолго?", "Да, собака или кошка может остаться на несколько часов до основной передержки. Такая пробная передержка стоит 1 000 RSD."],
+  ["А если питомец тревожится в новом месте?", "Стараемся сохранить привычный режим, знакомые вещи и дать время освоиться. Не торопим знакомство и не заставляем животное взаимодействовать, если ему сейчас спокойнее одному."],
+  ["Если собака не умеет оставаться одна?", "Скажите об этом заранее. Тогда можно организовать проживание так, чтобы дома был кто-то из нас и собаке не приходилось оставаться одной."],
+  ["Что если что-то пойдёт не так во время передержки?", "Мы не ждём молча возвращения хозяина. Сначала разбираемся в ситуации, сразу сообщаем вам и остаёмся на связи, чтобы найти решение вместе."],
+  ["Что если питомцу внезапно станет плохо?", "Такого случая у нас пока не было. Если ожидание ответа может навредить животному, действуем в его интересах сразу, при необходимости обращаемся к ветеринару и одновременно связываемся с хозяином."],
+  ["Будете ли вы присылать фото и видео?", "Да, регулярно. Важно, чтобы вы не только читали «всё хорошо», а видели прогулки, отдых, сон, еду, игру и то, как питомец постепенно осваивается."],
+  ["Что если у питомца странные привычки или особый режим?", "Расскажите о них. Мы не ждём, что все животные одинаковые, и стараемся сохранить разумные привычки. Если что-то неожиданно оказывается сложным, сразу обсудим это с вами."],
+  ["Какие прививки нужны кошке?", "Для гостевой кошки нужны действующие комплексная прививка и прививка от бешенства. Обе должны быть сделаны в течение последних 12 месяцев."],
+  ["Можно ли питомцу на диван или кровать?", "Да, если дома это для него привычно и безопасно."],
+  ["Сколько животных вы принимаете одновременно?", "Не более двух гостевых животных одновременно. Два животных из одной семьи приветствуются."],
+];
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: page.h1,
+    description: page.description,
+    url: `https://getmanov.com${page.path}`,
+    areaServed: "Petrovaradin, Novi Sad",
+    serviceType: "Домашняя передержка животных",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://getmanov.com/" },
+      { "@type": "ListItem", position: 2, name: "Передержка животных", item: "https://getmanov.com/ru/novi-sad/pet-sitting/" },
+      ...(kind === "main" ? [] : [{ "@type": "ListItem", position: 3, name: page.focus, item: `https://getmanov.com${page.path}` }]),
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })),
+  },
+];
+---
+
+<BaseLayout title={page.title} description={page.description} canonical={page.path} lang="ru" structuredData={structuredData}>
+  <div class="pet-page">
+    <section class="pet-hero">
+      <div>
+        <p class="eyebrow">Петроварадин · Нови-Сад</p>
+        <h1>{page.h1}</h1>
+        <p class="pet-hero__lead">{page.lead}</p>
+        <p class="pet-hero__price">От 1 500 RSD в сутки <span>· полная цена ниже, без скрытых условий</span></p>
+        <div class="pet-actions">
+          <a class="pet-button pet-button--primary" href="#dates">Проверить даты</a>
+          {telegram ? <a class="pet-button" href={telegram} target="_blank" rel="noreferrer">Написать Ане в Telegram</a> : <button class="pet-button" type="button" disabled title="Перед запуском добавьте Telegram Анны в src/data/pet-sitting.ts">Telegram Анны добавим перед запуском</button>}
+        </div>
+      </div>
+      <aside class="hero-note">
+        <strong>Не отель с жёстким расписанием</strong>
+        <p>Питомец временно живёт у нас дома. Сохраняем нормальный корм, прогулки, сон, правила и личное пространство настолько, насколько это разумно и безопасно.</p>
+        <small>Около 4 минут от железнодорожного вокзала и 2 минут от остановки.</small>
+      </aside>
+    </section>
+
+    <section class="fact-grid" aria-label="Ключевые условия">
+      <div><strong>2</strong><span>гостевых животных максимум</span></div>
+      <div><strong>3</strong><span>изолированные комнаты</span></div>
+      <div><strong>Фото + видео</strong><span>регулярно во время проживания</span></div>
+      <div><strong>Бесплатно</strong><span>первое знакомство дома</span></div>
+      <div><strong>1 000 RSD</strong><span>пробная передержка на несколько часов</span></div>
+      <div><strong>До ~2 месяцев</strong><span>долгие проживания обсуждаем отдельно</span></div>
+    </section>
+
+    <PetSittingCalendar />
+
+    <section class="content-section" id="home">
+      <div class="section-heading"><p class="eyebrow">Как дома, только у нас</p><h2>Обычная жизнь важнее идеального сценария</h2></div>
+      <div class="two-column">
+        <p>Передержка — это не попытка быстро «перевоспитать» питомца под новые правила. Мы заранее обсуждаем его привычный график: когда он ест, гуляет, спит, где любит лежать и что его успокаивает. На диван или кровать можно, если дома это привычно и безопасно.</p>
+        <p>Собаки гуляют по своему обычному ритму, кошки получают знакомый корм и привычный наполнитель. Если животному нужно побыть отдельно, для него можно организовать отдельную комнату или спокойную зону.</p>
+      </div>
+      {isDogs && <div class="focus-note"><strong>Для собак.</strong> Если собака спокойно остаётся одна, это иногда возможно. Если не умеет — сообщите заранее, и организуем проживание так, чтобы кто-то был дома.</div>}
+      {isCats && <div class="focus-note"><strong>Для кошек.</strong> Берите привычный корм, миски, переноску, наполнитель и то, что помогает кошке чувствовать себя знакомо. Общение с другими животными не будет обязательным.</div>}
+    </section>
+
+    <section class="content-section home-grid">
+      <div><p class="eyebrow">Квартира</p><h2>Спокойное пространство в Петроварадине</h2><p>Это квартира с тремя изолированными комнатами, без балкона и без частного двора. Отсутствие двора не скрываем: собак выгуливаем на улице по их обычному режиму. При необходимости животных можно безопасно разделить.</p></div>
+      <div class="quiet-card"><strong>Что можно принести</strong><p>Всё, что помогает питомцу чувствовать себя как дома: корм, миски, поводок, переноску, лекарства, любимые игрушки, лежанку, знакомые кошачьи вещи и всё важное для привычного ритма.</p></div>
+      <div class="quiet-card"><strong>Что умеем в быту</strong><p>Давать лекарства по инструкции, соблюдать специальное питание, мыть лапы, расчёсывать, ухаживать и следовать индивидуальному режиму. Забор и доставка животных пока не предлагаем.</p></div>
+    </section>
+
+    <section class="content-section residents" id="resident-cats">
+      <div class="section-heading"><p class="eyebrow">Наши коты</p><h2>Два постоянных жителя квартиры</h2><p>Обоим около четырёх лет. Они уже жили рядом с другими кошками и собаками, но мы не обещаем, что каждый гость станет их другом. Наша цель — спокойное и безопасное сосуществование.</p></div>
+      <div class="resident-grid">
+        {petSittingConfig.residentCats.map((cat) => (
+          <article class="resident-card">
+            {cat.image ? <img src={cat.image} alt={`Наш ${cat.name.toLowerCase()}`} width="900" height="700" loading="lazy" /> : <div class="media-slot" role="img" aria-label={`Место для реальной фотографии: ${cat.name}`}>Реальная фотография появится здесь</div>}
+            <h3>{cat.name}</h3><p>{cat.description}</p>
+          </article>
+        ))}
+      </div>
+      <p class="resident-note">Любопытство или желание поиграть с кошками не означает автоматический отказ. Но при серьёзной погоне, агрессии или сильной реакции добычи честнее выбрать передержку без домашних кошек.</p>
+    </section>
+
+    <section class="content-section introduction-grid">
+      <article><p class="eyebrow">Перед первым проживанием</p><h2>Знакомство дома — бесплатно</h2><p>Можно прийти примерно на 30 минут: познакомиться с нами, увидеть квартиру, дать питомцу осмотреться и спокойно посмотреть на его реакцию. Точный адрес сообщаем лично после первого общения.</p></article>
+      <article><p class="eyebrow">Если хочется проверить спокойнее</p><h2>Пробная передержка</h2><p>Собака или кошка может остаться на несколько часов без хозяина до основной даты. Это стоит 1 000 RSD и помогает всем понять, как питомец чувствует себя в новом месте.</p></article>
+    </section>
+
+    <section class="content-section media-section" id="media">
+      <div class="section-heading"><p class="eyebrow">Фото и видео</p><h2>Не только «всё хорошо», а жизнь питомца во время проживания</h2><p>Будем регулярно присылать фото и видео: прогулки, отдых, сон, еду, игру и освоение в новом месте. Реальные записи прошлых проживаний будут добавлены сюда с существующего YouTube-канала Getmanov, где уже около 6 300 подписчиков.</p></div>
+      {petSittingConfig.guestPhotos.length || petSittingConfig.youtubeVideos.length ? <div class="media-grid">{petSittingConfig.guestPhotos.map((photo) => <img src={photo.src} alt={photo.alt} width="900" height="675" loading="lazy" />)}{petSittingConfig.youtubeVideos.map((video) => <iframe width="560" height="315" loading="lazy" src={`https://www.youtube-nocookie.com/embed/${video.id}`} title={video.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>)}</div> : <div class="media-empty"><strong>Здесь будут реальные фотографии и видео гостей.</strong><span>Добавим их только после получения и подготовки настоящих материалов.</span></div>}
+    </section>
+
+    <section class="content-section pricing" id="pricing">
+      <div class="section-heading"><p class="eyebrow">Цена</p><h2>Просто и прозрачно</h2><p>Долгие проживания возможны; ориентировочный максимум — около двух месяцев. Для 14+ дней цену и возможную скидку обсуждаем индивидуально.</p></div>
+      <div class="price-grid">
+        <article><h3>1 животное</h3>{petSittingConfig.prices.oneAnimal.map((row) => <p><span>{row.duration}</span><strong>{row.price}</strong></p>)}</article>
+        <article><h3>2 животных</h3>{petSittingConfig.prices.twoAnimals.map((row) => <p><span>{row.duration}</span><strong>{row.price}</strong></p>)}</article>
+      </div>
+    </section>
+
+    <section class="content-section related-services" aria-labelledby="related-title">
+      <p class="eyebrow">В этом разделе</p><h2 id="related-title">Передержка для конкретного питомца</h2>
+      <div class="related-grid">{related.map((item) => <a href={petSittingPages[item].path}><span>{petSittingPages[item].focus}</span><strong>{petSittingPages[item].h1}</strong><small>Открыть подробности →</small></a>)}</div>
+    </section>
+
+    <section class="content-section faq" id="faq"><div class="section-heading"><p class="eyebrow">Вопросы</p><h2>Спокойно обсудим детали до передержки</h2></div>{faq.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</section>
+
+    <section class="final-cta"><div><p class="eyebrow">Без спешки</p><h2>Сначала уточним даты и познакомимся</h2><p>Напишите Ане в Telegram или выберите примерные даты в календаре. Окончательно всё подтвердим после короткого общения.</p></div>{telegram ? <a class="pet-button pet-button--primary" href={telegram} target="_blank" rel="noreferrer">Написать Ане в Telegram</a> : <button class="pet-button pet-button--primary" type="button" disabled title="Перед запуском добавьте Telegram Анны в src/data/pet-sitting.ts">Telegram Анны добавим перед запуском</button>}</section>
+  </div>
+
+  <style is:inline>
+    :global(html[lang="ru"]) { scroll-padding-top: 84px; }
+    :global(.prose:has(.pet-page)) { max-width:none; padding:0; }
+    .pet-page { --ink:#18302d; --muted:#5c706b; --line:#d7e3dd; --paper:#fbfcf8; --soft:#eef5ef; --accent:#226a52; --warm:#ad673a; --danger:#a24d42; color:var(--ink); background:linear-gradient(180deg,#fbfcf8 0%,#f1f6f1 48%,#fffdf9 100%); margin:-34px 0; padding:0 20px 80px; }
+    .pet-page :global(a) { color:inherit; }
+    .pet-hero,.content-section,.fact-grid,.availability,.final-cta { max-width:1120px; margin-inline:auto; }
+    .eyebrow { margin:0 0 12px; color:var(--accent); font-size:12px; font-weight:850; letter-spacing:.12em; text-transform:uppercase; }
+    .pet-hero { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr); gap:36px; align-items:end; padding:88px 0 52px; border-bottom:1px solid var(--line); }
+    .pet-hero h1 { max-width:840px; margin:0; font-size:clamp(48px,8vw,104px); line-height:.93; letter-spacing:-.07em; }
+    .pet-hero__lead { max-width:720px; margin:24px 0 0; color:var(--muted); font-size:clamp(21px,2.5vw,30px); line-height:1.25; }
+    .pet-hero__price { margin:20px 0 0; font-weight:780; font-size:18px; }.pet-hero__price span { color:var(--muted); font-weight:500; }
+    .pet-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }.pet-button { display:inline-flex; justify-content:center; align-items:center; min-height:48px; border:1px solid var(--ink); border-radius:10px; background:transparent; padding:11px 17px; color:var(--ink); font:inherit; font-weight:780; text-decoration:none; cursor:pointer; }.pet-button--primary { background:var(--accent); border-color:var(--accent); color:#fff; }.pet-button:disabled { opacity:.55; cursor:not-allowed; }
+    .hero-note { border:1px solid var(--line); border-radius:20px; background:rgba(255,255,255,.68); box-shadow:0 18px 42px rgba(24,48,45,.08); padding:24px; }.hero-note strong { font-size:20px; }.hero-note p,.hero-note small { color:var(--muted); }.hero-note small { display:block; border-top:1px solid var(--line); padding-top:14px; }
+    .fact-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1px; margin-top:18px; background:var(--line); border:1px solid var(--line); border-radius:18px; overflow:hidden; }.fact-grid div { min-height:120px; display:flex; flex-direction:column; justify-content:space-between; background:#fffefa; padding:18px; }.fact-grid strong { font-size:19px; }.fact-grid span { color:var(--muted); font-size:14px; line-height:1.25; }
+    .availability { display:grid; grid-template-columns:.55fr 1.45fr; gap:30px; padding:82px 0 60px; }.availability__intro h2,.section-heading h2,.content-section h2,.final-cta h2 { margin:0; font-size:clamp(30px,4vw,54px); line-height:.98; letter-spacing:-.055em; }.availability__intro p:not(.eyebrow),.section-heading>p:not(.eyebrow) { color:var(--muted); font-size:18px; line-height:1.45; }.calendar-panel { border:1px solid var(--line); border-radius:24px; background:#fffefa; padding:22px; box-shadow:0 18px 42px rgba(24,48,45,.06); }.calendar-panel__header { display:flex; justify-content:space-between; gap:16px; }.calendar-panel__header p { margin:4px 0 0; color:var(--muted); font-size:14px; }.calendar-controls { display:flex; gap:8px; }.calendar-nav { width:38px; height:38px; border:1px solid var(--line); border-radius:50%; background:#fff; color:var(--ink); font-size:20px; cursor:pointer; }.calendar-nav:disabled { opacity:.35; cursor:not-allowed; }.calendar-months { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; margin-top:24px; }.calendar-month h3 { margin:0 0 10px; font-size:16px; }.calendar-weekdays,.calendar-days { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }.calendar-weekdays span { color:var(--muted); font-size:11px; font-weight:750; text-align:center; }.calendar-days { margin-top:6px; }.calendar-days button { aspect-ratio:1; min-width:0; border:0; border-radius:8px; background:transparent; color:var(--ink); font:inherit; cursor:pointer; }.calendar-days button:hover:not(:disabled),.calendar-days button:focus-visible { outline:2px solid var(--accent); outline-offset:1px; background:#e1eee6; }.calendar-days button:disabled { color:#a6b1ac; cursor:not-allowed; }.calendar-days .is-unavailable { color:#a16e67; background:repeating-linear-gradient(-45deg,#f4dfdd 0 3px,#fff6f5 3px 6px); text-decoration:line-through; }.calendar-days .is-selected { background:var(--accent); color:#fff; }.calendar-days .is-in-range { background:#dceee2; border-radius:0; }.inquiry-form { display:grid; gap:16px; margin-top:28px; padding-top:20px; border-top:1px solid var(--line); }.inquiry-summary { font-weight:760; }.checkbox-label { display:flex; align-items:flex-start; gap:9px; font-size:14px; }.checkbox-label input { margin-top:4px; }.inquiry-fields { display:grid; grid-template-columns:.8fr .6fr 1.4fr; gap:12px; }.inquiry-fields label { display:grid; gap:6px; color:var(--muted); font-size:13px; }.inquiry-fields select,.inquiry-fields input { width:100%; min-height:42px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); padding:8px 10px; font:inherit; }.inquiry-fields small { color:var(--muted); }.telegram-button { display:inline-flex; width:max-content; min-height:46px; justify-content:center; align-items:center; border:1px solid var(--accent); border-radius:10px; background:var(--accent); padding:10px 15px; color:#fff; font:inherit; font-weight:780; text-decoration:none; cursor:pointer; }.telegram-button.is-disabled { opacity:.5; pointer-events:none; }.form-note { margin:0; color:var(--muted); font-size:12px; }
+    .content-section { border-top:1px solid var(--line); padding:68px 0; }.two-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px; margin-top:30px; font-size:18px; line-height:1.5; }.two-column p { margin:0; }.focus-note { margin-top:24px; border-left:3px solid var(--warm); padding:12px 18px; background:#fff8ee; }.home-grid { display:grid; grid-template-columns:1.25fr .85fr .85fr; gap:16px; }.home-grid>div:first-child { padding-right:24px; }.home-grid h2 { margin-bottom:20px; }.home-grid p { color:var(--muted); line-height:1.5; }.quiet-card { border:1px solid var(--line); border-radius:16px; background:#fffefa; padding:20px; }.quiet-card strong { font-size:18px; }.quiet-card p { margin-bottom:0; }
+    .residents { background:linear-gradient(135deg,#edf6f0,#fffdf9); border-radius:28px; padding:56px; }.resident-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:30px; }.resident-card { overflow:hidden; border:1px solid var(--line); border-radius:16px; background:#fffefa; padding:16px; }.resident-card img,.media-grid img { width:100%; height:auto; border-radius:10px; object-fit:cover; }.media-slot { display:grid; min-height:230px; place-items:center; border:1px dashed #adc1b6; border-radius:10px; background:#f5faf6; color:var(--muted); text-align:center; padding:20px; }.resident-card h3 { margin:14px 0 4px; font-size:21px; }.resident-card p { margin:0; color:var(--muted); }.resident-note { max-width:800px; margin:22px 0 0; color:var(--muted); }.introduction-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }.introduction-grid article { border:1px solid var(--line); border-radius:18px; background:#fffefa; padding:25px; }.introduction-grid h2 { font-size:clamp(28px,3vw,40px); }.introduction-grid p:last-child { color:var(--muted); line-height:1.5; }
+    .media-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:28px; }.media-grid iframe { width:100%; aspect-ratio:16/9; height:auto; border:0; border-radius:14px; }.media-empty { display:grid; gap:5px; min-height:170px; place-content:center; margin-top:28px; border:1px dashed #adc1b6; border-radius:16px; background:#f7faf7; color:var(--muted); text-align:center; }.media-empty strong { color:var(--ink); }.price-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:28px; }.price-grid article { border:1px solid var(--line); border-radius:18px; background:#fffefa; padding:24px; }.price-grid h3 { margin:0 0 12px; font-size:24px; }.price-grid p { display:flex; justify-content:space-between; gap:16px; margin:0; padding:12px 0; border-top:1px solid var(--line); }.price-grid span { color:var(--muted); }.price-grid strong { text-align:right; }
+    .related-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:24px; }.related-grid a { display:grid; gap:7px; border:1px solid var(--line); border-radius:14px; background:#fffefa; padding:19px; text-decoration:none; }.related-grid span { color:var(--accent); font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }.related-grid strong { font-size:21px; }.related-grid small { color:var(--muted); }.faq details { border-top:1px solid var(--line); padding:16px 0; }.faq details:last-child { border-bottom:1px solid var(--line); }.faq summary { cursor:pointer; font-weight:760; }.faq details p { max-width:780px; color:var(--muted); line-height:1.5; }.final-cta { display:flex; justify-content:space-between; align-items:center; gap:32px; border-radius:24px; background:var(--ink); color:#fff; margin-top:22px; padding:40px; }.final-cta .eyebrow { color:#a4d4b7; }.final-cta h2 { max-width:600px; }.final-cta p:not(.eyebrow) { max-width:650px; color:#d8e3de; }.final-cta .pet-button--primary { background:#fff; border-color:#fff; color:var(--ink); white-space:nowrap; }
+    @media (max-width:800px) { .pet-page { margin:-34px 0; padding-inline:16px; }.pet-hero,.availability { grid-template-columns:1fr; gap:26px; padding-block:54px 38px; }.pet-hero h1 { font-size:clamp(44px,14vw,74px); }.fact-grid { grid-template-columns:repeat(2,1fr); }.fact-grid div { min-height:96px; }.calendar-months,.inquiry-fields,.two-column,.home-grid,.resident-grid,.introduction-grid,.media-grid,.price-grid,.related-grid { grid-template-columns:1fr; }.calendar-panel { padding:16px; }.residents { margin-inline:-4px; padding:34px 20px; border-radius:20px; }.content-section { padding-block:48px; }.home-grid>div:first-child { padding-right:0; }.final-cta { display:grid; padding:28px 22px; }.final-cta .pet-button { width:100%; }.pet-actions .pet-button { width:100%; }.price-grid p { display:grid; }.price-grid strong { text-align:left; }.calendar-days button { font-size:13px; } }
+  </style>
+</BaseLayout>

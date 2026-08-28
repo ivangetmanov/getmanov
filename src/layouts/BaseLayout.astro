@@ -9,6 +9,7 @@ const description =
   "Experiments, case-based research, tools, and notes.";
 const canonical = Astro.props.canonical ?? frontmatter.canonical;
 const structuredData = Astro.props.structuredData;
+const lang = Astro.props.lang ?? "en";
 
 const canonicalUrl = canonical
   ? new URL(canonical, "https://getmanov.com").href
@@ -124,7 +125,7 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -133,6 +134,14 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index,follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === "ru" ? "ru_RU" : "en_US"} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="theme-color" content="#211d1e" />
     <meta name="apple-mobile-web-app-title" content="Getmanov" />
 

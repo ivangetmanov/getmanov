@@ -1,0 +1,188 @@
+---
+import { petSittingConfig } from "../data/pet-sitting";
+
+const config = {
+  unavailablePeriods: petSittingConfig.unavailablePeriods,
+  telegramUsername: petSittingConfig.telegramUsername,
+};
+---
+
+<section id="dates" class="availability" aria-labelledby="availability-title" data-pet-calendar={JSON.stringify(config)}>
+  <div class="availability__intro">
+    <p class="eyebrow">Календарь</p>
+    <h2 id="availability-title">Проверить даты</h2>
+    <p>Выберите примерные даты проживания. Календарь обновляем вручную: свободные даты окончательно подтвердим в Telegram.</p>
+  </div>
+
+  <div class="calendar-panel">
+    <div class="calendar-panel__header">
+      <div>
+        <strong>Выберите заезд и выезд</strong>
+        <p id="calendar-status" aria-live="polite">Сначала выберите дату заезда.</p>
+      </div>
+      <div class="calendar-controls" aria-label="Навигация по месяцам">
+        <button type="button" class="calendar-nav" data-calendar-prev aria-label="Предыдущий месяц">←</button>
+        <button type="button" class="calendar-nav" data-calendar-next aria-label="Следующий месяц">→</button>
+      </div>
+    </div>
+    <div class="calendar-months" data-calendar-months></div>
+
+    <form class="inquiry-form" data-inquiry-form>
+      <div class="inquiry-summary" data-inquiry-summary>Даты пока не выбраны.</div>
+      <label class="checkbox-label">
+        <input type="checkbox" name="flexible" />
+        <span>Даты примерные, можем немного сдвинуть</span>
+      </label>
+      <div class="inquiry-fields">
+        <label>Питомец
+          <select name="animal">
+            <option value="собака">собака</option>
+            <option value="кошка">кошка</option>
+          </select>
+        </label>
+        <label>Количество
+          <select name="quantity">
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+        </label>
+        <label>Ваш Telegram
+          <input name="username" type="text" inputmode="text" autocomplete="username" placeholder="@username" pattern="@?[A-Za-z0-9_]{5,32}" required aria-describedby="telegram-help" />
+          <small id="telegram-help">Нужен, чтобы Анна могла быстро ответить.</small>
+        </label>
+      </div>
+      {petSittingConfig.telegramUsername ? (
+        <a class="telegram-button" href={"https://t.me/" + petSittingConfig.telegramUsername} data-calendar-telegram target="_blank" rel="noreferrer">Открыть Telegram с заявкой</a>
+      ) : (
+        <button class="telegram-button" type="button" disabled title="Перед запуском добавьте Telegram Анны в src/data/pet-sitting.ts">Telegram Анны будет добавлен перед запуском</button>
+      )}
+      <p class="form-note" data-form-note>Никакой формы на сервере нет: сообщение откроется в Telegram, а вы сами нажмёте «Отправить».</p>
+    </form>
+  </div>
+</section>
+
+<script is:inline>
+  const root = document.querySelector('[data-pet-calendar]');
+  if (root) {
+    const settings = JSON.parse(root.dataset.petCalendar || '{}');
+    const monthsNode = root.querySelector('[data-calendar-months]');
+    const status = root.querySelector('#calendar-status');
+    const summary = root.querySelector('[data-inquiry-summary]');
+    const telegramLink = root.querySelector('[data-calendar-telegram]');
+    const form = root.querySelector('[data-inquiry-form]');
+    const formNote = root.querySelector('[data-form-note]');
+    const today = new Date();
+    const todayKey = toKey(today.getFullYear(), today.getMonth(), today.getDate());
+    let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
+    let start = '';
+    let end = '';
+    const unavailable = settings.unavailablePeriods || [];
+    const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+    function toKey(year, month, day) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
+    function fromKey(key) {
+      const [year, month, day] = key.split('-').map(Number);
+      return new Date(year, month - 1, day);
+    }
+    function isUnavailable(key) {
+      return unavailable.some((period) => key >= period.from && key <= period.to);
+    }
+    function isPast(key) { return key < todayKey; }
+    function rangeHasUnavailable(first, last) {
+      let date = fromKey(first);
+      const until = fromKey(last);
+      while (date <= until) {
+        if (isUnavailable(toKey(date.getFullYear(), date.getMonth(), date.getDate()))) return true;
+        date.setDate(date.getDate() + 1);
+      }
+      return false;
+    }
+    function formatDate(key) {
+      return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long' }).format(fromKey(key));
+    }
+    function duration() {
+      if (!start || !end) return 0;
+      return Math.round((fromKey(end) - fromKey(start)) / 86400000);
+    }
+    function updateInquiry() {
+      const nights = duration();
+      summary.textContent = start && end ? `Даты: ${formatDate(start)} — ${formatDate(end)} · ${nights} ${nights === 1 ? 'сутки' : nights < 5 ? 'суток' : 'суток'}` : 'Даты пока не выбраны.';
+      status.textContent = start && end ? `Выбрано: ${formatDate(start)} — ${formatDate(end)}.` : start ? `Заезд: ${formatDate(start)}. Теперь выберите выезд.` : 'Сначала выберите дату заезда.';
+      const usernameInput = form.querySelector('[name="username"]');
+      const rawUsername = usernameInput.value.trim();
+      const username = rawUsername ? (rawUsername.startsWith('@') ? rawUsername : `@${rawUsername}`) : '';
+      const validUsername = /^@[A-Za-z0-9_]{5,32}$/.test(username);
+      usernameInput.setAttribute('aria-invalid', String(rawUsername.length > 0 && !validUsername));
+      if (!telegramLink) return;
+      const flexible = form.querySelector('[name="flexible"]').checked ? 'да' : 'нет';
+      const animal = form.querySelector('[name="animal"]').value;
+      const quantity = form.querySelector('[name="quantity"]').value;
+      const text = `Здравствуйте! Хочу уточнить передержку.\n\nДаты: ${start && end ? `${formatDate(start)} — ${formatDate(end)}` : 'ещё не выбраны'}\nСрок: ${nights || '—'} ${nights === 1 ? 'сутки' : 'суток'}\nПитомец: ${animal}\nКоличество: ${quantity}\nДаты примерные: ${flexible}\nМой Telegram: ${username}`;
+      telegramLink.href = `https://t.me/${settings.telegramUsername}?text=${encodeURIComponent(text)}`;
+      const canOpenTelegram = Boolean(start && end && validUsername);
+      telegramLink.setAttribute('aria-disabled', String(!canOpenTelegram));
+      telegramLink.classList.toggle('is-disabled', !canOpenTelegram);
+      formNote.textContent = !validUsername
+        ? 'Укажите Telegram username: @username.'
+        : 'Никакой формы на сервере нет: сообщение откроется в Telegram, а вы сами нажмёте «Отправить».';
+    }
+    function choose(key) {
+      if (isPast(key) || isUnavailable(key)) return;
+      if (!start || end || key < start) {
+        start = key;
+        end = '';
+      } else if (key === start) {
+        start = '';
+      } else if (rangeHasUnavailable(start, key)) {
+        status.textContent = 'В выбранном диапазоне есть недоступная дата. Выберите другие даты.';
+        return;
+      } else {
+        end = key;
+      }
+      render();
+      updateInquiry();
+    }
+    function renderMonth(monthDate) {
+      const year = monthDate.getFullYear();
+      const month = monthDate.getMonth();
+      const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+      const days = new Date(year, month + 1, 0).getDate();
+      const panel = document.createElement('section');
+      panel.className = 'calendar-month';
+      panel.setAttribute('aria-label', `${monthNames[month]} ${year}`);
+      panel.innerHTML = `<h3>${monthNames[month]} ${year}</h3><div class="calendar-weekdays">${weekdays.map((day) => `<span>${day}</span>`).join('')}</div><div class="calendar-days"></div>`;
+      const daysNode = panel.querySelector('.calendar-days');
+      for (let blank = 0; blank < firstWeekday; blank += 1) daysNode.append(document.createElement('span'));
+      for (let day = 1; day <= days; day += 1) {
+        const key = toKey(year, month, day);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = String(day);
+        button.dataset.date = key;
+        button.disabled = isPast(key) || isUnavailable(key);
+        button.setAttribute('aria-label', `${formatDate(key)}${isUnavailable(key) ? ', недоступно' : ''}`);
+        if (isUnavailable(key)) button.classList.add('is-unavailable');
+        if (key === start || key === end) button.classList.add('is-selected');
+        if (start && end && key > start && key < end) button.classList.add('is-in-range');
+        button.addEventListener('click', () => choose(key));
+        daysNode.append(button);
+      }
+      return panel;
+    }
+    function render() {
+      monthsNode.replaceChildren(renderMonth(cursor), renderMonth(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1)));
+      root.querySelector('[data-calendar-prev]').disabled = cursor.getFullYear() === today.getFullYear() && cursor.getMonth() === today.getMonth();
+    }
+    root.querySelector('[data-calendar-prev]').addEventListener('click', () => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1); render(); });
+    root.querySelector('[data-calendar-next]').addEventListener('click', () => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1); render(); });
+    form.addEventListener('input', updateInquiry);
+    telegramLink?.addEventListener('click', (event) => {
+      if (telegramLink.getAttribute('aria-disabled') === 'true') event.preventDefault();
+    });
+    render();
+    updateInquiry();
+  }
+</script>
