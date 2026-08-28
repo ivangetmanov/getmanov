@@ -479,7 +479,22 @@ const structuredData = {
       background: rgba(255, 255, 255, 0.68);
     }
 
-    .hero-visual img,
+    .hero-visual {
+      overflow: hidden;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #f8ffff 0%, #e9f8ff 48%, #daf7ee 100%);
+      box-shadow: 0 30px 80px rgba(9, 20, 38, 0.15);
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 0;
+      transform: scale(1.085, 1.12);
+      transform-origin: center;
+    }
+
     .split-card img {
       display: block;
       width: 100%;
@@ -772,7 +787,7 @@ const structuredData = {
         justify-self: stretch;
       }
 
-      .hero-visual img,
+      .hero-visual,
       .split-card img {
         border-radius: 20px;
       }
