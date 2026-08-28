@@ -1,0 +1,36 @@
+---
+interface Props {
+  photos: Array<{ src: string; alt: string }>;
+  videos: Array<{ id: string; title: string }>;
+  label: string;
+}
+
+const { photos, videos, label } = Astro.props;
+const hasMedia = photos.length > 0 || videos.length > 0;
+---
+
+<section class="pet-media" id="media" aria-label={`Фото и видео ${label}`}>
+  {hasMedia ? (
+    <div class="media-grid">
+      {photos.map((photo) => (
+        <img src={photo.src} alt={photo.alt} width="900" height="675" loading="lazy" />
+      ))}
+      {videos.map((video) => (
+        <iframe
+          width="560"
+          height="315"
+          loading="lazy"
+          src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+          title={video.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      ))}
+    </div>
+  ) : (
+    <div class="media-empty">
+      <strong>Здесь будут реальные фото и видео {label}.</strong>
+      <span>Места уже подготовлены; добавим только настоящие материалы.</span>
+    </div>
+  )}
+</section>

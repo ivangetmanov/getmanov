@@ -5,8 +5,7 @@ export type PetSittingPageKind = "main" | "dogs" | "cats";
  * Update this file for availability, pricing, Telegram, photos, or video embeds.
  */
 export const petSittingConfig = {
-  // TODO before production launch: add Anna's public Telegram username without @.
-  telegramUsername: "",
+  telegramUsername: "ya_kushka",
   unavailablePeriods: [
     // { from: "2026-10-12", to: "2026-10-19" },
   ],
@@ -34,8 +33,21 @@ export const petSittingConfig = {
       image: "", // Add a local public image path here, for example /images/pet-sitting/cat-2.webp
     },
   ],
-  guestPhotos: [] as Array<{ src: string; alt: string }>,
-  youtubeVideos: [] as Array<{ id: string; title: string }>,
+  heroPhotos: {
+    main: "",
+    dogs: "",
+    cats: "",
+  } as Record<PetSittingPageKind, string>,
+  guestPhotos: [] as Array<{
+    src: string;
+    alt: string;
+    kind?: PetSittingPageKind;
+  }>,
+  youtubeVideos: [] as Array<{
+    id: string;
+    title: string;
+    kind?: PetSittingPageKind;
+  }>,
 };
 
 export const petSittingPages: Record<PetSittingPageKind, {
@@ -50,15 +62,15 @@ export const petSittingPages: Record<PetSittingPageKind, {
     path: "/ru/novi-sad/pet-sitting/",
     title: "Передержка животных в Нови-Саде — домашний петситтинг в Петроварадине",
     description: "Домашняя передержка собак и кошек в Петроварадине, Нови-Сад. Привычный режим, до 2 гостей, фото и видео, знакомство до первого проживания.",
-    h1: "Домашняя передержка животных в Нови-Саде",
-    lead: "Собака или кошка временно живёт у нас дома в Петроварадине. Мы стараемся сохранить привычный режим, а не подгонять питомца под жёсткий распорядок передержки.",
+    h1: "Домашняя передержка собак и кошек в Нови‑Саде",
+    lead: "Питомец временно живёт у нас дома в Петроварадине. Стараемся сохранить его обычный режим — прогулки, кормление, сон и привычные правила.",
     focus: "Для собак и кошек",
   },
   dogs: {
     path: "/ru/novi-sad/pet-sitting/dogs/",
     title: "Передержка собак в Нови-Саде — домашний догситтер в Петроварадине",
     description: "Домашняя передержка собак в Петроварадине, Нови-Сад: привычный график прогулок и кормления, знакомство до первого проживания, фото и видео.",
-    h1: "Передержка собак в Нови-Саде",
+    h1: "Передержка собак в Нови‑Саде",
     lead: "Если нужно оставить собаку в Нови-Саде на несколько дней или дольше, обсудим её привычный график прогулок, кормления, сна и возможность не оставаться одной.",
     focus: "Для собак",
   },
@@ -66,7 +78,7 @@ export const petSittingPages: Record<PetSittingPageKind, {
     path: "/ru/novi-sad/pet-sitting/cats/",
     title: "Передержка кошек в Нови-Саде — домашний ситтер в Петроварадине",
     description: "Домашняя передержка кошек в Петроварадине, Нови-Сад: отдельное пространство, привычный корм и наполнитель, спокойное знакомство, фото и видео.",
-    h1: "Передержка кошек в Нови-Саде",
+    h1: "Передержка кошек в Нови‑Саде",
     lead: "Кошке не нужно становиться общительной, чтобы ей было спокойно. Сохраняем привычный корм, наполнитель, ритм и возможность уйти в своё безопасное пространство.",
     focus: "Для кошек",
   },

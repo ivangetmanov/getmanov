@@ -1,0 +1,28 @@
+---
+import { petSittingConfig } from "../data/pet-sitting";
+
+const { compact = false } = Astro.props as { compact?: boolean };
+---
+
+<section class:list={["resident-section", { "resident-section--compact": compact }]} id="resident-cats">
+  <div class="resident-intro">
+    <p class="eyebrow">Наши коты</p>
+    <h2>Дружить с ними необязательно</h2>
+    <p>Обоим около четырёх лет, оба жили рядом с собаками и другими кошками. Важно не дружить, а спокойно жить в одном доме — вместе или в разных комнатах.</p>
+  </div>
+  <div class="resident-pair">
+    {petSittingConfig.residentCats.map((cat, index) => (
+      <figure>
+        {cat.image ? (
+          <img src={cat.image} alt={`Наш ${cat.name.toLowerCase()}`} width="900" height="700" loading="lazy" />
+        ) : (
+          <div class="cat-photo-placeholder">Фото {index === 0 ? "кота" : "кошки"}</div>
+        )}
+        <figcaption>
+          <strong>{index === 0 ? "Кот, 4 года" : "Кошка, 4 года"}</strong>
+          <span>{cat.description}</span>
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+</section>

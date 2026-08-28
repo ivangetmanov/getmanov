@@ -1,0 +1,35 @@
+---
+import { petSittingConfig } from "../data/pet-sitting";
+---
+
+<section class="pricing-section" id="pricing">
+  <div>
+    <p class="eyebrow">Цена</p>
+    <h2>Без сложных тарифов</h2>
+    <p>Для 14+ дней обсуждаем цену отдельно. Долгие проживания возможны примерно до двух месяцев.</p>
+  </div>
+  <div class="price-table" role="table" aria-label="Стоимость передержки">
+    <div role="row" class="price-head">
+      <span role="columnheader">Срок</span>
+      <span role="columnheader">1 животное</span>
+      <span role="columnheader">2 животных</span>
+    </div>
+    {petSittingConfig.prices.oneAnimal.map((row, index) => (
+      <div role="row">
+        <span role="cell">{row.duration}</span>
+        <strong role="cell" data-label="1 животное">{row.price}</strong>
+        <strong role="cell" data-label="2 животных">{petSittingConfig.prices.twoAnimals[index].price}</strong>
+      </div>
+    ))}
+    <div role="row" class="price-extra">
+      <span role="cell">Знакомство · около 30 минут</span>
+      <strong role="cell">бесплатно</strong>
+      <span role="cell"></span>
+    </div>
+    <div role="row" class="price-extra">
+      <span role="cell">Пробная передержка · несколько часов</span>
+      <strong role="cell">1 000 RSD</strong>
+      <span role="cell"></span>
+    </div>
+  </div>
+</section>
