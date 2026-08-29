@@ -10,6 +10,7 @@ const description =
 const canonical = Astro.props.canonical ?? frontmatter.canonical;
 const structuredData = Astro.props.structuredData;
 const lang = Astro.props.lang ?? "en";
+const alternates = Astro.props.alternates ?? [];
 
 const canonicalUrl = canonical
   ? new URL(canonical, "https://getmanov.com").href
@@ -133,6 +134,9 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+    {alternates.map((alternate: { hreflang: string; href: string }) => (
+      <link rel="alternate" hreflang={alternate.hreflang} href={new URL(alternate.href, "https://getmanov.com").href} />
+    ))}
     <meta name="robots" content="index,follow" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={lang === "ru" ? "ru_RU" : "en_US"} />

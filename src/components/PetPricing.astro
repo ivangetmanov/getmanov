@@ -1,34 +1,42 @@
 ---
 import { petSittingConfig } from "../data/pet-sitting";
+
+const { locale = "ru" } = Astro.props as { locale?: "ru" | "en" };
+const isEnglish = locale === "en";
+const englishDurations = ["1–3 days", "4–13 days", "14+ days"];
+const durationLabel = (duration: string, index: number) => isEnglish ? englishDurations[index] : duration;
+const priceLabel = (price: string, index: number) => isEnglish
+  ? index === 2 ? "Discuss individually" : price.replace(/(\d) (\d{3})/, "$1,$2").replace("в сутки", "per day")
+  : price;
 ---
 
 <section class="pricing-section" id="pricing">
   <div>
-    <p class="eyebrow">Цена</p>
-    <h2>Без сложных тарифов</h2>
-    <p>Для 14+ дней обсуждаем цену отдельно. Долгие проживания возможны примерно до двух месяцев.</p>
+    <p class="eyebrow">{isEnglish ? "Pricing" : "Цена"}</p>
+    <h2>{isEnglish ? "How much does pet boarding cost?" : "Без сложных тарифов"}</h2>
+    <p>{isEnglish ? "Long stays can be discussed individually and may be possible for approximately up to two months." : "Для 14+ дней обсуждаем цену отдельно. Долгие проживания возможны примерно до двух месяцев."}</p>
   </div>
-  <div class="price-table" role="table" aria-label="Стоимость передержки">
+  <div class="price-table" role="table" aria-label={isEnglish ? "Pet boarding prices" : "Стоимость передержки"}>
     <div role="row" class="price-head">
-      <span role="columnheader">Срок</span>
-      <span role="columnheader">1 животное</span>
-      <span role="columnheader">2 животных</span>
+      <span role="columnheader">{isEnglish ? "Length" : "Срок"}</span>
+      <span role="columnheader">{isEnglish ? "1 pet" : "1 животное"}</span>
+      <span role="columnheader">{isEnglish ? "2 pets" : "2 животных"}</span>
     </div>
     {petSittingConfig.prices.oneAnimal.map((row, index) => (
       <div role="row">
-        <span role="cell">{row.duration}</span>
-        <strong role="cell" data-label="1 животное">{row.price}</strong>
-        <strong role="cell" data-label="2 животных">{petSittingConfig.prices.twoAnimals[index].price}</strong>
+        <span role="cell">{durationLabel(row.duration, index)}</span>
+        <strong role="cell" data-label={isEnglish ? "1 pet" : "1 животное"}>{priceLabel(row.price, index)}</strong>
+        <strong role="cell" data-label={isEnglish ? "2 pets" : "2 животных"}>{priceLabel(petSittingConfig.prices.twoAnimals[index].price, index)}</strong>
       </div>
     ))}
     <div role="row" class="price-extra">
-      <span role="cell">Знакомство · около 30 минут</span>
-      <strong role="cell">бесплатно</strong>
+      <span role="cell">{isEnglish ? "Free introduction · around 30 minutes" : "Знакомство · около 30 минут"}</span>
+      <strong role="cell">{isEnglish ? "Free" : "бесплатно"}</strong>
       <span role="cell"></span>
     </div>
     <div role="row" class="price-extra">
-      <span role="cell">Пробная передержка · несколько часов</span>
-      <strong role="cell">1 000 RSD</strong>
+      <span role="cell">{isEnglish ? "Trial stay · a few hours" : "Пробная передержка · несколько часов"}</span>
+      <strong role="cell">{isEnglish ? "1,000 RSD" : "1 000 RSD"}</strong>
       <span role="cell"></span>
     </div>
   </div>

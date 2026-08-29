@@ -1,29 +1,31 @@
 ---
 import { petSittingConfig } from "../data/pet-sitting";
 
-const { compact = false, note = "Вашему питомцу совершенно не обязательно с ними дружить.", showSeparationNote = true } = Astro.props as { compact?: boolean; note?: string; showSeparationNote?: boolean };
+const { compact = false, note, showSeparationNote = true, locale = "ru" } = Astro.props as { compact?: boolean; note?: string; showSeparationNote?: boolean; locale?: "ru" | "en" };
+const isEnglish = locale === "en";
+const resolvedNote = note ?? (isEnglish ? "Your pet does not need to become friends with our cats." : "Вашему питомцу совершенно не обязательно с ними дружить.");
 ---
 
 <section class:list={["resident-section", { "resident-section--compact": compact }]} id="resident-cats">
   <div class="resident-intro">
-    <p class="eyebrow">Наши коты</p>
-    <h2>Наши коты</h2>
-    <p>Оба уже жили и с другими кошками, и с собаками.</p>
+    <p class="eyebrow">{isEnglish ? "Resident cats" : "Наши коты"}</p>
+    <h2>{isEnglish ? "Our cats" : "Наши коты"}</h2>
+    <p>{isEnglish ? "Both have lived around other cats and dogs." : "Оба уже жили и с другими кошками, и с собаками."}</p>
   </div>
   <div class="resident-pair">
     {petSittingConfig.residentCats.map((cat, index) => (
       <figure>
         {cat.image ? (
-          <img src={cat.image} alt={`Наш ${cat.name.toLowerCase()}`} width="900" height="700" loading="lazy" />
+          <img src={cat.image} alt={isEnglish ? `${cat.nameEn}, our resident cat` : `Наш ${cat.name.toLowerCase()}`} width="900" height="700" loading="lazy" />
         ) : (
-          <div class="cat-photo-placeholder">Фото {index === 0 ? "кота" : "кошки"}</div>
+          <div class="cat-photo-placeholder">{isEnglish ? "Cat photo" : `Фото ${index === 0 ? "кота" : "кошки"}`}</div>
         )}
         <figcaption>
-          <strong>{cat.name}, 4 года</strong>
-          <span>{cat.description}</span>
+          <strong>{isEnglish ? cat.nameEn : cat.name}, {isEnglish ? "4" : "4 года"}</strong>
+          <span>{isEnglish ? cat.descriptionEn : cat.description}</span>
         </figcaption>
       </figure>
     ))}
   </div>
-  <p class="resident-note"><strong>{note}</strong>{showSeparationNote && " Если кому-то комфортнее жить отдельно — у нас есть возможность животных разделить."}</p>
+  <p class="resident-note"><strong>{resolvedNote}</strong>{showSeparationNote && (isEnglish ? " If anyone is more comfortable living separately, we can keep the animals apart." : " Если кому-то комфортнее жить отдельно — у нас есть возможность животных разделить.")}</p>
 </section>

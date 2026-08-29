@@ -1,14 +1,14 @@
+import { petSittingUnavailablePeriods } from "./pet-sitting-availability.mjs";
+
 export type PetSittingPageKind = "main" | "dogs" | "cats";
 
 /**
  * The only operational settings for the static pet-sitting experiment.
- * Update this file for availability, pricing, Telegram, photos, or video embeds.
+ * Update the shared data modules for availability, pricing, Telegram, photos, or video embeds.
  */
 export const petSittingConfig = {
   telegramUsername: "ya_kushka",
-  unavailablePeriods: [
-    // { from: "2026-10-12", to: "2026-10-19" },
-  ],
+  unavailablePeriods: petSittingUnavailablePeriods,
   prices: {
     oneAnimal: [
       { duration: "1–3 дня", price: "2 000 RSD в сутки" },
@@ -24,12 +24,16 @@ export const petSittingConfig = {
   residentCats: [
     {
       name: "Пабло",
+      nameEn: "Pablo",
       description: "Очень дружелюбный и любопытный. Обычно ему интересно, кто приехал, и он хочет познакомиться.",
+      descriptionEn: "Very friendly and curious. He is usually interested in new guests and likes to see who has arrived.",
       image: "/images/pet-sitting/pablo.webp",
     },
     {
       name: "Свит",
+      nameEn: "Sweet",
       description: "Более пугливая. Чаще сама уходит куда-нибудь подальше и спокойно чиллит отдельно.",
+      descriptionEn: "More cautious. She usually chooses somewhere away from the action and relaxes on her own.",
       image: "/images/pet-sitting/sweet.webp",
     },
   ],
@@ -39,21 +43,22 @@ export const petSittingConfig = {
     cats: "/images/pet-sitting/cats-hero.webp",
   } as Record<PetSittingPageKind, string>,
   guestPhotos: [
-    { src: "/images/pet-sitting/dog-guest-01.webp", alt: "Собака-гость во время домашней передержки", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Собака-гость отдыхает дома", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-03.webp", alt: "Собака-гость дома", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Собака-гость во время игры", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-05.webp", alt: "Собака-гость играет дома", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-06.webp", alt: "Собака-гость у окна", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-07.webp", alt: "Собака-гость во время домашней передержки", kind: "dogs" },
-    { src: "/images/pet-sitting/cat-guest-01.webp", alt: "Кошки отдыхают дома", kind: "cats" },
-    { src: "/images/pet-sitting/cat-guest-02.webp", alt: "Кошка-гость дома", kind: "cats" },
-    { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Кошка-гость отдыхает рядом с человеком", kind: "cats" },
-    { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Кошки отдыхают на кровати", kind: "cats" },
-    { src: "/images/pet-sitting/cat-guest-05.webp", alt: "Кошка-гость спит", kind: "cats" },
+    { src: "/images/pet-sitting/dog-guest-01.webp", alt: "Собака-гость во время домашней передержки", altEn: "Guest dog during a stay in our home", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Собака-гость отдыхает дома", altEn: "Guest dog resting at home", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-03.webp", alt: "Собака-гость дома", altEn: "Guest dog staying in our home", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Собака-гость во время игры", altEn: "Guest dog during play", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-05.webp", alt: "Собака-гость играет дома", altEn: "Guest dog playing at home", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-06.webp", alt: "Собака-гость у окна", altEn: "Guest dog by the window", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-07.webp", alt: "Собака-гость во время домашней передержки", altEn: "Guest dog during home boarding", kind: "dogs" },
+    { src: "/images/pet-sitting/cat-guest-01.webp", alt: "Кошки отдыхают дома", altEn: "Cats resting at home", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-02.webp", alt: "Кошка-гость дома", altEn: "Guest cat staying in our home", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Кошка-гость отдыхает рядом с человеком", altEn: "Guest cat resting next to a person", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Кошки отдыхают на кровати", altEn: "Cats resting on the bed", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-05.webp", alt: "Кошка-гость спит", altEn: "Guest cat sleeping", kind: "cats" },
   ] as Array<{
     src: string;
     alt: string;
+    altEn: string;
     kind?: PetSittingPageKind;
   }>,
   guestVideos: [
@@ -110,6 +115,33 @@ export const petSittingPages: Record<PetSittingPageKind, {
     h1: "Передержка кошек в Нови‑Саде",
     lead: "Кошке не нужно становиться общительной, чтобы ей было спокойно. Сохраняем привычный корм, наполнитель, ритм и возможность уйти в своё безопасное пространство.",
     focus: "Для кошек",
+  },
+};
+
+export const petSittingPagesEn: typeof petSittingPages = {
+  main: {
+    path: "/en/novi-sad/pet-sitting/",
+    title: "Pet Boarding in Novi Sad — Home Pet Sitting in Petrovaradin",
+    description: "Home pet boarding for dogs and cats in Petrovaradin, Novi Sad. Familiar routines, up to two guest pets, real photos and videos, and a free introduction before the first stay.",
+    h1: "Home pet boarding for dogs and cats in Novi Sad",
+    lead: "Your pet stays with us in our home in Petrovaradin. We try to change as little as possible about their normal life: walks and meals stay close to their usual schedule, familiar house rules stay familiar, and we take their personality and habits into account.",
+    focus: "Pet boarding",
+  },
+  dogs: {
+    path: "/en/novi-sad/pet-sitting/dogs/",
+    title: "Dog Boarding in Novi Sad — Home Dog Sitter in Petrovaradin",
+    description: "Home dog boarding in Petrovaradin, Novi Sad. Familiar walking and feeding routines, real guest videos, a free introduction and a trial stay before boarding.",
+    h1: "Dog boarding in Novi Sad",
+    lead: "Your dog stays with us in our home in Petrovaradin and, as much as possible, continues their normal routine. We walk them as often as they are used to. We feed them on their normal schedule. If they are allowed on the bed at home, they are allowed on the bed here. And if your dog cannot stay home alone at all, tell us in advance — we may be able to arrange the stay so that one of us is always home.",
+    focus: "Dog boarding",
+  },
+  cats: {
+    path: "/en/novi-sad/pet-sitting/cats/",
+    title: "Cat Boarding in Novi Sad — Home Cat Sitter in Petrovaradin",
+    description: "Home cat boarding in Petrovaradin, Novi Sad. Separate rooms when needed, familiar food and litter, no forced interaction, real photos and videos.",
+    h1: "Cat boarding in Novi Sad",
+    lead: "A cat does not need to become sociable just because they are staying somewhere new. We keep familiar food, litter, routines and the option to have a quiet space of their own.",
+    focus: "Cat boarding",
   },
 };
 
