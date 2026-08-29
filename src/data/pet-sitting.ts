@@ -43,10 +43,20 @@ export const petSittingConfig = {
     alt: string;
     kind?: PetSittingPageKind;
   }>,
-  youtubeVideos: [] as Array<{
-    id: string;
-    title: string;
-    kind?: PetSittingPageKind;
+  guestVideos: [
+    { url: "https://youtu.be/NwHXwGqr1FM?si=krP4SBa6TYdMlXMo", animal: "dog", featured: true },
+    { url: "https://youtube.com/shorts/kTsjlgpyK_E?si=n0Qf6Jcc1vJ231X9", animal: "dog", featured: true },
+    { url: "https://youtube.com/shorts/IPpKV9xGk_s?si=qbjCkbb_SJt7-QOs", animal: "dog", featured: true },
+    { url: "https://youtube.com/shorts/upcNP-lwlLQ?si=RbdyU7oAZ4ldyc1D", animal: "dog", featured: true },
+    { url: "https://youtube.com/shorts/QoDvkleTOmA?si=DVpxaX1qHRzOCxAf", animal: "dog" },
+    { url: "https://youtube.com/shorts/LnHXyW79-6w?si=t7xWQDIybbWnlP8H", animal: "dog" },
+    { url: "https://youtube.com/shorts/Nnp80nmWhMA?si=zo_ORiSnNe6Xcsi0", animal: "dog" },
+    { url: "https://youtube.com/shorts/NpaWewHy8Mo?si=VaW3Dfb9gU1v_dgT", animal: "dog" },
+  ] as Array<{
+    url: string;
+    animal: "dog" | "cat";
+    title?: string;
+    featured?: boolean;
   }>,
 };
 

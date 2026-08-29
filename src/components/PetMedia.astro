@@ -1,12 +1,38 @@
 ---
 interface Props {
   photos: Array<{ src: string; alt: string }>;
-  videos: Array<{ id: string; title: string }>;
+  videos: Array<{ url: string; title?: string; featured?: boolean }>;
   label: string;
 }
 
 const { photos, videos, label } = Astro.props;
-const hasMedia = photos.length > 0 || videos.length > 0;
+
+function youtubeEmbedUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+    const hostname = parsed.hostname.replace(/^www\./, "");
+    let id = "";
+
+    if (hostname === "youtu.be") id = parsed.pathname.split("/").filter(Boolean)[0] || "";
+    if (hostname === "youtube.com" || hostname === "m.youtube.com") {
+      id = parsed.searchParams.get("v") || "";
+      if (!id) {
+        const [, segment, value] = parsed.pathname.split("/");
+        if (["shorts", "embed", "live"].includes(segment)) id = value || "";
+      }
+    }
+
+    return /^[A-Za-z0-9_-]{6,}$/.test(id) ? `https://www.youtube-nocookie.com/embed/${id}` : null;
+  } catch {
+    return null;
+  }
+}
+
+const resolvedVideos = videos
+  .slice(0, 4)
+  .map((video) => ({ ...video, embedUrl: youtubeEmbedUrl(video.url) }))
+  .filter((video): video is typeof video & { embedUrl: string } => Boolean(video.embedUrl));
+const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
 ---
 
 <section class="pet-media" id="media" aria-label={`Фото и видео ${label}`}>
@@ -15,16 +41,19 @@ const hasMedia = photos.length > 0 || videos.length > 0;
       {photos.map((photo) => (
         <img src={photo.src} alt={photo.alt} width="900" height="675" loading="lazy" />
       ))}
-      {videos.map((video) => (
-        <iframe
-          width="560"
-          height="315"
-          loading="lazy"
-          src={`https://www.youtube-nocookie.com/embed/${video.id}`}
-          title={video.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+      {resolvedVideos.map((video) => (
+        <figure>
+          <iframe
+            width="560"
+            height="315"
+            loading="lazy"
+            src={video.embedUrl}
+            title={video.title || "Видео на YouTube"}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          {video.title && <figcaption>{video.title}</figcaption>}
+        </figure>
       ))}
     </div>
   ) : (
