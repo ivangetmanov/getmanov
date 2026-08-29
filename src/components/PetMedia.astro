@@ -47,21 +47,17 @@ const resolvedVideos = videos.reduce<ResolvedVideo[]>((items, video) => {
 }, []);
 
 const primaryVideos = resolvedVideos.slice(0, 4);
-const galleryVideos = resolvedVideos.slice(4);
+const primaryPhotos = photos.slice(0, Math.max(0, 4 - primaryVideos.length));
+const galleryVideos = resolvedVideos.slice(primaryVideos.length);
+const galleryPhotos = photos.slice(primaryPhotos.length);
+const gallerySize = galleryVideos.length + galleryPhotos.length;
+const totalMedia = resolvedVideos.length + photos.length;
 const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
 ---
 
 <section class="pet-media" id="media" aria-label={`Фото и видео ${label}`}>
   {hasMedia ? (
     <>
-      {photos.length > 0 && (
-        <div class="photo-grid">
-          {photos.map((photo) => (
-            <img src={photo.src} alt={photo.alt} width="900" height="675" loading="lazy" />
-          ))}
-        </div>
-      )}
-
       <div class="media-grid">
         {primaryVideos.map((video, index) => (
           <figure>
@@ -84,12 +80,40 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
             {video.title && <figcaption>{video.title}</figcaption>}
           </figure>
         ))}
+        {primaryPhotos.map((photo) => (
+          <figure>
+            <button
+              class="photo-card"
+              type="button"
+              data-photo-open
+              data-photo-src={photo.src}
+              data-photo-alt={photo.alt}
+              aria-label={`Открыть фото: ${photo.alt}`}
+            >
+              <img src={photo.src} alt={photo.alt} width="720" height="1280" loading="lazy" />
+            </button>
+          </figure>
+        ))}
       </div>
 
-      {galleryVideos.length > 0 && (
+      {gallerySize > 0 && (
         <details class="media-gallery">
-          <summary><span>Смотреть все видео</span><span>{resolvedVideos.length}</span></summary>
+          <summary><span>Смотреть всю галерею</span><span>{totalMedia}</span></summary>
           <div class="media-gallery-grid">
+            {galleryPhotos.map((photo) => (
+              <figure>
+                <button
+                  class="photo-card"
+                  type="button"
+                  data-photo-open
+                  data-photo-src={photo.src}
+                  data-photo-alt={photo.alt}
+                  aria-label={`Открыть фото: ${photo.alt}`}
+                >
+                  <img src={photo.src} alt={photo.alt} width="720" height="1280" loading="lazy" />
+                </button>
+              </figure>
+            ))}
             {galleryVideos.map((video, index) => {
               const videoNumber = index + primaryVideos.length + 1;
               return (
@@ -117,6 +141,13 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
           </div>
         </details>
       )}
+
+      {photos.length > 0 && (
+        <dialog class="photo-lightbox" data-photo-dialog aria-label="Просмотр фотографии">
+          <button class="photo-lightbox-close" type="button" data-photo-close aria-label="Закрыть фотографию">×</button>
+          <img data-photo-view src="" alt="" />
+        </dialog>
+      )}
     </>
   ) : (
     <div class="media-empty">
@@ -130,6 +161,30 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
   document.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
+
+    const photoTrigger = target.closest<HTMLButtonElement>("[data-photo-open]");
+    if (photoTrigger) {
+      const media = photoTrigger.closest<HTMLElement>(".pet-media");
+      const dialog = media?.querySelector<HTMLDialogElement>("[data-photo-dialog]");
+      const image = dialog?.querySelector<HTMLImageElement>("[data-photo-view]");
+      if (!dialog || !image || !photoTrigger.dataset.photoSrc) return;
+
+      image.src = photoTrigger.dataset.photoSrc;
+      image.alt = photoTrigger.dataset.photoAlt || "";
+      dialog.showModal();
+      return;
+    }
+
+    const closeTrigger = target.closest<HTMLButtonElement>("[data-photo-close]");
+    if (closeTrigger) {
+      closeTrigger.closest<HTMLDialogElement>("dialog")?.close();
+      return;
+    }
+
+    if (target instanceof HTMLDialogElement && target.matches("[data-photo-dialog]")) {
+      target.close();
+      return;
+    }
 
     const trigger = target.closest<HTMLButtonElement>("[data-video-load]");
     if (!trigger) return;

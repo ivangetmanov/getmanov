@@ -38,7 +38,20 @@ export const petSittingConfig = {
     dogs: "",
     cats: "/images/pet-sitting/cats-hero.webp",
   } as Record<PetSittingPageKind, string>,
-  guestPhotos: [] as Array<{
+  guestPhotos: [
+    { src: "/images/pet-sitting/dog-guest-01.webp", alt: "Собака-гость во время домашней передержки", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Собака-гость отдыхает дома", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-03.webp", alt: "Собака-гость дома", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Собака-гость во время игры", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-05.webp", alt: "Собака-гость играет дома", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-06.webp", alt: "Собака-гость у окна", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-07.webp", alt: "Собака-гость во время домашней передержки", kind: "dogs" },
+    { src: "/images/pet-sitting/cat-guest-01.webp", alt: "Кошки отдыхают дома", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-02.webp", alt: "Кошка-гость дома", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Кошка-гость отдыхает рядом с человеком", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Кошки отдыхают на кровати", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-05.webp", alt: "Кошка-гость спит", kind: "cats" },
+  ] as Array<{
     src: string;
     alt: string;
     kind?: PetSittingPageKind;
@@ -56,6 +69,8 @@ export const petSittingConfig = {
     { url: "https://youtube.com/shorts/F-IxpMWhlSw?si=3AgPaT1TKh0jZuHU", animal: "dog" },
     { url: "https://youtube.com/shorts/YKHKXpjGzpA?si=BmaubqQsftRyvwio", animal: "dog" },
     { url: "https://youtube.com/shorts/HiwjWxa9qfM?si=xqmauQOeDt5Fsh2O", animal: "dog" },
+    { url: "https://youtube.com/shorts/gzEpuT0el14?feature=share", animal: "cat" },
+    { url: "https://youtube.com/shorts/unefUKL2sv8?feature=share", animal: "dog" },
   ] as Array<{
     url: string;
     animal: "dog" | "cat";
