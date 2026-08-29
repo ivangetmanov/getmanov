@@ -1,6 +1,6 @@
 import { petSittingUnavailablePeriods } from "../data/pet-sitting-availability.mjs";
 import { calendarDayDifference, isCalendarDateKey } from "./pet-sitting-calendar.mjs";
-import { calculatePetSittingQuote, formatRsd, petSittingBusiness } from "./pet-sitting-business.mjs";
+import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration, petSittingBusiness } from "./pet-sitting-business.mjs";
 
 const animals = new Set(["dog", "cat"]);
 const locales = new Set(["ru", "en"]);
@@ -109,7 +109,7 @@ export function buildPetSittingTelegramMessage(inquiry, submittedAt = new Date()
     "",
     `Страница: ${inquiry.pageLabel}`,
     `Даты: ${formatCalendarDate(inquiry.arrival, "ru")} — ${formatCalendarDate(inquiry.departure, "ru")}`,
-    `Дней передержки: ${inquiry.quote.billableDays}`,
+    `Срок: ${formatRussianStayDuration(inquiry.quote.billableDays)}`,
     `Питомец: ${animal}`,
     `Количество: ${inquiry.quantity}`,
     `Даты гибкие: ${flexible}`,

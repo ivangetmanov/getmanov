@@ -25,6 +25,17 @@ assert.match(notification, /Estimated price: 4,000 RSD/);
 assert.match(notification, /Source: https:\/\/getmanov\.com\/en\/novi-sad\/pet-sitting\/dogs\//);
 assert.match(notification, /Submitted: 2026-08-29T18:00:00\.000Z/);
 
+const russianPrepared = preparePetSittingInquiry({
+  ...validPayload,
+  arrival: "2026-09-07",
+  departure: "2026-09-11",
+  locale: "ru",
+  sourcePage: "/ru/novi-sad/pet-sitting/dogs/",
+});
+assert.equal(russianPrepared.ok, true);
+const russianNotification = buildPetSittingTelegramMessage(russianPrepared.inquiry);
+assert.match(russianNotification, /Срок: 4 дня передержки/);
+
 assert.deepEqual(
   preparePetSittingInquiry({ ...validPayload, telegramUsername: "bad" }),
   { ok: false, error: "invalid_telegram" },

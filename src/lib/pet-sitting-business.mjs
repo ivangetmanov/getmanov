@@ -31,6 +31,20 @@ export function formatRsd(amount, locale = "ru") {
   return String(amount).replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
+export function russianDayForm(days) {
+  const count = Math.abs(Number(days));
+  const lastDigit = count % 10;
+  const lastTwoDigits = count % 100;
+
+  if (lastDigit === 1 && lastTwoDigits !== 11) return "день";
+  if ([2, 3, 4].includes(lastDigit) && ![12, 13, 14].includes(lastTwoDigits)) return "дня";
+  return "дней";
+}
+
+export function formatRussianStayDuration(days) {
+  return `${days} ${russianDayForm(days)} передержки`;
+}
+
 export function calculatePetSittingQuote(arrival, departure, quantity) {
   const petQuantity = Number(quantity);
   if (!arrival || !departure || ![1, 2].includes(petQuantity)) return null;

@@ -88,7 +88,7 @@ const config = {
 
 <script>
   import { isDateUnavailable } from "../lib/pet-sitting-calendar.mjs";
-  import { calculatePetSittingQuote, formatRsd } from "../lib/pet-sitting-business.mjs";
+  import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration } from "../lib/pet-sitting-business.mjs";
 
   const root = document.querySelector('[data-pet-calendar]');
   if (root) {
@@ -152,7 +152,7 @@ const config = {
       if (!quote) return;
 
       priceSummary.append(createPriceLine(
-        isEnglish ? `${quote.billableDays} days of stay` : `${quote.billableDays} дней передержки`,
+        isEnglish ? `${quote.billableDays} days of stay` : formatRussianStayDuration(quote.billableDays),
         'inquiry-price__duration',
       ));
       if (quote.individualPricing) {
@@ -181,7 +181,7 @@ const config = {
         : `${formatRsd(quote.total, settings.locale)} RSD`;
       return isEnglish
         ? `Hello! I'd like to ask about pet boarding.\n\nDates: ${formatDate(start)} — ${formatDate(end)}\nLength: ${quote.billableDays} days of stay\nPet: ${animal}\nNumber of pets: ${quote.quantity}\nDates flexible: ${flexible}\nEstimated price: ${price}\nMy Telegram: ${username}`
-        : `Здравствуйте! Хочу уточнить передержку.\n\nДаты: ${formatDate(start)} — ${formatDate(end)}\nСрок: ${quote.billableDays} дней передержки\nПитомец: ${animal}\nКоличество: ${quote.quantity}\nДаты примерные: ${flexible}\nРасчётная цена: ${price}\nМой Telegram: ${username}`;
+        : `Здравствуйте! Хочу уточнить передержку.\n\nДаты: ${formatDate(start)} — ${formatDate(end)}\nСрок: ${formatRussianStayDuration(quote.billableDays)}\nПитомец: ${animal}\nКоличество: ${quote.quantity}\nДаты примерные: ${flexible}\nРасчётная цена: ${price}\nМой Telegram: ${username}`;
     }
     function trackEvent(name, parameters = {}) {
       if (typeof window.gtag !== 'function') return;
@@ -231,7 +231,7 @@ const config = {
       summary.textContent = quote
         ? isEnglish
           ? `Dates: ${formatDate(start)} — ${formatDate(end)} · ${quote.billableDays} days of stay`
-          : `Даты: ${formatDate(start)} — ${formatDate(end)} · ${quote.billableDays} дней передержки`
+          : `Даты: ${formatDate(start)} — ${formatDate(end)} · ${formatRussianStayDuration(quote.billableDays)}`
         : isEnglish ? 'No dates selected yet.' : 'Даты пока не выбраны.';
       status.textContent = quote
         ? isEnglish ? `Selected: ${formatDate(start)} — ${formatDate(end)}.` : `Выбрано: ${formatDate(start)} — ${formatDate(end)}.`

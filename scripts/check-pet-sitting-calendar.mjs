@@ -4,7 +4,12 @@ import { fileURLToPath } from "node:url";
 import { JSDOM } from "jsdom";
 import { petSittingUnavailablePeriods } from "../src/data/pet-sitting-availability.mjs";
 import { billableStayDays, isDateUnavailable } from "../src/lib/pet-sitting-calendar.mjs";
-import { calculatePetSittingQuote, petSittingBusiness } from "../src/lib/pet-sitting-business.mjs";
+import {
+  calculatePetSittingQuote,
+  formatRussianStayDuration,
+  petSittingBusiness,
+  russianDayForm,
+} from "../src/lib/pet-sitting-business.mjs";
 
 const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 const blockedDates = [
@@ -37,6 +42,21 @@ assert.deepEqual(
   calculatePetSittingQuote("2026-09-07", "2026-09-21", 1),
   { billableDays: 14, quantity: 1, dailyRate: null, total: null, individualPricing: true },
 );
+const russianDurationExamples = new Map([
+  [1, "1 день передержки"],
+  [2, "2 дня передержки"],
+  [4, "4 дня передержки"],
+  [5, "5 дней передержки"],
+  [11, "11 дней передержки"],
+  [14, "14 дней передержки"],
+  [21, "21 день передержки"],
+  [22, "22 дня передержки"],
+  [25, "25 дней передержки"],
+]);
+for (const [days, expected] of russianDurationExamples) {
+  assert.equal(formatRussianStayDuration(days), expected);
+  assert.equal(`${days} ${russianDayForm(days)} передержки`, expected);
+}
 assert.equal(isDateUnavailable("2026-08-28", petSittingUnavailablePeriods), false);
 assert.equal(isDateUnavailable("2026-09-07", petSittingUnavailablePeriods), false);
 
