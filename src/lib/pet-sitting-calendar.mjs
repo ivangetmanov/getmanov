@@ -49,3 +49,8 @@ export function billableStayDays(arrival, departure) {
 export function isDateUnavailable(key, periods) {
   return periods.some((period) => key >= period.from && key <= period.to);
 }
+
+export function rangeHasUnavailable(arrival, departure, periods) {
+  if (!arrival || !departure || !Array.isArray(periods)) return false;
+  return periods.some((period) => period.from <= departure && period.to >= arrival);
+}

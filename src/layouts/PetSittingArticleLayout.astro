@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import PetSittingArticleTools from "../components/PetSittingArticleTools.astro";
 import { petSittingArticleGuides } from "../data/pet-sitting";
+import { petSittingBillingFaq } from "../data/pet-sitting-faq";
 
 const frontmatter = Astro.props.frontmatter ?? {};
 const locale = frontmatter.locale === "ru" ? "ru" : "en";
@@ -14,6 +16,18 @@ const servicePath = frontmatter.servicePath ?? `/${locale}/novi-sad/pet-sitting/
 const serviceName = isRussian ? "Передержка животных в Нови-Саде" : "Pet boarding in Novi Sad";
 const datePublished = frontmatter.datePublished ?? "2026-08-29";
 const dateModified = frontmatter.dateModified ?? datePublished;
+const articleSlug = canonical.split("/").filter(Boolean).at(-1) ?? "";
+const interactiveArticleSlugs = new Set([
+  "pet-sitter-vs-boarding",
+  "can-cat-stay-alone-for-a-week",
+  "prepare-dog-for-boarding",
+  "prepare-cat-for-boarding",
+]);
+const hasArticleInteractions = isRussian && interactiveArticleSlugs.has(articleSlug);
+const billingFaq = petSittingBillingFaq[locale];
+const schemaFaqItems = hasArticleInteractions
+  ? [...faqItems, { question: billingFaq.question, answer: billingFaq.answer }]
+  : faqItems;
 
 const articleSchema = {
   "@type": "Article",
@@ -44,11 +58,11 @@ const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     articleSchema,
-    ...(faqItems.length
+    ...(schemaFaqItems.length
       ? [{
           "@type": "FAQPage",
           "@id": `${canonicalUrl}#faq`,
-          mainEntity: faqItems.map((item: { question: string; answer: string }) => ({
+          mainEntity: schemaFaqItems.map((item: { question: string; answer: string }) => ({
             "@type": "Question",
             name: item.question,
             acceptedAnswer: {
@@ -119,6 +133,8 @@ const alternates = alternatePath
     </div>
 
     <slot />
+
+    <PetSittingArticleTools locale={locale} canonical={canonical} />
 
     <aside class="pet-article__service" aria-labelledby="pet-service-title">
       <div>

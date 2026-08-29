@@ -1,0 +1,66 @@
+---
+const { articleSlug } = Astro.props as { articleSlug: string };
+---
+
+<section class="pet-article-tool" data-cat-care-tool data-tool-type="cat_care_options" data-article-slug={articleSlug} aria-labelledby="cat-care-title">
+  <p class="pet-article-tool__eyebrow">Сравнить варианты</p>
+  <h2 id="cat-care-title">Какой уход за кошкой имеет смысл рассмотреть?</h2>
+  <p>Ответы дают ориентир, а не медицинскую рекомендацию. Учитывайте характер, здоровье и привычки конкретной кошки.</p>
+  <form data-tool-form>
+    <label>Как долго вы уезжаете?
+      <select name="duration" required>
+        <option value="">Выберите</option>
+        <option value="short">До двух дней</option>
+        <option value="medium">3–6 дней</option>
+        <option value="week">Неделя или дольше</option>
+      </select>
+    </label>
+    <label>Будет ли кто-то регулярно приходить?
+      <select name="visits" required><option value="">Выберите</option><option value="yes">Да</option><option value="no">Нет</option></select>
+    </label>
+    <label>Кошка спокойно остаётся одна?
+      <select name="alone" required><option value="">Выберите</option><option value="yes">Обычно да</option><option value="no">Нет или не знаем</option></select>
+    </label>
+    <label>Нужны лекарства или более частый контроль?
+      <select name="care" required><option value="">Выберите</option><option value="no">Нет</option><option value="yes">Да</option></select>
+    </label>
+    <button type="submit">Показать варианты</button>
+  </form>
+  <div class="pet-article-tool__result" data-tool-result hidden aria-live="polite"></div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-cat-care-tool]').forEach((root) => {
+    const form = root.querySelector<HTMLFormElement>('[data-tool-form]');
+    const result = root.querySelector<HTMLElement>('[data-tool-result]');
+    if (!form || !result) return;
+    let started = false;
+    const track = (name: string) => {
+      if (typeof window.gtag !== 'function') return;
+      window.gtag('event', name, { article_slug: root.dataset.articleSlug, locale: 'ru', tool_type: root.dataset.toolType });
+    };
+    form.addEventListener('input', () => {
+      if (started) return;
+      started = true;
+      track('pet_sitting_article_tool_start');
+    });
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const values = Object.fromEntries(new FormData(form));
+      const options: string[] = [];
+      if (values.visits === 'yes' && values.alone === 'yes' && values.care === 'no') options.push('регулярные визиты зооняни на дом');
+      if (values.care === 'yes' || values.alone === 'no') options.push('ситтера с проживанием у вас дома');
+      if (values.duration !== 'short' || values.visits === 'no') options.push('домашнюю передержку с отдельным безопасным пространством');
+      if (!options.length) options.push('регулярные визиты зооняни и домашнюю передержку');
+      const uniqueOptions = [...new Set(options)];
+      result.replaceChildren();
+      const strong = document.createElement('strong');
+      strong.textContent = 'Имеет смысл сравнить: ' + uniqueOptions.join(', ') + '.';
+      const paragraph = document.createElement('p');
+      paragraph.textContent = 'Проверьте, какой вариант лучше сохраняет привычный режим кошки и обеспечивает нужную частоту наблюдения. Лекарства и особенности здоровья заранее обсудите с человеком, который будет ухаживать за питомцем.';
+      result.append(strong, paragraph);
+      result.hidden = false;
+      track('pet_sitting_article_tool_result');
+    });
+  });
+</script>

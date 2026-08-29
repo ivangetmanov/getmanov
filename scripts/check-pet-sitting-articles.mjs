@@ -45,6 +45,12 @@ const russianCopyHashes = {
   "prepare-dog-for-boarding": "648487a53390195c432448aa3ff29cd482e53a70c3ca58f7e4a434ffc0090c13",
   "prepare-cat-for-boarding": "963600d79d91c45be8e5353b4f9c9bcf144339532bd29d9d8cf7c3e766f12520",
 };
+const interactionSelectors = {
+  "pet-sitter-vs-boarding": '[data-article-decision-tool][data-tool-type="care_comparison"]',
+  "can-cat-stay-alone-for-a-week": '[data-cat-care-tool][data-tool-type="cat_care_options"]',
+  "prepare-dog-for-boarding": '[data-article-checklist][data-tool-type="dog_preparation_checklist"]',
+  "prepare-cat-for-boarding": '[data-article-checklist][data-tool-type="cat_preparation_checklist"]',
+};
 
 const servicePath = (locale, service) =>
   `/${locale}/novi-sad/pet-sitting/${service === "main" ? "" : `${service}/`}`;
@@ -79,6 +85,18 @@ for (const locale of ["ru", "en"]) {
       document.querySelector(`.pet-article a[href="${servicePath(locale, article.service)}"]`),
       `${path} must link to its primary service page`,
     );
+    if (locale === "ru") {
+      assert(document.querySelector(interactionSelectors[article.slug]), `${path} needs its mapped interactive tool`);
+      assert(document.querySelector(`[data-article-interactions="${article.slug}"]`));
+      const compactCalendar = document.querySelector("[data-pet-calendar].availability--compact");
+      assert(compactCalendar, `${path} needs the shared compact calendar`);
+      const compactConfig = JSON.parse(compactCalendar.getAttribute("data-pet-calendar"));
+      assert.equal(compactConfig.articleSlug, article.slug);
+      assert.equal(compactConfig.sourcePage, path);
+      assert(document.querySelector("#boarding-days.pet-article-billing-faq"), `${path} needs the shared billing FAQ anchor`);
+    } else {
+      assert.equal(document.querySelector("[data-article-interactions]"), null, `${path} should not receive unrequested EN interaction copy`);
+    }
 
     const mediaImages = [...document.querySelectorAll(".pet-article .pet-article-media > img")];
     const mediaVideos = [...document.querySelectorAll(".pet-article .pet-article-video[data-video-id]")];
@@ -118,7 +136,15 @@ for (const locale of ["ru", "en"]) {
     assert(!html.includes("[MEDIA"), `${path} contains a media placeholder`);
     assert(!html.includes("?autoplay="), `${path} must not autoplay video`);
     if (mediaVideos.length) {
-      assert(html.includes("www.youtube-nocookie.com/embed/"), `${path} must prepare privacy-enhanced embeds`);
+      const scriptSources = [...document.querySelectorAll('script[src^="/_astro/"]')]
+        .map((script) => script.getAttribute("src"));
+      const bundledScripts = await Promise.all(
+        scriptSources.map((src) => readFile(new URL(`dist${src}`, root), "utf8")),
+      );
+      assert(
+        bundledScripts.some((source) => source.includes("www.youtube-nocookie.com/embed/")),
+        `${path} must prepare privacy-enhanced embeds`,
+      );
       for (const figure of mediaVideos) {
         assert(figure.querySelector("a[href]"), `${path} video needs a no-JavaScript fallback link`);
       }
@@ -201,6 +227,48 @@ const approvedRussianDogBlocks = [
 for (const block of approvedRussianDogBlocks) {
   assert(russianDogBlocks.includes(block), `${russianDogPath} is missing approved copy: ${block}`);
 }
+assert.equal(russianDogDocument.querySelectorAll(".faq-list details").length, 11, `${russianDogPath} should preserve all FAQs plus billing`);
+assert(russianDogDocument.querySelector("#boarding-days"), `${russianDogPath} should preserve the shared billing FAQ`);
+
+const russianCatPath = servicePath("ru", "cats");
+const russianCatHtml = await readFile(htmlFile(russianCatPath), "utf8");
+const russianCatDocument = new JSDOM(russianCatHtml).window.document;
+const russianCatBlocks = [...russianCatDocument.querySelectorAll("h2, p, summary")]
+  .map((node) => node.textContent.replace(/\s+/g, " ").trim());
+const approvedRussianCatBlocks = [
+  "Не знаете, с кем оставить котика во время отъезда?",
+  "На домашней передержке питомец остаётся под присмотром и получает столько внимания и личного пространства, сколько ему нужно.",
+  "Мы не торопим знакомство, даём кошке возможность спрятаться, привыкнуть к новым запахам, поспать в одиночестве — столько, сколько нужно. А привычные корм и наполнитель помогают сохранить знакомую часть домашней рутины.",
+  "Фото и видео каждый день",
+  "Мы знаем, как тревожно оставлять любимого питомца, поэтому присылаем фото и видео минимум 3 раза в день. Не ограничиваемся сообщением «всё хорошо», а показываем, как на самом деле проходит день кошки у нас.",
+  "Сон, питание, игры, валяние на диване, знакомство с котами — всё, что происходит в течение дня.",
+  "Если кошка не дружит с другими — это нормально",
+  "У нас живут свои кот и кошка, но вашему питомцу совершенно не обязательно с ними общаться.",
+  "В квартире три изолированные комнаты. Если котику спокойнее жить отдельно, мы выделим ему своё безопасное пространство и организуем всё так, чтобы животные не пересекались.",
+  "Сохраняем привычный режим, как дома",
+  "Передержка — не время вводить новые правила. Перед заездом мы узнаём о рутине вашей кошки и придерживаемся её всё время, пока питомец живёт у нас.",
+  "Привозите привычный корм, миски, лоток, наполнитель, игрушки — всё это поможет кошке чувствовать себя спокойнее в новом месте.",
+  "Если в первые дни кошка захочет спрятаться и не выходить, поставим миски и лоток рядом и дадим столько времени на адаптацию, сколько потребуется.",
+  "Наши коты будут рады познакомиться, но если ваша кошка выберет побыть одной, мы не будем настаивать на знакомстве и выделим каждому своё пространство.",
+  "Познакомимся заранее",
+  "Перед первой передержкой приглашаем вас зайти к нам домой примерно на 30 минут — это бесплатно. Вы познакомитесь с нами, увидите квартиру и условия, в которых будет жить питомец, познакомитесь с нашими котами.",
+  "Саму кошку приносить на знакомство не рекомендуем: короткий визит в незнакомое пространство скорее станет для неё лишним стрессом и не покажет, как она будет чувствовать себя во время полноценной передержки.",
+  "Можно также оставить кошку тестово на несколько часов — это стоит 1 000 RSD.",
+  "Как считаются сутки передержки?",
+  "Это нормально. Если питомцу спокойнее жить отдельно, мы выделим ему отдельную комнату и организуем всё так, чтобы животные не пересекались.",
+  "Не будем её вытаскивать или заставлять общаться. Поставим рядом миски и лоток и дадим столько времени на адаптацию, сколько ей потребуется.",
+  "Да, и мы рекомендуем так делать. Знакомые запахи и привычный наполнитель помогают кошке спокойнее освоиться в новом месте.",
+  "Привозите привычный корм и расскажите, когда и сколько питомец ест. Мы будем придерживаться его обычного режима и не дадим ничего нового без согласования с вами.",
+  "Да, у нас нет никаких ограничений.",
+  "Нужны действующая комплексная прививка и прививка от бешенства. Перед передержкой попросим прислать фото ветпаспорта.",
+  "Сразу свяжемся с вами, расскажем, что происходит, и вместе решим, что делать дальше. Не будем ждать вашего возвращения, если ситуацию нужно решать сейчас.",
+  "Сразу свяжемся с вами. Если ситуация срочная, действуем в интересах питомца и при необходимости обращаемся к ветеринару, не дожидаясь вашего возвращения.",
+  "Да. Мы всегда остаёмся на связи и присылаем фото и видео минимум 3 раза в день — даже если котик пока предпочитает проводить время в укрытии.",
+];
+for (const block of approvedRussianCatBlocks) {
+  assert(russianCatBlocks.includes(block), `${russianCatPath} is missing approved or preserved copy: ${block}`);
+}
+assert.equal(russianCatDocument.querySelectorAll(".faq-list details").length, 10, `${russianCatPath} should preserve all cat FAQs plus billing`);
 
 const weakCommitmentPattern = /\b(?:постараемся|попытаемся|стараемся|пытаемся)\b/iu;
 for (const article of slugs) {

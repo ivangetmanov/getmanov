@@ -1,6 +1,6 @@
 import { petSittingUnavailablePeriods } from "../data/pet-sitting-availability.mjs";
-import { calendarDayDifference, isCalendarDateKey } from "./pet-sitting-calendar.mjs";
-import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration, petSittingBusiness } from "./pet-sitting-business.mjs";
+import { calendarDayDifference, isCalendarDateKey, rangeHasUnavailable } from "./pet-sitting-calendar.mjs";
+import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration, isAllowedPetSittingSourcePage, petSittingBusiness } from "./pet-sitting-business.mjs";
 
 const animals = new Set(["dog", "cat"]);
 const locales = new Set(["ru", "en"]);
@@ -9,10 +9,6 @@ const pageKinds = new Set(["main", "dogs", "cats"]);
 export function normalizeTelegramUsername(value) {
   const trimmed = typeof value === "string" ? value.trim() : "";
   return trimmed && !trimmed.startsWith("@") ? `@${trimmed}` : trimmed;
-}
-
-function rangeHasUnavailable(arrival, departure) {
-  return petSittingUnavailablePeriods.some((period) => period.from <= departure && period.to >= arrival);
 }
 
 export function preparePetSittingInquiry(payload) {
@@ -35,10 +31,10 @@ export function preparePetSittingInquiry(payload) {
   const telegramUsername = normalizeTelegramUsername(payload.telegramUsername);
 
   if (!locales.has(locale) || !pageKinds.has(pageKind)) return { ok: false, error: "invalid_page" };
-  if (sourcePage !== petSittingBusiness.pagePaths[locale][pageKind]) return { ok: false, error: "invalid_source" };
+  if (!isAllowedPetSittingSourcePage(locale, pageKind, sourcePage)) return { ok: false, error: "invalid_source" };
   if (!isCalendarDateKey(arrival) || !isCalendarDateKey(departure)) return { ok: false, error: "missing_dates" };
   if (calendarDayDifference(arrival, departure) <= 0) return { ok: false, error: "invalid_dates" };
-  if (rangeHasUnavailable(arrival, departure)) return { ok: false, error: "unavailable_dates" };
+  if (rangeHasUnavailable(arrival, departure, petSittingUnavailablePeriods)) return { ok: false, error: "unavailable_dates" };
   if (!animals.has(pet)) return { ok: false, error: "invalid_pet" };
   if (![1, 2].includes(quantity)) return { ok: false, error: "invalid_quantity" };
   if (!/^@[A-Za-z0-9_]{5,32}$/.test(telegramUsername)) return { ok: false, error: "invalid_telegram" };

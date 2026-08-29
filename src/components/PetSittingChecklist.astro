@@ -1,0 +1,56 @@
+---
+const { animal, articleSlug } = Astro.props as { animal: "dog" | "cat"; articleSlug: string };
+const isDog = animal === "dog";
+const items = isDog
+  ? [
+      "Корм на весь срок",
+      "Поводок, шлейка или ошейник",
+      "Лекарства и инструкция",
+      "Рассказали график прогулок",
+      "Рассказали график кормления",
+      "Обсудили, остаётся ли собака одна",
+      "Рассказали отношение к кошкам",
+      "Взяли знакомую вещь или игрушку при необходимости",
+      "Договорились о знакомстве или тестовой передержке при необходимости",
+    ]
+  : [
+      "Проверили актуальные прививки",
+      "Взяли привычный корм",
+      "Взяли привычный наполнитель",
+      "Решили, брать ли свой лоток",
+      "Взяли лекарства и инструкцию",
+      "Взяли знакомую вещь, плед или игрушку",
+      "Рассказали о привычках и страхах",
+      "Рассказали, как кошка относится к другим животным",
+    ];
+---
+
+<section class="pet-article-tool pet-article-checklist" data-article-checklist data-tool-type={`${animal}_preparation_checklist`} data-article-slug={articleSlug} aria-labelledby={`${animal}-checklist-title`}>
+  <p class="pet-article-tool__eyebrow">Чек-лист перед поездкой</p>
+  <h2 id={`${animal}-checklist-title`}>{isDog ? "Проверьте подготовку собаки" : "Проверьте подготовку кошки"}</h2>
+  <p data-checklist-progress aria-live="polite">Отмечено: 0 из {items.length}</p>
+  <div class="pet-article-checklist__items">
+    {items.map((item) => <label><input type="checkbox" /><span>{item}</span></label>)}
+  </div>
+  <p class="pet-article-checklist__note">Отметки хранятся только на этой странице и сбросятся после обновления.</p>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-article-checklist]').forEach((root) => {
+    const inputs = [...root.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')];
+    const progress = root.querySelector<HTMLElement>('[data-checklist-progress]');
+    inputs.forEach((input) => input.addEventListener('change', () => {
+      const checked = inputs.filter((item) => item.checked).length;
+      if (progress) progress.textContent = `Отмечено: ${checked} из ${inputs.length}`;
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'pet_sitting_article_checklist_interaction', {
+          article_slug: root.dataset.articleSlug,
+          locale: 'ru',
+          tool_type: root.dataset.toolType,
+          checked_count: checked,
+          item_count: inputs.length,
+        });
+      }
+    }));
+  });
+</script>

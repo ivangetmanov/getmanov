@@ -1,0 +1,89 @@
+---
+const { articleSlug } = Astro.props as { articleSlug: string };
+---
+
+<section class="pet-article-tool" data-article-decision-tool data-tool-type="care_comparison" data-article-slug={articleSlug} aria-labelledby="care-comparison-title">
+  <p class="pet-article-tool__eyebrow">Небольшая подсказка</p>
+  <h2 id="care-comparison-title">Какой формат ухода стоит сравнить?</h2>
+  <p>Ответьте на четыре вопроса. Результат не заменяет личную оценку питомца, но поможет сузить варианты.</p>
+  <form data-tool-form>
+    <label>Питомец спокойно остаётся один?
+      <select name="alone" required>
+        <option value="">Выберите</option>
+        <option value="yes">Да</option>
+        <option value="sometimes">Не всегда</option>
+        <option value="no">Нет</option>
+      </select>
+    </label>
+    <label>Сильно ли он стрессует в новом месте?
+      <select name="newPlace" required>
+        <option value="">Выберите</option>
+        <option value="low">Обычно нет</option>
+        <option value="high">Да</option>
+        <option value="unknown">Пока не знаем</option>
+      </select>
+    </label>
+    <label>Нужен ли человек рядом большую часть дня?
+      <select name="company" required>
+        <option value="">Выберите</option>
+        <option value="no">Нет</option>
+        <option value="yes">Да</option>
+      </select>
+    </label>
+    <label>Нужны частый контроль или лекарства?
+      <select name="care" required>
+        <option value="">Выберите</option>
+        <option value="no">Нет</option>
+        <option value="yes">Да</option>
+      </select>
+    </label>
+    <button type="submit">Показать варианты</button>
+  </form>
+  <div class="pet-article-tool__result" data-tool-result hidden aria-live="polite"></div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-article-decision-tool][data-tool-type="care_comparison"]').forEach((root) => {
+    const form = root.querySelector<HTMLFormElement>('[data-tool-form]');
+    const result = root.querySelector<HTMLElement>('[data-tool-result]');
+    if (!form || !result) return;
+    let started = false;
+    const track = (name: string) => {
+      if (typeof window.gtag !== 'function') return;
+      window.gtag('event', name, {
+        article_slug: root.dataset.articleSlug,
+        locale: 'ru',
+        tool_type: root.dataset.toolType,
+      });
+    };
+    form.addEventListener('input', () => {
+      if (started) return;
+      started = true;
+      track('pet_sitting_article_tool_start');
+    });
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const values = Object.fromEntries(new FormData(form));
+      let heading = 'Имеет смысл сравнить несколько форматов ухода.';
+      let explanation = 'Посмотрите, где питомцу будет проще сохранить привычный режим и получить нужное внимание.';
+      if (values.company === 'yes' || values.care === 'yes') {
+        heading = 'Ситтер с проживанием у вас дома может быть особенно подходящим вариантом.';
+        explanation = 'Питомец останется в знакомой обстановке, а человек сможет быть рядом и соблюдать согласованный режим. Требования к лекарствам и контролю лучше отдельно обсудить с ситтером.';
+      } else if (values.newPlace === 'high' && values.alone === 'yes') {
+        heading = 'В первую очередь стоит рассмотреть визиты зооняни.';
+        explanation = 'Питомец спокойно остаётся один, а визиты позволяют не менять знакомую обстановку. Сравните частоту визитов с его обычным режимом.';
+      } else if (values.newPlace === 'low' || values.newPlace === 'unknown') {
+        heading = 'Имеет смысл посмотреть домашнюю передержку.';
+        explanation = 'Этот формат может подойти, если питомцу нужны компания и домашняя обстановка. До бронирования стоит проверить совместимость и обсудить привычный режим.';
+      }
+      result.replaceChildren();
+      const strong = document.createElement('strong');
+      strong.textContent = heading;
+      const paragraph = document.createElement('p');
+      paragraph.textContent = explanation;
+      result.append(strong, paragraph);
+      result.hidden = false;
+      track('pet_sitting_article_tool_result');
+    });
+  });
+</script>

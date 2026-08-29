@@ -25,6 +25,20 @@ assert.match(notification, /Estimated price: 4,000 RSD/);
 assert.match(notification, /Source: https:\/\/getmanov\.com\/en\/novi-sad\/pet-sitting\/dogs\//);
 assert.match(notification, /Submitted: 2026-08-29T18:00:00\.000Z/);
 
+const articlePrepared = preparePetSittingInquiry({
+  ...validPayload,
+  locale: "ru",
+  pageKind: "cats",
+  pet: "cat",
+  sourcePage: "/ru/novi-sad/pet-sitting/prepare-cat-for-boarding/",
+});
+assert.equal(articlePrepared.ok, true);
+assert.equal(articlePrepared.inquiry.sourcePage, "/ru/novi-sad/pet-sitting/prepare-cat-for-boarding/");
+assert.deepEqual(
+  preparePetSittingInquiry({ ...validPayload, sourcePage: "/ru/novi-sad/pet-sitting/not-a-real-article/" }),
+  { ok: false, error: "invalid_source" },
+);
+
 const russianPrepared = preparePetSittingInquiry({
   ...validPayload,
   arrival: "2026-09-07",

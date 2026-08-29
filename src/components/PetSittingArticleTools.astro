@@ -1,0 +1,61 @@
+---
+import CatCareOptionsHelper from "./CatCareOptionsHelper.astro";
+import PetSittingCalendar from "./PetSittingCalendar.astro";
+import PetSittingChecklist from "./PetSittingChecklist.astro";
+import PetSittingComparisonHelper from "./PetSittingComparisonHelper.astro";
+import { petSittingBillingFaq } from "../data/pet-sitting-faq";
+import type { PetSittingPageKind } from "../data/pet-sitting";
+
+const { locale, canonical } = Astro.props as { locale: "ru" | "en"; canonical: string };
+const articleSlug = canonical.split("/").filter(Boolean).at(-1) ?? "";
+const configurations: Record<string, { kind: PetSittingPageKind; tool: "comparison" | "cat-options" | "dog-checklist" | "cat-checklist" }> = {
+  "pet-sitter-vs-boarding": { kind: "main", tool: "comparison" },
+  "can-cat-stay-alone-for-a-week": { kind: "cats", tool: "cat-options" },
+  "prepare-dog-for-boarding": { kind: "dogs", tool: "dog-checklist" },
+  "prepare-cat-for-boarding": { kind: "cats", tool: "cat-checklist" },
+};
+const configuration = locale === "ru" ? configurations[articleSlug] : undefined;
+const billingFaq = petSittingBillingFaq[locale];
+---
+
+{configuration && (
+  <div class="pet-article-interactions" data-article-interactions={articleSlug}>
+    {configuration.tool === "comparison" && <PetSittingComparisonHelper articleSlug={articleSlug} />}
+    {configuration.tool === "cat-options" && <CatCareOptionsHelper articleSlug={articleSlug} />}
+    {configuration.tool === "dog-checklist" && <PetSittingChecklist animal="dog" articleSlug={articleSlug} />}
+    {configuration.tool === "cat-checklist" && <PetSittingChecklist animal="cat" articleSlug={articleSlug} />}
+    <PetSittingCalendar locale={locale} kind={configuration.kind} variant="compact" sourcePage={canonical} articleSlug={articleSlug} />
+    <details class="pet-article-billing-faq" id="boarding-days">
+      <summary>{billingFaq.question}</summary>
+      <p>{billingFaq.answer}</p>
+    </details>
+  </div>
+)}
+
+<style is:global>
+  .pet-article-interactions { margin-top:5rem; }
+  .pet-article-tool { margin:0;padding:32px;border:1px solid var(--pet-line);border-radius:22px;background:#f4f7f3; }
+  .pet-article-tool__eyebrow { margin:0 0 8px;color:var(--pet-accent);font-size:12px;font-weight:850;letter-spacing:.1em;text-transform:uppercase; }
+  .pet-article .pet-article-tool h2 { margin:0;padding:0;border:0;font-size:clamp(29px,4vw,40px); }
+  .pet-article-tool>p:not(.pet-article-tool__eyebrow) { color:var(--pet-muted); }
+  .pet-article-tool form { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:24px; }
+  .pet-article-tool form label { display:grid;gap:7px;color:var(--pet-ink);font-size:15px;font-weight:720;line-height:1.4; }
+  .pet-article-tool select { width:100%;min-height:46px;border:1px solid #cfdad3;border-radius:9px;background:#fff;color:var(--pet-ink);padding:8px 10px;font:inherit; }
+  .pet-article-tool form button { grid-column:1 / -1;min-height:48px;border:0;border-radius:9px;background:var(--pet-accent);color:#fff;font:inherit;font-weight:800;cursor:pointer; }
+  .pet-article-tool__result { margin-top:20px;border-left:4px solid var(--pet-accent);padding:15px 18px;background:#e6f0ea; }
+  .pet-article-tool__result[hidden] { display:none; }
+  .pet-article-tool__result strong { display:block;font-size:18px;line-height:1.4; }
+  .pet-article-tool__result p { margin:7px 0 0;color:#3f554d;font-size:15px;line-height:1.55; }
+  .pet-article-checklist__items { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:22px; }
+  .pet-article-checklist__items label { display:flex;min-height:50px;align-items:flex-start;gap:11px;border:1px solid #d4ded8;border-radius:10px;padding:12px;background:#fff;cursor:pointer;font-size:15px;line-height:1.4; }
+  .pet-article-checklist__items input { flex:0 0 auto;width:19px;height:19px;margin:1px 0 0;accent-color:var(--pet-accent); }
+  .pet-article-checklist__note { margin-bottom:0;font-size:13px; }
+  .pet-article-billing-faq { margin-top:14px;border:1px solid var(--pet-line);border-radius:12px;background:#fff; }
+  .pet-article-billing-faq summary { padding:16px 18px;cursor:pointer;font-weight:780; }
+  .pet-article-billing-faq p { margin:0;padding:0 18px 18px;color:var(--pet-muted);font-size:15px;line-height:1.65;white-space:pre-line; }
+  @media (max-width:600px) {
+    .pet-article-tool { padding:24px 18px; }
+    .pet-article-tool form,.pet-article-checklist__items { grid-template-columns:1fr; }
+    .pet-article-tool form button { grid-column:auto; }
+  }
+</style>

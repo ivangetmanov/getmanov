@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { JSDOM } from "jsdom";
 import { petSittingUnavailablePeriods } from "../src/data/pet-sitting-availability.mjs";
-import { billableStayDays, isDateUnavailable } from "../src/lib/pet-sitting-calendar.mjs";
+import { billableStayDays, isDateUnavailable, rangeHasUnavailable } from "../src/lib/pet-sitting-calendar.mjs";
 import {
   calculatePetSittingQuote,
   formatRussianStayDuration,
@@ -30,6 +30,10 @@ const pages = [
   { path: "en/novi-sad/pet-sitting/index.html", locale: "en", kind: "main" },
   { path: "en/novi-sad/pet-sitting/dogs/index.html", locale: "en", kind: "dogs" },
   { path: "en/novi-sad/pet-sitting/cats/index.html", locale: "en", kind: "cats" },
+  { path: "ru/novi-sad/pet-sitting/pet-sitter-vs-boarding/index.html", locale: "ru", kind: "main", articleSlug: "pet-sitter-vs-boarding" },
+  { path: "ru/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/index.html", locale: "ru", kind: "cats", articleSlug: "can-cat-stay-alone-for-a-week" },
+  { path: "ru/novi-sad/pet-sitting/prepare-dog-for-boarding/index.html", locale: "ru", kind: "dogs", articleSlug: "prepare-dog-for-boarding" },
+  { path: "ru/novi-sad/pet-sitting/prepare-cat-for-boarding/index.html", locale: "ru", kind: "cats", articleSlug: "prepare-cat-for-boarding" },
 ];
 
 assert.equal(billableStayDays("2026-08-29", "2026-08-30"), 2);
@@ -60,6 +64,25 @@ for (const [days, expected] of russianDurationExamples) {
 }
 assert.equal(isDateUnavailable("2026-08-28", petSittingUnavailablePeriods), false);
 assert.equal(isDateUnavailable("2026-09-07", petSittingUnavailablePeriods), false);
+assert.equal(rangeHasUnavailable("2026-08-28", "2026-08-29", petSittingUnavailablePeriods), true);
+assert.equal(rangeHasUnavailable("2026-09-07", "2026-09-10", petSittingUnavailablePeriods), false);
+
+async function sourceFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const path = `${directory}/${entry.name}`;
+    if (entry.isDirectory()) files.push(...await sourceFiles(path));
+    else if (/\.(?:astro|mjs|js|ts)$/.test(entry.name)) files.push(path);
+  }
+  return files;
+}
+const dateSourceDeclarations = [];
+for (const file of await sourceFiles(`${projectRoot}src`)) {
+  const source = await readFile(file, "utf8");
+  if (/export const petSittingUnavailablePeriods\s*=/.test(source)) dateSourceDeclarations.push(file);
+}
+assert.deepEqual(dateSourceDeclarations, [`${projectRoot}src/data/pet-sitting-availability.mjs`]);
 
 for (const key of blockedDates) {
   assert.equal(isDateUnavailable(key, petSittingUnavailablePeriods), true, `${key} should be unavailable`);
@@ -74,7 +97,12 @@ for (const page of pages) {
   const config = JSON.parse(calendar.getAttribute("data-pet-calendar"));
   assert.equal(config.locale, page.locale, `${page.path} should use the correct locale`);
   assert.equal(config.pageKind, page.kind, `${page.path} should use the correct page kind`);
-  assert.equal(config.sourcePage, petSittingBusiness.pagePaths[page.locale][page.kind]);
+  const expectedSourcePage = page.articleSlug
+    ? `/${page.path.replace(/index\.html$/, "")}`
+    : petSittingBusiness.pagePaths[page.locale][page.kind];
+  assert.equal(config.sourcePage, expectedSourcePage);
+  assert.equal(config.variant, page.articleSlug ? "compact" : "full");
+  assert.equal(config.articleSlug, page.articleSlug ?? "");
   assert.deepEqual(config.unavailablePeriods, petSittingUnavailablePeriods, `${page.path} should use shared unavailable dates`);
   for (const key of blockedDates) {
     assert.equal(isDateUnavailable(key, config.unavailablePeriods), true, `${key} should be blocked on ${page.path}`);
@@ -90,7 +118,7 @@ for (const page of pages) {
     page.locale === "en" ? "How are boarding days calculated?" : "Как считаются сутки?",
   );
 
-  const boardingDaysFaq = dom.window.document.querySelector("#boarding-days[open]");
+  const boardingDaysFaq = dom.window.document.querySelector(page.articleSlug ? "#boarding-days" : "#boarding-days[open]");
   const expectedFaqQuestion = page.locale === "en"
     ? "How are boarding days calculated?"
     : "Как считаются сутки передержки?";
@@ -114,10 +142,15 @@ for (const page of pages) {
     assert.ok(calendar.querySelector('a[href^="https://wa.me/381628426881"]'));
     assert.ok(calendar.querySelector('a[href^="viber://chat?number=%2B381628426881"]'));
   }
+  if (page.articleSlug) {
+    assert.ok(calendar.classList.contains("availability--compact"));
+    assert.ok(calendar.querySelector("[data-compact-enquiry-open][hidden]"));
+    assert.ok(calendar.querySelector("[data-inquiry-details][hidden]"));
+  }
 
   assert.equal(html.includes("PET_SITTING_TELEGRAM_BOT_TOKEN"), false);
   assert.equal(html.includes("PET_SITTING_TELEGRAM_CHAT_ID"), false);
-  if (page.kind === "main") {
+  if (!page.articleSlug && page.kind === "main") {
     assert.equal(dom.window.document.querySelector(".pet-hero img")?.getAttribute("src"), "/images/pet-sitting/main-hero.webp");
   }
 }
@@ -128,4 +161,4 @@ assert.match(calendarSource, /Предварительная стоимость:
 assert.doesNotMatch(calendarSource, /Estimated total:/);
 assert.doesNotMatch(calendarSource, /Итого:/);
 
-console.log(`Pet-sitting calendar checks passed for ${pages.length} pages.`);
+console.log(`Pet-sitting calendar checks passed for ${pages.length} full and compact instances.`);

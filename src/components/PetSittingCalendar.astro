@@ -1,13 +1,25 @@
 ---
 import { petSittingConfig, type PetSittingPageKind } from "../data/pet-sitting";
+import { petSittingBillingFaq } from "../data/pet-sitting-faq";
 import { petSittingBusiness } from "../lib/pet-sitting-business.mjs";
 
-const { locale = "ru", kind = "main" } = Astro.props as {
+const {
+  locale = "ru",
+  kind = "main",
+  variant = "full",
+  sourcePage,
+  articleSlug = "",
+} = Astro.props as {
   locale?: "ru" | "en";
   kind?: PetSittingPageKind;
+  variant?: "full" | "compact";
+  sourcePage?: string;
+  articleSlug?: string;
 };
 const isEnglish = locale === "en";
+const isCompact = variant === "compact";
 const defaultAnimal = kind === "cats" ? "cat" : "dog";
+const billingFaq = petSittingBillingFaq[locale];
 const phoneDigits = petSittingConfig.contactPhone.replace(/\D/g, "");
 const telegramDirectUrl = `https://t.me/${petSittingConfig.telegramUsername}`;
 const whatsappDirectUrl = `https://wa.me/${phoneDigits}`;
@@ -19,15 +31,17 @@ const config = {
   locale,
   pageKind: kind,
   pageLabel: petSittingBusiness.pageLabels[locale][kind],
-  sourcePage: petSittingBusiness.pagePaths[locale][kind],
+  sourcePage: sourcePage ?? petSittingBusiness.pagePaths[locale][kind],
+  variant,
+  articleSlug,
 };
 ---
 
-<section id="dates" class="availability" aria-labelledby="availability-title" data-pet-calendar={JSON.stringify(config)}>
+<section id={isCompact ? "article-availability" : "dates"} class:list={["availability", { "availability--compact": isCompact }]} aria-labelledby="availability-title" data-pet-calendar={JSON.stringify(config)}>
   <div class="availability__intro">
     <p class="eyebrow">{isEnglish ? "Availability" : "Календарь"}</p>
-    <h2 id="availability-title">{isEnglish ? "Check available dates" : "Проверить даты"}</h2>
-    <p>{isEnglish ? "Choose approximate dates for the stay. We update the calendar manually and will confirm availability in Telegram." : "Выберите примерные даты проживания. Календарь обновляем вручную: свободные даты окончательно подтвердим в Telegram."}</p>
+    <h2 id="availability-title">{isCompact ? isEnglish ? "Considering home boarding?" : "Рассматриваете передержку?" : isEnglish ? "Check available dates" : "Проверить даты"}</h2>
+    <p>{isCompact ? isEnglish ? "Choose your dates to check availability and see an estimated price." : "Выберите даты — сразу покажем, свободны ли они и сколько примерно будет стоить передержка." : isEnglish ? "Choose approximate dates for the stay. We update the calendar manually and will confirm availability in Telegram." : "Выберите примерные даты проживания. Календарь обновляем вручную: свободные даты окончательно подтвердим в Telegram."}</p>
   </div>
 
   <div class="calendar-panel">
@@ -47,42 +61,49 @@ const config = {
       <div class="inquiry-summary" data-inquiry-summary>{isEnglish ? "No dates selected yet." : "Даты пока не выбраны."}</div>
       <div class="inquiry-price" data-inquiry-price hidden aria-live="polite"></div>
       <a class="inquiry-price-help" data-inquiry-price-help href="#boarding-days" hidden>
-        {isEnglish ? "How are boarding days calculated?" : "Как считаются сутки?"}
+        {billingFaq.helpLabel}
       </a>
-      <label class="checkbox-label">
-        <input type="checkbox" name="flexible" />
-        <span>{isEnglish ? "Approximate dates — we can move them slightly" : "Даты примерные, можем немного сдвинуть"}</span>
-      </label>
-      <div class="inquiry-fields">
-        <label>{isEnglish ? "Pet" : "Питомец"}
-          <select name="animal">
-            <option value="dog" selected={defaultAnimal === "dog"}>{isEnglish ? "dog" : "собака"}</option>
-            <option value="cat" selected={defaultAnimal === "cat"}>{isEnglish ? "cat" : "кошка"}</option>
-          </select>
+      {isCompact && (
+        <button class="compact-enquiry-open" type="button" data-compact-enquiry-open hidden>
+          {isEnglish ? "Send an enquiry" : "Оставить заявку"}
+        </button>
+      )}
+      <div class="inquiry-details" data-inquiry-details hidden={isCompact}>
+        <label class="checkbox-label">
+          <input type="checkbox" name="flexible" />
+          <span>{isEnglish ? "Approximate dates — we can move them slightly" : "Даты примерные, можем немного сдвинуть"}</span>
         </label>
-        <label>{isEnglish ? "Number of pets" : "Количество"}
-          <select name="quantity">
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-        </label>
-        <label>{isEnglish ? "Your Telegram" : "Ваш Telegram"}
-          <input name="username" type="text" inputmode="text" autocomplete="username" placeholder="@username" pattern="@?[A-Za-z0-9_]{5,32}" required aria-describedby="telegram-help" />
-          <small id="telegram-help">{isEnglish ? "Anna needs this to reply quickly." : "Нужен, чтобы Анна могла быстро ответить."}</small>
-        </label>
-      </div>
-      <div class="inquiry-honeypot" aria-hidden="true">
-        <label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
-      </div>
-      <button class="enquiry-submit" type="submit" data-enquiry-submit disabled>{isEnglish ? "Send enquiry" : "Отправить заявку"}</button>
-      <p class="form-note" data-form-note role="status" aria-live="polite">{isEnglish ? "Choose dates and enter your Telegram username." : "Выберите даты и укажите Telegram username."}</p>
+        <div class="inquiry-fields">
+          <label>{isEnglish ? "Pet" : "Питомец"}
+            <select name="animal">
+              <option value="dog" selected={defaultAnimal === "dog"}>{isEnglish ? "dog" : "собака"}</option>
+              <option value="cat" selected={defaultAnimal === "cat"}>{isEnglish ? "cat" : "кошка"}</option>
+            </select>
+          </label>
+          <label>{isEnglish ? "Number of pets" : "Количество"}
+            <select name="quantity">
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+          </label>
+          <label>{isEnglish ? "Your Telegram" : "Ваш Telegram"}
+            <input name="username" type="text" inputmode="text" autocomplete="username" placeholder="@username" pattern="@?[A-Za-z0-9_]{5,32}" required aria-describedby="telegram-help" />
+            <small id="telegram-help">{isEnglish ? "Anna needs this to reply quickly." : "Нужен, чтобы Анна могла быстро ответить."}</small>
+          </label>
+        </div>
+        <div class="inquiry-honeypot" aria-hidden="true">
+          <label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+        </div>
+        <button class="enquiry-submit" type="submit" data-enquiry-submit disabled>{isEnglish ? "Send enquiry" : "Отправить заявку"}</button>
+        <p class="form-note" data-form-note role="status" aria-live="polite">{isEnglish ? "Choose dates and enter your Telegram username." : "Выберите даты и укажите Telegram username."}</p>
 
-      <div class="direct-contact" data-direct-contact-group>
-        <p>{isEnglish ? "Or message us directly" : "Или написать напрямую"}</p>
-        <div class="direct-contact__links">
-          <a href={telegramDirectUrl} data-direct-contact data-channel="telegram" target="_blank" rel="noreferrer">Telegram · @{petSittingConfig.telegramUsername}</a>
-          {isEnglish && <a href={whatsappDirectUrl} data-direct-contact data-channel="whatsapp" target="_blank" rel="noreferrer">WhatsApp</a>}
-          {isEnglish && <a href={viberDirectUrl} data-direct-contact data-channel="viber">Viber</a>}
+        <div class="direct-contact" data-direct-contact-group>
+          <p>{isEnglish ? "Or message us directly" : "Или написать напрямую"}</p>
+          <div class="direct-contact__links">
+            <a href={telegramDirectUrl} data-direct-contact data-channel="telegram" target="_blank" rel="noreferrer">Telegram · @{petSittingConfig.telegramUsername}</a>
+            {isEnglish && <a href={whatsappDirectUrl} data-direct-contact data-channel="whatsapp" target="_blank" rel="noreferrer">WhatsApp</a>}
+            {isEnglish && <a href={viberDirectUrl} data-direct-contact data-channel="viber">Viber</a>}
+          </div>
         </div>
       </div>
     </form>
@@ -90,7 +111,7 @@ const config = {
 </section>
 
 <script>
-  import { isDateUnavailable } from "../lib/pet-sitting-calendar.mjs";
+  import { isDateUnavailable, rangeHasUnavailable } from "../lib/pet-sitting-calendar.mjs";
   import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration } from "../lib/pet-sitting-business.mjs";
 
   const root = document.querySelector('[data-pet-calendar]');
@@ -105,6 +126,8 @@ const config = {
     const form = root.querySelector('[data-inquiry-form]');
     const formNote = root.querySelector('[data-form-note]');
     const submitButton = root.querySelector('[data-enquiry-submit]');
+    const inquiryDetails = root.querySelector('[data-inquiry-details]');
+    const compactOpenButton = root.querySelector('[data-compact-enquiry-open]');
     const telegramLink = root.querySelector('[data-channel="telegram"]');
     const whatsappLink = root.querySelector('[data-channel="whatsapp"]');
     const today = new Date();
@@ -119,6 +142,7 @@ const config = {
     let end = '';
     let submitting = false;
     let feedbackState = 'idle';
+    let availabilityTracked = false;
 
     function toKey(year, month, day) {
       return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -131,9 +155,6 @@ const config = {
       return isDateUnavailable(key, unavailable);
     }
     function isPast(key) { return key < todayKey; }
-    function rangeHasUnavailable(first, last) {
-      return unavailable.some((period) => period.from <= last && period.to >= first);
-    }
     function formatDate(key) {
       return new Intl.DateTimeFormat(isEnglish ? 'en-GB' : 'ru-RU', { day: 'numeric', month: 'long' }).format(fromKey(key));
     }
@@ -154,6 +175,7 @@ const config = {
       priceSummary.replaceChildren();
       priceSummary.hidden = !quote;
       priceHelp.hidden = !quote;
+      if (compactOpenButton && inquiryDetails.hidden) compactOpenButton.hidden = !quote;
       if (!quote) return;
 
       priceSummary.append(createPriceLine(
@@ -193,6 +215,8 @@ const config = {
       window.gtag('event', name, {
         source_page: settings.sourcePage,
         locale: settings.locale,
+        article_slug: settings.articleSlug || undefined,
+        tool_type: settings.variant === 'compact' ? 'compact_availability' : 'full_enquiry',
         ...parameters,
       });
     }
@@ -256,13 +280,17 @@ const config = {
     }
     function choose(key) {
       if (isPast(key) || isUnavailable(key)) return;
+      if (settings.variant === 'compact' && !availabilityTracked) {
+        availabilityTracked = true;
+        trackEvent('pet_sitting_article_availability_open');
+      }
       feedbackState = 'idle';
       if (!start || end || key < start) {
         start = key;
         end = '';
       } else if (key === start) {
         start = '';
-      } else if (rangeHasUnavailable(start, key)) {
+      } else if (rangeHasUnavailable(start, key, unavailable)) {
         status.textContent = isEnglish ? 'The selected range contains an unavailable date. Choose different dates.' : 'В выбранном диапазоне есть недоступная дата. Выберите другие даты.';
         return;
       } else {
@@ -308,6 +336,12 @@ const config = {
     form.addEventListener('input', () => {
       if (!submitting) feedbackState = 'idle';
       updateInquiry();
+    });
+    compactOpenButton?.addEventListener('click', () => {
+      compactOpenButton.hidden = true;
+      inquiryDetails.hidden = false;
+      trackEvent('pet_sitting_article_enquiry_start');
+      form.querySelector('[name="animal"]')?.focus();
     });
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -355,3 +389,99 @@ const config = {
     updateInquiry();
   }
 </script>
+
+<style is:global>
+  .availability {
+    --ink:#20332f;
+    --muted:#52645d;
+    --line:#d9e2dc;
+    --accent:#275f4b;
+    display:grid;
+    width:min(1160px,100%);
+    grid-template-columns:260px 1fr;
+    gap:38px;
+    align-items:start;
+    margin-inline:auto;
+    padding:72px 0;
+    border-top:1px solid var(--line);
+  }
+  .availability * { box-sizing:border-box;min-width:0; }
+  .availability .availability__intro h2 { margin:0;padding:0;border:0;font-size:38px;line-height:1.06;letter-spacing:-.04em; }
+  .availability__intro>p:not(.eyebrow) { color:var(--muted);line-height:1.5; }
+  .calendar-panel { display:grid;grid-template-columns:minmax(420px,1.15fr) minmax(260px,.85fr);gap:24px 30px;border-top:1px solid var(--ink);padding-top:18px; }
+  .calendar-panel__header { grid-column:1;display:flex;justify-content:space-between;gap:12px; }
+  .calendar-panel__header p { margin:4px 0 0;color:var(--muted);font-size:13px; }
+  .calendar-controls { display:flex;gap:6px; }
+  .calendar-nav { width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink);font:inherit;cursor:pointer; }
+  .calendar-nav:disabled { opacity:.3; }
+  .calendar-months { grid-column:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px; }
+  .calendar-month h3 { margin:0 0 9px;font-size:15px; }
+  .calendar-weekdays,.calendar-days { display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px; }
+  .calendar-weekdays span { color:var(--muted);font-size:10px;text-align:center; }
+  .calendar-days { margin-top:4px; }
+  .calendar-days button { width:100%;aspect-ratio:1;border:0;border-radius:5px;background:transparent;color:var(--ink);font:inherit;font-size:12px;cursor:pointer; }
+  .calendar-days button:hover:not(:disabled),.calendar-days button:focus-visible { outline:2px solid var(--accent);outline-offset:0; }
+  .calendar-days button:disabled { color:#b5bdb8;cursor:not-allowed; }
+  .calendar-days .is-unavailable { background:repeating-linear-gradient(-45deg,#efded9 0 3px,#faf6f1 3px 6px);color:#9d665d;text-decoration:line-through; }
+  .calendar-days .is-selected { background:var(--accent);color:#fff; }
+  .calendar-days .is-in-range { border-radius:0;background:#dbe9e0; }
+  .inquiry-form { position:relative;grid-column:2;grid-row:1 / span 2;display:grid;align-content:start;gap:13px;padding-left:28px;border-left:1px solid var(--line); }
+  .inquiry-summary { font-weight:750; }
+  .inquiry-price { display:grid;gap:3px;border:1px solid #cddcd3;border-radius:8px;padding:11px 12px;background:#f1f6f3; }
+  .inquiry-price[hidden],.inquiry-price-help[hidden],.compact-enquiry-open[hidden],.inquiry-details[hidden] { display:none; }
+  .inquiry-price p { margin:0;color:var(--muted);font-size:12px;line-height:1.4; }
+  .inquiry-price .inquiry-price__duration,.inquiry-price .inquiry-price__total { color:var(--ink);font-weight:800; }
+  .inquiry-price-help { width:max-content;max-width:100%;margin-top:-7px;color:var(--accent);font-size:12px;font-weight:700;text-underline-offset:3px; }
+  .inquiry-details { display:grid;gap:13px; }
+  .checkbox-label { display:flex;align-items:flex-start;gap:8px;font-size:13px; }
+  .checkbox-label input { margin-top:3px; }
+  .inquiry-fields { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+  .inquiry-fields label { display:grid;gap:4px;color:var(--muted);font-size:12px; }
+  .inquiry-fields label:last-child { grid-column:1 / -1; }
+  .inquiry-fields select,.inquiry-fields input { width:100%;min-height:39px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);padding:7px 9px;font:inherit; }
+  .inquiry-fields small,.form-note { color:var(--muted);font-size:11px; }
+  .inquiry-honeypot { position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden; }
+  .enquiry-submit,.compact-enquiry-open { display:inline-flex;width:100%;min-height:43px;align-items:center;justify-content:center;border:0;border-radius:7px;background:var(--accent);color:#fff;font:inherit;font-weight:750;cursor:pointer; }
+  .enquiry-submit:disabled { opacity:.45;cursor:not-allowed; }
+  .form-note { min-height:16px;margin:0;line-height:1.45; }
+  .form-note.is-success { color:#276845;font-weight:750; }
+  .form-note.is-error { color:#9d463c;font-weight:750; }
+  .direct-contact { display:grid;gap:7px;border-top:1px solid var(--line);padding-top:12px; }
+  .direct-contact p { margin:0;color:var(--muted);font-size:12px; }
+  .direct-contact__links { display:flex;flex-wrap:wrap;gap:6px 12px; }
+  .direct-contact__links a { font-size:12px;font-weight:750;text-underline-offset:3px; }
+  .availability--compact { display:block;width:100%;margin:5rem 0 0;padding:32px;border:1px solid var(--line);border-radius:22px;background:#f7faf7; }
+  .availability--compact .availability__intro { max-width:700px;margin-bottom:26px; }
+  .availability--compact .availability__intro h2 { font-size:clamp(29px,4vw,40px); }
+  .availability--compact .calendar-panel { grid-template-columns:minmax(300px,1fr) minmax(240px,.8fr); }
+  .availability--compact .calendar-months { grid-template-columns:1fr; }
+  .availability--compact .calendar-month:nth-child(2) { display:none; }
+  @media (max-width:1024px) {
+    .availability:not(.availability--compact) { grid-template-columns:210px 1fr;gap:26px; }
+    .calendar-panel { grid-template-columns:1fr 245px; }
+    .calendar-months { grid-template-columns:1fr; }
+    .calendar-month:nth-child(2) { display:none; }
+  }
+  @media (max-width:780px) {
+    .availability:not(.availability--compact) { grid-template-columns:1fr;padding-block:54px; }
+    .calendar-panel { grid-template-columns:1fr 240px; }
+    .calendar-months { grid-template-columns:1fr; }
+    .calendar-month:nth-child(2) { display:none; }
+    .availability--compact { padding:24px 20px; }
+    .availability--compact .calendar-panel { grid-template-columns:1fr; }
+    .availability--compact .inquiry-form { grid-column:1;grid-row:auto;padding:20px 0 0;border-top:1px solid var(--line);border-left:0; }
+  }
+  @media (max-width:600px) {
+    .calendar-panel { display:block; }
+    .calendar-panel__header { margin-bottom:16px; }
+    .calendar-months { margin-bottom:22px; }
+    .inquiry-form { margin-top:22px;padding:20px 0 0;border-top:1px solid var(--line);border-left:0; }
+    .inquiry-fields { grid-template-columns:1fr 1fr; }
+    .availability--compact { margin-inline:0;padding:22px 16px; }
+  }
+  @media (max-width:350px) {
+    .calendar-panel__header { align-items:flex-start; }
+    .inquiry-fields { grid-template-columns:1fr; }
+    .inquiry-fields label:last-child { grid-column:auto; }
+  }
+</style>

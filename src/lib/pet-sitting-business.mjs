@@ -24,7 +24,30 @@ export const petSittingBusiness = {
     ru: { main: "Домашняя передержка", dogs: "Передержка собак", cats: "Передержка кошек" },
     en: { main: "Pet boarding", dogs: "Dog boarding", cats: "Cat boarding" },
   },
+  articlePaths: {
+    ru: {
+      main: ["/ru/novi-sad/pet-sitting/pet-sitter-vs-boarding/"],
+      dogs: ["/ru/novi-sad/pet-sitting/prepare-dog-for-boarding/"],
+      cats: [
+        "/ru/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/",
+        "/ru/novi-sad/pet-sitting/prepare-cat-for-boarding/",
+      ],
+    },
+    en: {
+      main: ["/en/novi-sad/pet-sitting/pet-sitter-vs-boarding/"],
+      dogs: ["/en/novi-sad/pet-sitting/prepare-dog-for-boarding/"],
+      cats: [
+        "/en/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/",
+        "/en/novi-sad/pet-sitting/prepare-cat-for-boarding/",
+      ],
+    },
+  },
 };
+
+export function isAllowedPetSittingSourcePage(locale, pageKind, sourcePage) {
+  if (sourcePage === petSittingBusiness.pagePaths[locale]?.[pageKind]) return true;
+  return petSittingBusiness.articlePaths[locale]?.[pageKind]?.includes(sourcePage) ?? false;
+}
 
 export function formatRsd(amount, locale = "ru") {
   const separator = locale === "en" ? "," : " ";
