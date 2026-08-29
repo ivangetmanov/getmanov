@@ -5,12 +5,13 @@
 
   if (!article || !progressBar || !tocList) return;
 
+  const headingRoot = article.querySelector(":scope > .pet-article") || article;
   let headings = [
-    ...article.querySelectorAll(":scope > h2, :scope > h3"),
+    ...headingRoot.querySelectorAll(":scope > h2, :scope > h3"),
   ];
 
   if (!headings.length) {
-    const fallbackLabels = [...article.querySelectorAll(":scope > p")].filter(
+    const fallbackLabels = [...headingRoot.querySelectorAll(":scope > p")].filter(
       (paragraph) =>
         paragraph.children.length === 1 &&
         paragraph.firstElementChild?.tagName === "STRONG" &&
@@ -18,7 +19,7 @@
     );
 
     headings = [
-      ...article.querySelectorAll(":scope > h1"),
+      ...headingRoot.querySelectorAll(":scope > h1"),
       ...fallbackLabels,
     ].sort((first, second) =>
       first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING

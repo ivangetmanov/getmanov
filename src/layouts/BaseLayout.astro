@@ -93,10 +93,25 @@ const b2bSeoGuides = [
 const currentPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`;
+const petSittingArticleMatch = currentPath.match(
+  /^\/(ru|en)\/novi-sad\/pet-sitting\/([^/]+)\/$/,
+);
+const isPetSittingArticle = Boolean(
+  petSittingArticleMatch && !["cats", "dogs"].includes(petSittingArticleMatch[2]),
+);
+const petArticleLocale = petSittingArticleMatch?.[1] === "ru" ? "ru" : "en";
+const petArticleSlug = petSittingArticleMatch?.[2] ?? "";
+const petArticleServiceKind = petArticleSlug.includes("cat")
+  ? "cats"
+  : petArticleSlug.includes("dog")
+    ? "dogs"
+    : "";
+const petArticleServicePath = `/${petArticleLocale}/novi-sad/pet-sitting/${petArticleServiceKind ? `${petArticleServiceKind}/` : ""}`;
 const hasArticleNavigation =
   (currentPath.startsWith("/notes/") && currentPath !== "/notes/") ||
   (currentPath.startsWith("/case-studies/") &&
-    currentPath !== "/case-studies/");
+    currentPath !== "/case-studies/") ||
+  isPetSittingArticle;
 const b2bSeoPaths = new Set([
   b2bSeoCase.href,
   ...b2bSeoGuides.map((guide) => guide.href),
@@ -109,7 +124,21 @@ const articleCta = hasB2BSeoMap
       title: "Try the SEO ROI Calculator",
       description: "Estimate CAC, LTV, payback, and ROI with your own numbers.",
     }
-  : currentPath.startsWith("/notes/")
+  : isPetSittingArticle
+    ? petArticleLocale === "ru"
+      ? {
+          href: petArticleServicePath,
+          eyebrow: "Домашняя передержка",
+          title: petArticleServiceKind === "cats" ? "Передержка кошек" : petArticleServiceKind === "dogs" ? "Передержка собак" : "Передержка в Нови-Саде",
+          description: "Условия, свободные даты, цены и реальные фото гостей.",
+        }
+      : {
+          href: petArticleServicePath,
+          eyebrow: "Home boarding",
+          title: petArticleServiceKind === "cats" ? "Cat boarding" : petArticleServiceKind === "dogs" ? "Dog boarding" : "Pet boarding in Novi Sad",
+          description: "See availability, pricing, conditions, and real guest media.",
+        }
+    : currentPath.startsWith("/notes/")
     ? {
         href: "/tools/session-saver/",
         eyebrow: "Free browser tool",
@@ -307,14 +336,14 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
                 loading="eager"
               />
               <span>
-                <small>Written by</small>
+                <small>{lang === "ru" ? "Автор" : "Written by"}</small>
                 <strong>Ivan Getmanov</strong>
               </span>
             </a>
 
             <nav>
               <p id="article-toc-title" class="article-toc__title">
-                Table of contents
+                {lang === "ru" ? "Содержание" : "Table of contents"}
               </p>
               <ol class="article-toc__list"></ol>
             </nav>
@@ -324,7 +353,7 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
                 <small>{articleCta.eyebrow}</small>
                 <strong>{articleCta.title}</strong>
                 <span>{articleCta.description}</span>
-                <b aria-hidden="true">Open tool →</b>
+                <b aria-hidden="true">{isPetSittingArticle ? lang === "ru" ? "Посмотреть условия →" : "View boarding details →" : "Open tool →"}</b>
               </a>
             )}
           </aside>

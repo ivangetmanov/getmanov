@@ -1,0 +1,406 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import { petSittingArticleGuides } from "../data/pet-sitting";
+
+const frontmatter = Astro.props.frontmatter ?? {};
+const locale = frontmatter.locale === "ru" ? "ru" : "en";
+const isRussian = locale === "ru";
+const canonical = frontmatter.canonical ?? Astro.url.pathname;
+const canonicalUrl = new URL(canonical, "https://getmanov.com").href;
+const alternatePath = frontmatter.alternate;
+const alternateLocale = isRussian ? "en" : "ru";
+const faqItems = frontmatter.faq ?? [];
+const servicePath = frontmatter.servicePath ?? `/${locale}/novi-sad/pet-sitting/`;
+const serviceName = isRussian ? "Передержка животных в Нови-Саде" : "Pet boarding in Novi Sad";
+const datePublished = frontmatter.datePublished ?? "2026-08-29";
+const dateModified = frontmatter.dateModified ?? datePublished;
+
+const articleSchema = {
+  "@type": "Article",
+  "@id": `${canonicalUrl}#article`,
+  headline: frontmatter.title,
+  description: frontmatter.description,
+  inLanguage: locale,
+  url: canonicalUrl,
+  mainEntityOfPage: canonicalUrl,
+  ...(frontmatter.heroImage
+    ? { image: new URL(frontmatter.heroImage, "https://getmanov.com").href }
+    : {}),
+  datePublished,
+  dateModified,
+  author: {
+    "@type": "Person",
+    name: "Ivan Getmanov",
+    url: "https://getmanov.com/",
+  },
+  publisher: {
+    "@type": "Person",
+    name: "Ivan Getmanov",
+    url: "https://getmanov.com/",
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    articleSchema,
+    ...(faqItems.length
+      ? [{
+          "@type": "FAQPage",
+          "@id": `${canonicalUrl}#faq`,
+          mainEntity: faqItems.map((item: { question: string; answer: string }) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.answer,
+            },
+          })),
+        }]
+      : []),
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalUrl}#breadcrumbs`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: isRussian ? "Главная" : "Home",
+          item: "https://getmanov.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: serviceName,
+          item: new URL(servicePath, "https://getmanov.com").href,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: frontmatter.title,
+          item: canonicalUrl,
+        },
+      ],
+    },
+  ],
+};
+
+const articleGuides = petSittingArticleGuides.map((guide) => isRussian ? guide.ru : guide.en);
+const relatedGuides = articleGuides.filter((guide) => guide.href !== canonical);
+const alternates = alternatePath
+  ? [
+      { hreflang: locale, href: canonical },
+      { hreflang: alternateLocale, href: alternatePath },
+      { hreflang: "x-default", href: isRussian ? alternatePath : canonical },
+    ]
+  : [];
+---
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  canonical={canonical}
+  lang={locale}
+  alternates={alternates}
+  structuredData={structuredData}
+>
+  <div class="pet-article">
+    <div class="pet-article__topline">
+      <nav class="pet-article__breadcrumbs" aria-label={isRussian ? "Навигация" : "Breadcrumbs"}>
+        <a href={servicePath}>{serviceName}</a>
+        <span aria-hidden="true">/</span>
+        <span>{isRussian ? "Гайд" : "Guide"}</span>
+      </nav>
+      {alternatePath && (
+        <a class="pet-article__locale" href={alternatePath} hreflang={alternateLocale}>
+          {isRussian ? "EN" : "RU"}
+        </a>
+      )}
+    </div>
+
+    <slot />
+
+    <aside class="pet-article__service" aria-labelledby="pet-service-title">
+      <div>
+        <p>{isRussian ? "Домашняя передержка в Петроварадине" : "Home boarding in Petrovaradin"}</p>
+        <h2 id="pet-service-title">
+          {isRussian ? "Посмотрите условия и свободные даты" : "Check conditions and available dates"}
+        </h2>
+      </div>
+      <a href={servicePath}>{isRussian ? "Перейти к передержке" : "View boarding details"}<span aria-hidden="true">→</span></a>
+    </aside>
+
+    <aside class="pet-article__related" aria-labelledby="pet-related-title">
+      <p>{isRussian ? "Другие полезные гайды" : "Related practical guides"}</p>
+      <h2 id="pet-related-title">{isRussian ? "Подготовьтесь к передержке" : "Prepare for the stay"}</h2>
+      <nav>
+        {relatedGuides.map((guide) => (
+          <a href={guide.href}><span>{guide.title}</span><b aria-hidden="true">→</b></a>
+        ))}
+      </nav>
+    </aside>
+  </div>
+</BaseLayout>
+
+<script>
+  const videoFigures = document.querySelectorAll<HTMLElement>(".pet-article-video[data-video-id]");
+
+  videoFigures.forEach((figure) => {
+    const videoId = figure.dataset.videoId;
+    const fallbackLink = figure.querySelector<HTMLAnchorElement>("a[href]");
+    if (!videoId || !/^[A-Za-z0-9_-]{6,}$/.test(videoId) || !fallbackLink) return;
+
+    const title = fallbackLink.textContent?.trim() || "YouTube video";
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "pet-article-video__poster";
+    button.dataset.videoLoad = "";
+    button.dataset.videoId = videoId;
+    button.setAttribute("aria-label", title);
+
+    const thumbnail = document.createElement("img");
+    thumbnail.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    thumbnail.alt = "";
+    thumbnail.width = 480;
+    thumbnail.height = 360;
+    thumbnail.loading = "lazy";
+
+    const play = document.createElement("span");
+    play.className = "pet-article-video__play";
+    play.setAttribute("aria-hidden", "true");
+    play.textContent = "▶";
+
+    button.append(thumbnail, play);
+    fallbackLink.replaceWith(button);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+    const trigger = event.target.closest<HTMLButtonElement>("[data-video-load]");
+    if (!trigger?.dataset.videoId) return;
+
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube-nocookie.com/embed/${trigger.dataset.videoId}`;
+    iframe.title = trigger.getAttribute("aria-label") || "YouTube video";
+    iframe.loading = "lazy";
+    iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    trigger.replaceWith(iframe);
+
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "pet_article_video_play", {
+        source_page: window.location.pathname,
+        video_id: trigger.dataset.videoId,
+      });
+    }
+  });
+</script>
+
+<style is:global>
+  .prose:has(.pet-article) {
+    color:#263b35;
+    font-size:18px;
+    line-height:1.72;
+  }
+  .pet-article {
+    --pet-ink:#263b35;
+    --pet-muted:#5c6f68;
+    --pet-line:#dbe4de;
+    --pet-accent:#24634e;
+    --pet-paper:#f5f7f3;
+  }
+  .pet-article__topline {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    margin:4px 0 34px;
+    color:var(--pet-muted);
+    font-size:13px;
+  }
+  .pet-article__breadcrumbs { display:flex;align-items:center;gap:9px; }
+  .pet-article__breadcrumbs a { color:var(--pet-accent);font-weight:750; }
+  .pet-article__locale {
+    border:1px solid var(--pet-line);
+    border-radius:999px;
+    padding:5px 10px;
+    color:var(--pet-accent);
+    font-size:12px;
+    font-weight:850;
+    letter-spacing:.08em;
+    text-decoration:none;
+  }
+  .pet-article > h1 {
+    max-width:760px;
+    margin:0 0 28px;
+    color:var(--pet-ink);
+    font-size:clamp(42px,6.2vw,70px);
+    line-height:1.02;
+    letter-spacing:-.05em;
+    text-wrap:balance;
+  }
+  .pet-article > h1 + p {
+    margin-top:0;
+    color:#425951;
+    font-size:clamp(20px,2.5vw,25px);
+    line-height:1.5;
+  }
+  .pet-article h2 {
+    margin-top:4.5rem;
+    padding-top:2rem;
+    border-top:1px solid var(--pet-line);
+    color:var(--pet-ink);
+    font-size:clamp(29px,4vw,42px);
+    letter-spacing:-.035em;
+  }
+  .pet-article h3 {
+    margin-top:2.8rem;
+    color:var(--pet-ink);
+    font-size:clamp(22px,3vw,28px);
+    letter-spacing:-.02em;
+  }
+  .pet-article strong { color:#183f33; }
+  .pet-article table {
+    border:1px solid var(--pet-line);
+    border-radius:14px;
+    background:#fff;
+  }
+  .pet-article th { background:#eaf1ed; }
+  .pet-article blockquote {
+    margin:2rem 0;
+    padding:18px 22px;
+    border:0;
+    border-radius:14px;
+    background:#edf3ef;
+    color:#315347;
+    font-size:20px;
+    font-weight:680;
+  }
+  .pet-article-media {
+    width:min(560px,100%);
+    margin:34px auto 42px;
+    padding:0;
+  }
+  .pet-article-media img,
+  .pet-article-video__poster,
+  .pet-article-video iframe {
+    display:block;
+    width:100%;
+    margin:0;
+    border:0;
+    border-radius:20px;
+    background:#e7ece8;
+    box-shadow:0 20px 52px rgba(38,59,53,.13);
+  }
+  .pet-article-media > img { max-height:720px;object-fit:cover; }
+  .pet-article-media figcaption {
+    margin-top:11px;
+    color:var(--pet-muted);
+    font-size:14px;
+    line-height:1.45;
+    text-align:center;
+  }
+  .pet-article-video { width:min(430px,100%); }
+  .pet-article-video__poster,
+  .pet-article-video iframe { aspect-ratio:9/16; }
+  .pet-article-video__poster {
+    position:relative;
+    overflow:hidden;
+    padding:0;
+    cursor:pointer;
+  }
+  .pet-article-video__poster img { width:100%;height:100%;object-fit:cover; }
+  .pet-article-video__poster::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,transparent 55%,rgba(19,40,33,.32));
+  }
+  .pet-article-video__play {
+    position:absolute;
+    z-index:1;
+    top:50%;
+    left:50%;
+    display:grid;
+    width:64px;
+    height:64px;
+    place-items:center;
+    border-radius:50%;
+    background:#fff;
+    color:var(--pet-accent);
+    font-size:22px;
+    box-shadow:0 10px 30px rgba(18,43,35,.25);
+    transform:translate(-50%,-50%);
+    transition:transform 180ms ease;
+  }
+  .pet-article-video__poster:hover .pet-article-video__play,
+  .pet-article-video__poster:focus-visible .pet-article-video__play { transform:translate(-50%,-50%) scale(1.08); }
+  .pet-article-video__poster:focus-visible { outline:3px solid var(--pet-accent);outline-offset:4px; }
+  .pet-article__service {
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:30px;
+    align-items:center;
+    margin-top:5rem;
+    padding:30px;
+    border-radius:22px;
+    background:var(--pet-ink);
+    color:#fff;
+  }
+  .pet-article__service p,
+  .pet-article__related > p {
+    margin:0 0 7px;
+    color:#a9cfbf;
+    font-size:11px;
+    font-weight:850;
+    letter-spacing:.11em;
+    text-transform:uppercase;
+  }
+  .pet-article__service h2,
+  .pet-article__related h2 {
+    margin:0;
+    padding:0;
+    border:0;
+    color:inherit;
+    font-size:clamp(27px,3.6vw,38px);
+  }
+  .pet-article__service > a {
+    display:flex;
+    align-items:center;
+    gap:20px;
+    border-radius:10px;
+    padding:13px 16px;
+    background:#fff;
+    color:var(--pet-ink);
+    font-size:15px;
+    font-weight:800;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+  .pet-article__related { margin-top:4rem;padding-top:2rem;border-top:1px solid var(--pet-line); }
+  .pet-article__related > p { color:var(--pet-accent); }
+  .pet-article__related nav { display:grid;margin-top:24px;border-top:1px solid var(--pet-line); }
+  .pet-article__related nav a {
+    display:flex;
+    justify-content:space-between;
+    gap:24px;
+    border-bottom:1px solid var(--pet-line);
+    padding:16px 2px;
+    color:var(--pet-ink);
+    font-weight:740;
+    text-decoration:none;
+  }
+  .pet-article__related nav a:hover { color:var(--pet-accent);opacity:1; }
+  @media (max-width:600px) {
+    .pet-article__topline { align-items:flex-start;margin-bottom:26px; }
+    .pet-article__breadcrumbs { flex-wrap:wrap; }
+    .pet-article > h1 { font-size:clamp(36px,11vw,49px); }
+    .pet-article h2 { margin-top:3.6rem; }
+    .pet-article-media { width:min(470px,100%); }
+    .pet-article__service { grid-template-columns:1fr;padding:24px 20px; }
+    .pet-article__service > a { justify-content:space-between;white-space:normal; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .pet-article-video__play { transition:none; }
+  }
+</style>

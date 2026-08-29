@@ -147,6 +147,65 @@ export const petSittingPagesEn: typeof petSittingPages = {
   },
 };
 
+export const petSittingArticleGuides = [
+  {
+    slug: "pet-sitter-vs-boarding",
+    kinds: ["main", "dogs", "cats"] as PetSittingPageKind[],
+    ru: {
+      href: "/ru/novi-sad/pet-sitting/pet-sitter-vs-boarding/",
+      title: "Петситтер, домашняя передержка или зоогостиница",
+      description: "Сравниваем четыре формата ухода за питомцем на время поездки.",
+    },
+    en: {
+      href: "/en/novi-sad/pet-sitting/pet-sitter-vs-boarding/",
+      title: "Pet sitter, home boarding, or pet hotel",
+      description: "Compare four care arrangements for your pet while you are away.",
+    },
+  },
+  {
+    slug: "can-cat-stay-alone-for-a-week",
+    kinds: ["main", "cats"] as PetSittingPageKind[],
+    ru: {
+      href: "/ru/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/",
+      title: "Можно ли оставить кошку одну на неделю",
+      description: "Визиты, ситтер с проживанием или домашняя передержка.",
+    },
+    en: {
+      href: "/en/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/",
+      title: "Can a cat stay alone for a week?",
+      description: "Compare visits, a live-in sitter, and home boarding.",
+    },
+  },
+  {
+    slug: "prepare-dog-for-boarding",
+    kinds: ["main", "dogs"] as PetSittingPageKind[],
+    ru: {
+      href: "/ru/novi-sad/pet-sitting/prepare-dog-for-boarding/",
+      title: "Как подготовить собаку к передержке",
+      description: "Режим, корм, прогулки, знакомые вещи и пробный визит.",
+    },
+    en: {
+      href: "/en/novi-sad/pet-sitting/prepare-dog-for-boarding/",
+      title: "How to prepare a dog for boarding",
+      description: "Routines, food, walks, familiar belongings, and a trial visit.",
+    },
+  },
+  {
+    slug: "prepare-cat-for-boarding",
+    kinds: ["main", "cats"] as PetSittingPageKind[],
+    ru: {
+      href: "/ru/novi-sad/pet-sitting/prepare-cat-for-boarding/",
+      title: "Как подготовить кошку к передержке",
+      description: "Корм, лоток, наполнитель, знакомые вещи и спокойная адаптация.",
+    },
+    en: {
+      href: "/en/novi-sad/pet-sitting/prepare-cat-for-boarding/",
+      title: "How to prepare a cat for boarding",
+      description: "Food, litter, familiar belongings, and a quiet adaptation plan.",
+    },
+  },
+] as const;
+
 export const telegramUrl = (text = "") => {
   if (!petSittingConfig.telegramUsername) return "";
   const base = `https://t.me/${petSittingConfig.telegramUsername}`;

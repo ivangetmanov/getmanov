@@ -8,7 +8,8 @@
     "check:links": "node scripts/check-site-links.mjs",
     "check:pet-calendar": "node scripts/check-pet-sitting-calendar.mjs",
     "check:pet-inquiry": "node scripts/check-pet-sitting-inquiry.mjs",
-    "verify": "npm run build && npm run check:links && npm run check:pet-calendar && npm run check:pet-inquiry"
+    "check:pet-articles": "node scripts/check-pet-sitting-articles.mjs",
+    "verify": "npm run build && npm run check:links && npm run check:pet-calendar && npm run check:pet-inquiry && npm run check:pet-articles"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.0.0",

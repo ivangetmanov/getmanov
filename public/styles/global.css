@@ -125,11 +125,12 @@ a:hover{opacity:.85}
 }
 .article-toc__title{
   position:sticky;
-  z-index:1;
+  z-index:3;
   top:0;
-  margin:0 0 16px;
-  padding:0 10px 8px;
-  background:linear-gradient(#fff 75%,rgba(255,255,255,0));
+  margin:0 0 10px;
+  padding:0 10px 11px;
+  background:#fff;
+  box-shadow:0 10px 14px -14px rgba(23,33,30,.45);
   color:#17211e;
   font-size:13px;
   font-weight:850;
