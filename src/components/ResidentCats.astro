@@ -1,14 +1,14 @@
 ---
 import { petSittingConfig } from "../data/pet-sitting";
 
-const { compact = false } = Astro.props as { compact?: boolean };
+const { compact = false, note = "Вашему питомцу совершенно не обязательно с ними дружить.", showSeparationNote = true } = Astro.props as { compact?: boolean; note?: string; showSeparationNote?: boolean };
 ---
 
 <section class:list={["resident-section", { "resident-section--compact": compact }]} id="resident-cats">
   <div class="resident-intro">
     <p class="eyebrow">Наши коты</p>
-    <h2>Дружить с ними необязательно</h2>
-    <p>Обоим около четырёх лет, оба жили рядом с собаками и другими кошками. Важно не дружить, а спокойно жить в одном доме — вместе или в разных комнатах.</p>
+    <h2>Наши коты</h2>
+    <p>Оба уже жили и с другими кошками, и с собаками.</p>
   </div>
   <div class="resident-pair">
     {petSittingConfig.residentCats.map((cat, index) => (
@@ -25,4 +25,5 @@ const { compact = false } = Astro.props as { compact?: boolean };
       </figure>
     ))}
   </div>
+  <p class="resident-note"><strong>{note}</strong>{showSeparationNote && " Если кому-то комфортнее жить отдельно — у нас есть возможность животных разделить."}</p>
 </section>
