@@ -34,8 +34,8 @@ export const petSittingConfig = {
     },
   ],
   heroPhotos: {
-    main: "",
-    dogs: "",
+    main: "/images/pet-sitting/cat-guest-01.webp",
+    dogs: "/images/pet-sitting/dog-guest-02.webp",
     cats: "/images/pet-sitting/cats-hero.webp",
   } as Record<PetSittingPageKind, string>,
   guestPhotos: [

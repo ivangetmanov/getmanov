@@ -19,6 +19,11 @@ const isDogs = kind === "dogs";
 const isCats = kind === "cats";
 const priceLabel = isCats ? "от 1 500 RSD в сутки" : "От 1 500 RSD в сутки";
 const heroPhoto = petSittingConfig.heroPhotos[kind];
+const videoLabel = isDogs
+  ? "Видео с собакой на домашней передержке"
+  : isCats
+    ? "Видео с кошкой на домашней передержке"
+    : "Видео с питомцем на домашней передержке";
 const related = (["main", "dogs", "cats"] as PetSittingPageKind[]).filter(
   (item) => item !== kind,
 );
@@ -112,19 +117,24 @@ const structuredData = [
         </div>
       </div>
       <div class="hero-media">
-        {heroPhoto ? (
-          <img src={heroPhoto} alt={isDogs ? "Собака на домашней передержке" : isCats ? "Кошка на домашней передержке" : "Питомец на домашней передержке"} width="1200" height="900" />
-        ) : (
-          <div class="media-placeholder">
-            <span>Место для реальной фотографии</span>
-            <small>{isDogs ? "собаки-гостя" : isCats ? "кошки-гостя" : "питомца или квартиры"}</small>
-          </div>
-        )}
+        <img src={heroPhoto} alt={isDogs ? "Собака на домашней передержке" : isCats ? "Кошка на домашней передержке" : "Питомец на домашней передержке"} width="1200" height="900" />
       </div>
     </section>
 
     {isMain && (
       <>
+        <section class="early-media">
+          <div>
+            <h2>Как питомцы живут у нас</h2>
+            <p>Для нас это вообще важная часть передержки.</p>
+            <p>Когда оставляешь животное у других людей, сообщение «всё хорошо» — это одно. А когда видишь, как оно ест, спит, гуляет, валяется на диване или уже освоилось и занимается своими делами, — совсем другое.</p>
+            <p>Поэтому будем регулярно присылать вам фото и видео.</p>
+          </div>
+          <PetMedia photos={photos} videos={videos} label="гостей" videoLabel={videoLabel} />
+        </section>
+        <PetSittingCalendar />
+        <PetPricing />
+
         <section class="routine-section">
           <div><h2>Не гостиница с одним режимом для всех</h2></div>
           <div class="routine-copy">
@@ -148,27 +158,20 @@ const structuredData = [
         </section>
 
         <ResidentCats />
-        <section class="early-media">
-          <div>
-            <h2>Как питомцы живут у нас</h2>
-            <p>Для нас это вообще важная часть передержки.</p>
-            <p>Когда оставляешь животное у других людей, сообщение «всё хорошо» — это одно. А когда видишь, как оно ест, спит, гуляет, валяется на диване или уже освоилось и занимается своими делами, — совсем другое.</p>
-            <p>Поэтому будем регулярно присылать вам фото и видео.</p>
-          </div>
-          <PetMedia photos={photos} videos={videos} label="гостей" />
-        </section>
 
         <section class="intro-section">
           <div><h2>Сначала можно познакомиться</h2><p>Перед первой передержкой можно бесплатно прийти к нам домой примерно на полчаса.</p><p>Вы познакомитесь с нами, посмотрите квартиру, питомец всё понюхает и осмотрится, а мы посмотрим, как все друг на друга реагируют.</p><p>Если хочется проверить чуть серьёзнее, можно оставить собаку или кошку <strong>тестово на несколько часов — 1 000 RSD</strong>.</p></div>
           <div><h2>Что взять с собой</h2><p>Всё, что помогает питомцу жить примерно так же, как дома.</p><p>Корм, миски, поводок, переноску, лекарства, игрушки, любимую лежанку — если она ему нужна. Для кошки можно привезти привычный лоток и наполнитель.</p><p>Если есть какой-нибудь особенный ритуал, режим или странная привычка — просто расскажите нам.</p></div>
         </section>
-        <PetSittingCalendar />
-        <PetPricing />
       </>
     )}
 
     {isDogs && (
       <>
+        <section class="early-media"><div><h2>Фото и видео каждый день</h2><p>Будем показывать вам не только парадное «всё хорошо», а нормальную жизнь собаки у нас.</p><p>Прогулки, сон, игры, валяние на диване, знакомство с котами — то, что реально происходит.</p></div><PetMedia photos={photos} videos={videos} label="собак-гостей" videoLabel={videoLabel} /></section>
+        <PetSittingCalendar />
+        <PetPricing />
+
         <section class="species-intro dog-routine">
           <div><h2>Не будем переучивать вашу собаку за неделю</h2></div>
           <div><p>Передержка — не самое подходящее время внезапно вводить новые правила.</p><p>Поэтому сначала мы спрашиваем, <strong>как собака живёт дома</strong>, и стараемся делать примерно так же.</p><p>Сколько прогулок? Когда еда? Где спит? Можно ли на диван? Нормально ли остаётся одна?</p><p>Если какой-то режим для неё важен — лучше просто рассказать нам заранее.</p></div>
@@ -191,14 +194,15 @@ const structuredData = [
           <p>Если хочется проверить именно пребывание без хозяина, можно оставить её <strong>на несколько часов за 1 000 RSD</strong>.</p>
         </section>
         <section class="intro-section"><div><h2>Гуляем столько, сколько собака привыкла</h2><p>Не будет правила «всем собакам две прогулки по двадцать минут».</p><p>Если ваша собака привыкла к определённому графику — расскажите нам, и будем его соблюдать настолько близко, насколько можем.</p><p>То же самое с кормлением, лекарствами и другими привычными вещами.</p></div><div><h2>Можно на кровать?</h2><p>Да.</p><p>Если собака дома спит на лежанке — можно привезти её лежанку.</p><p>Если привыкла лежать на диване — пожалуйста.</p><p>Если привыкла спать с человеком на кровати — у нас нет принципиального запрета и на это.</p></div></section>
-        <section class="early-media"><div><h2>Фото и видео каждый день</h2><p>Будем показывать вам не только парадное «всё хорошо», а нормальную жизнь собаки у нас.</p><p>Прогулки, сон, игры, валяние на диване, знакомство с котами — то, что реально происходит.</p></div><PetMedia photos={photos} videos={videos} label="собак-гостей" /></section>
-        <PetSittingCalendar />
-        <PetPricing />
       </>
     )}
 
     {isCats && (
       <>
+        <section class="early-media"><div><h2>Фото и видео</h2><p>Да, будем присылать много :)</p><p>Нам самим спокойнее, когда мы оставляем животное и можем видеть не просто сообщение «всё хорошо», а как оно ест, спит, ходит по квартире и постепенно осваивается.</p><p>Поэтому фото и видео во время передержки — это для нас обычная часть процесса.</p></div><PetMedia photos={photos} videos={videos} label="кошек-гостей" videoLabel={videoLabel} /></section>
+        <PetSittingCalendar />
+        <PetPricing />
+
         <section class="cat-safe-space">
           <div class="cat-safe-space__copy"><h2>Если кошка не любит других кошек — это нормально</h2><p>У нас живут свои кот и кошка, но вашей кошке совершенно не обязательно с ними дружить.</p><p>В квартире три изолированные комнаты. Если ей спокойнее жить отдельно, можно сделать ей своё пространство и вообще не заставлять знакомиться.</p></div>
           <div class="cat-list"><p>Наши коты уже привыкли к другим животным, а если гость хочет сидеть в своей комнате и никого не видеть — тоже ок.</p></div>
@@ -206,14 +210,11 @@ const structuredData = [
 
         <section class="routine-section"><div><h2>Стараемся оставить всё как дома</h2></div><div class="routine-copy"><p>Не будем специально менять привычки кошки только потому, что она приехала на передержку.</p><p>Привозите её обычный корм, миски, лоток, привычный наполнитель, игрушки, лекарства — в общем всё, что помогает ей чувствовать себя нормально.</p><p>Если она первые дни хочет спрятаться и не выходить — пусть прячется. Если привыкла спать на кровати — можно на кровать. Если нужен отдельный тихий угол — сделаем.</p></div></section>
         <ResidentCats compact={true} note="Но дружить с ними вашей кошке вообще не обязательно." showSeparationNote={false} />
-        <section class="early-media"><div><h2>Фото и видео</h2><p>Да, будем присылать много :)</p><p>Нам самим спокойнее, когда мы оставляем животное и можем видеть не просто сообщение «всё хорошо», а как оно ест, спит, ходит по квартире и постепенно осваивается.</p><p>Поэтому фото и видео во время передержки — это для нас обычная часть процесса.</p></div><PetMedia photos={photos} videos={videos} label="кошек-гостей" /></section>
 
         <section class="cat-arrival">
           <div><h2>Знакомство до передержки</h2><p>Если хочется, перед первой передержкой можно бесплатно прийти к нам примерно на полчаса.</p><p>Посмотрите квартиру, познакомитесь с нами, кошка сможет немного осмотреться, а мы посмотрим, как она реагирует на новое место и наших котов.</p></div>
           <p class="cat-arrival__note">Можно также оставить кошку тестово на несколько часов — это стоит <strong>1 000 RSD</strong>.</p>
         </section>
-        <PetSittingCalendar />
-        <PetPricing />
       </>
     )}
 
@@ -249,7 +250,7 @@ const structuredData = [
   .pet-hero__lead { max-width:690px; margin:22px 0 0; color:var(--muted); font-size:21px; line-height:1.43; }
   .pet-hero__price { display:flex; flex-wrap:wrap; gap:8px 18px; margin:22px 0 0; }.pet-hero__price strong { font-size:18px; }.pet-hero__price span { color:var(--muted); }
   .pet-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }.pet-button { display:inline-flex; min-height:46px; align-items:center; justify-content:center; border:1px solid var(--ink); border-radius:8px; padding:10px 16px; font:inherit; font-weight:750; text-decoration:none; }.pet-page .pet-button--primary { border-color:var(--accent); background:var(--accent); color:#fff; }
-  .hero-media { aspect-ratio:4/3; overflow:hidden; background:#edf0eb; }.hero-media img { width:100%; height:100%; object-fit:cover; }.media-placeholder { width:100%; height:100%; display:grid; place-content:center; gap:5px; color:var(--muted); text-align:center; }.media-placeholder span { color:var(--ink); font-weight:700; }.media-placeholder small { font-size:13px; }
+  .hero-media { aspect-ratio:4/3; overflow:hidden; background:#edf0eb; }.hero-media img { width:100%; height:100%; object-fit:cover; }
   .trust-summary { border-block:1px solid var(--line); padding:20px 0; }.trust-summary ul { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px 56px; margin:0; padding-left:20px; }.trust-summary li { padding-left:3px; font-size:15px; line-height:1.45; }.trust-summary li::marker { color:var(--accent); }
   .early-media { display:grid; grid-template-columns:minmax(230px,.54fr) minmax(0,1.46fr); gap:56px; align-items:start; padding:84px 0 40px; }.early-media>div:first-child { position:sticky; top:96px; }.early-media h2,.routine-section h2,.resident-section h2,.pricing-section h2,.intro-section h2,.species-intro h2,.dog-cats-section h2,.dog-trial h2,.cat-safe-space h2,.cat-arrival h2,.faq-section h2,.related-section h2,.final-cta h2 { margin:0; font-size:clamp(30px,3.5vw,46px); line-height:1.08; letter-spacing:-.04em; }.early-media p:not(.eyebrow),.routine-copy,.resident-intro p:not(.eyebrow),.pricing-section>div:first-child p:not(.eyebrow),.species-intro p,.dog-cats-section p,.cat-safe-space p,.cat-arrival p { color:var(--muted); font-size:17px; line-height:1.7; }
   .pet-media { padding:50px 0; }.early-media .pet-media { width:100%; padding:0; }.media-grid,.media-gallery-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }.media-grid figure,.media-gallery-grid figure { margin:0; }.video-frame,.photo-card { position:relative; display:block; width:100%; aspect-ratio:9/16; overflow:hidden; border:0; border-radius:16px; padding:0; background:#dfe7e2; box-shadow:0 10px 28px rgba(32,51,47,.1); }.video-frame iframe,.video-poster,.video-poster img,.photo-card img { display:block; width:100%; height:100%; border:0; }.video-frame iframe { background:#111; }.video-poster,.photo-card { cursor:pointer; }.video-poster { position:relative; padding:0; background:#dfe7e2; }.video-poster img,.photo-card img { object-fit:cover; }.video-poster::after,.photo-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 72%,rgba(9,24,19,.32)); opacity:.7; transition:opacity .18s ease; }.photo-card:hover::after,.photo-card:focus-visible::after { opacity:0; }.video-play { position:absolute; z-index:1; left:50%; top:50%; display:grid; width:58px; height:58px; place-items:center; border-radius:50%; background:rgba(255,255,255,.94); color:var(--accent); box-shadow:0 8px 24px rgba(17,42,33,.22); transform:translate(-50%,-50%); transition:transform .18s ease,background .18s ease; }.video-play svg { width:22px; margin-left:3px; }.video-poster:hover .video-play,.video-poster:focus-visible .video-play { background:#fff; transform:translate(-50%,-50%) scale(1.08); }.video-poster:focus-visible,.photo-card:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }.video-number { position:absolute; z-index:1; right:12px; bottom:12px; color:#fff; font-size:12px; font-weight:800; letter-spacing:.04em; }.media-grid figcaption,.media-gallery-grid figcaption { padding-top:8px; color:var(--muted); font-size:13px; line-height:1.4; }.media-gallery { margin-top:18px; }.media-gallery>summary { display:flex; min-height:52px; align-items:center; justify-content:space-between; gap:16px; border:1px solid var(--line); border-radius:12px; padding:12px 16px; cursor:pointer; list-style:none; background:#fff; font-weight:800; }.media-gallery>summary::-webkit-details-marker { display:none; }.media-gallery>summary::after { content:"+"; display:grid; width:30px; height:30px; place-items:center; border-radius:50%; background:#e8f0eb; color:var(--accent); font-size:22px; line-height:1; }.media-gallery[open]>summary::after { content:"−"; }.media-gallery>summary:hover { border-color:#9eb6aa; }.media-gallery-grid { margin-top:14px; }.photo-lightbox { width:min(900px,calc(100vw - 32px)); max-width:none; height:min(90vh,1100px); max-height:none; border:0; border-radius:18px; padding:0; overflow:hidden; background:#17231f; box-shadow:0 24px 80px rgba(0,0,0,.42); }.photo-lightbox::backdrop { background:rgba(15,23,20,.82); backdrop-filter:blur(5px); }.photo-lightbox img { width:100%; height:100%; object-fit:contain; }.photo-lightbox-close { position:absolute; z-index:1; top:12px; right:12px; display:grid; width:42px; height:42px; place-items:center; border:0; border-radius:50%; background:rgba(255,255,255,.92); color:var(--ink); cursor:pointer; font:inherit; font-size:27px; line-height:1; }.photo-lightbox-close:focus-visible { outline:3px solid #fff; outline-offset:3px; }.media-empty { min-height:250px; display:grid; place-content:center; gap:5px; border:1px solid var(--line); border-radius:16px; background:#f3f3ed; color:var(--muted); text-align:center; padding:30px; }.media-empty strong { color:var(--ink); }

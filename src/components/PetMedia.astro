@@ -3,6 +3,7 @@ interface Props {
   photos: Array<{ src: string; alt: string }>;
   videos: Array<{ url: string; title?: string; featured?: boolean }>;
   label: string;
+  videoLabel: string;
 }
 
 type ResolvedVideo = Props["videos"][number] & {
@@ -11,7 +12,7 @@ type ResolvedVideo = Props["videos"][number] & {
   thumbnailUrl: string;
 };
 
-const { photos, videos, label } = Astro.props;
+const { photos, videos, label, videoLabel } = Astro.props;
 
 function youtubeVideoId(url: string) {
   try {
@@ -67,8 +68,9 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
                 type="button"
                 data-video-load
                 data-embed-url={video.embedUrl}
-                data-video-title={video.title || `Видео ${index + 1}`}
-                aria-label={video.title ? `Смотреть видео: ${video.title}` : `Смотреть видео ${index + 1}`}
+                data-video-title={video.title || `${videoLabel} ${index + 1}`}
+                title={video.title || `${videoLabel} ${index + 1}`}
+                aria-label={`Смотреть: ${video.title || `${videoLabel} ${index + 1}`}`}
               >
                 <img src={video.thumbnailUrl} alt="" width="480" height="360" loading="lazy" />
                 <span class="video-play" aria-hidden="true">
@@ -116,6 +118,8 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
             ))}
             {galleryVideos.map((video, index) => {
               const videoNumber = index + primaryVideos.length + 1;
+              const fallbackTitle = `${videoLabel} ${videoNumber}`;
+              const title = video.title || fallbackTitle;
               return (
                 <figure>
                   <div class="video-frame">
@@ -124,8 +128,9 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
                       type="button"
                       data-video-load
                       data-embed-url={video.embedUrl}
-                      data-video-title={video.title || `Видео ${videoNumber}`}
-                      aria-label={video.title ? `Смотреть видео: ${video.title}` : `Смотреть видео ${videoNumber}`}
+                      data-video-title={title}
+                      title={title}
+                      aria-label={`Смотреть: ${title}`}
                     >
                       <img src={video.thumbnailUrl} alt="" width="480" height="360" loading="lazy" />
                       <span class="video-play" aria-hidden="true">
