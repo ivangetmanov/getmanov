@@ -5,57 +5,119 @@ interface Props {
   label: string;
 }
 
+type ResolvedVideo = Props["videos"][number] & {
+  id: string;
+  embedUrl: string;
+  thumbnailUrl: string;
+};
+
 const { photos, videos, label } = Astro.props;
 
-function youtubeEmbedUrl(url: string) {
+function youtubeVideoId(url: string) {
   try {
     const parsed = new URL(url);
     const hostname = parsed.hostname.replace(/^www\./, "");
-    let id = "";
 
-    if (hostname === "youtu.be") id = parsed.pathname.split("/").filter(Boolean)[0] || "";
+    if (hostname === "youtu.be") return parsed.pathname.split("/").filter(Boolean)[0] || "";
     if (hostname === "youtube.com" || hostname === "m.youtube.com") {
-      id = parsed.searchParams.get("v") || "";
-      if (!id) {
-        const [, segment, value] = parsed.pathname.split("/");
-        if (["shorts", "embed", "live"].includes(segment)) id = value || "";
-      }
+      const queryId = parsed.searchParams.get("v");
+      if (queryId) return queryId;
+
+      const [, segment, value] = parsed.pathname.split("/");
+      if (["shorts", "embed", "live"].includes(segment)) return value || "";
     }
 
-    return /^[A-Za-z0-9_-]{6,}$/.test(id) ? `https://www.youtube-nocookie.com/embed/${id}` : null;
+    return "";
   } catch {
-    return null;
+    return "";
   }
 }
 
-const resolvedVideos = videos
-  .slice(0, 4)
-  .map((video) => ({ ...video, embedUrl: youtubeEmbedUrl(video.url) }))
-  .filter((video): video is typeof video & { embedUrl: string } => Boolean(video.embedUrl));
+const resolvedVideos = videos.reduce<ResolvedVideo[]>((items, video) => {
+  const id = youtubeVideoId(video.url);
+  if (/^[A-Za-z0-9_-]{6,}$/.test(id)) {
+    items.push({
+      ...video,
+      id,
+      embedUrl: `https://www.youtube-nocookie.com/embed/${id}`,
+      thumbnailUrl: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+    });
+  }
+  return items;
+}, []);
+
+const primaryVideos = resolvedVideos.slice(0, 4);
+const galleryVideos = resolvedVideos.slice(4);
 const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
 ---
 
 <section class="pet-media" id="media" aria-label={`Фото и видео ${label}`}>
   {hasMedia ? (
-    <div class="media-grid">
-      {photos.map((photo) => (
-        <img src={photo.src} alt={photo.alt} width="900" height="675" loading="lazy" />
-      ))}
-      {resolvedVideos.map((video) => (
-        <figure>
-          <iframe
-            width="560"
-            height="315"
-            loading="lazy"
-            src={video.embedUrl}
-            title={video.title || "Видео на YouTube"}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-          {video.title && <figcaption>{video.title}</figcaption>}
-        </figure>
-      ))}
-    </div>
+    <>
+      {photos.length > 0 && (
+        <div class="photo-grid">
+          {photos.map((photo) => (
+            <img src={photo.src} alt={photo.alt} width="900" height="675" loading="lazy" />
+          ))}
+        </div>
+      )}
+
+      <div class="media-grid">
+        {primaryVideos.map((video, index) => (
+          <figure>
+            <div class="video-frame">
+              <button
+                class="video-poster"
+                type="button"
+                data-video-load
+                data-embed-url={video.embedUrl}
+                data-video-title={video.title || `Видео ${index + 1}`}
+                aria-label={video.title ? `Смотреть видео: ${video.title}` : `Смотреть видео ${index + 1}`}
+              >
+                <img src={video.thumbnailUrl} alt="" width="480" height="360" loading="lazy" />
+                <span class="video-play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                </span>
+                <span class="video-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              </button>
+            </div>
+            {video.title && <figcaption>{video.title}</figcaption>}
+          </figure>
+        ))}
+      </div>
+
+      {galleryVideos.length > 0 && (
+        <details class="media-gallery">
+          <summary><span>Смотреть все видео</span><span>{resolvedVideos.length}</span></summary>
+          <div class="media-gallery-grid">
+            {galleryVideos.map((video, index) => {
+              const videoNumber = index + primaryVideos.length + 1;
+              return (
+                <figure>
+                  <div class="video-frame">
+                    <button
+                      class="video-poster"
+                      type="button"
+                      data-video-load
+                      data-embed-url={video.embedUrl}
+                      data-video-title={video.title || `Видео ${videoNumber}`}
+                      aria-label={video.title ? `Смотреть видео: ${video.title}` : `Смотреть видео ${videoNumber}`}
+                    >
+                      <img src={video.thumbnailUrl} alt="" width="480" height="360" loading="lazy" />
+                      <span class="video-play" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+                      </span>
+                      <span class="video-number" aria-hidden="true">{String(videoNumber).padStart(2, "0")}</span>
+                    </button>
+                  </div>
+                  {video.title && <figcaption>{video.title}</figcaption>}
+                </figure>
+              );
+            })}
+          </div>
+        </details>
+      )}
+    </>
   ) : (
     <div class="media-empty">
       <strong>Здесь будут реальные фото и видео {label}.</strong>
@@ -63,3 +125,24 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
     </div>
   )}
 </section>
+
+<script>
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const trigger = target.closest<HTMLButtonElement>("[data-video-load]");
+    if (!trigger) return;
+
+    const embedUrl = trigger.dataset.embedUrl;
+    if (!embedUrl) return;
+
+    const iframe = document.createElement("iframe");
+    iframe.src = embedUrl;
+    iframe.title = trigger.dataset.videoTitle || "Видео на YouTube";
+    iframe.loading = "lazy";
+    iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    trigger.replaceWith(iframe);
+  });
+</script>

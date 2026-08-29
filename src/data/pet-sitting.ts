@@ -23,20 +23,20 @@ export const petSittingConfig = {
   },
   residentCats: [
     {
-      name: "Кот",
+      name: "Пабло",
       description: "Очень дружелюбный и любопытный. Обычно ему интересно, кто приехал, и он хочет познакомиться.",
-      image: "", // Add a local public image path here, for example /images/pet-sitting/cat-1.webp
+      image: "/images/pet-sitting/pablo.webp",
     },
     {
-      name: "Кошка",
+      name: "Свит",
       description: "Более пугливая. Чаще сама уходит куда-нибудь подальше и спокойно чиллит отдельно.",
-      image: "", // Add a local public image path here, for example /images/pet-sitting/cat-2.webp
+      image: "/images/pet-sitting/sweet.webp",
     },
   ],
   heroPhotos: {
     main: "",
     dogs: "",
-    cats: "",
+    cats: "/images/pet-sitting/cats-hero.webp",
   } as Record<PetSittingPageKind, string>,
   guestPhotos: [] as Array<{
     src: string;
@@ -52,6 +52,10 @@ export const petSittingConfig = {
     { url: "https://youtube.com/shorts/LnHXyW79-6w?si=t7xWQDIybbWnlP8H", animal: "dog" },
     { url: "https://youtube.com/shorts/Nnp80nmWhMA?si=zo_ORiSnNe6Xcsi0", animal: "dog" },
     { url: "https://youtube.com/shorts/NpaWewHy8Mo?si=VaW3Dfb9gU1v_dgT", animal: "dog" },
+    { url: "https://youtube.com/shorts/uwBPEaJk56o?si=v6WYRKUxxo_hw7Ti", animal: "dog" },
+    { url: "https://youtube.com/shorts/F-IxpMWhlSw?si=3AgPaT1TKh0jZuHU", animal: "dog" },
+    { url: "https://youtube.com/shorts/YKHKXpjGzpA?si=BmaubqQsftRyvwio", animal: "dog" },
+    { url: "https://youtube.com/shorts/HiwjWxa9qfM?si=xqmauQOeDt5Fsh2O", animal: "dog" },
   ] as Array<{
     url: string;
     animal: "dog" | "cat";
