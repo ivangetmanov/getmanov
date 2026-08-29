@@ -43,6 +43,11 @@ faq:
 7. взять несколько знакомых вещей;
 8. не рассчитывать, что она обязательно сразу станет общительной.
 
+<figure class="pet-article-media pet-article-media--compact pet-article-media--left">
+  <img src="/images/pet-sitting/cat-guest-02.webp" alt="Полосатая кошка сидит в комнате" width="720" height="1280" loading="lazy" />
+  <figcaption>Полосатая кошка сидит в комнате.</figcaption>
+</figure>
+
 ## Проверьте прививки заранее
 У разных ситтеров и гостиниц требования отличаются, поэтому это лучше выяснить не за день до поездки.
 
@@ -99,9 +104,9 @@ faq:
 Не нужно перевозить полквартиры.
 
 Достаточно нескольких вещей, которые уже пахнут знакомым домом.
-<figure class="pet-article-media">
-  <img src="/images/pet-sitting/cat-guest-04.webp" alt="Кошки отдыхают на кровати в домашней обстановке" width="720" height="1280" loading="lazy" />
-  <figcaption>Кошки отдыхают дома на знакомом мягком месте.</figcaption>
+<figure class="pet-article-media pet-article-media--wide">
+  <img src="/images/pet-sitting/cat-guest-04.webp" alt="Две кошки лежат на кровати" width="720" height="1280" loading="lazy" />
+  <figcaption>Две кошки лежат на кровати.</figcaption>
 </figure>
 
 ## А что с переноской?
@@ -131,6 +136,11 @@ faq:
 
 «Очень добрая» — хорошая характеристика для фотографии в Instagram, но для ситтера гораздо полезнее конкретика.
 
+<figure class="pet-article-media pet-article-media--compact">
+  <img src="/images/pet-sitting/cat-guest-03.webp" alt="Полосатая кошка лежит рядом с человеком" width="720" height="1280" loading="lazy" />
+  <figcaption>Полосатая кошка лежит рядом с человеком.</figcaption>
+</figure>
+
 ## Если кошка спрячется — это не провал передержки
 Некоторые кошки приезжают и через полчаса уже исследуют всё вокруг.
 
@@ -141,9 +151,9 @@ faq:
 Если ей сейчас безопаснее сидеть в укрытии — пусть сидит.
 
 Позже она выйдет сама, когда будет готова.
-<figure class="pet-article-media">
-  <img src="/images/pet-sitting/cat-guest-05.webp" alt="Кошка-гость спокойно отдыхает" width="720" height="1280" loading="lazy" />
-  <figcaption>Кошка-гость отдыхает у нас дома.</figcaption>
+<figure class="pet-article-media pet-article-media--wide">
+  <img src="/images/pet-sitting/cat-guest-05.webp" alt="Полосатая кошка лежит на серой ткани" width="720" height="1280" loading="lazy" />
+  <figcaption>Полосатая кошка лежит на серой ткани.</figcaption>
 </figure>
 
 ## Нужно ли заранее привозить кошку знакомиться?
@@ -174,6 +184,15 @@ faq:
 > «Вот моя комната, а остальных я видеть не хочу»,
 
 такой вариант нас вполне устраивает.
+
+<figure class="pet-article-media pet-article-media--compact pet-article-media--left">
+  <img src="/images/pet-sitting/pablo.webp" alt="Рыжий кот в вязаном жилете" width="720" height="1280" loading="lazy" />
+  <figcaption>Пабло.</figcaption>
+</figure>
+<figure class="pet-article-media pet-article-media--compact">
+  <img src="/images/pet-sitting/sweet.webp" alt="Бело-рыжая кошка сидит на диване рядом с мотошлемами" width="960" height="1280" loading="lazy" />
+  <figcaption>Свит.</figcaption>
+</figure>
 
 ## Что если кошка первые сутки плохо ест
 На новом месте аппетит действительно может измениться.
@@ -213,6 +232,10 @@ faq:
 А на видео сразу видно: кошка сидит в своём месте, умывается, поела, вышла посмотреть квартиру или уже спит на кровати.
 
 Поэтому мы регулярно показываем не «идеальный рекламный кадр», а нормальную жизнь кошки у нас.
+<figure class="pet-article-media pet-article-media--wide">
+  <img src="/images/pet-sitting/cat-guest-01.webp" alt="Две кошки лежат на кровати" width="720" height="1280" loading="lazy" />
+  <figcaption>Две кошки лежат на кровати.</figcaption>
+</figure>
 <figure class="pet-article-media pet-article-video" data-video-id="gzEpuT0el14">
   <a href="https://youtube.com/shorts/gzEpuT0el14?feature=share" target="_blank" rel="noreferrer">Посмотреть реальное видео кошки-гостя</a>
   <figcaption>Видео кошки-гостя во время домашней передержки.</figcaption>

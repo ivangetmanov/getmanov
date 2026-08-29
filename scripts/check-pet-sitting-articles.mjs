@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { JSDOM } from "jsdom";
 
@@ -7,24 +8,43 @@ const slugs = [
   {
     slug: "pet-sitter-vs-boarding",
     service: "main",
-    media: { images: 3, videos: 0, animal: "mixed" },
+    media: {
+      ru: { images: 4, videos: 3, animal: "mixed" },
+      en: { images: 3, videos: 0, animal: "mixed" },
+    },
   },
   {
     slug: "can-cat-stay-alone-for-a-week",
     service: "cats",
-    media: { images: 2, videos: 0, animal: "cat" },
+    media: {
+      ru: { images: 5, videos: 1, animal: "cat" },
+      en: { images: 2, videos: 0, animal: "cat" },
+    },
   },
   {
     slug: "prepare-dog-for-boarding",
     service: "dogs",
-    media: { images: 2, videos: 1, animal: "dog" },
+    media: {
+      ru: { images: 4, videos: 5, animal: "dog" },
+      en: { images: 2, videos: 1, animal: "dog" },
+    },
   },
   {
     slug: "prepare-cat-for-boarding",
     service: "cats",
-    media: { images: 2, videos: 1, animal: "cat" },
+    media: {
+      ru: { images: 7, videos: 1, animal: "cat" },
+      en: { images: 2, videos: 1, animal: "cat" },
+    },
   },
 ];
+
+const russianCopyHashes = {
+  "pet-sitter-vs-boarding": "c41f56b9431d222a89ac16aa31a013ec331b120353f96fa6d75b99e30ddd4bb1",
+  "can-cat-stay-alone-for-a-week": "4fc36aec7d5c992d92b32a099265fbd1b48d474728cc2bdbc754f48a28b86c8c",
+  "prepare-dog-for-boarding": "648487a53390195c432448aa3ff29cd482e53a70c3ca58f7e4a434ffc0090c13",
+  "prepare-cat-for-boarding": "963600d79d91c45be8e5353b4f9c9bcf144339532bd29d9d8cf7c3e766f12520",
+};
 
 const servicePath = (locale, service) =>
   `/${locale}/novi-sad/pet-sitting/${service === "main" ? "" : `${service}/`}`;
@@ -34,6 +54,7 @@ const htmlFile = (path) => new URL(`dist${path}index.html`, root);
 for (const locale of ["ru", "en"]) {
   for (const article of slugs) {
     const path = articlePath(locale, article.slug);
+    const expectedMedia = article.media[locale];
     const counterpartLocale = locale === "ru" ? "en" : "ru";
     const html = await readFile(htmlFile(path), "utf8");
     const dom = new JSDOM(html);
@@ -61,8 +82,13 @@ for (const locale of ["ru", "en"]) {
 
     const mediaImages = [...document.querySelectorAll(".pet-article .pet-article-media > img")];
     const mediaVideos = [...document.querySelectorAll(".pet-article .pet-article-video[data-video-id]")];
-    assert.equal(mediaImages.length, article.media.images, `${path} has the wrong contextual image count`);
-    assert.equal(mediaVideos.length, article.media.videos, `${path} has the wrong contextual video count`);
+    assert.equal(mediaImages.length, expectedMedia.images, `${path} has the wrong contextual image count`);
+    assert.equal(mediaVideos.length, expectedMedia.videos, `${path} has the wrong contextual video count`);
+
+    const imageSources = mediaImages.map((image) => image.getAttribute("src"));
+    const videoIds = mediaVideos.map((video) => video.getAttribute("data-video-id"));
+    assert.equal(new Set(imageSources).size, imageSources.length, `${path} must not repeat contextual images`);
+    assert.equal(new Set(videoIds).size, videoIds.length, `${path} must not repeat contextual videos`);
 
     for (const image of mediaImages) {
       const src = image.getAttribute("src") ?? "";
@@ -74,11 +100,18 @@ for (const locale of ["ru", "en"]) {
     }
 
     const mediaMarkup = document.querySelector(".pet-article")?.innerHTML ?? "";
-    if (article.media.animal === "cat") {
+    if (expectedMedia.animal === "cat") {
       assert(!mediaMarkup.includes("dog-guest"), `${path} must not use dog media`);
     }
-    if (article.media.animal === "dog") {
+    if (expectedMedia.animal === "dog") {
       assert(!mediaMarkup.includes("cat-guest"), `${path} must not use cat media`);
+    }
+    if (locale === "ru") {
+      const figureText = [...document.querySelectorAll(".pet-article-media")]
+        .map((figure) => figure.textContent)
+        .join(" ");
+      const figureAlts = mediaImages.map((image) => image.getAttribute("alt") ?? "").join(" ");
+      assert(!/Петроварадин|Нови[ -]?Сад/iu.test(`${figureText} ${figureAlts}`), `${path} media must not claim an unverified location`);
     }
 
     assert(!html.includes("chatgpt.com/ru/novi-sad"), `${path} contains a placeholder ChatGPT link`);
@@ -103,6 +136,13 @@ for (const locale of ["ru", "en"]) {
       assert(visibleText.includes(question.name.replace(/[‘’]/g, "'")), `${path} schema question must be visible: ${question.name}`);
     }
   }
+}
+
+for (const [slug, expectedHash] of Object.entries(russianCopyHashes)) {
+  const source = await readFile(new URL(`src/pages/ru/novi-sad/pet-sitting/${slug}/index.md`, root), "utf8");
+  const copyWithoutMedia = source.replace(/<figure class="pet-article-media[\s\S]*?<\/figure>\s*/g, "");
+  const actualHash = createHash("sha256").update(copyWithoutMedia).digest("hex");
+  assert.equal(actualHash, expectedHash, `${slug} article copy changed outside contextual media figures`);
 }
 
 const expectedGuideCounts = { main: 4, dogs: 2, cats: 3 };

@@ -41,6 +41,11 @@ faq:
 
 Ничего сложнее обычно не требуется.
 
+<figure class="pet-article-media pet-article-media--wide">
+  <img src="/images/pet-sitting/dog-guest-03.webp" alt="Собака-гость сидит в комнате" width="720" height="1280" loading="lazy" />
+  <figcaption>Собака-гость сидит в комнате.</figcaption>
+</figure>
+
 ## Расскажите, как собака реально живёт дома
 Не «она хорошая и дружелюбная», а именно бытовые вещи.
 
@@ -61,6 +66,11 @@ faq:
 * есть ли странные привычки, которые дома уже кажутся вам совершенно обычными.
 
 Именно такие детали потом определяют, насколько привычной будет жизнь собаки на новом месте.
+
+<figure class="pet-article-media pet-article-media--compact pet-article-media--left">
+  <img src="/images/pet-sitting/dog-guest-01.webp" alt="Собака-гость сидит рядом с человеком" width="720" height="1280" loading="lazy" />
+  <figcaption>Собака-гость сидит рядом с человеком.</figcaption>
+</figure>
 
 ## Не меняйте корм специально перед поездкой
 Передержка сама по себе добавляет нового: человек, квартира, запахи, маршруты.
@@ -91,6 +101,11 @@ faq:
 
 Если дома собака никогда не лежит на своей лежанке и постоянно спит на диване, покупать специальную «лежанку для передержки» смысла немного.
 
+<figure class="pet-article-media pet-article-media--wide">
+  <img src="/images/pet-sitting/dog-guest-02.webp" alt="Собака-гость лежит на диване" width="720" height="1280" loading="lazy" />
+  <figcaption>Собака-гость лежит на диване.</figcaption>
+</figure>
+
 ## Лучше познакомиться заранее
 Для первой передержки встреча до поездки очень полезна.
 
@@ -106,9 +121,9 @@ faq:
 
 У нас такое знакомство перед первой передержкой бесплатно и занимает примерно полчаса.
 
-<figure class="pet-article-media">
-  <img src="/images/pet-sitting/dog-guest-06.webp" alt="Собака-гость осматривает дом во время передержки" width="720" height="1280" loading="lazy" />
-  <figcaption>Собака-гость знакомится с домашней обстановкой.</figcaption>
+<figure class="pet-article-media pet-article-media--compact">
+  <img src="/images/pet-sitting/dog-guest-06.webp" alt="Собака-гость стоит у стеклянной двери" width="720" height="1280" loading="lazy" />
+  <figcaption>Собака-гость стоит у стеклянной двери.</figcaption>
 </figure>
 
 ## Если собака никогда не оставалась с чужими — можно сделать пробу
@@ -126,6 +141,11 @@ faq:
 
 У нас пробная передержка на несколько часов стоит 1 000 RSD.
 
+<figure class="pet-article-media pet-article-video" data-video-id="IPpKV9xGk_s">
+  <a href="https://youtube.com/shorts/IPpKV9xGk_s" target="_blank" rel="noreferrer">Посмотреть видео собаки-гостя</a>
+  <figcaption>Собака-гость играет с человеком.</figcaption>
+</figure>
+
 ## Не переучивайте собаку специально перед передержкой
 Если она всю жизнь спит на кровати, неделя перед поездкой — довольно странный момент начинать учить её спать на полу.
 
@@ -134,6 +154,11 @@ faq:
 Если ест утром и вечером — оставить этот режим.
 
 Передержка обычно проходит проще, когда **меняется только то, что действительно неизбежно**.
+
+<figure class="pet-article-media pet-article-video" data-video-id="NwHXwGqr1FM">
+  <a href="https://youtu.be/NwHXwGqr1FM" target="_blank" rel="noreferrer">Посмотреть видео собаки-гостя</a>
+  <figcaption>Собака-гость лежит на кровати.</figcaption>
+</figure>
 
 ## Если собака не умеет оставаться одна — скажите об этом прямо
 Это одна из самых важных вещей.
@@ -169,6 +194,11 @@ faq:
 
 Если есть конкретная команда, которой вы останавливаете нежелательное поведение, тоже полезно сказать.
 
+<figure class="pet-article-media pet-article-video" data-video-id="kTsjlgpyK_E">
+  <a href="https://youtube.com/shorts/kTsjlgpyK_E" target="_blank" rel="noreferrer">Посмотреть видео собаки-гостя на прогулке</a>
+  <figcaption>Собака-гость на прогулке.</figcaption>
+</figure>
+
 ## Что происходит в первые часы после ухода хозяина
 Не каждая собака через пять минут ложится спать.
 
@@ -186,9 +216,9 @@ faq:
 
 Нужно смотреть, **как собака постепенно адаптируется**.
 
-<figure class="pet-article-media">
-  <img src="/images/pet-sitting/dog-guest-02.webp" alt="Собака-гость спит на диване" width="720" height="1280" loading="lazy" />
-  <figcaption>Собака-гость отдыхает во время домашней передержки.</figcaption>
+<figure class="pet-article-media pet-article-video" data-video-id="HiwjWxa9qfM">
+  <a href="https://youtube.com/shorts/HiwjWxa9qfM" target="_blank" rel="noreferrer">Посмотреть видео собаки-гостя</a>
+  <figcaption>Собака-гость лежит рядом с человеком.</figcaption>
 </figure>
 
 ## Договоритесь о фото и видео

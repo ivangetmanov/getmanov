@@ -34,6 +34,7 @@ const pages = [
 
 assert.equal(billableStayDays("2026-08-29", "2026-08-30"), 2);
 assert.equal(billableStayDays("2026-08-29", "2026-09-05"), 7);
+assert.equal(billableStayDays("2026-09-08", "2026-09-10"), 2);
 assert.equal(calculatePetSittingQuote("2026-08-29", "2026-08-30", 1).total, 4000);
 assert.equal(calculatePetSittingQuote("2026-08-29", "2026-08-30", 2).total, 6000);
 assert.equal(calculatePetSittingQuote("2026-08-29", "2026-09-05", 1).total, 10500);
@@ -81,6 +82,30 @@ for (const page of pages) {
 
   assert.ok(calendar.querySelector("[data-enquiry-submit][disabled]"), `${page.path} should have a disabled enquiry button initially`);
   assert.ok(calendar.querySelector('input[name="website"]'), `${page.path} should include a honeypot field`);
+  assert.equal(calendar.querySelector('input[type="time"]'), null, `${page.path} must remain date-only`);
+  const priceHelp = calendar.querySelector('[data-inquiry-price-help][href="#boarding-days"]');
+  assert.ok(priceHelp, `${page.path} needs the boarding-day explanation link`);
+  assert.equal(
+    priceHelp.textContent.trim(),
+    page.locale === "en" ? "How are boarding days calculated?" : "Как считаются сутки?",
+  );
+
+  const boardingDaysFaq = dom.window.document.querySelector("#boarding-days[open]");
+  const expectedFaqQuestion = page.locale === "en"
+    ? "How are boarding days calculated?"
+    : "Как считаются сутки передержки?";
+  const expectedFaqAnswer = page.locale === "en"
+    ? "We charge by 24-hour periods starting from the check-in time.\n\nFor example, if your pet arrives on September 8 at 9:00 AM and is picked up on September 10 at 9:00 AM, that is 2 boarding days.\n\nIf pick-up is later than the original check-in time, the next billable period begins.\n\nWe confirm the exact check-in and pick-up times before the stay."
+    : "Оплата считается за каждые 24 часа с момента заезда.\n\nНапример, если питомца привезли 8 сентября в 09:00 и забрали 10 сентября в 09:00 — это 2 суток.\n\nЕсли питомца забирают позже времени заезда, начинается следующий оплачиваемый период.\n\nТочное время заезда и выезда мы согласуем перед передержкой.";
+  assert.equal(boardingDaysFaq?.querySelector("summary")?.textContent.trim(), expectedFaqQuestion);
+  assert.equal(boardingDaysFaq?.querySelector("p")?.textContent.trim(), expectedFaqAnswer);
+
+  const schemas = [...dom.window.document.querySelectorAll('script[type="application/ld+json"]')]
+    .map((node) => JSON.parse(node.textContent || "{}"));
+  const schemaItems = schemas.flatMap((schema) => Array.isArray(schema) ? schema : schema["@graph"] ?? [schema]);
+  const faqSchema = schemaItems.find((schema) => schema["@type"] === "FAQPage");
+  const schemaQuestion = faqSchema?.mainEntity?.find((item) => item.name === expectedFaqQuestion);
+  assert.equal(schemaQuestion?.acceptedAnswer?.text, expectedFaqAnswer, `${page.path} FAQ schema must match the visible answer`);
   const selectedAnimal = calendar.querySelector('select[name="animal"] option[selected]')?.value;
   assert.equal(selectedAnimal, page.kind === "cats" ? "cat" : "dog", `${page.path} should have the correct species default`);
   const channels = [...calendar.querySelectorAll("[data-direct-contact]")].map((link) => link.dataset.channel);
@@ -96,5 +121,11 @@ for (const page of pages) {
     assert.equal(dom.window.document.querySelector(".pet-hero img")?.getAttribute("src"), "/images/pet-sitting/main-hero.webp");
   }
 }
+
+const calendarSource = await readFile(`${projectRoot}src/components/PetSittingCalendar.astro`, "utf8");
+assert.match(calendarSource, /Estimated price: \$\{formatRsd\(quote\.total, 'en'\)\} RSD/);
+assert.match(calendarSource, /Предварительная стоимость: \$\{formatRsd\(quote\.total, 'ru'\)\} RSD/);
+assert.doesNotMatch(calendarSource, /Estimated total:/);
+assert.doesNotMatch(calendarSource, /Итого:/);
 
 console.log(`Pet-sitting calendar checks passed for ${pages.length} pages.`);

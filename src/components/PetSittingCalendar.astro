@@ -46,6 +46,9 @@ const config = {
     <form class="inquiry-form" data-inquiry-form novalidate>
       <div class="inquiry-summary" data-inquiry-summary>{isEnglish ? "No dates selected yet." : "Даты пока не выбраны."}</div>
       <div class="inquiry-price" data-inquiry-price hidden aria-live="polite"></div>
+      <a class="inquiry-price-help" data-inquiry-price-help href="#boarding-days" hidden>
+        {isEnglish ? "How are boarding days calculated?" : "Как считаются сутки?"}
+      </a>
       <label class="checkbox-label">
         <input type="checkbox" name="flexible" />
         <span>{isEnglish ? "Approximate dates — we can move them slightly" : "Даты примерные, можем немного сдвинуть"}</span>
@@ -98,6 +101,7 @@ const config = {
     const status = root.querySelector('#calendar-status');
     const summary = root.querySelector('[data-inquiry-summary]');
     const priceSummary = root.querySelector('[data-inquiry-price]');
+    const priceHelp = root.querySelector('[data-inquiry-price-help]');
     const form = root.querySelector('[data-inquiry-form]');
     const formNote = root.querySelector('[data-form-note]');
     const submitButton = root.querySelector('[data-enquiry-submit]');
@@ -149,6 +153,7 @@ const config = {
     function renderPrice(quote) {
       priceSummary.replaceChildren();
       priceSummary.hidden = !quote;
+      priceHelp.hidden = !quote;
       if (!quote) return;
 
       priceSummary.append(createPriceLine(
@@ -168,7 +173,7 @@ const config = {
       const rate = `${formatRsd(quote.dailyRate, settings.locale)} RSD/${isEnglish ? 'day' : 'день'}`;
       priceSummary.append(createPriceLine(`${quantityLabel} · ${rate}`));
       priceSummary.append(createPriceLine(
-        isEnglish ? `Estimated total: ${formatRsd(quote.total, 'en')} RSD` : `Итого: ${formatRsd(quote.total, 'ru')} RSD`,
+        isEnglish ? `Estimated price: ${formatRsd(quote.total, 'en')} RSD` : `Предварительная стоимость: ${formatRsd(quote.total, 'ru')} RSD`,
         'inquiry-price__total',
       ));
     }

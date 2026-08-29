@@ -99,9 +99,13 @@ faq:
 Главное отличие от проживания ситтера у владельца — питомцу всё-таки приходится переехать в новое место.
 
 [Как устроена наша домашняя передержка в Нови-Саде →](/ru/novi-sad/pet-sitting/)
-<figure class="pet-article-media">
+<figure class="pet-article-media pet-article-media--wide">
   <img src="/images/pet-sitting/dog-guest-02.webp" alt="Собака-гость отдыхает во время домашней передержки" width="720" height="1280" loading="lazy" />
-  <figcaption>Собака-гость отдыхает у нас дома в Петроварадине.</figcaption>
+  <figcaption>Собака-гость отдыхает у нас дома.</figcaption>
+</figure>
+<figure class="pet-article-media pet-article-video" data-video-id="IPpKV9xGk_s">
+  <a href="https://youtube.com/shorts/IPpKV9xGk_s" target="_blank" rel="noreferrer">Посмотреть видео собаки-гостя</a>
+  <figcaption>Собака-гость играет с человеком.</figcaption>
 </figure>
 
 ## Зоогостиница
@@ -146,9 +150,13 @@ faq:
 Обычное желание собаки подойти, понюхать или поиграть для нас само по себе не проблема. Но если собака именно охотится за кошками, не переключается и проявляет серьёзную агрессию, мы сами скорее посоветуем найти передержку без своих котов.
 
 [Передержка собак в Нови-Саде →](/ru/novi-sad/pet-sitting/dogs/)
-<figure class="pet-article-media">
-  <img src="/images/pet-sitting/dog-guest-06.webp" alt="Собака-гость осматривает домашнее пространство" width="720" height="1280" loading="lazy" />
-  <figcaption>Собака-гость во время домашней передержки.</figcaption>
+<figure class="pet-article-media pet-article-media--compact pet-article-media--left">
+  <img src="/images/pet-sitting/dog-guest-06.webp" alt="Собака-гость стоит у стеклянной двери" width="720" height="1280" loading="lazy" />
+  <figcaption>Собака-гость стоит у стеклянной двери.</figcaption>
+</figure>
+<figure class="pet-article-media pet-article-video" data-video-id="kTsjlgpyK_E">
+  <a href="https://youtube.com/shorts/kTsjlgpyK_E" target="_blank" rel="noreferrer">Посмотреть видео собаки-гостя на прогулке</a>
+  <figcaption>Собака-гость на прогулке.</figcaption>
 </figure>
 
 ## Что лучше для кошки
@@ -170,9 +178,17 @@ faq:
 Например, у нас есть три изолированные комнаты. Если гостевой кошке спокойнее жить отдельно от наших котов, так и можно сделать.
 
 [Передержка кошек в Нови-Саде →](/ru/novi-sad/pet-sitting/cats/)
-<figure class="pet-article-media">
+<figure class="pet-article-media pet-article-media--wide">
   <img src="/images/pet-sitting/cat-guest-03.webp" alt="Кошка-гость отдыхает рядом с человеком" width="720" height="1280" loading="lazy" />
   <figcaption>Кошка-гость отдыхает у нас дома.</figcaption>
+</figure>
+<figure class="pet-article-media pet-article-media--compact">
+  <img src="/images/pet-sitting/cat-guest-02.webp" alt="Полосатая кошка сидит в комнате" width="720" height="1280" loading="lazy" />
+  <figcaption>Полосатая кошка сидит в комнате.</figcaption>
+</figure>
+<figure class="pet-article-media pet-article-video" data-video-id="gzEpuT0el14">
+  <a href="https://youtube.com/shorts/gzEpuT0el14?feature=share" target="_blank" rel="noreferrer">Посмотреть видео кошки-гостя</a>
+  <figcaption>Полосатая кошка лежит на постели.</figcaption>
 </figure>
 
 ## Что выбрать тревожному питомцу

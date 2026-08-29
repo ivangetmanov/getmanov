@@ -34,6 +34,11 @@ faq:
 * кошка едет на домашнюю передержку;
 * кошка остаётся в зоогостинице.
 
+<figure class="pet-article-media pet-article-media--compact pet-article-media--left">
+  <img src="/images/pet-sitting/cat-guest-02.webp" alt="Полосатая кошка сидит в комнате" width="720" height="1280" loading="lazy" />
+  <figcaption>Полосатая кошка сидит в комнате.</figcaption>
+</figure>
+
 ## А если поставить автоматическую кормушку?
 Автоматическая кормушка решает только одну конкретную задачу — выдаёт корм.
 
@@ -107,6 +112,11 @@ faq:
 
 Но здесь уже появляется другой возможный стресс — **новое место**.
 
+<figure class="pet-article-media pet-article-media--wide">
+  <img src="/images/pet-sitting/cat-guest-03.webp" alt="Полосатая кошка лежит рядом с человеком" width="720" height="1280" loading="lazy" />
+  <figcaption>Полосатая кошка лежит рядом с человеком.</figcaption>
+</figure>
+
 ## Что для кошки хуже: новое место или одиночество?
 Универсального ответа нет.
 
@@ -132,7 +142,7 @@ faq:
 Можно выделить ей своё пространство.
 
 [Как устроена наша передержка кошек в Нови-Саде →](/ru/novi-sad/pet-sitting/cats/)
-<figure class="pet-article-media">
+<figure class="pet-article-media pet-article-media--compact pet-article-media--left">
   <img src="/images/pet-sitting/cat-guest-04.webp" alt="Кошки спокойно отдыхают на кровати" width="720" height="1280" loading="lazy" />
   <figcaption>Кошки отдыхают в домашней обстановке.</figcaption>
 </figure>
@@ -147,6 +157,11 @@ faq:
 Мы не считаем, что кошку обязательно надо немедленно достать из-под кровати, взять на руки и «познакомить со всеми».
 
 Пусть осваивается в своём темпе.
+
+<figure class="pet-article-media pet-article-video" data-video-id="gzEpuT0el14">
+  <a href="https://youtube.com/shorts/gzEpuT0el14?feature=share" target="_blank" rel="noreferrer">Посмотреть видео кошки-гостя</a>
+  <figcaption>Полосатая кошка лежит на постели.</figcaption>
+</figure>
 
 ## Нужно ли привозить кошку заранее знакомиться с ситтером?
 Не обязательно.
@@ -174,7 +189,7 @@ faq:
 Не потому что кошке обязательно нужен огромный чемодан.
 
 Просто знакомые вещи помогают сделать новое пространство чуть менее новым.
-<figure class="pet-article-media">
+<figure class="pet-article-media pet-article-media--wide">
   <img src="/images/pet-sitting/cat-guest-05.webp" alt="Кошка-гость отдыхает рядом с человеком" width="720" height="1280" loading="lazy" />
   <figcaption>Кошка-гость отдыхает у нас дома.</figcaption>
 </figure>
@@ -207,6 +222,11 @@ faq:
 а:
 
 > «Сколько времени вы реально будете находиться с кошками и что входит в визит?»
+
+<figure class="pet-article-media">
+  <img src="/images/pet-sitting/cat-guest-01.webp" alt="Две кошки лежат на кровати" width="720" height="1280" loading="lazy" />
+  <figcaption>Две кошки лежат на кровати.</figcaption>
+</figure>
 
 ## Что я бы выбрал для своей кошки?
 Если кошка:
