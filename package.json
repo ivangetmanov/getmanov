@@ -7,7 +7,8 @@
     "preview": "astro preview",
     "check:links": "node scripts/check-site-links.mjs",
     "check:pet-calendar": "node scripts/check-pet-sitting-calendar.mjs",
-    "verify": "npm run build && npm run check:links && npm run check:pet-calendar"
+    "check:pet-inquiry": "node scripts/check-pet-sitting-inquiry.mjs",
+    "verify": "npm run build && npm run check:links && npm run check:pet-calendar && npm run check:pet-inquiry"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.0.0",

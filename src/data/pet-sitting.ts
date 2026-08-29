@@ -1,4 +1,5 @@
 import { petSittingUnavailablePeriods } from "./pet-sitting-availability.mjs";
+import { formatRsd, petSittingBusiness } from "../lib/pet-sitting-business.mjs";
 
 export type PetSittingPageKind = "main" | "dogs" | "cats";
 
@@ -7,17 +8,18 @@ export type PetSittingPageKind = "main" | "dogs" | "cats";
  * Update the shared data modules for availability, pricing, Telegram, photos, or video embeds.
  */
 export const petSittingConfig = {
-  telegramUsername: "ya_kushka",
+  telegramUsername: petSittingBusiness.telegramUsername,
+  contactPhone: petSittingBusiness.contactPhone,
   unavailablePeriods: petSittingUnavailablePeriods,
   prices: {
     oneAnimal: [
-      { duration: "1–3 дня", price: "2 000 RSD в сутки" },
-      { duration: "4–13 дней", price: "1 500 RSD в сутки" },
+      { duration: "1–3 дня", price: `${formatRsd(petSittingBusiness.pricing[1].shortStayDailyRate)} RSD в сутки` },
+      { duration: "4–13 дней", price: `${formatRsd(petSittingBusiness.pricing[1].standardDailyRate)} RSD в сутки` },
       { duration: "14+ дней", price: "обсуждаем цену и возможную скидку отдельно" },
     ],
     twoAnimals: [
-      { duration: "1–3 дня", price: "3 000 RSD в сутки" },
-      { duration: "4–13 дней", price: "2 500 RSD в сутки" },
+      { duration: "1–3 дня", price: `${formatRsd(petSittingBusiness.pricing[2].shortStayDailyRate)} RSD в сутки` },
+      { duration: "4–13 дней", price: `${formatRsd(petSittingBusiness.pricing[2].standardDailyRate)} RSD в сутки` },
       { duration: "14+ дней", price: "обсуждаем отдельно" },
     ],
   },
@@ -38,7 +40,7 @@ export const petSittingConfig = {
     },
   ],
   heroPhotos: {
-    main: "/images/pet-sitting/cat-guest-01.webp",
+    main: "/images/pet-sitting/main-hero.webp",
     dogs: "/images/pet-sitting/dog-guest-02.webp",
     cats: "/images/pet-sitting/cats-hero.webp",
   } as Record<PetSittingPageKind, string>,
@@ -93,7 +95,7 @@ export const petSittingPages: Record<PetSittingPageKind, {
   focus: string;
 }> = {
   main: {
-    path: "/ru/novi-sad/pet-sitting/",
+    path: petSittingBusiness.pagePaths.ru.main,
     title: "Передержка животных в Нови-Саде — домашний петситтинг в Петроварадине",
     description: "Домашняя передержка собак и кошек в Петроварадине, Нови-Сад. Привычный режим, до 2 гостей, фото и видео, знакомство до первого проживания.",
     h1: "Домашняя передержка собак и кошек в Нови‑Саде",
@@ -101,7 +103,7 @@ export const petSittingPages: Record<PetSittingPageKind, {
     focus: "Для собак и кошек",
   },
   dogs: {
-    path: "/ru/novi-sad/pet-sitting/dogs/",
+    path: petSittingBusiness.pagePaths.ru.dogs,
     title: "Передержка собак в Нови-Саде — домашний догситтер в Петроварадине",
     description: "Домашняя передержка собак в Петроварадине, Нови-Сад: привычный график прогулок и кормления, знакомство до первого проживания, фото и видео.",
     h1: "Передержка собак в Нови‑Саде",
@@ -109,7 +111,7 @@ export const petSittingPages: Record<PetSittingPageKind, {
     focus: "Для собак",
   },
   cats: {
-    path: "/ru/novi-sad/pet-sitting/cats/",
+    path: petSittingBusiness.pagePaths.ru.cats,
     title: "Передержка кошек в Нови-Саде — домашний ситтер в Петроварадине",
     description: "Домашняя передержка кошек в Петроварадине, Нови-Сад: отдельное пространство, привычный корм и наполнитель, спокойное знакомство, фото и видео.",
     h1: "Передержка кошек в Нови‑Саде",
@@ -120,7 +122,7 @@ export const petSittingPages: Record<PetSittingPageKind, {
 
 export const petSittingPagesEn: typeof petSittingPages = {
   main: {
-    path: "/en/novi-sad/pet-sitting/",
+    path: petSittingBusiness.pagePaths.en.main,
     title: "Pet Boarding in Novi Sad — Home Pet Sitting in Petrovaradin",
     description: "Home pet boarding for dogs and cats in Petrovaradin, Novi Sad. Familiar routines, up to two guest pets, real photos and videos, and a free introduction before the first stay.",
     h1: "Home pet boarding for dogs and cats in Novi Sad",
@@ -128,7 +130,7 @@ export const petSittingPagesEn: typeof petSittingPages = {
     focus: "Pet boarding",
   },
   dogs: {
-    path: "/en/novi-sad/pet-sitting/dogs/",
+    path: petSittingBusiness.pagePaths.en.dogs,
     title: "Dog Boarding in Novi Sad — Home Dog Sitter in Petrovaradin",
     description: "Home dog boarding in Petrovaradin, Novi Sad. Familiar walking and feeding routines, real guest videos, a free introduction and a trial stay before boarding.",
     h1: "Dog boarding in Novi Sad",
@@ -136,7 +138,7 @@ export const petSittingPagesEn: typeof petSittingPages = {
     focus: "Dog boarding",
   },
   cats: {
-    path: "/en/novi-sad/pet-sitting/cats/",
+    path: petSittingBusiness.pagePaths.en.cats,
     title: "Cat Boarding in Novi Sad — Home Cat Sitter in Petrovaradin",
     description: "Home cat boarding in Petrovaradin, Novi Sad. Separate rooms when needed, familiar food and litter, no forced interaction, real photos and videos.",
     h1: "Cat boarding in Novi Sad",

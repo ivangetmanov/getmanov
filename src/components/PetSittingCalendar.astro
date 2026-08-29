@@ -1,12 +1,25 @@
 ---
-import { petSittingConfig } from "../data/pet-sitting";
+import { petSittingConfig, type PetSittingPageKind } from "../data/pet-sitting";
+import { petSittingBusiness } from "../lib/pet-sitting-business.mjs";
 
-const { locale = "ru" } = Astro.props as { locale?: "ru" | "en" };
+const { locale = "ru", kind = "main" } = Astro.props as {
+  locale?: "ru" | "en";
+  kind?: PetSittingPageKind;
+};
 const isEnglish = locale === "en";
+const defaultAnimal = kind === "cats" ? "cat" : "dog";
+const phoneDigits = petSittingConfig.contactPhone.replace(/\D/g, "");
+const telegramDirectUrl = `https://t.me/${petSittingConfig.telegramUsername}`;
+const whatsappDirectUrl = `https://wa.me/${phoneDigits}`;
+const viberDirectUrl = `viber://chat?number=${encodeURIComponent(petSittingConfig.contactPhone)}`;
 const config = {
   unavailablePeriods: petSittingConfig.unavailablePeriods,
   telegramUsername: petSittingConfig.telegramUsername,
+  contactPhone: petSittingConfig.contactPhone,
   locale,
+  pageKind: kind,
+  pageLabel: petSittingBusiness.pageLabels[locale][kind],
+  sourcePage: petSittingBusiness.pagePaths[locale][kind],
 };
 ---
 
@@ -30,8 +43,9 @@ const config = {
     </div>
     <div class="calendar-months" data-calendar-months></div>
 
-    <form class="inquiry-form" data-inquiry-form>
+    <form class="inquiry-form" data-inquiry-form novalidate>
       <div class="inquiry-summary" data-inquiry-summary>{isEnglish ? "No dates selected yet." : "Даты пока не выбраны."}</div>
+      <div class="inquiry-price" data-inquiry-price hidden aria-live="polite"></div>
       <label class="checkbox-label">
         <input type="checkbox" name="flexible" />
         <span>{isEnglish ? "Approximate dates — we can move them slightly" : "Даты примерные, можем немного сдвинуть"}</span>
@@ -39,8 +53,8 @@ const config = {
       <div class="inquiry-fields">
         <label>{isEnglish ? "Pet" : "Питомец"}
           <select name="animal">
-            <option value={isEnglish ? "dog" : "собака"}>{isEnglish ? "dog" : "собака"}</option>
-            <option value={isEnglish ? "cat" : "кошка"}>{isEnglish ? "cat" : "кошка"}</option>
+            <option value="dog" selected={defaultAnimal === "dog"}>{isEnglish ? "dog" : "собака"}</option>
+            <option value="cat" selected={defaultAnimal === "cat"}>{isEnglish ? "cat" : "кошка"}</option>
           </select>
         </label>
         <label>{isEnglish ? "Number of pets" : "Количество"}
@@ -54,18 +68,27 @@ const config = {
           <small id="telegram-help">{isEnglish ? "Anna needs this to reply quickly." : "Нужен, чтобы Анна могла быстро ответить."}</small>
         </label>
       </div>
-      {petSittingConfig.telegramUsername ? (
-        <a class="telegram-button" href={"https://t.me/" + petSittingConfig.telegramUsername} data-calendar-telegram target="_blank" rel="noreferrer">{isEnglish ? "Open Telegram with enquiry" : "Открыть Telegram с заявкой"}</a>
-      ) : (
-        <button class="telegram-button" type="button" disabled title={isEnglish ? "Add Anna's Telegram in src/data/pet-sitting.ts before launch" : "Перед запуском добавьте Telegram Анны в src/data/pet-sitting.ts"}>{isEnglish ? "Anna's Telegram will be added before launch" : "Telegram Анны будет добавлен перед запуском"}</button>
-      )}
-      <p class="form-note" data-form-note>{isEnglish ? "There is no server-side form. The message opens in Telegram and you choose when to send it." : "Никакой формы на сервере нет: сообщение откроется в Telegram, а вы сами нажмёте «Отправить»."}</p>
+      <div class="inquiry-honeypot" aria-hidden="true">
+        <label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+      </div>
+      <button class="enquiry-submit" type="submit" data-enquiry-submit disabled>{isEnglish ? "Send enquiry" : "Отправить заявку"}</button>
+      <p class="form-note" data-form-note role="status" aria-live="polite">{isEnglish ? "Choose dates and enter your Telegram username." : "Выберите даты и укажите Telegram username."}</p>
+
+      <div class="direct-contact" data-direct-contact-group>
+        <p>{isEnglish ? "Or message us directly" : "Или написать напрямую"}</p>
+        <div class="direct-contact__links">
+          <a href={telegramDirectUrl} data-direct-contact data-channel="telegram" target="_blank" rel="noreferrer">Telegram · @{petSittingConfig.telegramUsername}</a>
+          {isEnglish && <a href={whatsappDirectUrl} data-direct-contact data-channel="whatsapp" target="_blank" rel="noreferrer">WhatsApp</a>}
+          {isEnglish && <a href={viberDirectUrl} data-direct-contact data-channel="viber">Viber</a>}
+        </div>
+      </div>
     </form>
   </div>
 </section>
 
 <script>
-  import { billableStayDays, isDateUnavailable } from "../lib/pet-sitting-calendar.mjs";
+  import { isDateUnavailable } from "../lib/pet-sitting-calendar.mjs";
+  import { calculatePetSittingQuote, formatRsd } from "../lib/pet-sitting-business.mjs";
 
   const root = document.querySelector('[data-pet-calendar]');
   if (root) {
@@ -74,19 +97,24 @@ const config = {
     const monthsNode = root.querySelector('[data-calendar-months]');
     const status = root.querySelector('#calendar-status');
     const summary = root.querySelector('[data-inquiry-summary]');
-    const telegramLink = root.querySelector('[data-calendar-telegram]');
+    const priceSummary = root.querySelector('[data-inquiry-price]');
     const form = root.querySelector('[data-inquiry-form]');
     const formNote = root.querySelector('[data-form-note]');
+    const submitButton = root.querySelector('[data-enquiry-submit]');
+    const telegramLink = root.querySelector('[data-channel="telegram"]');
+    const whatsappLink = root.querySelector('[data-channel="whatsapp"]');
     const today = new Date();
     const todayKey = toKey(today.getFullYear(), today.getMonth(), today.getDate());
-    let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
-    let start = '';
-    let end = '';
     const unavailable = settings.unavailablePeriods || [];
     const monthNames = isEnglish
       ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
       : ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     const weekdays = isEnglish ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
+    let start = '';
+    let end = '';
+    let submitting = false;
+    let feedbackState = 'idle';
 
     function toKey(year, month, day) {
       return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -105,43 +133,125 @@ const config = {
     function formatDate(key) {
       return new Intl.DateTimeFormat(isEnglish ? 'en-GB' : 'ru-RU', { day: 'numeric', month: 'long' }).format(fromKey(key));
     }
-    function duration() {
-      return billableStayDays(start, end);
+    function normalizeUsername(value) {
+      const trimmed = value.trim();
+      return trimmed && !trimmed.startsWith('@') ? `@${trimmed}` : trimmed;
+    }
+    function currentQuote() {
+      return calculatePetSittingQuote(start, end, form.querySelector('[name="quantity"]').value);
+    }
+    function createPriceLine(text, className = '') {
+      const line = document.createElement('p');
+      line.textContent = text;
+      if (className) line.className = className;
+      return line;
+    }
+    function renderPrice(quote) {
+      priceSummary.replaceChildren();
+      priceSummary.hidden = !quote;
+      if (!quote) return;
+
+      priceSummary.append(createPriceLine(
+        isEnglish ? `${quote.billableDays} days of stay` : `${quote.billableDays} дней передержки`,
+        'inquiry-price__duration',
+      ));
+      if (quote.individualPricing) {
+        priceSummary.append(createPriceLine(
+          isEnglish ? "For longer stays, we'll agree the price individually." : 'Для длительной передержки цену обсуждаем отдельно.',
+        ));
+        return;
+      }
+
+      const quantityLabel = isEnglish
+        ? quote.quantity === 1 ? '1 pet' : '2 pets'
+        : quote.quantity === 1 ? '1 животное' : '2 животных';
+      const rate = `${formatRsd(quote.dailyRate, settings.locale)} RSD/${isEnglish ? 'day' : 'день'}`;
+      priceSummary.append(createPriceLine(`${quantityLabel} · ${rate}`));
+      priceSummary.append(createPriceLine(
+        isEnglish ? `Estimated total: ${formatRsd(quote.total, 'en')} RSD` : `Итого: ${formatRsd(quote.total, 'ru')} RSD`,
+        'inquiry-price__total',
+      ));
+    }
+    function directMessage(quote, username) {
+      const animalValue = form.querySelector('[name="animal"]').value;
+      const animal = isEnglish ? animalValue : animalValue === 'dog' ? 'собака' : 'кошка';
+      const flexible = form.querySelector('[name="flexible"]').checked ? (isEnglish ? 'yes' : 'да') : (isEnglish ? 'no' : 'нет');
+      const price = quote.individualPricing
+        ? isEnglish ? 'discuss individually' : 'обсуждается отдельно'
+        : `${formatRsd(quote.total, settings.locale)} RSD`;
+      return isEnglish
+        ? `Hello! I'd like to ask about pet boarding.\n\nDates: ${formatDate(start)} — ${formatDate(end)}\nLength: ${quote.billableDays} days of stay\nPet: ${animal}\nNumber of pets: ${quote.quantity}\nDates flexible: ${flexible}\nEstimated price: ${price}\nMy Telegram: ${username}`
+        : `Здравствуйте! Хочу уточнить передержку.\n\nДаты: ${formatDate(start)} — ${formatDate(end)}\nСрок: ${quote.billableDays} дней передержки\nПитомец: ${animal}\nКоличество: ${quote.quantity}\nДаты примерные: ${flexible}\nРасчётная цена: ${price}\nМой Telegram: ${username}`;
+    }
+    function trackEvent(name, parameters = {}) {
+      if (typeof window.gtag !== 'function') return;
+      window.gtag('event', name, {
+        source_page: settings.sourcePage,
+        locale: settings.locale,
+        ...parameters,
+      });
+    }
+    function updateDirectLinks(quote, username) {
+      const telegramBase = `https://t.me/${settings.telegramUsername}`;
+      const whatsappBase = `https://wa.me/${String(settings.contactPhone).replace(/\D/g, '')}`;
+      if (!quote) {
+        telegramLink.href = telegramBase;
+        if (whatsappLink) whatsappLink.href = whatsappBase;
+        return;
+      }
+      const message = directMessage(quote, username);
+      telegramLink.href = `${telegramBase}?text=${encodeURIComponent(message)}`;
+      if (whatsappLink) whatsappLink.href = `${whatsappBase}?text=${encodeURIComponent(message)}`;
+    }
+    function renderFeedback(validUsername) {
+      formNote.classList.toggle('is-success', feedbackState === 'success');
+      formNote.classList.toggle('is-error', feedbackState === 'error');
+      if (feedbackState === 'sending') {
+        formNote.textContent = isEnglish ? 'Sending enquiry…' : 'Отправляем заявку…';
+      } else if (feedbackState === 'success') {
+        formNote.textContent = isEnglish ? "Sent! We'll reply to you on Telegram." : 'Готово! Заявка отправлена. Ответим вам в Telegram.';
+      } else if (feedbackState === 'error') {
+        formNote.textContent = isEnglish ? "Couldn't send the enquiry. You can message us directly instead." : 'Не получилось отправить заявку. Можно написать нам напрямую.';
+      } else if (!start || !end) {
+        formNote.textContent = isEnglish ? 'Choose arrival and departure dates.' : 'Выберите даты заезда и выезда.';
+      } else if (!validUsername) {
+        formNote.textContent = isEnglish ? 'Enter your Telegram username: @username.' : 'Укажите Telegram username: @username.';
+      } else {
+        formNote.textContent = isEnglish ? 'Ready to send. We will reply in Telegram.' : 'Можно отправлять. Ответим в Telegram.';
+      }
     }
     function updateInquiry() {
-      const billableDays = duration();
-      summary.textContent = start && end
+      const quote = currentQuote();
+      const usernameInput = form.querySelector('[name="username"]');
+      const rawUsername = usernameInput.value.trim();
+      const username = normalizeUsername(rawUsername);
+      const validUsername = /^@[A-Za-z0-9_]{5,32}$/.test(username);
+      usernameInput.setAttribute('aria-invalid', String(rawUsername.length > 0 && !validUsername));
+
+      summary.textContent = quote
         ? isEnglish
-          ? `Dates: ${formatDate(start)} — ${formatDate(end)} · ${billableDays} days of stay`
-          : `Даты: ${formatDate(start)} — ${formatDate(end)} · ${billableDays} дней передержки`
+          ? `Dates: ${formatDate(start)} — ${formatDate(end)} · ${quote.billableDays} days of stay`
+          : `Даты: ${formatDate(start)} — ${formatDate(end)} · ${quote.billableDays} дней передержки`
         : isEnglish ? 'No dates selected yet.' : 'Даты пока не выбраны.';
-      status.textContent = start && end
+      status.textContent = quote
         ? isEnglish ? `Selected: ${formatDate(start)} — ${formatDate(end)}.` : `Выбрано: ${formatDate(start)} — ${formatDate(end)}.`
         : start
           ? isEnglish ? `Arrival: ${formatDate(start)}. Now choose a departure date.` : `Заезд: ${formatDate(start)}. Теперь выберите выезд.`
           : isEnglish ? 'First choose an arrival date.' : 'Сначала выберите дату заезда.';
-      const usernameInput = form.querySelector('[name="username"]');
-      const rawUsername = usernameInput.value.trim();
-      const username = rawUsername ? (rawUsername.startsWith('@') ? rawUsername : `@${rawUsername}`) : '';
-      const validUsername = /^@[A-Za-z0-9_]{5,32}$/.test(username);
-      usernameInput.setAttribute('aria-invalid', String(rawUsername.length > 0 && !validUsername));
-      if (!telegramLink) return;
-      const flexible = form.querySelector('[name="flexible"]').checked ? (isEnglish ? 'yes' : 'да') : (isEnglish ? 'no' : 'нет');
-      const animal = form.querySelector('[name="animal"]').value;
-      const quantity = form.querySelector('[name="quantity"]').value;
-      const text = isEnglish
-        ? `Hello! I'd like to ask about pet boarding.\n\nDates: ${start && end ? `${formatDate(start)} — ${formatDate(end)}` : 'not selected yet'}\nLength: ${billableDays || '—'} days of stay\nPet: ${animal}\nNumber of pets: ${quantity}\nDates flexible: ${flexible}\nMy Telegram: ${username}`
-        : `Здравствуйте! Хочу уточнить передержку.\n\nДаты: ${start && end ? `${formatDate(start)} — ${formatDate(end)}` : 'ещё не выбраны'}\nСрок: ${billableDays || '—'} дней передержки\nПитомец: ${animal}\nКоличество: ${quantity}\nДаты примерные: ${flexible}\nМой Telegram: ${username}`;
-      telegramLink.href = `https://t.me/${settings.telegramUsername}?text=${encodeURIComponent(text)}`;
-      const canOpenTelegram = Boolean(start && end && validUsername);
-      telegramLink.setAttribute('aria-disabled', String(!canOpenTelegram));
-      telegramLink.classList.toggle('is-disabled', !canOpenTelegram);
-      formNote.textContent = !validUsername
-        ? isEnglish ? 'Enter your Telegram username: @username.' : 'Укажите Telegram username: @username.'
-        : isEnglish ? 'There is no server-side form. The message opens in Telegram and you choose when to send it.' : 'Никакой формы на сервере нет: сообщение откроется в Telegram, а вы сами нажмёте «Отправить».';
+
+      renderPrice(quote);
+      updateDirectLinks(quote, username);
+      renderFeedback(validUsername);
+      const canSubmit = Boolean(quote && validUsername && !submitting && feedbackState !== 'success');
+      submitButton.disabled = !canSubmit;
+      submitButton.textContent = feedbackState === 'sending'
+        ? isEnglish ? 'Sending…' : 'Отправляем…'
+        : isEnglish ? 'Send enquiry' : 'Отправить заявку';
+      return { quote, username, validUsername, canSubmit };
     }
     function choose(key) {
       if (isPast(key) || isUnavailable(key)) return;
+      feedbackState = 'idle';
       if (!start || end || key < start) {
         start = key;
         end = '';
@@ -187,11 +297,54 @@ const config = {
       monthsNode.replaceChildren(renderMonth(cursor), renderMonth(new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1)));
       root.querySelector('[data-calendar-prev]').disabled = cursor.getFullYear() === today.getFullYear() && cursor.getMonth() === today.getMonth();
     }
+
     root.querySelector('[data-calendar-prev]').addEventListener('click', () => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1); render(); });
     root.querySelector('[data-calendar-next]').addEventListener('click', () => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1); render(); });
-    form.addEventListener('input', updateInquiry);
-    telegramLink?.addEventListener('click', (event) => {
-      if (telegramLink.getAttribute('aria-disabled') === 'true') event.preventDefault();
+    form.addEventListener('input', () => {
+      if (!submitting) feedbackState = 'idle';
+      updateInquiry();
+    });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (submitting) return;
+      const current = updateInquiry();
+      if (!current.canSubmit) return;
+
+      submitting = true;
+      feedbackState = 'sending';
+      trackEvent('pet_sitting_enquiry_submit');
+      updateInquiry();
+      try {
+        const response = await fetch('/.netlify/functions/pet-sitting-inquiry', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            arrival: start,
+            departure: end,
+            pet: form.querySelector('[name="animal"]').value,
+            quantity: Number(form.querySelector('[name="quantity"]').value),
+            flexible: form.querySelector('[name="flexible"]').checked,
+            telegramUsername: current.username,
+            website: form.querySelector('[name="website"]').value,
+            locale: settings.locale,
+            pageKind: settings.pageKind,
+            sourcePage: settings.sourcePage,
+          }),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result.ok) throw new Error('submission_failed');
+        feedbackState = 'success';
+        trackEvent('pet_sitting_enquiry_success');
+      } catch {
+        feedbackState = 'error';
+        trackEvent('pet_sitting_enquiry_error');
+      } finally {
+        submitting = false;
+        updateInquiry();
+      }
+    });
+    root.querySelectorAll('[data-direct-contact]').forEach((link) => {
+      link.addEventListener('click', () => trackEvent('pet_sitting_direct_contact_click', { channel: link.dataset.channel }));
     });
     render();
     updateInquiry();

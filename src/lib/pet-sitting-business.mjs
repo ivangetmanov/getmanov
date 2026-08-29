@@ -1,0 +1,68 @@
+import { billableStayDays } from "./pet-sitting-calendar.mjs";
+
+export const petSittingBusiness = {
+  telegramUsername: "ya_kushka",
+  contactPhone: "+381628426881",
+  longStayFromDays: 14,
+  pricing: {
+    1: { shortStayMaxDays: 3, shortStayDailyRate: 2000, standardDailyRate: 1500 },
+    2: { shortStayMaxDays: 3, shortStayDailyRate: 3000, standardDailyRate: 2500 },
+  },
+  pagePaths: {
+    ru: {
+      main: "/ru/novi-sad/pet-sitting/",
+      dogs: "/ru/novi-sad/pet-sitting/dogs/",
+      cats: "/ru/novi-sad/pet-sitting/cats/",
+    },
+    en: {
+      main: "/en/novi-sad/pet-sitting/",
+      dogs: "/en/novi-sad/pet-sitting/dogs/",
+      cats: "/en/novi-sad/pet-sitting/cats/",
+    },
+  },
+  pageLabels: {
+    ru: { main: "Домашняя передержка", dogs: "Передержка собак", cats: "Передержка кошек" },
+    en: { main: "Pet boarding", dogs: "Dog boarding", cats: "Cat boarding" },
+  },
+};
+
+export function formatRsd(amount, locale = "ru") {
+  const separator = locale === "en" ? "," : " ";
+  return String(amount).replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+}
+
+export function calculatePetSittingQuote(arrival, departure, quantity) {
+  const petQuantity = Number(quantity);
+  if (!arrival || !departure || ![1, 2].includes(petQuantity)) return null;
+
+  let billableDays;
+  try {
+    billableDays = billableStayDays(arrival, departure);
+  } catch {
+    return null;
+  }
+  if (!billableDays) return null;
+
+  if (billableDays >= petSittingBusiness.longStayFromDays) {
+    return {
+      billableDays,
+      quantity: petQuantity,
+      dailyRate: null,
+      total: null,
+      individualPricing: true,
+    };
+  }
+
+  const pricing = petSittingBusiness.pricing[petQuantity];
+  const dailyRate = billableDays <= pricing.shortStayMaxDays
+    ? pricing.shortStayDailyRate
+    : pricing.standardDailyRate;
+
+  return {
+    billableDays,
+    quantity: petQuantity,
+    dailyRate,
+    total: billableDays * dailyRate,
+    individualPricing: false,
+  };
+}

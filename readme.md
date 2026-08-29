@@ -6,11 +6,11 @@ This repository contains a static website built with Astro and deployed to Netli
 
 **Project type:** Static website  
 **Primary goal:** Content-driven site with tools, notes, projects, and case studies  
-**Rendering model:** Static generation only
+**Rendering model:** Static generation with one isolated Netlify Function for pet-sitting enquiry delivery
 
 ### Explicit non-goals (important)
 
-- ❌ No backend
+- ❌ No general application backend beyond the isolated pet-sitting notification function
 - ❌ No databases
 - ❌ No authentication
 - ❌ No SSR
@@ -81,6 +81,10 @@ src/
      └─ tools/
          ├─ index.astro             -> /tools
          └─ track-email-copy.astro  -> /tools/track-email-copy
+
+netlify/
+ └─ functions/
+     └─ pet-sitting-inquiry.mjs     -> Telegram delivery for pet-sitting enquiries
 ````
 ### Structural rules
 
@@ -137,6 +141,15 @@ Continue
 
 Netlify logs are the **single source of truth** for build errors.
 
+### Pet-sitting enquiry environment variables
+
+The `pet-sitting-inquiry` Netlify Function requires these production environment variables:
+
+* `PET_SITTING_TELEGRAM_BOT_TOKEN`
+* `PET_SITTING_TELEGRAM_CHAT_ID`
+
+They are server-side secrets and must never be exposed through Astro page data or client-side JavaScript. If either variable is unavailable, the function returns a temporary delivery error while the direct Telegram, WhatsApp, and Viber links remain usable.
+
 Continue
 
 ## 8. Known Pitfalls
@@ -155,7 +168,7 @@ When assisting with this repository, the LLM MUST assume:
 
 * Static Astro project
 * Linux case-sensitive filesystem
-* No backend or server logic
+* No general backend or server logic beyond the isolated pet-sitting notification function
 * No SSR
 * Manual component imports only
 * Markdown is plain CommonMark (no Obsidian extensions)
