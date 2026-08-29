@@ -39,17 +39,39 @@ const slugs = [
   },
 ];
 
-const russianCopyHashes = {
-  "pet-sitter-vs-boarding": "c41f56b9431d222a89ac16aa31a013ec331b120353f96fa6d75b99e30ddd4bb1",
-  "can-cat-stay-alone-for-a-week": "4fc36aec7d5c992d92b32a099265fbd1b48d474728cc2bdbc754f48a28b86c8c",
-  "prepare-dog-for-boarding": "648487a53390195c432448aa3ff29cd482e53a70c3ca58f7e4a434ffc0090c13",
-  "prepare-cat-for-boarding": "963600d79d91c45be8e5353b4f9c9bcf144339532bd29d9d8cf7c3e766f12520",
+const copyHashes = {
+  ru: {
+    "pet-sitter-vs-boarding": "c41f56b9431d222a89ac16aa31a013ec331b120353f96fa6d75b99e30ddd4bb1",
+    "can-cat-stay-alone-for-a-week": "4fc36aec7d5c992d92b32a099265fbd1b48d474728cc2bdbc754f48a28b86c8c",
+    "prepare-dog-for-boarding": "648487a53390195c432448aa3ff29cd482e53a70c3ca58f7e4a434ffc0090c13",
+    "prepare-cat-for-boarding": "963600d79d91c45be8e5353b4f9c9bcf144339532bd29d9d8cf7c3e766f12520",
+  },
+  en: {
+    "pet-sitter-vs-boarding": "87d87fbfcad2a86a5269ea6757854f207a3b36cc81a850b0fbb677482585d268",
+    "can-cat-stay-alone-for-a-week": "e306abef7d1f3fbc0d27abef7f4f317a257784307272ca3e866447883f1a51b0",
+    "prepare-dog-for-boarding": "adde415e61b1cfc9af452b4860c2ddd45949fd3aabb766189a9e2f3b5e224203",
+    "prepare-cat-for-boarding": "4abec575e3e1928fd978b95b7607f498dbe0ba2bae70275728e6ba270e0f3e81",
+  },
 };
 const interactionSelectors = {
   "pet-sitter-vs-boarding": '[data-article-decision-tool][data-tool-type="care_comparison"]',
   "can-cat-stay-alone-for-a-week": '[data-cat-care-tool][data-tool-type="cat_care_options"]',
   "prepare-dog-for-boarding": '[data-article-checklist][data-tool-type="dog_preparation_checklist"]',
   "prepare-cat-for-boarding": '[data-article-checklist][data-tool-type="cat_preparation_checklist"]',
+};
+const placementBounds = {
+  ru: {
+    "pet-sitter-vs-boarding": ["Четыре основных варианта", "Визиты зооняни: животное остаётся дома", "Домашняя передержка: питомец живёт дома у ситтера", "Зоогостиница"],
+    "can-cat-stay-alone-for-a-week": ["Можно ли оставить кошку одну на неделю?", "А если поставить автоматическую кормушку?", "Когда домашняя передержка может оказаться лучше", "Что для кошки хуже: новое место или одиночество?"],
+    "prepare-dog-for-boarding": ["Короткий чек-лист перед передержкой", "Расскажите, как собака реально живёт дома", "Если собака никогда не оставалась с чужими — можно сделать пробу", "Не переучивайте собаку специально перед передержкой"],
+    "prepare-cat-for-boarding": ["Короткий чек-лист", "Проверьте прививки заранее", "А что с переноской?", "Расскажите ситтеру, какой ваша кошка бывает на самом деле"],
+  },
+  en: {
+    "pet-sitter-vs-boarding": ["The four main options", "Drop-in visits: the pet remains at home", "Home boarding: the pet stays in the sitter's home", "Pet hotels"],
+    "can-cat-stay-alone-for-a-week": ["Can you leave a cat alone for a week?", "What if you use an automatic feeder?", "When home boarding may be a better option", "Which is harder for the cat: a new place or being alone?"],
+    "prepare-dog-for-boarding": ["A short pre-boarding checklist", "Explain how your dog actually lives at home", "If the dog has never stayed with someone else, try a short visit", "Do not try to retrain the dog specifically for boarding"],
+    "prepare-cat-for-boarding": ["A short checklist", "Check vaccinations in advance", "What about the carrier?", "Tell the sitter what your cat is actually like"],
+  },
 };
 
 const servicePath = (locale, service) =>
@@ -85,17 +107,56 @@ for (const locale of ["ru", "en"]) {
       document.querySelector(`.pet-article a[href="${servicePath(locale, article.service)}"]`),
       `${path} must link to its primary service page`,
     );
-    if (locale === "ru") {
-      assert(document.querySelector(interactionSelectors[article.slug]), `${path} needs its mapped interactive tool`);
-      assert(document.querySelector(`[data-article-interactions="${article.slug}"]`));
-      const compactCalendar = document.querySelector("[data-pet-calendar].availability--compact");
-      assert(compactCalendar, `${path} needs the shared compact calendar`);
-      const compactConfig = JSON.parse(compactCalendar.getAttribute("data-pet-calendar"));
-      assert.equal(compactConfig.articleSlug, article.slug);
-      assert.equal(compactConfig.sourcePage, path);
-      assert(document.querySelector("#boarding-days.pet-article-billing-faq"), `${path} needs the shared billing FAQ anchor`);
-    } else {
-      assert.equal(document.querySelector("[data-article-interactions]"), null, `${path} should not receive unrequested EN interaction copy`);
+    const helper = document.querySelector('[data-article-interaction="helper"]');
+    const booking = document.querySelector('[data-article-interaction="booking"]');
+    const calendar = booking?.querySelector("[data-pet-calendar]");
+    assert(document.querySelector(interactionSelectors[article.slug]), `${path} needs its mapped localized helper`);
+    assert(helper, `${path} needs one early helper`);
+    assert(booking, `${path} needs one contextual booking block`);
+    assert.equal(document.querySelectorAll('[data-article-interaction="helper"]').length, 1, `${path} must not duplicate its helper`);
+    assert.equal(document.querySelectorAll('[data-article-interaction="booking"]').length, 1, `${path} must not duplicate its booking block`);
+    assert.equal(document.querySelectorAll("[data-pet-calendar]").length, 1, `${path} must render one shared calendar`);
+    assert(calendar, `${path} needs the full shared calendar inside its booking block`);
+    assert.equal(calendar.classList.contains("availability--compact"), false, `${path} must not use the removed compact variant`);
+    const calendarConfig = JSON.parse(calendar.getAttribute("data-pet-calendar"));
+    assert.equal(calendarConfig.locale, locale);
+    assert.equal(calendarConfig.articleSlug, article.slug);
+    assert.equal(calendarConfig.sourcePage, path);
+    assert(document.querySelector("#boarding-days.pet-article-billing-faq"), `${path} needs the shared billing FAQ anchor`);
+
+    const headings = [...document.querySelectorAll(".pet-article h1, .pet-article h2")];
+    const normalizeApostrophes = (text) => text.replace(/[‘’]/g, "'").trim();
+    const heading = (text) => headings.find((node) => normalizeApostrophes(node.textContent) === normalizeApostrophes(text));
+    const [helperAfter, helperBefore, bookingAfter, bookingBefore] = placementBounds[locale][article.slug];
+    for (const title of [helperAfter, helperBefore, bookingAfter, bookingBefore]) {
+      assert(heading(title), `${path} is missing placement boundary: ${title}`);
+    }
+    assert(heading(helperAfter).compareDocumentPosition(helper) & 4, `${path} helper must follow ${helperAfter}`);
+    assert(helper.compareDocumentPosition(heading(helperBefore)) & 4, `${path} helper must precede ${helperBefore}`);
+    assert(heading(bookingAfter).compareDocumentPosition(booking) & 4, `${path} booking must follow ${bookingAfter}`);
+    assert(booking.compareDocumentPosition(heading(bookingBefore)) & 4, `${path} booking must precede ${bookingBefore}`);
+
+    if (article.slug === "pet-sitter-vs-boarding") {
+      assert.equal(helper.querySelectorAll("select").length, 0, `${path} comparison helper must not use dropdowns`);
+      assert.equal(helper.querySelectorAll('input[type="radio"]').length, 10, `${path} comparison helper needs all ten visible radio options`);
+      for (const [name, count] of [["alone", 3], ["newPlace", 3], ["company", 2], ["care", 2]]) {
+        assert.equal(helper.querySelectorAll(`input[type="radio"][name="${name}"]`).length, count, `${path} has the wrong ${name} option count`);
+      }
+      const optionLabels = [...helper.querySelectorAll(".pet-article-options span")].map((node) => node.textContent.trim());
+      const questionLabels = [...helper.querySelectorAll(".pet-article-question legend")].map((node) => node.textContent.trim());
+      const expectedOptions = locale === "ru"
+        ? ["Да", "Не всегда", "Нет", "Обычно нет", "Да", "Пока не знаем", "Да", "Нет", "Да", "Нет"]
+        : ["Yes", "Not always", "No", "Usually not", "Yes", "We do not know yet", "Yes", "No", "Yes", "No"];
+      const expectedQuestions = locale === "ru"
+        ? ["Питомец спокойно остаётся один?", "Сильно ли он стрессует в новом месте?", "Нужен ли человек рядом большую часть дня?", "Нужны частый контроль или лекарства?"]
+        : ["Can your pet stay alone comfortably?", "Does a new place cause significant stress?", "Does your pet need a person nearby for most of the day?", "Does your pet need frequent monitoring or medication?"];
+      assert.deepEqual(optionLabels, expectedOptions, `${path} must expose the approved options in order`);
+      assert.deepEqual(questionLabels, expectedQuestions, `${path} must preserve the approved question wording`);
+      assert.deepEqual(
+        [...helper.querySelectorAll('input[type="radio"]')].map((input) => input.value),
+        ["yes", "sometimes", "no", "low", "high", "unknown", "yes", "no", "yes", "no"],
+        `${path} must preserve the existing recommendation values`,
+      );
     }
 
     const mediaImages = [...document.querySelectorAll(".pet-article .pet-article-media > img")];
@@ -167,13 +228,17 @@ for (const locale of ["ru", "en"]) {
   }
 }
 
-for (const [slug, expectedHash] of Object.entries(russianCopyHashes)) {
-  const source = await readFile(new URL(`src/pages/ru/novi-sad/pet-sitting/${slug}/index.md`, root), "utf8");
-  const copyWithoutMedia = source
-    .replace(/<div class="pet-article-media-group[^"]*">[\s\S]*?<\/div>\s*/g, "")
-    .replace(/<figure class="pet-article-media[\s\S]*?<\/figure>\s*/g, "");
-  const actualHash = createHash("sha256").update(copyWithoutMedia).digest("hex");
-  assert.equal(actualHash, expectedHash, `${slug} article copy changed outside contextual media figures`);
+for (const locale of ["ru", "en"]) {
+  for (const [slug, expectedHash] of Object.entries(copyHashes[locale])) {
+    const source = await readFile(new URL(`src/pages/${locale}/novi-sad/pet-sitting/${slug}/index.mdx`, root), "utf8");
+    const copyWithoutInteractionsOrMedia = source
+      .replace(/^import PetSittingArticleInteraction[^\n]*\n\s*/m, "")
+      .replace(/^<PetSittingArticleInteraction[^\n]*\/>\n\s*/gm, "")
+      .replace(/<div class="pet-article-media-group[^"]*">[\s\S]*?<\/div>\s*/g, "")
+      .replace(/<figure class="pet-article-media[\s\S]*?<\/figure>\s*/g, "");
+    const actualHash = createHash("sha256").update(copyWithoutInteractionsOrMedia).digest("hex");
+    assert.equal(actualHash, expectedHash, `${locale}/${slug} article prose changed outside component and media insertions`);
+  }
 }
 
 const expectedGuideCounts = { main: 4, dogs: 2, cats: 3 };
@@ -353,6 +418,23 @@ for (const service of Object.keys(expectedGuideCounts)) {
   const path = servicePath("ru", service);
   const html = await readFile(htmlFile(path), "utf8");
   assert(!weakCommitmentPattern.test(new JSDOM(html).window.document.body.textContent), `${path} contains weak service wording`);
+}
+
+const analyticsSources = await Promise.all([
+  "PetSittingCalendar.astro",
+  "PetSittingComparisonHelper.astro",
+  "CatCareOptionsHelper.astro",
+  "PetSittingChecklist.astro",
+].map((file) => readFile(new URL(`src/components/${file}`, root), "utf8")));
+const analyticsSource = analyticsSources.join("\n");
+for (const eventName of [
+  "pet_sitting_article_availability_open",
+  "pet_sitting_article_enquiry_start",
+  "pet_sitting_article_tool_start",
+  "pet_sitting_article_tool_result",
+  "pet_sitting_article_checklist_interaction",
+]) {
+  assert(analyticsSource.includes(eventName), `Article analytics event must remain wired: ${eventName}`);
 }
 
 console.log("Pet-sitting article checks passed for 8 localized guides and 6 service pages.");

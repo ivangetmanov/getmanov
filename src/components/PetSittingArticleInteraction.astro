@@ -1,0 +1,106 @@
+---
+import CatCareOptionsHelper from "./CatCareOptionsHelper.astro";
+import PetSittingCalendar from "./PetSittingCalendar.astro";
+import PetSittingChecklist from "./PetSittingChecklist.astro";
+import PetSittingComparisonHelper from "./PetSittingComparisonHelper.astro";
+import { petSittingBillingFaq } from "../data/pet-sitting-faq";
+import type { PetSittingPageKind } from "../data/pet-sitting";
+
+type Locale = "ru" | "en";
+type Placement = "helper" | "booking";
+type Tool = "comparison" | "cat-options" | "dog-checklist" | "cat-checklist";
+
+const { locale, articleSlug, placement } = Astro.props as {
+  locale: Locale;
+  articleSlug: string;
+  placement: Placement;
+};
+const configurations: Record<string, { kind: PetSittingPageKind; tool: Tool; toolType: string }> = {
+  "pet-sitter-vs-boarding": { kind: "main", tool: "comparison", toolType: "care_comparison" },
+  "can-cat-stay-alone-for-a-week": { kind: "cats", tool: "cat-options", toolType: "cat_care_options" },
+  "prepare-dog-for-boarding": { kind: "dogs", tool: "dog-checklist", toolType: "dog_preparation_checklist" },
+  "prepare-cat-for-boarding": { kind: "cats", tool: "cat-checklist", toolType: "cat_preparation_checklist" },
+};
+const configuration = configurations[articleSlug];
+const billingFaq = petSittingBillingFaq[locale];
+const sourcePage = `/${locale}/novi-sad/pet-sitting/${articleSlug}/`;
+const isEnglish = locale === "en";
+---
+
+{configuration && placement === "helper" && (
+  <div class="pet-article-interaction" data-article-interaction="helper" data-article-slug={articleSlug}>
+    {configuration.tool === "comparison" && <PetSittingComparisonHelper locale={locale} articleSlug={articleSlug} />}
+    {configuration.tool === "cat-options" && <CatCareOptionsHelper locale={locale} articleSlug={articleSlug} />}
+    {configuration.tool === "dog-checklist" && <PetSittingChecklist locale={locale} animal="dog" articleSlug={articleSlug} />}
+    {configuration.tool === "cat-checklist" && <PetSittingChecklist locale={locale} animal="cat" articleSlug={articleSlug} />}
+  </div>
+)}
+
+{configuration && placement === "booking" && (
+  <div class="pet-article-booking" data-article-interaction="booking" data-article-slug={articleSlug}>
+    <div class="pet-article-booking__context">
+      <p class="pet-article-tool__eyebrow">{isEnglish ? "Check your dates" : "Проверить даты"}</p>
+      <h2>{isEnglish ? "Considering home boarding?" : "Рассматриваете передержку?"}</h2>
+      <p>{isEnglish
+        ? "Choose your dates to see whether they are available and get an immediate estimated price."
+        : "Выберите даты — сразу покажем, свободны ли они и сколько примерно будет стоить передержка."}</p>
+    </div>
+    <PetSittingCalendar
+      locale={locale}
+      kind={configuration.kind}
+      sourcePage={sourcePage}
+      articleSlug={articleSlug}
+      toolType={configuration.toolType}
+    />
+    <details class="pet-article-billing-faq" id="boarding-days">
+      <summary>{billingFaq.question}</summary>
+      <p>{billingFaq.answer}</p>
+    </details>
+  </div>
+)}
+
+<style is:global>
+  .pet-article-interaction { margin:3.5rem 0 4.5rem; }
+  .pet-article-tool { margin:0;padding:32px;border:1px solid var(--pet-line);border-radius:22px;background:#f4f7f3; }
+  .pet-article-tool__eyebrow { margin:0 0 8px;color:var(--pet-accent);font-size:12px;font-weight:850;letter-spacing:.1em;text-transform:uppercase; }
+  .pet-article .pet-article-tool h2 { margin:0;padding:0;border:0;font-size:clamp(29px,4vw,40px); }
+  .pet-article-tool>p:not(.pet-article-tool__eyebrow) { color:var(--pet-muted); }
+  .pet-article-tool form { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:24px; }
+  .pet-article-tool form>label { display:grid;gap:7px;color:var(--pet-ink);font-size:15px;font-weight:720;line-height:1.4; }
+  .pet-article-tool select { width:100%;min-height:46px;border:1px solid #cfdad3;border-radius:9px;background:#fff;color:var(--pet-ink);padding:8px 10px;font:inherit; }
+  .pet-article-question { min-width:0;margin:0;border:0;padding:0; }
+  .pet-article-question legend { min-height:42px;margin:0 0 9px;color:var(--pet-ink);font-size:15px;font-weight:760;line-height:1.4; }
+  .pet-article-options { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px; }
+  .pet-article-options--three { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .pet-article-options label { position:relative;display:block;min-width:0;cursor:pointer; }
+  .pet-article-options input { position:absolute;width:1px;height:1px;overflow:hidden;opacity:0; }
+  .pet-article-options span { display:flex;min-height:46px;align-items:center;justify-content:center;border:1px solid #c8d6ce;border-radius:10px;background:#fff;color:#30483e;padding:9px 8px;text-align:center;font-size:14px;font-weight:760;line-height:1.25;transition:border-color .16s ease,background-color .16s ease,color .16s ease,box-shadow .16s ease,transform .16s ease; }
+  .pet-article-options label:hover span { border-color:#789989;background:#f8fbf9; }
+  .pet-article-options input:checked+span { border-color:var(--pet-accent);background:var(--pet-accent);color:#fff;box-shadow:0 5px 13px rgba(31,94,69,.18); }
+  .pet-article-options input:focus-visible+span { outline:3px solid rgba(31,94,69,.28);outline-offset:2px; }
+  .pet-article-options label:active span { transform:translateY(1px); }
+  .pet-article-tool form button { grid-column:1 / -1;min-height:48px;border:0;border-radius:9px;background:var(--pet-accent);color:#fff;font:inherit;font-weight:800;cursor:pointer; }
+  .pet-article-tool__result { margin-top:20px;border-left:4px solid var(--pet-accent);padding:15px 18px;background:#e6f0ea; }
+  .pet-article-tool__result[hidden] { display:none; }
+  .pet-article-tool__result strong { display:block;font-size:18px;line-height:1.4; }
+  .pet-article-tool__result p { margin:7px 0 0;color:#3f554d;font-size:15px;line-height:1.55; }
+  .pet-article-checklist__items { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:22px; }
+  .pet-article-checklist__items label { display:flex;min-height:50px;align-items:flex-start;gap:11px;border:1px solid #d4ded8;border-radius:10px;padding:12px;background:#fff;cursor:pointer;font-size:15px;line-height:1.4; }
+  .pet-article-checklist__items input { flex:0 0 auto;width:19px;height:19px;margin:1px 0 0;accent-color:var(--pet-accent); }
+  .pet-article-checklist__note { margin-bottom:0;font-size:13px; }
+  .pet-article-booking { container-type:inline-size;margin:4.5rem 0; }
+  .pet-article-booking__context { max-width:680px;margin-bottom:-28px; }
+  .pet-article .pet-article-booking__context h2 { margin:0;padding:0;border:0;font-size:clamp(29px,4vw,40px); }
+  .pet-article-booking__context>p:not(.pet-article-tool__eyebrow) { color:var(--pet-muted); }
+  .pet-article-billing-faq { margin-top:14px;border:1px solid var(--pet-line);border-radius:12px;background:#fff; }
+  .pet-article-billing-faq summary { padding:16px 18px;cursor:pointer;font-weight:780; }
+  .pet-article-billing-faq p { margin:0;padding:0 18px 18px;color:var(--pet-muted);font-size:15px;line-height:1.65;white-space:pre-line; }
+  @media (max-width:600px) {
+    .pet-article-tool { padding:24px 18px; }
+    .pet-article-tool form,.pet-article-checklist__items { grid-template-columns:1fr; }
+    .pet-article-question legend { min-height:auto; }
+    .pet-article-options span { min-height:48px;font-size:13px; }
+    .pet-article-tool form button { grid-column:auto; }
+    .pet-article-booking__context { margin-bottom:-12px; }
+  }
+</style>

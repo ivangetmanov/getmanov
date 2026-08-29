@@ -34,7 +34,17 @@ const pages = [
   { path: "ru/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/index.html", locale: "ru", kind: "cats", articleSlug: "can-cat-stay-alone-for-a-week" },
   { path: "ru/novi-sad/pet-sitting/prepare-dog-for-boarding/index.html", locale: "ru", kind: "dogs", articleSlug: "prepare-dog-for-boarding" },
   { path: "ru/novi-sad/pet-sitting/prepare-cat-for-boarding/index.html", locale: "ru", kind: "cats", articleSlug: "prepare-cat-for-boarding" },
+  { path: "en/novi-sad/pet-sitting/pet-sitter-vs-boarding/index.html", locale: "en", kind: "main", articleSlug: "pet-sitter-vs-boarding" },
+  { path: "en/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/index.html", locale: "en", kind: "cats", articleSlug: "can-cat-stay-alone-for-a-week" },
+  { path: "en/novi-sad/pet-sitting/prepare-dog-for-boarding/index.html", locale: "en", kind: "dogs", articleSlug: "prepare-dog-for-boarding" },
+  { path: "en/novi-sad/pet-sitting/prepare-cat-for-boarding/index.html", locale: "en", kind: "cats", articleSlug: "prepare-cat-for-boarding" },
 ];
+const articleToolTypes = {
+  "pet-sitter-vs-boarding": "care_comparison",
+  "can-cat-stay-alone-for-a-week": "cat_care_options",
+  "prepare-dog-for-boarding": "dog_preparation_checklist",
+  "prepare-cat-for-boarding": "cat_preparation_checklist",
+};
 
 assert.equal(billableStayDays("2026-08-29", "2026-08-30"), 2);
 assert.equal(billableStayDays("2026-08-29", "2026-09-05"), 7);
@@ -88,11 +98,13 @@ for (const key of blockedDates) {
   assert.equal(isDateUnavailable(key, petSittingUnavailablePeriods), true, `${key} should be unavailable`);
 }
 
+const fullCalendarMarkup = new Map();
 for (const page of pages) {
   const html = await readFile(`${projectRoot}dist/${page.path}`, "utf8");
   const dom = new JSDOM(html);
   const calendar = dom.window.document.querySelector("[data-pet-calendar]");
   assert.ok(calendar, `${page.path} should contain a pet-sitting calendar`);
+  assert.equal(dom.window.document.querySelectorAll("[data-pet-calendar]").length, 1, `${page.path} should contain exactly one calendar`);
 
   const config = JSON.parse(calendar.getAttribute("data-pet-calendar"));
   assert.equal(config.locale, page.locale, `${page.path} should use the correct locale`);
@@ -101,8 +113,8 @@ for (const page of pages) {
     ? `/${page.path.replace(/index\.html$/, "")}`
     : petSittingBusiness.pagePaths[page.locale][page.kind];
   assert.equal(config.sourcePage, expectedSourcePage);
-  assert.equal(config.variant, page.articleSlug ? "compact" : "full");
   assert.equal(config.articleSlug, page.articleSlug ?? "");
+  assert.equal(config.toolType, page.articleSlug ? articleToolTypes[page.articleSlug] : "full_enquiry");
   assert.deepEqual(config.unavailablePeriods, petSittingUnavailablePeriods, `${page.path} should use shared unavailable dates`);
   for (const key of blockedDates) {
     assert.equal(isDateUnavailable(key, config.unavailablePeriods), true, `${key} should be blocked on ${page.path}`);
@@ -110,6 +122,9 @@ for (const page of pages) {
 
   assert.ok(calendar.querySelector("[data-enquiry-submit][disabled]"), `${page.path} should have a disabled enquiry button initially`);
   assert.ok(calendar.querySelector('input[name="website"]'), `${page.path} should include a honeypot field`);
+  assert.ok(calendar.querySelector("[data-inquiry-details]:not([hidden])"), `${page.path} should expose the complete enquiry form`);
+  assert.equal(calendar.querySelector("[data-compact-enquiry-open]"), null, `${page.path} must not contain the removed compact disclosure`);
+  assert.equal(calendar.classList.contains("availability--compact"), false, `${page.path} must use the full shared calendar`);
   assert.equal(calendar.querySelector('input[type="time"]'), null, `${page.path} must remain date-only`);
   const priceHelp = calendar.querySelector('[data-inquiry-price-help][href="#boarding-days"]');
   assert.ok(priceHelp, `${page.path} needs the boarding-day explanation link`);
@@ -142,10 +157,17 @@ for (const page of pages) {
     assert.ok(calendar.querySelector('a[href^="https://wa.me/381628426881"]'));
     assert.ok(calendar.querySelector('a[href^="viber://chat?number=%2B381628426881"]'));
   }
+  const normalizedCalendar = calendar.cloneNode(true);
+  normalizedCalendar.setAttribute("data-pet-calendar", "");
+  const parityKey = `${page.locale}:${page.kind}`;
   if (page.articleSlug) {
-    assert.ok(calendar.classList.contains("availability--compact"));
-    assert.ok(calendar.querySelector("[data-compact-enquiry-open][hidden]"));
-    assert.ok(calendar.querySelector("[data-inquiry-details][hidden]"));
+    assert.equal(
+      normalizedCalendar.outerHTML,
+      fullCalendarMarkup.get(parityKey),
+      `${page.path} calendar markup must exactly match its ${page.locale}/${page.kind} money page`,
+    );
+  } else {
+    fullCalendarMarkup.set(parityKey, normalizedCalendar.outerHTML);
   }
 
   assert.equal(html.includes("PET_SITTING_TELEGRAM_BOT_TOKEN"), false);
@@ -161,4 +183,4 @@ assert.match(calendarSource, /Предварительная стоимость:
 assert.doesNotMatch(calendarSource, /Estimated total:/);
 assert.doesNotMatch(calendarSource, /Итого:/);
 
-console.log(`Pet-sitting calendar checks passed for ${pages.length} full and compact instances.`);
+console.log(`Pet-sitting calendar checks passed for ${pages.length} full shared instances.`);

@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-import PetSittingArticleTools from "../components/PetSittingArticleTools.astro";
 import { petSittingArticleGuides } from "../data/pet-sitting";
 import { petSittingBillingFaq } from "../data/pet-sitting-faq";
 
@@ -23,7 +22,7 @@ const interactiveArticleSlugs = new Set([
   "prepare-dog-for-boarding",
   "prepare-cat-for-boarding",
 ]);
-const hasArticleInteractions = isRussian && interactiveArticleSlugs.has(articleSlug);
+const hasArticleInteractions = interactiveArticleSlugs.has(articleSlug);
 const billingFaq = petSittingBillingFaq[locale];
 const schemaFaqItems = hasArticleInteractions
   ? [...faqItems, { question: billingFaq.question, answer: billingFaq.answer }]
@@ -133,8 +132,6 @@ const alternates = alternatePath
     </div>
 
     <slot />
-
-    <PetSittingArticleTools locale={locale} canonical={canonical} />
 
     <aside class="pet-article__service" aria-labelledby="pet-service-title">
       <div>
