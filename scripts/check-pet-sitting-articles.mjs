@@ -9,32 +9,32 @@ const slugs = [
     slug: "pet-sitter-vs-boarding",
     service: "main",
     media: {
-      ru: { images: 4, videos: 3, animal: "mixed" },
-      en: { images: 3, videos: 0, animal: "mixed" },
+      ru: { images: 4, videos: 3, groups: [2, 2, 3], animal: "mixed" },
+      en: { images: 3, videos: 0, groups: [], animal: "mixed" },
     },
   },
   {
     slug: "can-cat-stay-alone-for-a-week",
     service: "cats",
     media: {
-      ru: { images: 5, videos: 1, animal: "cat" },
-      en: { images: 2, videos: 0, animal: "cat" },
+      ru: { images: 5, videos: 1, groups: [], animal: "cat" },
+      en: { images: 2, videos: 0, groups: [], animal: "cat" },
     },
   },
   {
     slug: "prepare-dog-for-boarding",
     service: "dogs",
     media: {
-      ru: { images: 4, videos: 5, animal: "dog" },
-      en: { images: 2, videos: 1, animal: "dog" },
+      ru: { images: 4, videos: 5, groups: [], animal: "dog" },
+      en: { images: 2, videos: 1, groups: [], animal: "dog" },
     },
   },
   {
     slug: "prepare-cat-for-boarding",
     service: "cats",
     media: {
-      ru: { images: 7, videos: 1, animal: "cat" },
-      en: { images: 2, videos: 1, animal: "cat" },
+      ru: { images: 7, videos: 1, groups: [2, 2], animal: "cat" },
+      en: { images: 2, videos: 1, groups: [], animal: "cat" },
     },
   },
 ];
@@ -102,6 +102,9 @@ for (const locale of ["ru", "en"]) {
     const mediaVideos = [...document.querySelectorAll(".pet-article .pet-article-video[data-video-id]")];
     assert.equal(mediaImages.length, expectedMedia.images, `${path} has the wrong contextual image count`);
     assert.equal(mediaVideos.length, expectedMedia.videos, `${path} has the wrong contextual video count`);
+    const mediaGroupSizes = [...document.querySelectorAll(".pet-article-media-group")]
+      .map((group) => [...group.children].filter((child) => child.matches(".pet-article-media")).length);
+    assert.deepEqual(mediaGroupSizes, expectedMedia.groups, `${path} has the wrong related-media grouping`);
 
     const imageSources = mediaImages.map((image) => image.getAttribute("src"));
     const videoIds = mediaVideos.map((video) => video.getAttribute("data-video-id"));
@@ -124,13 +127,13 @@ for (const locale of ["ru", "en"]) {
     if (expectedMedia.animal === "dog") {
       assert(!mediaMarkup.includes("cat-guest"), `${path} must not use cat media`);
     }
-    if (locale === "ru") {
-      const figureText = [...document.querySelectorAll(".pet-article-media")]
-        .map((figure) => figure.textContent)
-        .join(" ");
-      const figureAlts = mediaImages.map((image) => image.getAttribute("alt") ?? "").join(" ");
-      assert(!/Петроварадин|Нови[ -]?Сад/iu.test(`${figureText} ${figureAlts}`), `${path} media must not claim an unverified location`);
-    }
+    const figureText = [...document.querySelectorAll(".pet-article-media")]
+      .map((figure) => figure.textContent)
+      .join(" ");
+    const figureAlts = mediaImages.map((image) => image.getAttribute("alt") ?? "").join(" ");
+    const factualLabels = `${figureText} ${figureAlts}`;
+    assert(!/Петроварадин|Нови[ -]?Сад|Petrovaradin|Novi Sad/iu.test(factualLabels), `${path} media must not claim an unverified location`);
+    assert(!/у нас дома|in our home/iu.test(factualLabels), `${path} media must not claim an unverified current-home context`);
 
     assert(!html.includes("chatgpt.com/ru/novi-sad"), `${path} contains a placeholder ChatGPT link`);
     assert(!html.includes("[MEDIA"), `${path} contains a media placeholder`);
@@ -166,7 +169,9 @@ for (const locale of ["ru", "en"]) {
 
 for (const [slug, expectedHash] of Object.entries(russianCopyHashes)) {
   const source = await readFile(new URL(`src/pages/ru/novi-sad/pet-sitting/${slug}/index.md`, root), "utf8");
-  const copyWithoutMedia = source.replace(/<figure class="pet-article-media[\s\S]*?<\/figure>\s*/g, "");
+  const copyWithoutMedia = source
+    .replace(/<div class="pet-article-media-group[^"]*">[\s\S]*?<\/div>\s*/g, "")
+    .replace(/<figure class="pet-article-media[\s\S]*?<\/figure>\s*/g, "");
   const actualHash = createHash("sha256").update(copyWithoutMedia).digest("hex");
   assert.equal(actualHash, expectedHash, `${slug} article copy changed outside contextual media figures`);
 }
@@ -229,6 +234,74 @@ for (const block of approvedRussianDogBlocks) {
 }
 assert.equal(russianDogDocument.querySelectorAll(".faq-list details").length, 11, `${russianDogPath} should preserve all FAQs plus billing`);
 assert(russianDogDocument.querySelector("#boarding-days"), `${russianDogPath} should preserve the shared billing FAQ`);
+
+const russianMainPath = servicePath("ru", "main");
+const russianMainHtml = await readFile(htmlFile(russianMainPath), "utf8");
+const russianMainDocument = new JSDOM(russianMainHtml).window.document;
+const russianMainBlocks = [...russianMainDocument.querySelectorAll("h2, p")]
+  .map((node) => node.textContent.replace(/\s+/g, " ").trim());
+const approvedRussianMainBlocks = [
+  "Не знаете, с кем оставить питомца на время отъезда?",
+  "Домашняя передержка помогает питомцу чувствовать себя комфортно и сохранить привычные для него вещи, даже когда вас нет рядом. Мы заранее узнаём о его характере, рутине и потребностях и учитываем их на протяжении всего времени с нами.",
+  "Питомец будет жить с нами в квартире в Петроварадине.",
+  "Как питомцы живут у нас",
+  "Для нас это важная часть передержки. Когда оставляешь питомца у других людей, сообщение «всё хорошо» — это одно. А когда видишь, как он ест, спит, гуляет, валяется на диване или уже освоился и занимается своими делами, — совсем другое.",
+  "Поэтому мы присылаем фото и видео минимум 3 раза в день и всегда остаёмся на связи.",
+  "У каждого питомца свои привычки, и мы не меняем их просто потому, что хозяин уехал.",
+  "Если собака привыкла гулять три раза в день — гуляем три. Если привыкла спать на кровати — спит на кровати. Если кошке нужны определённый лоток и наполнитель — привозите их с собой.",
+  "Если питомцу нужно много внимания или, наоборот, хочется побыть отдельно и чтобы его никто не трогал, — мы обеспечим это.",
+  "Мы подстраиваем передержку под питомца, а не питомца под передержку.",
+  "Мы живём в квартире в Петроварадине. У нас три изолированные комнаты, поэтому, если питомцам нужно отдельное пространство, мы спокойно их разделяем.",
+  "Двора и балкона нет. С собаками гуляем на улице по привычному для них графику.",
+  "У нас нет запретов на диваны и кровати, а кошкам можно забираться на столы и шкафы.",
+  "У нас живут свои кот и кошка, обоим по четыре года. Они привыкли к гостям: у нас уже оставались на передержке и собаки, и другие кошки.",
+  "Вашему питомцу совершенно не обязательно с ними дружить. Если ему комфортнее жить отдельно, мы разделим животных и выделим каждому своё пространство.",
+  "Познакомимся заранее",
+  "Перед первой передержкой можно прийти к нам домой — это бесплатно. Вы познакомитесь с нами, и увидите, где будет жить питомец.",
+  "Собаку можно взять с собой — она всё понюхает, осмотрится, познакомится с нами и котами, а мы посмотрим, как животные друг на друга реагируют.",
+  "Кошку приносить на знакомство не рекомендуем: короткий визит в незнакомое пространство скорее станет для неё лишним стрессом и не покажет, как она будет чувствовать себя во время полноценной передержки.",
+  "Если хочется проверить, как собака чувствует себя без хозяина, можно оставить её у нас на 3–4 часа. Тестовая передержка стоит 1 000 RSD.",
+  "Что взять с собой",
+  "Всё, что помогает питомцу чувствовать себя привычно в новом месте.",
+  "Корм, миски, поводок или переноску, лекарства, игрушки, любимую лежанку — если она ему нужна. Для кошки рекомендуем привезти привычные лоток и наполнитель.",
+  "Если у питомца есть особенный ритуал, режим или странная привычка — обязательно расскажите нам. Мы это учтём.",
+];
+for (const block of approvedRussianMainBlocks) {
+  assert(russianMainBlocks.includes(block), `${russianMainPath} is missing approved copy: ${block}`);
+}
+
+const approvedRussianMainFaq = new Map([
+  ["А если мой питомец не подружится с вашими котами?", "Ничего страшного. Дружить с нашими котами необязательно: если питомцу комфортнее отдельно, мы разделим животных и выделим ему своё спокойное пространство."],
+  ["А нормально вообще оставлять животное там, где уже есть другие животные?", "Да, если у каждого достаточно пространства и никого не заставляют общаться. Наши коты привыкли к гостям: иногда животные знакомятся и проводят время вместе, иногда просто игнорируют друг друга. Оба варианта нормальны."],
+  ["Сколько животных у вас бывает одновременно?", "Максимум два гостевых питомца одновременно."],
+  ["Можно сначала приехать познакомиться?", "Да. Перед первой передержкой можно бесплатно прийти к нам домой примерно на полчаса, познакомиться с нами и посмотреть квартиру."],
+  ["А можно оставить питомца на пробу?", "Если речь о собаке — да. Можно оставить её у нас на 3–4 часа и посмотреть, как она чувствует себя без хозяина. Тестовая передержка стоит 1 000 RSD. Для кошек тестовый визит не рекомендуем: короткое пребывание в незнакомом месте скорее добавит стресса и мало скажет о том, как пройдёт полноценная передержка."],
+  ["Будете присылать фото и видео?", "Да. Присылаем фото и видео минимум 3 раза в день и всегда остаёмся на связи."],
+  ["Что если у моего питомца какой-то очень специфический режим?", "Расскажите нам. Мы не ждём, что все животные одинаковые. Если это что-то адекватное и выполнимое, сохраняем его обычный режим."],
+  ["А если что-нибудь пойдёт не так?", "Мы точно не будем молча ждать вашего возвращения. Разберёмся в ситуации, сразу свяжемся с вами и вместе решим, что делать. Если вдруг случится срочная ситуация со здоровьем и ждать ответа будет опасно для животного, сделаем необходимое в моменте, при необходимости обратимся к ветеринару и сразу же сообщим вам."],
+]);
+const visibleRussianMainFaq = new Map(
+  [...russianMainDocument.querySelectorAll(".faq-list details")].map((details) => [
+    details.querySelector("summary")?.textContent.replace(/\s+/g, " ").trim(),
+    details.querySelector("p")?.textContent.replace(/\s+/g, " ").trim(),
+  ]),
+);
+for (const [question, answer] of approvedRussianMainFaq) {
+  assert.equal(visibleRussianMainFaq.get(question), answer, `${russianMainPath} has the wrong FAQ answer: ${question}`);
+}
+assert.equal(visibleRussianMainFaq.size, 9, `${russianMainPath} should preserve all main FAQs plus billing`);
+const russianMainSchemas = [...russianMainDocument.querySelectorAll('script[type="application/ld+json"]')]
+  .map((node) => JSON.parse(node.textContent || "{}"));
+const russianMainFaqSchema = russianMainSchemas
+  .flatMap((schema) => Array.isArray(schema) ? schema : schema["@graph"] ?? [schema])
+  .find((item) => item["@type"] === "FAQPage");
+const schemaRussianMainFaq = new Map(
+  russianMainFaqSchema.mainEntity.map((item) => [
+    item.name.replace(/\s+/g, " ").trim(),
+    item.acceptedAnswer.text.replace(/\s+/g, " ").trim(),
+  ]),
+);
+assert.deepEqual(schemaRussianMainFaq, visibleRussianMainFaq, `${russianMainPath} visible FAQ and FAQPage schema must match`);
 
 const russianCatPath = servicePath("ru", "cats");
 const russianCatHtml = await readFile(htmlFile(russianCatPath), "utf8");

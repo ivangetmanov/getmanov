@@ -143,7 +143,7 @@ faq:
 
 [Как устроена наша передержка кошек в Нови-Саде →](/ru/novi-sad/pet-sitting/cats/)
 <figure class="pet-article-media pet-article-media--compact pet-article-media--left">
-  <img src="/images/pet-sitting/cat-guest-04.webp" alt="Кошки спокойно отдыхают на кровати" width="720" height="1280" loading="lazy" />
+  <img src="/images/pet-sitting/cat-guest-04.webp" alt="Кошки отдыхают на кровати" width="720" height="1280" loading="lazy" />
   <figcaption>Кошки отдыхают в домашней обстановке.</figcaption>
 </figure>
 
@@ -191,7 +191,7 @@ faq:
 Просто знакомые вещи помогают сделать новое пространство чуть менее новым.
 <figure class="pet-article-media pet-article-media--wide">
   <img src="/images/pet-sitting/cat-guest-05.webp" alt="Кошка-гость отдыхает рядом с человеком" width="720" height="1280" loading="lazy" />
-  <figcaption>Кошка-гость отдыхает у нас дома.</figcaption>
+  <figcaption>Кошка-гость отдыхает рядом с человеком.</figcaption>
 </figure>
 
 ## А если кошка принимает лекарства?

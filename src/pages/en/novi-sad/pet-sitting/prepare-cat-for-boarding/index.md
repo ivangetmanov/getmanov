@@ -153,8 +153,8 @@ If hiding feels safer at that moment, the cat can hide.
 The cat can come out later when ready.
 
 <figure class="pet-article-media">
-  <img src="/images/pet-sitting/cat-guest-05.webp" alt="A guest cat resting quietly" width="720" height="1280" loading="lazy" />
-  <figcaption>A guest cat resting in our home.</figcaption>
+  <img src="/images/pet-sitting/cat-guest-05.webp" alt="A guest cat resting on soft fabric" width="720" height="1280" loading="lazy" />
+  <figcaption>A guest cat resting on soft fabric.</figcaption>
 </figure>
 
 ## Should you bring the cat for an introduction in advance?

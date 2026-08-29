@@ -185,14 +185,16 @@ faq:
 
 такой вариант нас вполне устраивает.
 
-<figure class="pet-article-media pet-article-media--compact pet-article-media--left">
+<div class="pet-article-media-group">
+<figure class="pet-article-media">
   <img src="/images/pet-sitting/pablo.webp" alt="Рыжий кот в вязаном жилете" width="720" height="1280" loading="lazy" />
   <figcaption>Пабло.</figcaption>
 </figure>
-<figure class="pet-article-media pet-article-media--compact">
+<figure class="pet-article-media">
   <img src="/images/pet-sitting/sweet.webp" alt="Бело-рыжая кошка сидит на диване рядом с мотошлемами" width="960" height="1280" loading="lazy" />
   <figcaption>Свит.</figcaption>
 </figure>
+</div>
 
 ## Что если кошка первые сутки плохо ест
 На новом месте аппетит действительно может измениться.
@@ -232,7 +234,8 @@ faq:
 А на видео сразу видно: кошка сидит в своём месте, умывается, поела, вышла посмотреть квартиру или уже спит на кровати.
 
 Поэтому мы регулярно показываем не «идеальный рекламный кадр», а нормальную жизнь кошки у нас.
-<figure class="pet-article-media pet-article-media--wide">
+<div class="pet-article-media-group">
+<figure class="pet-article-media">
   <img src="/images/pet-sitting/cat-guest-01.webp" alt="Две кошки лежат на кровати" width="720" height="1280" loading="lazy" />
   <figcaption>Две кошки лежат на кровати.</figcaption>
 </figure>
@@ -240,6 +243,7 @@ faq:
   <a href="https://youtube.com/shorts/gzEpuT0el14?feature=share" target="_blank" rel="noreferrer">Посмотреть реальное видео кошки-гостя</a>
   <figcaption>Видео кошки-гостя во время домашней передержки.</figcaption>
 </figure>
+</div>
 
 [Посмотреть реальные условия, фото и видео нашей передержки кошек в Нови-Саде →](/ru/novi-sad/pet-sitting/cats/)
 

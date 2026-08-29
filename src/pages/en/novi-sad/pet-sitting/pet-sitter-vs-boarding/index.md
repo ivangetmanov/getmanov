@@ -106,7 +106,7 @@ The main difference from a live-in sitter is that the pet still needs to move to
 
 <figure class="pet-article-media">
   <img src="/images/pet-sitting/dog-guest-02.webp" alt="A guest dog resting during home boarding" width="720" height="1280" loading="lazy" />
-  <figcaption>A guest dog resting in our home in Petrovaradin.</figcaption>
+  <figcaption>A guest dog resting during home boarding.</figcaption>
 </figure>
 
 ## Pet hotels
@@ -158,7 +158,7 @@ A dog wanting to approach, sniff, or play is not automatically a problem for us.
 [Read about our dog boarding in Novi Sad →](/en/novi-sad/pet-sitting/dogs/)
 
 <figure class="pet-article-media">
-  <img src="/images/pet-sitting/dog-guest-06.webp" alt="A guest dog looking around the home" width="720" height="1280" loading="lazy" />
+  <img src="/images/pet-sitting/dog-guest-06.webp" alt="A guest dog standing by a glass door" width="720" height="1280" loading="lazy" />
   <figcaption>A guest dog during a home boarding stay.</figcaption>
 </figure>
 
@@ -185,7 +185,7 @@ We have three separate rooms. If a guest cat is more comfortable living separate
 
 <figure class="pet-article-media">
   <img src="/images/pet-sitting/cat-guest-03.webp" alt="A guest cat resting next to a person" width="720" height="1280" loading="lazy" />
-  <figcaption>A guest cat resting in our home.</figcaption>
+  <figcaption>A guest cat resting next to a person.</figcaption>
 </figure>
 
 ## What should you choose for an anxious pet?

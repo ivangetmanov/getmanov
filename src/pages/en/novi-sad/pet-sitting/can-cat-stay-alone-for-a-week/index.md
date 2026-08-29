@@ -185,7 +185,7 @@ A few familiar objects simply make the new space feel a little less new.
 
 <figure class="pet-article-media">
   <img src="/images/pet-sitting/cat-guest-05.webp" alt="A guest cat resting next to a person" width="720" height="1280" loading="lazy" />
-  <figcaption>A guest cat resting in our home.</figcaption>
+  <figcaption>A guest cat resting next to a person.</figcaption>
 </figure>
 
 ## What if the cat takes medication?

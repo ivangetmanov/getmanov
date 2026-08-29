@@ -113,8 +113,8 @@ The owner can see **where the dog will actually live** instead of trying to imag
 Our introduction before a first stay is free and normally takes about half an hour.
 
 <figure class="pet-article-media">
-  <img src="/images/pet-sitting/dog-guest-06.webp" alt="A guest dog looking around the home during boarding" width="720" height="1280" loading="lazy" />
-  <figcaption>A guest dog becoming familiar with the home environment.</figcaption>
+  <img src="/images/pet-sitting/dog-guest-06.webp" alt="A guest dog standing by a glass door" width="720" height="1280" loading="lazy" />
+  <figcaption>A guest dog standing by a glass door.</figcaption>
 </figure>
 
 ## If the dog has never stayed with someone else, try a short visit

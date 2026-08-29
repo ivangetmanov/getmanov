@@ -293,13 +293,30 @@ const alternates = alternatePath
     font-weight:680;
   }
   .pet-article-media {
-    width:min(560px,100%);
-    margin:34px auto 42px;
+    width:min(410px,100%);
+    margin:32px auto 44px;
     padding:0;
   }
-  .pet-article-media--wide { width:min(680px,100%); }
-  .pet-article-media--compact { width:min(430px,100%); }
+  .pet-article-media--wide { width:min(480px,100%); }
+  .pet-article-media--compact { width:min(360px,100%); }
   .pet-article-media--left { margin-left:0; }
+  .pet-article-media-group {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:22px;
+    align-items:start;
+    width:min(790px,100%);
+    margin:36px auto 48px;
+  }
+  .pet-article-media-group > .pet-article-media {
+    width:100%;
+    margin:0;
+  }
+  .pet-article-media-group--feature-last > .pet-article-media:last-child:nth-child(odd) {
+    grid-column:1 / -1;
+    width:min(360px,calc(50% - 11px));
+    justify-self:center;
+  }
   .pet-article-media img,
   .pet-article-video__poster,
   .pet-article-video iframe {
@@ -311,15 +328,15 @@ const alternates = alternatePath
     background:#e7ece8;
     box-shadow:0 20px 52px rgba(38,59,53,.13);
   }
-  .pet-article-media > img { max-height:720px;object-fit:cover; }
+  .pet-article-media > img { height:auto; }
   .pet-article-media figcaption {
-    margin-top:11px;
+    margin:11px 4px 0;
     color:var(--pet-muted);
-    font-size:14px;
+    font-size:15px;
     line-height:1.45;
-    text-align:center;
+    text-align:left;
   }
-  .pet-article-video { width:min(430px,100%); }
+  .pet-article-video { width:min(360px,100%); }
   .pet-article-video__poster,
   .pet-article-video iframe { aspect-ratio:9/16; }
   .pet-article-video__poster {
@@ -415,7 +432,16 @@ const alternates = alternatePath
     .pet-article__breadcrumbs { flex-wrap:wrap; }
     .pet-article > h1 { font-size:clamp(36px,11vw,49px); }
     .pet-article h2 { margin-top:3.6rem; }
-    .pet-article-media { width:min(470px,100%); }
+    .pet-article-media { width:min(390px,100%); }
+    .pet-article-media-group {
+      grid-template-columns:minmax(0,1fr);
+      gap:26px;
+      width:min(390px,100%);
+    }
+    .pet-article-media-group--feature-last > .pet-article-media:last-child:nth-child(odd) {
+      grid-column:auto;
+      width:100%;
+    }
     .pet-article__service { grid-template-columns:1fr;padding:24px 20px; }
     .pet-article__service > a { justify-content:space-between;white-space:normal; }
   }
