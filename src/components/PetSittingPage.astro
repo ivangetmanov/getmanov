@@ -13,6 +13,15 @@ import {
   telegramUrl,
   type PetSittingPageKind,
 } from "../data/pet-sitting";
+import {
+  absoluteSiteUrl,
+  annaEntity,
+  ivanEntity,
+  petSittingAreaServed,
+  petSittingSchemaIds,
+  petSittingWebsiteEntity,
+  primaryImageEntity,
+} from "../lib/pet-sitting-seo.mjs";
 
 const { kind, locale = "ru" } = Astro.props as { kind: PetSittingPageKind; locale?: "ru" | "en" };
 const isEnglish = locale === "en";
@@ -215,41 +224,75 @@ const relatedGuides = guideSlugs[kind].flatMap((slug) => {
 const serviceName = isEnglish
   ? isMain ? "Home pet boarding in Novi Sad" : isDogs ? "Dog boarding in Novi Sad" : "Cat boarding in Novi Sad"
   : page.h1;
+const serviceType = isEnglish
+  ? isMain ? "Home pet boarding and pet sitting" : isDogs ? "Home dog boarding and dog sitting" : "Home cat boarding and cat sitting"
+  : isMain ? "Домашняя передержка и петситтинг" : isDogs ? "Домашняя передержка собак" : "Домашняя передержка кошек";
 const alternates = [
   { hreflang: "ru", href: petSittingPages[kind].path },
   { hreflang: "en", href: petSittingPagesEn[kind].path },
+  { hreflang: "x-default", href: petSittingPagesEn[kind].path },
 ];
-
-const structuredData = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: serviceName,
-    description: page.description,
-    url: `https://getmanov.com${page.path}`,
-    image: `https://getmanov.com${heroPhoto}`,
-    areaServed: "Petrovaradin, Novi Sad",
-    serviceType: isEnglish ? "Home pet boarding" : "Домашняя передержка животных",
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: isEnglish ? "Home" : "Главная", item: "https://getmanov.com/" },
-      { "@type": "ListItem", position: 2, name: isEnglish ? "Pet boarding in Novi Sad" : "Передержка животных", item: `https://getmanov.com${localizedPages.main.path}` },
-      ...(isMain ? [] : [{ "@type": "ListItem", position: 3, name: page.focus, item: `https://getmanov.com${page.path}` }]),
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faq.map(([question, answer]) => ({
-      "@type": "Question",
-      name: question,
-      acceptedAnswer: { "@type": "Answer", text: answer },
-    })),
-  },
-];
+const canonicalUrl = absoluteSiteUrl(page.path);
+const mainServiceUrl = absoluteSiteUrl(localizedPages.main.path);
+const imageUrl = absoluteSiteUrl(heroPhoto);
+const webPageId = `${canonicalUrl}#webpage`;
+const imageId = `${imageUrl}#image`;
+const breadcrumbId = `${canonicalUrl}#breadcrumbs`;
+const serviceId = petSittingSchemaIds.services[kind];
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    petSittingWebsiteEntity(),
+    ivanEntity(),
+    annaEntity(),
+    primaryImageEntity({ url: imageUrl, width: heroPhotoWidth, height: heroPhotoHeight }),
+    {
+      "@type": "WebPage",
+      "@id": webPageId,
+      url: canonicalUrl,
+      name: page.title,
+      description: page.description,
+      inLanguage: locale,
+      isPartOf: { "@id": petSittingSchemaIds.website },
+      primaryImageOfPage: { "@id": imageId },
+      mainEntity: { "@id": serviceId },
+      breadcrumb: { "@id": breadcrumbId },
+    },
+    {
+      "@type": "Service",
+      "@id": serviceId,
+      name: serviceName,
+      description: page.description,
+      serviceType,
+      image: { "@id": imageId },
+      provider: [
+        { "@id": petSittingSchemaIds.anna },
+        { "@id": petSittingSchemaIds.ivan },
+      ],
+      areaServed: petSittingAreaServed(),
+      subjectOf: { "@id": webPageId },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": breadcrumbId,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: isEnglish ? "Home" : "Главная", item: "https://getmanov.com/" },
+        { "@type": "ListItem", position: 2, name: isEnglish ? "Pet boarding in Novi Sad" : "Передержка животных", item: mainServiceUrl },
+        ...(isMain ? [] : [{ "@type": "ListItem", position: 3, name: page.focus, item: canonicalUrl }]),
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonicalUrl}#faq`,
+      isPartOf: { "@id": webPageId },
+      mainEntity: faq.map(([question, answer]) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    },
+  ],
+};
 ---
 
 <BaseLayout

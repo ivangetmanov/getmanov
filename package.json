@@ -9,7 +9,8 @@
     "check:pet-calendar": "node scripts/check-pet-sitting-calendar.mjs",
     "check:pet-inquiry": "node scripts/check-pet-sitting-inquiry.mjs",
     "check:pet-articles": "node scripts/check-pet-sitting-articles.mjs",
-    "verify": "npm run build && npm run check:links && npm run check:pet-calendar && npm run check:pet-inquiry && npm run check:pet-articles"
+    "check:pet-seo": "node scripts/check-pet-sitting-seo.mjs",
+    "verify": "npm run build && npm run check:links && npm run check:pet-calendar && npm run check:pet-inquiry && npm run check:pet-articles && npm run check:pet-seo"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.9",

@@ -2,6 +2,13 @@
 import BaseLayout from "./BaseLayout.astro";
 import { petSittingArticleGuides } from "../data/pet-sitting";
 import { petSittingBillingFaq } from "../data/pet-sitting-faq";
+import {
+  absoluteSiteUrl,
+  ivanEntity,
+  petSittingSchemaIds,
+  petSittingWebsiteEntity,
+  primaryImageEntity,
+} from "../lib/pet-sitting-seo.mjs";
 
 const frontmatter = Astro.props.frontmatter ?? {};
 const locale = frontmatter.locale === "ru" ? "ru" : "en";
@@ -13,8 +20,14 @@ const alternateLocale = isRussian ? "en" : "ru";
 const faqItems = frontmatter.faq ?? [];
 const servicePath = frontmatter.servicePath ?? `/${locale}/novi-sad/pet-sitting/`;
 const serviceName = isRussian ? "Передержка животных в Нови-Саде" : "Pet boarding in Novi Sad";
-const datePublished = frontmatter.datePublished ?? "2026-08-29";
+const serviceKind = servicePath.endsWith("/dogs/") ? "dogs" : servicePath.endsWith("/cats/") ? "cats" : "main";
+const datePublished = frontmatter.datePublished;
 const dateModified = frontmatter.dateModified ?? datePublished;
+const headline = frontmatter.headline ?? frontmatter.title;
+const heroImageUrl = frontmatter.heroImage ? absoluteSiteUrl(frontmatter.heroImage) : undefined;
+const heroImageWidth = frontmatter.heroImageWidth;
+const heroImageHeight = frontmatter.heroImageHeight;
+const heroImageAlt = frontmatter.heroImageAlt ?? headline;
 const articleSlug = canonical.split("/").filter(Boolean).at(-1) ?? "";
 const interactiveArticleSlugs = new Set([
   "pet-sitter-vs-boarding",
@@ -28,39 +41,53 @@ const schemaFaqItems = hasArticleInteractions
   ? [...faqItems, { question: billingFaq.question, answer: billingFaq.answer }]
   : faqItems;
 
+const webPageId = `${canonicalUrl}#webpage`;
+const articleId = `${canonicalUrl}#article`;
+const breadcrumbId = `${canonicalUrl}#breadcrumbs`;
+const imageId = heroImageUrl ? `${heroImageUrl}#image` : undefined;
 const articleSchema = {
   "@type": "Article",
-  "@id": `${canonicalUrl}#article`,
-  headline: frontmatter.title,
+  "@id": articleId,
+  headline,
   description: frontmatter.description,
   inLanguage: locale,
   url: canonicalUrl,
-  mainEntityOfPage: canonicalUrl,
-  ...(frontmatter.heroImage
-    ? { image: new URL(frontmatter.heroImage, "https://getmanov.com").href }
-    : {}),
-  datePublished,
-  dateModified,
-  author: {
-    "@type": "Person",
-    name: "Ivan Getmanov",
-    url: "https://getmanov.com/",
-  },
-  publisher: {
-    "@type": "Person",
-    name: "Ivan Getmanov",
-    url: "https://getmanov.com/",
-  },
+  mainEntityOfPage: { "@id": webPageId },
+  ...(imageId ? { image: { "@id": imageId } } : {}),
+  ...(datePublished ? { datePublished } : {}),
+  ...(dateModified ? { dateModified } : {}),
+  author: { "@id": petSittingSchemaIds.ivan },
+  publisher: { "@id": petSittingSchemaIds.ivan },
+  about: { "@id": petSittingSchemaIds.services[serviceKind] },
+  isPartOf: { "@id": petSittingSchemaIds.website },
 };
 
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
+    petSittingWebsiteEntity(),
+    ivanEntity(),
+    ...(heroImageUrl && heroImageWidth && heroImageHeight
+      ? [primaryImageEntity({ url: heroImageUrl, width: heroImageWidth, height: heroImageHeight })]
+      : []),
+    {
+      "@type": "WebPage",
+      "@id": webPageId,
+      url: canonicalUrl,
+      name: frontmatter.title,
+      description: frontmatter.description,
+      inLanguage: locale,
+      isPartOf: { "@id": petSittingSchemaIds.website },
+      ...(imageId ? { primaryImageOfPage: { "@id": imageId } } : {}),
+      mainEntity: { "@id": articleId },
+      breadcrumb: { "@id": breadcrumbId },
+    },
     articleSchema,
     ...(schemaFaqItems.length
       ? [{
           "@type": "FAQPage",
           "@id": `${canonicalUrl}#faq`,
+          isPartOf: { "@id": webPageId },
           mainEntity: schemaFaqItems.map((item: { question: string; answer: string }) => ({
             "@type": "Question",
             name: item.question,
@@ -73,7 +100,7 @@ const structuredData = {
       : []),
     {
       "@type": "BreadcrumbList",
-      "@id": `${canonicalUrl}#breadcrumbs`,
+      "@id": breadcrumbId,
       itemListElement: [
         {
           "@type": "ListItem",
@@ -116,6 +143,13 @@ const alternates = alternatePath
   lang={locale}
   alternates={alternates}
   structuredData={structuredData}
+  image={frontmatter.heroImage}
+  imageAlt={heroImageAlt}
+  imageWidth={heroImageWidth}
+  imageHeight={heroImageHeight}
+  ogType="article"
+  articlePublishedTime={datePublished}
+  articleModifiedTime={dateModified}
 >
   <div class="pet-article">
     <div class="pet-article__topline">

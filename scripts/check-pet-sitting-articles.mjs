@@ -41,16 +41,16 @@ const slugs = [
 
 const copyHashes = {
   ru: {
-    "pet-sitter-vs-boarding": "c41f56b9431d222a89ac16aa31a013ec331b120353f96fa6d75b99e30ddd4bb1",
-    "can-cat-stay-alone-for-a-week": "4fc36aec7d5c992d92b32a099265fbd1b48d474728cc2bdbc754f48a28b86c8c",
-    "prepare-dog-for-boarding": "648487a53390195c432448aa3ff29cd482e53a70c3ca58f7e4a434ffc0090c13",
-    "prepare-cat-for-boarding": "963600d79d91c45be8e5353b4f9c9bcf144339532bd29d9d8cf7c3e766f12520",
+    "pet-sitter-vs-boarding": "806b39c54a53f60e8783c3463aff0d191d9ba74c0d625a847db741685b5dc4eb",
+    "can-cat-stay-alone-for-a-week": "b4dc6a701e29cd01f0e7f66983e417e5aeb0fb153bffb0383d2416f384b46531",
+    "prepare-dog-for-boarding": "f32ea9d2ab63aa1e4ca54cbbc5a483fe7d52b1f0da643c3e3b9b4455845bc897",
+    "prepare-cat-for-boarding": "d34eda12ab85d234ba92a8b6e7ac6a6571060be7592ef02fb96d6cf22d622059",
   },
   en: {
-    "pet-sitter-vs-boarding": "87d87fbfcad2a86a5269ea6757854f207a3b36cc81a850b0fbb677482585d268",
-    "can-cat-stay-alone-for-a-week": "e306abef7d1f3fbc0d27abef7f4f317a257784307272ca3e866447883f1a51b0",
-    "prepare-dog-for-boarding": "adde415e61b1cfc9af452b4860c2ddd45949fd3aabb766189a9e2f3b5e224203",
-    "prepare-cat-for-boarding": "4abec575e3e1928fd978b95b7607f498dbe0ba2bae70275728e6ba270e0f3e81",
+    "pet-sitter-vs-boarding": "83cec0965d126d012b6b2361d85b090b628702e3279ed53147ea3c760c74b9cd",
+    "can-cat-stay-alone-for-a-week": "97027267e345f15c2d51d088a80c879cfdfda47b2d2cb6ea5df41b8eccaa77c4",
+    "prepare-dog-for-boarding": "a2a98734ad53eddac5631f6bf6f97c7bfc3a3469355a70886a5ec92007ad2008",
+    "prepare-cat-for-boarding": "5ed81558d9922048877a0a7ef8d05355fbc51112a308c0d71cec7fd2917acd9a",
   },
 };
 const interactionSelectors = {
@@ -541,7 +541,11 @@ for (const page of moneyPageCases) {
   const serviceSchema = schemas
     .flatMap((schema) => Array.isArray(schema) ? schema : schema["@graph"] ?? [schema])
     .find((item) => item["@type"] === "Service");
-  assert.equal(serviceSchema?.image, preferredImageUrl, path + " Service schema needs the preferred image");
+  const imageSchema = schemas
+    .flatMap((schema) => Array.isArray(schema) ? schema : schema["@graph"] ?? [schema])
+    .find((item) => item["@type"] === "ImageObject");
+  assert.equal(serviceSchema?.image?.["@id"], imageSchema?.["@id"], path + " Service schema needs the preferred ImageObject");
+  assert.equal(imageSchema?.contentUrl, preferredImageUrl, path + " ImageObject needs the preferred image");
   const schemaFaq = new Map(faqSchema.mainEntity.map((item) => [
     item.name.replace(/\s+/g, " ").trim(),
     item.acceptedAnswer.text.replace(/\s+/g, " ").trim(),
