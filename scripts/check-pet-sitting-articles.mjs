@@ -241,172 +241,253 @@ for (const locale of ["ru", "en"]) {
   }
 }
 
-const expectedGuideCounts = { main: 4, dogs: 2, cats: 3 };
-for (const locale of ["ru", "en"]) {
-  for (const [service, expectedCount] of Object.entries(expectedGuideCounts)) {
-    const path = servicePath(locale, service);
-    const html = await readFile(htmlFile(path), "utf8");
-    const document = new JSDOM(html).window.document;
-    const guideLinks = [...document.querySelectorAll(".guide-section a[href]")];
-    assert.equal(guideLinks.length, expectedCount, `${path} has the wrong guide-link count`);
-    for (const link of guideLinks) {
-      assert(link.getAttribute("href")?.startsWith(`/${locale}/novi-sad/pet-sitting/`), `${path} guide link must stay localized`);
-    }
+const moneyPageCases = [
+  { locale: "ru", service: "main", h1: "Домашняя передержка собак и кошек в Нови‑Саде", hero: "/images/pet-sitting/main-hero.webp" },
+  { locale: "ru", service: "dogs", h1: "Передержка собак в Нови‑Саде", hero: "/images/pet-sitting/dog-guest-02.webp" },
+  { locale: "ru", service: "cats", h1: "Передержка кошек в Нови‑Саде", hero: "/images/pet-sitting/cats-hero.webp" },
+  { locale: "en", service: "main", h1: "Home pet boarding for dogs and cats in Novi Sad", hero: "/images/pet-sitting/main-hero.webp" },
+  { locale: "en", service: "dogs", h1: "Dog boarding in Novi Sad", hero: "/images/pet-sitting/dog-guest-02.webp" },
+  { locale: "en", service: "cats", h1: "Cat boarding in Novi Sad", hero: "/images/pet-sitting/cats-hero.webp" },
+];
+const expectedMoneyPageSections = [
+  "pet-hero",
+  "early-media",
+  "availability",
+  "pricing-section",
+  "faq-section",
+  "final-cta",
+];
+const removedMoneyPageSelectors = [
+  ".routine-section",
+  ".resident-section",
+  ".intro-section",
+  ".species-intro",
+  ".dog-cats-section",
+  ".dog-trial",
+  ".cat-safe-space",
+  ".cat-arrival",
+  ".related-section",
+  ".guide-section",
+];
+const requiredMoneyPageFaqs = {
+  ru: {
+    main: [
+      "Как считаются сутки передержки?",
+      "Кто вы и с кем будет жить мой питомец?",
+      "Как вы сохраняете привычный режим питомца?",
+      "Как всё устроено дома?",
+      "А если мой питомец не подружится с вашими котами?",
+      "А нормально вообще оставлять животное там, где уже есть другие животные?",
+      "Сколько животных у вас бывает одновременно?",
+      "Можно сначала приехать познакомиться?",
+      "А можно оставить питомца на пробу?",
+      "Что взять с собой?",
+      "Будете присылать фото и видео?",
+      "Что если у моего питомца какой-то очень специфический режим?",
+      "А если что-нибудь пойдёт не так?",
+    ],
+    dogs: [
+      "Как считаются сутки передержки?",
+      "Кто вы и с кем будет жить мой питомец?",
+      "Моя собака любит гоняться за кошками. Вы её возьмёте?",
+      "А если собака не подружится с вашими котами?",
+      "Моя собака никогда не оставалась с чужими. Что делать?",
+      "Она вообще не умеет оставаться одна.",
+      "Сколько раз вы будете гулять?",
+      "Можно привезти свой корм?",
+      "Можно давать лекарства?",
+      "Можно собаке на диван или кровать?",
+      "Можно сначала приехать познакомиться?",
+      "Можно ли оставить собаку на пробу?",
+      "Что взять с собой?",
+      "Будете присылать фото и видео?",
+      "Что если что-то неожиданное случится, пока меня нет?",
+    ],
+    cats: [
+      "Как считаются сутки передержки?",
+      "Кто вы и с кем будет жить мой питомец?",
+      "Какие нужны прививки?",
+      "А если моя кошка вообще не любит других кошек?",
+      "А если она спрячется и не будет выходить?",
+      "Нужно ли знакомить её с вашими котами?",
+      "Можно привезти свой лоток и наполнитель?",
+      "Можно привезти привычный корм?",
+      "Что если у неё особый режим?",
+      "Можно давать лекарства?",
+      "Можно ли ей на диван или кровать?",
+      "Нужно ли заранее привозить кошку знакомиться?",
+      "Что взять с собой?",
+      "Будете присылать фото и видео?",
+      "А если кошке внезапно станет плохо?",
+    ],
+  },
+  en: {
+    main: [
+      "How are boarding days calculated?",
+      "Who are you, and who will my pet stay with?",
+      "How do you keep my pet's normal routine?",
+      "Where will my pet stay?",
+      "What if my pet does not get along with your cats?",
+      "Is it okay that other animals already live in the home?",
+      "How many guest pets do you host at once?",
+      "Can we meet you first?",
+      "Can I leave my pet for a short trial stay?",
+      "What should I bring?",
+      "Will you send photos and videos?",
+      "What if my pet has an unusual routine?",
+      "What happens if something goes wrong?",
+    ],
+    dogs: [
+      "How are boarding days calculated?",
+      "Who are you, and who will my pet stay with?",
+      "My dog likes chasing cats. Will you take them?",
+      "What if my dog does not get along with your cats?",
+      "My dog has never stayed with strangers before. What should I do?",
+      "My dog cannot stay alone.",
+      "How often will you walk my dog?",
+      "Can I bring their normal food?",
+      "Can you give medication?",
+      "Can my dog sleep on the sofa or bed?",
+      "Can we meet you first?",
+      "Can I leave my dog for a trial stay?",
+      "What should I bring?",
+      "Will you send photos and videos?",
+      "What happens in an emergency?",
+    ],
+    cats: [
+      "How are boarding days calculated?",
+      "Who are you, and who will my pet stay with?",
+      "Which vaccinations are required?",
+      "My cat really does not like other cats. Is that a problem?",
+      "What if my cat hides and refuses to come out?",
+      "Does my cat have to meet your cats?",
+      "Can I bring their own litter box and litter?",
+      "Can I bring their normal food?",
+      "What if my cat has a particular routine?",
+      "Can you give medication?",
+      "Can they sleep on the sofa or bed?",
+      "Should I bring my cat for an introduction first?",
+      "What should I bring?",
+      "Will you send photos and videos?",
+      "What happens if my cat suddenly becomes ill?",
+    ],
+  },
+};
+const preservedMoneyPageFacts = {
+  "ru:main": [
+    "У каждого питомца свои привычки, и мы не меняем их просто потому, что хозяин уехал.",
+    "Двора и балкона нет.",
+    "Пабло очень дружелюбный и любопытный.",
+    "Свит более пугливая",
+    "Кошку приносить на знакомство не рекомендуем",
+    "Корм, миски, поводок или переноску, лекарства, игрушки, любимую лежанку",
+  ],
+  "ru:dogs": [
+    "Передержка — не время вводить новые правила.",
+    "сможем быть рядом с собакой 24/7",
+    "Обычный интерес, желание понюхать, познакомиться или поиграть",
+    "Тестовая передержка стоит 1 000 RSD.",
+    "У нас нет правила «всем собакам две прогулки по двадцать минут».",
+    "Если собака спит на своей лежанке",
+    "То же самое с кормлением, лекарствами",
+  ],
+  "ru:cats": [
+    "В квартире три изолированные комнаты.",
+    "Наши коты Пабло и Свит",
+    "Передержка — не время вводить новые правила.",
+    "Саму кошку приносить на знакомство не рекомендуем",
+    "оставить кошку тестово на несколько часов",
+    "Привозите привычный корм, миски, лоток, наполнитель, игрушки",
+    "Можно давать лекарства?",
+  ],
+  "en:main": [
+    "Every pet has different habits",
+    "There is no garden or balcony.",
+    "Pablo is very friendly and curious.",
+    "Sweet is more cautious",
+    "Food, bowls, lead, carrier, medication, toys",
+  ],
+  "en:dogs": [
+    "not a particularly good time to suddenly introduce a completely new set of rules",
+    "one of us is home while the dog is staying with us",
+    "Normal curiosity, sniffing, wanting to meet them",
+    "a few hours for 1,000 RSD",
+    "There is no rule here that every dog gets exactly two twenty-minute walks.",
+    "If your dog sleeps in their own bed at home",
+  ],
+  "en:cats": [
+    "There are three separate rooms in the apartment.",
+    "Pablo is very friendly and curious.",
+    "We are not going to deliberately change your cat's habits",
+    "do not recommend bringing your cat for a short introduction",
+    "Trial stay: 1,000 RSD.",
+    "litter box, usual litter, toys and medication",
+  ],
+};
+
+for (const page of moneyPageCases) {
+  const path = servicePath(page.locale, page.service);
+  const html = await readFile(htmlFile(path), "utf8");
+  const document = new JSDOM(html).window.document;
+  const pageRoot = document.querySelector(".pet-page");
+  assert(pageRoot, path + " needs the shared money-page root");
+  assert.equal(document.querySelector("h1")?.textContent.trim(), page.h1, path + " H1 changed");
+  assert.equal(document.querySelector(".pet-hero img")?.getAttribute("src"), page.hero, path + " hero asset changed without a confirmed couple photo");
+
+  const sectionOrder = [...pageRoot.querySelectorAll(":scope > section")].map((section) =>
+    section.className.split(/\s+/)[0],
+  );
+  assert.deepEqual(sectionOrder, expectedMoneyPageSections, path + " has the wrong simplified section order");
+  for (const selector of removedMoneyPageSelectors) {
+    assert.equal(pageRoot.querySelector(selector), null, path + " must not render removed money-page block " + selector);
   }
-}
 
-const russianDogPath = servicePath("ru", "dogs");
-const russianDogHtml = await readFile(htmlFile(russianDogPath), "utf8");
-const russianDogDocument = new JSDOM(russianDogHtml).window.document;
-const russianDogBlocks = [...russianDogDocument.querySelectorAll("h2, p")]
-  .map((node) => node.textContent.replace(/\s+/g, " ").trim());
-const approvedRussianDogBlocks = [
-  "Переживаете, с кем оставить питомца на время отъезда?",
-  "Домашняя передержка помогает сохранить для собаки привычный ритм жизни, пока хозяина нет рядом. Мы придерживаемся обычной рутины собаки: графика прогулок и кормления, игр, отдыха и других важных для неё вещей.",
-  "Регулярно присылаем фото и видео, рассказываем, как дела у питомца, и всегда остаёмся на связи.",
-  "Передержка проходит в нашей квартире в Петроварадине.",
-  "Фото и видео каждый день",
-  "Мы знаем, как тревожно оставлять любимого питомца, поэтому присылаем фото и видео минимум 3 раза в день. Не ограничиваемся сообщением «всё хорошо», а показываем, как на самом деле проходит день собаки у нас.",
-  "Прогулки, сон, игры, валяние на диване, знакомство с котами — всё, что происходит в течение дня.",
-  "Никаких резких изменений",
-  "Передержка — не время вводить новые правила. Перед заездом мы узнаём привычный режим вашей собаки и придерживаемся его на протяжении всей передержки.",
-  "Сколько прогулок нужно? Когда и сколько ест? Где любит спать? Спокойно ли остаётся одна? Принимает ли лекарства?",
-  "Расскажите нам заранее обо всём, что считаете важным, — и мы это учтём.",
-  "Если собака не остаётся одна",
-  "Такое тоже бывает. Если вашему питомцу постоянно нужен человек рядом, скажите об этом до передержки. Мы организуем всё так, чтобы во время проживания собаки дома всегда был кто-то из нас.",
-  "Такую потребность важно обсудить заранее, чтобы мы могли спланировать своё время и подтвердить, что сможем быть рядом с собакой 24/7.",
-  "У нас есть два своих кота",
-  "Если вы не знаете, как ваша собака относится к кошкам, это лучше проверить заранее.",
-  "Обычный интерес, желание понюхать, познакомиться или поиграть — нормальная реакция и не преграда для совместного проживания.",
-  "Если же собака охотится за кошками, не может переключиться или проявляет серьёзную агрессию, честнее будет выбрать ситтера без своих кошек.",
-  "Именно для этого у нас есть бесплатное знакомство.",
-  "А если они просто не понравятся друг другу?",
-  "Это не страшно.",
-  "У нас три изолированные комнаты, и животным совсем не обязательно становиться лучшими друзьями.",
-  "Мы разделяем питомцев так, чтобы у каждого оставалось своё безопасное пространство. При этом собака продолжает общаться с нами, гулять и жить в своём обычном ритме.",
-  "познакомимся заранее",
-  "Перед первой передержкой мы приглашаем зайти к нам домой на 30 минут — это бесплатно. Собака познакомится с нами, квартирой и котами, а вы сами увидите, где и с кем она будет жить.",
-  "Если хочется проверить, как собака чувствует себя без хозяина, можно оставить её у нас на 3–4 часа. Тестовая передержка стоит 1 000 RSD.",
-  "Гуляем так, как собака привыкла",
-  "У нас нет правила «всем собакам две прогулки по двадцать минут». Если ваш питомец привык к определённому графику и длительности прогулок — расскажите нам, и мы будем его соблюдать.",
-  "То же самое с кормлением, лекарствами и другими привычными вещами.",
-  "Где питомец будет спать?",
-  "Там, где привык дома. Если собака спит на своей лежанке — возьмите её с собой, знакомое место поможет ей быстрее освоиться.",
-  "Привыкла отдыхать на диване — пожалуйста. Спит с человеком на кровати — мы только за.",
-];
-for (const block of approvedRussianDogBlocks) {
-  assert(russianDogBlocks.includes(block), `${russianDogPath} is missing approved copy: ${block}`);
-}
-assert.equal(russianDogDocument.querySelectorAll(".faq-list details").length, 11, `${russianDogPath} should preserve all FAQs plus billing`);
-assert(russianDogDocument.querySelector("#boarding-days"), `${russianDogPath} should preserve the shared billing FAQ`);
+  const heroActions = [...document.querySelectorAll(".pet-hero .pet-actions a")];
+  assert.equal(heroActions.length, 2, path + " needs exactly two hero actions");
+  assert.equal(heroActions[0].getAttribute("href"), "#dates");
+  assert.equal(heroActions[1].getAttribute("href"), "https://t.me/ya_kushka");
+  assert.equal(heroActions[0].textContent.trim(), page.locale === "ru" ? "Проверить даты" : "Check available dates");
+  assert.equal(heroActions[1].textContent.trim(), page.locale === "ru" ? "Написать Ане в Telegram" : "Message Anna on Telegram");
 
-const russianMainPath = servicePath("ru", "main");
-const russianMainHtml = await readFile(htmlFile(russianMainPath), "utf8");
-const russianMainDocument = new JSDOM(russianMainHtml).window.document;
-const russianMainBlocks = [...russianMainDocument.querySelectorAll("h2, p")]
-  .map((node) => node.textContent.replace(/\s+/g, " ").trim());
-const approvedRussianMainBlocks = [
-  "Не знаете, с кем оставить питомца на время отъезда?",
-  "Домашняя передержка помогает питомцу чувствовать себя комфортно и сохранить привычные для него вещи, даже когда вас нет рядом. Мы заранее узнаём о его характере, рутине и потребностях и учитываем их на протяжении всего времени с нами.",
-  "Питомец будет жить с нами в квартире в Петроварадине.",
-  "Как питомцы живут у нас",
-  "Для нас это важная часть передержки. Когда оставляешь питомца у других людей, сообщение «всё хорошо» — это одно. А когда видишь, как он ест, спит, гуляет, валяется на диване или уже освоился и занимается своими делами, — совсем другое.",
-  "Поэтому мы присылаем фото и видео минимум 3 раза в день и всегда остаёмся на связи.",
-  "У каждого питомца свои привычки, и мы не меняем их просто потому, что хозяин уехал.",
-  "Если собака привыкла гулять три раза в день — гуляем три. Если привыкла спать на кровати — спит на кровати. Если кошке нужны определённый лоток и наполнитель — привозите их с собой.",
-  "Если питомцу нужно много внимания или, наоборот, хочется побыть отдельно и чтобы его никто не трогал, — мы обеспечим это.",
-  "Мы подстраиваем передержку под питомца, а не питомца под передержку.",
-  "Мы живём в квартире в Петроварадине. У нас три изолированные комнаты, поэтому, если питомцам нужно отдельное пространство, мы спокойно их разделяем.",
-  "Двора и балкона нет. С собаками гуляем на улице по привычному для них графику.",
-  "У нас нет запретов на диваны и кровати, а кошкам можно забираться на столы и шкафы.",
-  "У нас живут свои кот и кошка, обоим по четыре года. Они привыкли к гостям: у нас уже оставались на передержке и собаки, и другие кошки.",
-  "Вашему питомцу совершенно не обязательно с ними дружить. Если ему комфортнее жить отдельно, мы разделим животных и выделим каждому своё пространство.",
-  "Познакомимся заранее",
-  "Перед первой передержкой можно прийти к нам домой — это бесплатно. Вы познакомитесь с нами, и увидите, где будет жить питомец.",
-  "Собаку можно взять с собой — она всё понюхает, осмотрится, познакомится с нами и котами, а мы посмотрим, как животные друг на друга реагируют.",
-  "Кошку приносить на знакомство не рекомендуем: короткий визит в незнакомое пространство скорее станет для неё лишним стрессом и не покажет, как она будет чувствовать себя во время полноценной передержки.",
-  "Если хочется проверить, как собака чувствует себя без хозяина, можно оставить её у нас на 3–4 часа. Тестовая передержка стоит 1 000 RSD.",
-  "Что взять с собой",
-  "Всё, что помогает питомцу чувствовать себя привычно в новом месте.",
-  "Корм, миски, поводок или переноску, лекарства, игрушки, любимую лежанку — если она ему нужна. Для кошки рекомендуем привезти привычные лоток и наполнитель.",
-  "Если у питомца есть особенный ритуал, режим или странная привычка — обязательно расскажите нам. Мы это учтём.",
-];
-for (const block of approvedRussianMainBlocks) {
-  assert(russianMainBlocks.includes(block), `${russianMainPath} is missing approved copy: ${block}`);
-}
+  const proof = document.querySelector(".early-media");
+  assert.equal(proof?.querySelector("h2")?.textContent.trim(), page.locale === "ru" ? "Фото и видео каждый день" : "Photos and videos every day");
+  assert(
+    proof?.textContent.includes(page.locale === "ru" ? "минимум 3 раза в день" : "at least three times a day"),
+    path + " must preserve the three-updates-per-day commitment",
+  );
+  assert.equal(proof?.querySelectorAll(".pet-media").length, 1, path + " needs one proof gallery");
 
-const approvedRussianMainFaq = new Map([
-  ["А если мой питомец не подружится с вашими котами?", "Ничего страшного. Дружить с нашими котами необязательно: если питомцу комфортнее отдельно, мы разделим животных и выделим ему своё спокойное пространство."],
-  ["А нормально вообще оставлять животное там, где уже есть другие животные?", "Да, если у каждого достаточно пространства и никого не заставляют общаться. Наши коты привыкли к гостям: иногда животные знакомятся и проводят время вместе, иногда просто игнорируют друг друга. Оба варианта нормальны."],
-  ["Сколько животных у вас бывает одновременно?", "Максимум два гостевых питомца одновременно."],
-  ["Можно сначала приехать познакомиться?", "Да. Перед первой передержкой можно бесплатно прийти к нам домой примерно на полчаса, познакомиться с нами и посмотреть квартиру."],
-  ["А можно оставить питомца на пробу?", "Если речь о собаке — да. Можно оставить её у нас на 3–4 часа и посмотреть, как она чувствует себя без хозяина. Тестовая передержка стоит 1 000 RSD. Для кошек тестовый визит не рекомендуем: короткое пребывание в незнакомом месте скорее добавит стресса и мало скажет о том, как пройдёт полноценная передержка."],
-  ["Будете присылать фото и видео?", "Да. Присылаем фото и видео минимум 3 раза в день и всегда остаёмся на связи."],
-  ["Что если у моего питомца какой-то очень специфический режим?", "Расскажите нам. Мы не ждём, что все животные одинаковые. Если это что-то адекватное и выполнимое, сохраняем его обычный режим."],
-  ["А если что-нибудь пойдёт не так?", "Мы точно не будем молча ждать вашего возвращения. Разберёмся в ситуации, сразу свяжемся с вами и вместе решим, что делать. Если вдруг случится срочная ситуация со здоровьем и ждать ответа будет опасно для животного, сделаем необходимое в моменте, при необходимости обратимся к ветеринару и сразу же сообщим вам."],
-]);
-const visibleRussianMainFaq = new Map(
-  [...russianMainDocument.querySelectorAll(".faq-list details")].map((details) => [
-    details.querySelector("summary")?.textContent.replace(/\s+/g, " ").trim(),
-    details.querySelector("p")?.textContent.replace(/\s+/g, " ").trim(),
-  ]),
-);
-for (const [question, answer] of approvedRussianMainFaq) {
-  assert.equal(visibleRussianMainFaq.get(question), answer, `${russianMainPath} has the wrong FAQ answer: ${question}`);
-}
-assert.equal(visibleRussianMainFaq.size, 9, `${russianMainPath} should preserve all main FAQs plus billing`);
-const russianMainSchemas = [...russianMainDocument.querySelectorAll('script[type="application/ld+json"]')]
-  .map((node) => JSON.parse(node.textContent || "{}"));
-const russianMainFaqSchema = russianMainSchemas
-  .flatMap((schema) => Array.isArray(schema) ? schema : schema["@graph"] ?? [schema])
-  .find((item) => item["@type"] === "FAQPage");
-const schemaRussianMainFaq = new Map(
-  russianMainFaqSchema.mainEntity.map((item) => [
+  const finalActions = [...document.querySelectorAll(".final-cta .pet-actions a")];
+  assert.equal(finalActions.length, 2, path + " needs two compact final actions");
+  assert.equal(finalActions[0].getAttribute("href"), "#dates");
+  assert.equal(finalActions[1].getAttribute("href"), "https://t.me/ya_kushka");
+
+  const details = [...document.querySelectorAll(".faq-list details")];
+  const visibleQuestions = details.map((item) => item.querySelector("summary")?.textContent.trim());
+  assert.deepEqual(visibleQuestions, requiredMoneyPageFaqs[page.locale][page.service], path + " FAQ topics changed");
+  assert(details[0].hasAttribute("open"), path + " should open the billing FAQ");
+  assert(details.slice(1).every((item) => !item.hasAttribute("open")), path + " should collapse secondary FAQs");
+
+  const visibleFaq = new Map(details.map((item) => [
+    item.querySelector("summary")?.textContent.replace(/\s+/g, " ").trim(),
+    item.querySelector("p")?.textContent.replace(/\s+/g, " ").trim(),
+  ]));
+  const schemas = [...document.querySelectorAll("script[type=\"application/ld+json\"]")]
+    .map((node) => JSON.parse(node.textContent || "{}"));
+  const faqSchema = schemas
+    .flatMap((schema) => Array.isArray(schema) ? schema : schema["@graph"] ?? [schema])
+    .find((item) => item["@type"] === "FAQPage");
+  const schemaFaq = new Map(faqSchema.mainEntity.map((item) => [
     item.name.replace(/\s+/g, " ").trim(),
     item.acceptedAnswer.text.replace(/\s+/g, " ").trim(),
-  ]),
-);
-assert.deepEqual(schemaRussianMainFaq, visibleRussianMainFaq, `${russianMainPath} visible FAQ and FAQPage schema must match`);
+  ]));
+  assert.deepEqual(schemaFaq, visibleFaq, path + " visible FAQ and FAQPage schema must match");
 
-const russianCatPath = servicePath("ru", "cats");
-const russianCatHtml = await readFile(htmlFile(russianCatPath), "utf8");
-const russianCatDocument = new JSDOM(russianCatHtml).window.document;
-const russianCatBlocks = [...russianCatDocument.querySelectorAll("h2, p, summary")]
-  .map((node) => node.textContent.replace(/\s+/g, " ").trim());
-const approvedRussianCatBlocks = [
-  "Не знаете, с кем оставить котика во время отъезда?",
-  "На домашней передержке питомец остаётся под присмотром и получает столько внимания и личного пространства, сколько ему нужно.",
-  "Мы не торопим знакомство, даём кошке возможность спрятаться, привыкнуть к новым запахам, поспать в одиночестве — столько, сколько нужно. А привычные корм и наполнитель помогают сохранить знакомую часть домашней рутины.",
-  "Фото и видео каждый день",
-  "Мы знаем, как тревожно оставлять любимого питомца, поэтому присылаем фото и видео минимум 3 раза в день. Не ограничиваемся сообщением «всё хорошо», а показываем, как на самом деле проходит день кошки у нас.",
-  "Сон, питание, игры, валяние на диване, знакомство с котами — всё, что происходит в течение дня.",
-  "Если кошка не дружит с другими — это нормально",
-  "У нас живут свои кот и кошка, но вашему питомцу совершенно не обязательно с ними общаться.",
-  "В квартире три изолированные комнаты. Если котику спокойнее жить отдельно, мы выделим ему своё безопасное пространство и организуем всё так, чтобы животные не пересекались.",
-  "Сохраняем привычный режим, как дома",
-  "Передержка — не время вводить новые правила. Перед заездом мы узнаём о рутине вашей кошки и придерживаемся её всё время, пока питомец живёт у нас.",
-  "Привозите привычный корм, миски, лоток, наполнитель, игрушки — всё это поможет кошке чувствовать себя спокойнее в новом месте.",
-  "Если в первые дни кошка захочет спрятаться и не выходить, поставим миски и лоток рядом и дадим столько времени на адаптацию, сколько потребуется.",
-  "Наши коты будут рады познакомиться, но если ваша кошка выберет побыть одной, мы не будем настаивать на знакомстве и выделим каждому своё пространство.",
-  "Познакомимся заранее",
-  "Перед первой передержкой приглашаем вас зайти к нам домой примерно на 30 минут — это бесплатно. Вы познакомитесь с нами, увидите квартиру и условия, в которых будет жить питомец, познакомитесь с нашими котами.",
-  "Саму кошку приносить на знакомство не рекомендуем: короткий визит в незнакомое пространство скорее станет для неё лишним стрессом и не покажет, как она будет чувствовать себя во время полноценной передержки.",
-  "Можно также оставить кошку тестово на несколько часов — это стоит 1 000 RSD.",
-  "Как считаются сутки передержки?",
-  "Это нормально. Если питомцу спокойнее жить отдельно, мы выделим ему отдельную комнату и организуем всё так, чтобы животные не пересекались.",
-  "Не будем её вытаскивать или заставлять общаться. Поставим рядом миски и лоток и дадим столько времени на адаптацию, сколько ей потребуется.",
-  "Да, и мы рекомендуем так делать. Знакомые запахи и привычный наполнитель помогают кошке спокойнее освоиться в новом месте.",
-  "Привозите привычный корм и расскажите, когда и сколько питомец ест. Мы будем придерживаться его обычного режима и не дадим ничего нового без согласования с вами.",
-  "Да, у нас нет никаких ограничений.",
-  "Нужны действующая комплексная прививка и прививка от бешенства. Перед передержкой попросим прислать фото ветпаспорта.",
-  "Сразу свяжемся с вами, расскажем, что происходит, и вместе решим, что делать дальше. Не будем ждать вашего возвращения, если ситуацию нужно решать сейчас.",
-  "Сразу свяжемся с вами. Если ситуация срочная, действуем в интересах питомца и при необходимости обращаемся к ветеринару, не дожидаясь вашего возвращения.",
-  "Да. Мы всегда остаёмся на связи и присылаем фото и видео минимум 3 раза в день — даже если котик пока предпочитает проводить время в укрытии.",
-];
-for (const block of approvedRussianCatBlocks) {
-  assert(russianCatBlocks.includes(block), `${russianCatPath} is missing approved or preserved copy: ${block}`);
+  const normalizedBody = document.body.textContent.replace(/\s+/g, " ");
+  for (const fact of preservedMoneyPageFacts[page.locale + ":" + page.service]) {
+    assert(normalizedBody.includes(fact), path + " lost approved service information: " + fact);
+  }
 }
-assert.equal(russianCatDocument.querySelectorAll(".faq-list details").length, 10, `${russianCatPath} should preserve all cat FAQs plus billing`);
 
 const weakCommitmentPattern = /\b(?:постараемся|попытаемся|стараемся|пытаемся)\b/iu;
 for (const article of slugs) {
@@ -414,7 +495,7 @@ for (const article of slugs) {
   const html = await readFile(htmlFile(path), "utf8");
   assert(!weakCommitmentPattern.test(new JSDOM(html).window.document.body.textContent), `${path} contains weak service wording`);
 }
-for (const service of Object.keys(expectedGuideCounts)) {
+for (const service of ["main", "dogs", "cats"]) {
   const path = servicePath("ru", service);
   const html = await readFile(htmlFile(path), "utf8");
   assert(!weakCommitmentPattern.test(new JSDOM(html).window.document.body.textContent), `${path} contains weak service wording`);
