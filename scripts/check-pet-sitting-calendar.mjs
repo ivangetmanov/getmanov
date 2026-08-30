@@ -134,6 +134,11 @@ for (const page of pages) {
   assert.equal(dom.window.document.querySelectorAll("[data-pet-calendar]").length, 1, `${page.path} should contain exactly one calendar`);
 
   const config = JSON.parse(calendar.getAttribute("data-pet-calendar"));
+  assert.deepEqual(
+    Object.keys(config).sort(),
+    ["articleSlug", "initialMonth", "locale", "pageKind", "sourcePage", "telegramUsername", "toolType", "unavailablePeriods"].sort(),
+    `${page.path} should expose only the client settings the calendar uses`,
+  );
   assert.equal(config.locale, page.locale, `${page.path} should use the correct locale`);
   assert.equal(config.pageKind, page.kind, `${page.path} should use the correct page kind`);
   const expectedSourcePage = page.articleSlug
@@ -180,11 +185,8 @@ for (const page of pages) {
   const selectedAnimal = calendar.querySelector('select[name="animal"] option[selected]')?.value;
   assert.equal(selectedAnimal, page.kind === "cats" ? "cat" : "dog", `${page.path} should have the correct species default`);
   const channels = [...calendar.querySelectorAll("[data-direct-contact]")].map((link) => link.dataset.channel);
-  assert.deepEqual(channels, page.locale === "en" ? ["telegram", "whatsapp", "viber"] : ["telegram"]);
-  if (page.locale === "en") {
-    assert.ok(calendar.querySelector('a[href^="https://wa.me/381628426881"]'));
-    assert.ok(calendar.querySelector('a[href^="viber://chat?number=%2B381628426881"]'));
-  }
+  assert.deepEqual(channels, ["telegram"], `${page.path} should expose Telegram as the only direct-contact channel`);
+  assert.equal(calendar.querySelector('[data-channel="whatsapp"], [data-channel="viber"]'), null);
   const normalizedCalendar = calendar.cloneNode(true);
   normalizedCalendar.setAttribute("data-pet-calendar", "");
   const parityKey = `${page.locale}:${page.kind}`;
@@ -239,5 +241,6 @@ assert.match(calendarSource, /Estimated price: \$\{formatRsd\(quote\.total, 'en'
 assert.match(calendarSource, /Предварительная стоимость: \$\{formatRsd\(quote\.total, 'ru'\)\} RSD/);
 assert.doesNotMatch(calendarSource, /Estimated total:/);
 assert.doesNotMatch(calendarSource, /Итого:/);
+assert.doesNotMatch(calendarSource, /contactPhone|wa\.me|viber:\/\//);
 
 console.log(`Pet-sitting calendar checks passed for ${pages.length} full shared instances.`);

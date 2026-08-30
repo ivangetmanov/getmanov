@@ -3,7 +3,7 @@ export const siteOrigin = "https://getmanov.com";
 export const petSittingSchemaIds = Object.freeze({
   website: `${siteOrigin}/#website`,
   ivan: `${siteOrigin}/#ivan-getmanov`,
-  anna: `${siteOrigin}/#anna-pet-sitter`,
+  anna: `${siteOrigin}/#anna-iakushko`,
   services: Object.freeze({
     main: `${siteOrigin}/#home-pet-boarding-service`,
     dogs: `${siteOrigin}/#home-dog-boarding-service`,
@@ -31,7 +31,7 @@ export function ivanEntity() {
     "@type": "Person",
     "@id": petSittingSchemaIds.ivan,
     name: "Ivan Getmanov",
-    alternateName: "Иван",
+    alternateName: ["Иван", "Ваня"],
     url: `${siteOrigin}/`,
   };
 }
@@ -40,7 +40,7 @@ export function annaEntity() {
   return {
     "@type": "Person",
     "@id": petSittingSchemaIds.anna,
-    name: "Anna",
+    name: "Anna Iakushko",
     alternateName: "Аня",
   };
 }

@@ -2,7 +2,6 @@ import { billableStayDays } from "./pet-sitting-calendar.mjs";
 
 export const petSittingBusiness = {
   telegramUsername: "ya_kushka",
-  contactPhone: "+381628426881",
   longStayFromDays: 14,
   pricing: {
     1: { shortStayMaxDays: 3, shortStayDailyRate: 2000, standardDailyRate: 1500 },

@@ -19,18 +19,13 @@ const {
 const isEnglish = locale === "en";
 const defaultAnimal = kind === "cats" ? "cat" : "dog";
 const billingFaq = petSittingBillingFaq[locale];
-const phoneDigits = petSittingConfig.contactPhone.replace(/\D/g, "");
 const telegramDirectUrl = `https://t.me/${petSittingConfig.telegramUsername}`;
-const whatsappDirectUrl = `https://wa.me/${phoneDigits}`;
-const viberDirectUrl = `viber://chat?number=${encodeURIComponent(petSittingConfig.contactPhone)}`;
 const config = {
   initialMonth: petSittingConfig.initialMonth,
   unavailablePeriods: petSittingConfig.unavailablePeriods,
   telegramUsername: petSittingConfig.telegramUsername,
-  contactPhone: petSittingConfig.contactPhone,
   locale,
   pageKind: kind,
-  pageLabel: petSittingBusiness.pageLabels[locale][kind],
   sourcePage: sourcePage ?? petSittingBusiness.pagePaths[locale][kind],
   articleSlug,
   toolType,
@@ -96,8 +91,6 @@ const config = {
           <p>{isEnglish ? "Or message us directly" : "Или написать напрямую"}</p>
           <div class="direct-contact__links">
             <a href={telegramDirectUrl} data-direct-contact data-channel="telegram" target="_blank" rel="noreferrer">Telegram · @{petSittingConfig.telegramUsername}</a>
-            {isEnglish && <a href={whatsappDirectUrl} data-direct-contact data-channel="whatsapp" target="_blank" rel="noreferrer">WhatsApp</a>}
-            {isEnglish && <a href={viberDirectUrl} data-direct-contact data-channel="viber">Viber</a>}
           </div>
         </div>
       </div>
@@ -122,7 +115,6 @@ const config = {
     const formNote = root.querySelector('[data-form-note]');
     const submitButton = root.querySelector('[data-enquiry-submit]');
     const telegramLink = root.querySelector('[data-channel="telegram"]');
-    const whatsappLink = root.querySelector('[data-channel="whatsapp"]');
     const today = new Date();
     const todayKey = toKey(today.getFullYear(), today.getMonth(), today.getDate());
     const unavailable = settings.unavailablePeriods || [];
@@ -220,15 +212,12 @@ const config = {
     }
     function updateDirectLinks(quote, username) {
       const telegramBase = `https://t.me/${settings.telegramUsername}`;
-      const whatsappBase = `https://wa.me/${String(settings.contactPhone).replace(/\D/g, '')}`;
       if (!quote) {
         telegramLink.href = telegramBase;
-        if (whatsappLink) whatsappLink.href = whatsappBase;
         return;
       }
       const message = directMessage(quote, username);
       telegramLink.href = `${telegramBase}?text=${encodeURIComponent(message)}`;
-      if (whatsappLink) whatsappLink.href = `${whatsappBase}?text=${encodeURIComponent(message)}`;
     }
     function renderFeedback(validUsername) {
       formNote.classList.toggle('is-success', feedbackState === 'success');

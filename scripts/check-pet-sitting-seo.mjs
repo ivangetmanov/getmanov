@@ -194,6 +194,7 @@ function validateVisibleFaq(graph, document, path) {
 
 const renderedMoneyPages = new Map();
 const auditedGraphs = [];
+const serviceSignatures = new Map();
 const allTitles = [];
 const allDescriptions = [];
 const allCanonicalUrls = [];
@@ -211,6 +212,7 @@ for (const locale of locales) {
     const graph = schemaGraph(document, path);
     auditedGraphs.push(graph);
     const { webPage, image } = validateCommonGraph(graph, path, head, expectedImage, width, height);
+    assert.equal(webPage.inLanguage, locale, `${path} WebPage language must match the document`);
     const service = entityOfType(graph, "Service", path);
     assert.equal(service["@id"], petSittingSchemaIds.services[kind], `${path} needs its stable service entity`);
     assert.equal(service.description, head.description);
@@ -223,6 +225,57 @@ for (const locale of locales) {
     ]);
     assert.deepEqual(new Set(service.areaServed.map((area) => area.name)), new Set(["Novi Sad", "Petrovaradin"]));
     assert.deepEqual(new Set(entitiesOfType(graph, "Person").map((person) => person["@id"])), new Set([petSittingSchemaIds.ivan, petSittingSchemaIds.anna]));
+    const ivan = graph.find((entity) => entity["@id"] === petSittingSchemaIds.ivan);
+    const anna = graph.find((entity) => entity["@id"] === petSittingSchemaIds.anna);
+    assert(ivan && hasType(ivan, "Person"), `${path} needs the shared Ivan Person entity`);
+    assert.equal(ivan.name, "Ivan Getmanov");
+    assert.deepEqual(ivan.alternateName, ["Иван", "Ваня"]);
+    assert(anna && hasType(anna, "Person"), `${path} needs the shared Anna Person entity`);
+    assert.equal(anna.name, "Anna Iakushko");
+    assert.equal(anna.alternateName, "Аня");
+    const oldAnnaFragment = ["#anna", "pet-sitter"].join("-");
+    assert(!JSON.stringify(graph).includes(oldAnnaFragment), `${path} must not reference Anna's retired entity ID`);
+    const signature = {
+      "@type": service["@type"],
+      "@id": service["@id"],
+      provider: service.provider,
+      areaServed: service.areaServed,
+      image: service.image,
+    };
+    if (serviceSignatures.has(kind)) {
+      assert.deepEqual(signature, serviceSignatures.get(kind), `${path} must describe the shared ${kind} Service consistently across locales`);
+    } else {
+      serviceSignatures.set(kind, signature);
+    }
+    const bodyText = document.body.textContent;
+    if (locale === "ru") {
+      assert.match(bodyText, /Аня и Ваня/, `${path} should use the conversational RU pair wording`);
+      assert.doesNotMatch(bodyText, /Аня и Иван/, `${path} should not use the formal name in the visible RU pair wording`);
+    } else {
+      assert.match(bodyText, /Anna and Ivan/, `${path} should retain the English pair wording`);
+      assert.doesNotMatch(bodyText, /Anna and Vanya/);
+    }
+    if (kind === "main") {
+      const expectedHeroAlt = locale === "ru" ? "Аня с нашим котом" : "Anna holding one of our cats";
+      assert.equal(hero.getAttribute("alt"), expectedHeroAlt, `${path} needs image-grounded hero alt text`);
+      assert.equal(document.querySelector('meta[property="og:image:alt"]')?.content, expectedHeroAlt);
+      assert.equal(document.querySelector('meta[name="twitter:image:alt"]')?.content, expectedHeroAlt);
+      const capacityQuestion = locale === "ru"
+        ? "Сколько животных у вас бывает одновременно?"
+        : "How many guest pets do you host at once?";
+      const expectedCapacityAnswer = locale === "ru"
+        ? "Одновременно берём максимум двух гостевых животных — и только от одних хозяев. То есть к вашему питомцу не подселим незнакомое животное другого клиента."
+        : "We host no more than two guest pets at once, and only from the same owners. We won’t place an unfamiliar animal from another client with your pet.";
+      const capacityDetails = [...document.querySelectorAll(".faq-list details")]
+        .find((details) => details.querySelector("summary")?.textContent.trim() === capacityQuestion);
+      assert.equal(capacityDetails?.querySelector("p")?.textContent.trim(), expectedCapacityAnswer);
+      const faq = entityOfType(graph, "FAQPage", path);
+      assert.equal(
+        faq.mainEntity.find((item) => item.name === capacityQuestion)?.acceptedAnswer?.text,
+        expectedCapacityAnswer,
+        `${path} capacity policy must match in visible copy and FAQ schema`,
+      );
+    }
     validateVisibleFaq(graph, document, path);
     allTitles.push(head.title);
     allDescriptions.push(head.description);
@@ -255,6 +308,7 @@ for (const article of articles) {
     article.heroImageHeight,
   );
   const articleEntity = entityOfType(graph, "Article", article.path);
+  assert.equal(webPage.inLanguage, article.locale, `${article.path} WebPage language must match the document`);
   assert.equal(entitiesOfType(graph, "Service").length, 0, `${article.path} must not be marked as a Service page`);
   assert.equal(articleEntity.headline, document.querySelector(".pet-article h1")?.textContent.trim(), `${article.path} Article headline must match the visible H1`);
   assert.equal(articleEntity.headline, article.headline);
@@ -270,6 +324,12 @@ for (const article of articles) {
   assert.deepEqual(articleEntity.author, { "@id": petSittingSchemaIds.ivan });
   assert.deepEqual(articleEntity.publisher, { "@id": petSittingSchemaIds.ivan });
   assert.deepEqual(new Set(entitiesOfType(graph, "Person").map((person) => person["@id"])), new Set([petSittingSchemaIds.ivan]));
+  const ivan = graph.find((entity) => entity["@id"] === petSittingSchemaIds.ivan);
+  assert.equal(ivan?.name, "Ivan Getmanov");
+  assert.deepEqual(ivan?.alternateName, ["Иван", "Ваня"]);
+  const bodyText = document.body.textContent;
+  if (article.locale === "ru") assert.doesNotMatch(bodyText, /Аня и Иван/);
+  else assert.doesNotMatch(bodyText, /Anna and Vanya/);
   const kind = article.servicePath.endsWith("/dogs/") ? "dogs" : article.servicePath.endsWith("/cats/") ? "cats" : "main";
   assert.deepEqual(articleEntity.about, { "@id": petSittingSchemaIds.services[kind] });
   assert(document.querySelector(`a[href="${article.servicePath}"]`), `${article.path} must link to its relevant money page`);
@@ -304,5 +364,22 @@ function validateEntityReferences(value) {
   Object.values(value).forEach(validateEntityReferences);
 }
 auditedGraphs.forEach(validateEntityReferences);
+
+async function filesBelow(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const item = new URL(entry.isDirectory() ? `${entry.name}/` : entry.name, directory);
+    if (entry.isDirectory()) files.push(...await filesBelow(item));
+    else files.push(item);
+  }
+  return files;
+}
+
+const privatePhoneDigits = ["381", "628", "426", "881"].join("");
+for (const file of await filesBelow(new URL("dist/", projectRoot))) {
+  const contents = await readFile(file);
+  assert.equal(contents.includes(Buffer.from(privatePhoneDigits)), false, `Private phone number leaked into ${file.pathname}`);
+}
 
 console.log(`Pet-sitting SEO checks passed for 6 money pages and ${articles.length} discovered localized support articles.`);

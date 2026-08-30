@@ -9,7 +9,6 @@ export type PetSittingPageKind = "main" | "dogs" | "cats";
  */
 export const petSittingConfig = {
   telegramUsername: petSittingBusiness.telegramUsername,
-  contactPhone: petSittingBusiness.contactPhone,
   initialMonth: petSittingInitialMonth,
   unavailablePeriods: petSittingUnavailablePeriods,
   prices: {
