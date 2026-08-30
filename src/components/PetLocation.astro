@@ -1,0 +1,22 @@
+---
+const { locale = "ru" } = Astro.props as { locale?: "ru" | "en" };
+const isEnglish = locale === "en";
+const mapUrl = "https://www.openstreetmap.org/export/embed.html?bbox=19.84%2C45.235%2C19.90%2C45.275&layer=mapnik";
+---
+
+<section class="pet-location" aria-labelledby="pet-location-title">
+  <div class="pet-location__copy">
+    <p class="eyebrow">{isEnglish ? "Where the stay takes place" : "Где проходит передержка"}</p>
+    <h2 id="pet-location-title">{isEnglish ? "Petrovaradin, Novi Sad" : "Петроварадин, Нови-Сад"}</h2>
+    <p>{isEnglish ? "We will send the exact address before the introduction or stay." : "Точный адрес отправим перед знакомством или передержкой."}</p>
+  </div>
+  <div class="pet-location__map">
+    <iframe
+      src={mapUrl}
+      title={isEnglish ? "Approximate Petrovaradin area map" : "Карта района Петроварадин без точного адреса"}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+    <span>{isEnglish ? "The map shows the general area, not our home." : "На карте показан район, а не точка нашего дома."}</span>
+  </div>
+</section>

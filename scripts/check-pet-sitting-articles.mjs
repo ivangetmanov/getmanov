@@ -254,7 +254,9 @@ const expectedMoneyPageSections = [
   "early-media",
   "availability",
   "pricing-section",
+  "pet-location",
   "faq-section",
+  "useful-guides",
   "final-cta",
 ];
 const removedMoneyPageSelectors = [
@@ -273,7 +275,8 @@ const requiredMoneyPageFaqs = {
   ru: {
     main: [
       "Как считаются сутки передержки?",
-      "Кто вы и с кем будет жить мой питомец?",
+      "Кто мы такие?",
+      "Почему мы этим занимаемся?",
       "Как вы сохраняете привычный режим питомца?",
       "Как всё устроено дома?",
       "А если мой питомец не подружится с вашими котами?",
@@ -288,7 +291,8 @@ const requiredMoneyPageFaqs = {
     ],
     dogs: [
       "Как считаются сутки передержки?",
-      "Кто вы и с кем будет жить мой питомец?",
+      "Кто мы такие?",
+      "Почему мы этим занимаемся?",
       "Моя собака любит гоняться за кошками. Вы её возьмёте?",
       "А если собака не подружится с вашими котами?",
       "Моя собака никогда не оставалась с чужими. Что делать?",
@@ -305,7 +309,8 @@ const requiredMoneyPageFaqs = {
     ],
     cats: [
       "Как считаются сутки передержки?",
-      "Кто вы и с кем будет жить мой питомец?",
+      "Кто мы такие?",
+      "Почему мы этим занимаемся?",
       "Какие нужны прививки?",
       "А если моя кошка вообще не любит других кошек?",
       "А если она спрячется и не будет выходить?",
@@ -324,7 +329,8 @@ const requiredMoneyPageFaqs = {
   en: {
     main: [
       "How are boarding days calculated?",
-      "Who are you, and who will my pet stay with?",
+      "Who are we?",
+      "Why do we do this?",
       "How do you keep my pet's normal routine?",
       "Where will my pet stay?",
       "What if my pet does not get along with your cats?",
@@ -339,7 +345,8 @@ const requiredMoneyPageFaqs = {
     ],
     dogs: [
       "How are boarding days calculated?",
-      "Who are you, and who will my pet stay with?",
+      "Who are we?",
+      "Why do we do this?",
       "My dog likes chasing cats. Will you take them?",
       "What if my dog does not get along with your cats?",
       "My dog has never stayed with strangers before. What should I do?",
@@ -356,7 +363,8 @@ const requiredMoneyPageFaqs = {
     ],
     cats: [
       "How are boarding days calculated?",
-      "Who are you, and who will my pet stay with?",
+      "Who are we?",
+      "Why do we do this?",
       "Which vaccinations are required?",
       "My cat really does not like other cats. Is that a problem?",
       "What if my cat hides and refuses to come out?",
@@ -452,10 +460,17 @@ for (const page of moneyPageCases) {
   const proof = document.querySelector(".early-media");
   assert.equal(proof?.querySelector("h2")?.textContent.trim(), page.locale === "ru" ? "Фото и видео каждый день" : "Photos and videos every day");
   assert(
-    proof?.textContent.includes(page.locale === "ru" ? "минимум 3 раза в день" : "at least three times a day"),
+    proof?.textContent.toLocaleLowerCase(page.locale).includes(page.locale === "ru" ? "минимум 3 раза в день" : "at least three times a day"),
     path + " must preserve the three-updates-per-day commitment",
   );
   assert.equal(proof?.querySelectorAll(".pet-media").length, 1, path + " needs one proof gallery");
+
+  const location = document.querySelector(".pet-location");
+  const locationMap = location?.querySelector("iframe");
+  assert(location?.textContent.includes(page.locale === "ru" ? "Петроварадин, Нови-Сад" : "Petrovaradin, Novi Sad"), path + " needs the locality label");
+  assert(location?.textContent.includes(page.locale === "ru" ? "Точный адрес отправим" : "exact address"), path + " needs the address privacy note");
+  assert(locationMap?.getAttribute("src")?.includes("bbox="), path + " needs an approximate area map");
+  assert(!locationMap?.getAttribute("src")?.includes("marker="), path + " must not publish an exact home pin");
 
   const finalActions = [...document.querySelectorAll(".final-cta .pet-actions a")];
   assert.equal(finalActions.length, 2, path + " needs two compact final actions");
@@ -464,9 +479,20 @@ for (const page of moneyPageCases) {
 
   const details = [...document.querySelectorAll(".faq-list details")];
   const visibleQuestions = details.map((item) => item.querySelector("summary")?.textContent.trim());
-  assert.deepEqual(visibleQuestions, requiredMoneyPageFaqs[page.locale][page.service], path + " FAQ topics changed");
-  assert(details[0].hasAttribute("open"), path + " should open the billing FAQ");
-  assert(details.slice(1).every((item) => !item.hasAttribute("open")), path + " should collapse secondary FAQs");
+  assert.deepEqual(new Set(visibleQuestions), new Set(requiredMoneyPageFaqs[page.locale][page.service]), path + " FAQ topics changed");
+  assert.equal(document.querySelectorAll(".faq-group").length, 2, path + " needs two explicit FAQ groups");
+  const billingDetails = document.querySelector("#boarding-days");
+  assert(billingDetails?.hasAttribute("open"), path + " should open the billing FAQ");
+  assert(details.filter((item) => item !== billingDetails).every((item) => !item.hasAttribute("open")), path + " should collapse secondary FAQs");
+
+  const guideLinks = [...document.querySelectorAll(".useful-guides nav a")];
+  assert(guideLinks.length >= 2 && guideLinks.length <= 3, path + " needs two or three useful guide links");
+  assert(guideLinks.every((link) => link.getAttribute("href")?.startsWith(`/${page.locale}/novi-sad/pet-sitting/`)), path + " guide links must stay in the localized pet-sitting section");
+
+  const petNav = document.querySelector(".site-header--pet .pet-nav");
+  assert(petNav, path + " needs the contextual pet-sitting header");
+  assert.equal(document.querySelector(".site-header--pet a[href='/tools/']"), null, path + " must not show the generic Tools navigation");
+  assert(document.querySelector(".site-footer--pet"), path + " needs the contextual pet-sitting footer");
 
   const visibleFaq = new Map(details.map((item) => [
     item.querySelector("summary")?.textContent.replace(/\s+/g, " ").trim(),

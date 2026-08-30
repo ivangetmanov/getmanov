@@ -1,5 +1,6 @@
 ---
 import { readFile } from "node:fs/promises";
+import { telegramUrl } from "../data/pet-sitting";
 
 const frontmatter = Astro.props.frontmatter ?? {};
 const title = Astro.props.title ?? frontmatter.title ?? "getmanov.com";
@@ -93,6 +94,15 @@ const b2bSeoGuides = [
 const currentPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`;
+const petSittingSectionMatch = currentPath.match(/^\/(ru|en)\/novi-sad\/pet-sitting\//);
+const isPetSittingSection = Boolean(petSittingSectionMatch);
+const petSectionLocale = petSittingSectionMatch?.[1] === "ru" ? "ru" : "en";
+const petSectionBase = `/${petSectionLocale}/novi-sad/pet-sitting/`;
+const petSectionAlternatePath = currentPath.replace(
+  `/${petSectionLocale}/`,
+  petSectionLocale === "ru" ? "/en/" : "/ru/",
+);
+const petSectionTelegram = telegramUrl();
 const petSittingArticleMatch = currentPath.match(
   /^\/(ru|en)\/novi-sad\/pet-sitting\/([^/]+)\/$/,
 );
@@ -257,17 +267,28 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
 
     <a class="skip-link" href="#content">Skip to content</a>
 
-    <header class="site-header">
+    <header class:list={["site-header", { "site-header--pet": isPetSittingSection }]}>
       <div class="container header-inner">
-        <a class="brand" href="/">
+        <a class="brand" href={isPetSittingSection ? petSectionBase : "/"}>
           <span class="brand-mark">GETMANOV</span>
+          {isPetSittingSection && <span class="pet-brand-context">Pet sitting</span>}
         </a>
 
-        <nav class="nav">
-          <a href="/tools/">Tools</a>
-          <a href="/case-studies/">Case studies</a>
-          <a href="/notes/">Notes</a>
-        </nav>
+        {isPetSittingSection ? (
+          <nav class="nav pet-nav" aria-label={petSectionLocale === "ru" ? "Передержка животных" : "Pet boarding"}>
+            <a href={petSectionBase} aria-current={currentPath === petSectionBase ? "page" : undefined}>{petSectionLocale === "ru" ? "Главная" : "Overview"}</a>
+            <a href={`${petSectionBase}dogs/`} aria-current={currentPath === `${petSectionBase}dogs/` ? "page" : undefined}>{petSectionLocale === "ru" ? "Собаки" : "Dogs"}</a>
+            <a href={`${petSectionBase}cats/`} aria-current={currentPath === `${petSectionBase}cats/` ? "page" : undefined}>{petSectionLocale === "ru" ? "Кошки" : "Cats"}</a>
+            <a href={`${petSectionBase}#guides`}>{petSectionLocale === "ru" ? "Полезное" : "Guides"}</a>
+            <a class="pet-nav__locale" href={petSectionAlternatePath} hreflang={petSectionLocale === "ru" ? "en" : "ru"}>{petSectionLocale === "ru" ? "EN" : "RU"}</a>
+          </nav>
+        ) : (
+          <nav class="nav">
+            <a href="/tools/">Tools</a>
+            <a href="/case-studies/">Case studies</a>
+            <a href="/notes/">Notes</a>
+          </nav>
+        )}
       </div>
     </header>
 
@@ -361,37 +382,56 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
       </div>
     </main>
 
-    <footer id="contact" class="site-footer">
-      <div class="container footer-grid">
-        <div>
-          <div class="footer-title">Contact</div>
-          <div class="footer-text">
-            <a href="mailto:ivangetmanov@icloud.com">ivangetmanov@icloud.com</a><br />
-            <a
-              href="https://t.me/getmanov_marketing"
-              target="_blank"
-              rel="noreferrer"
-            >
-              t.me/getmanov_marketing
-            </a>
+    <footer id="contact" class:list={["site-footer", { "site-footer--pet": isPetSittingSection }]}>
+      {isPetSittingSection ? (
+        <div class="container footer-grid pet-footer-grid">
+          <div>
+            <div class="footer-title">{petSectionLocale === "ru" ? "Домашняя передержка" : "Home pet boarding"}</div>
+            <div class="footer-text">{petSectionLocale === "ru" ? "Петроварадин, Нови-Сад" : "Petrovaradin, Novi Sad"}<br />{petSectionLocale === "ru" ? "Собаки и кошки живут у нас дома." : "Dogs and cats stay with us in our home."}</div>
+          </div>
+          <div>
+            <div class="footer-title">{petSectionLocale === "ru" ? "Раздел" : "Explore"}</div>
+            <nav class="footer-text pet-footer-links">
+              <a href={petSectionBase}>{petSectionLocale === "ru" ? "Все условия" : "Pet boarding"}</a>
+              <a href={`${petSectionBase}dogs/`}>{petSectionLocale === "ru" ? "Собаки" : "Dogs"}</a>
+              <a href={`${petSectionBase}cats/`}>{petSectionLocale === "ru" ? "Кошки" : "Cats"}</a>
+              <a href={`${petSectionBase}#guides`}>{petSectionLocale === "ru" ? "Полезные статьи" : "Useful guides"}</a>
+            </nav>
+          </div>
+          <div>
+            <div class="footer-title">{petSectionLocale === "ru" ? "Связаться с Аней" : "Contact Anna"}</div>
+            <div class="footer-text">
+              <a href={petSectionTelegram} target="_blank" rel="noreferrer">Telegram</a><br />
+              <a href={petSectionAlternatePath} hreflang={petSectionLocale === "ru" ? "en" : "ru"}>{petSectionLocale === "ru" ? "English version" : "Русская версия"}</a>
+            </div>
           </div>
         </div>
+      ) : (
+        <div class="container footer-grid">
+          <div>
+            <div class="footer-title">Contact</div>
+            <div class="footer-text">
+              <a href="mailto:ivangetmanov@icloud.com">ivangetmanov@icloud.com</a><br />
+              <a href="https://t.me/getmanov_marketing" target="_blank" rel="noreferrer">t.me/getmanov_marketing</a>
+            </div>
+          </div>
 
-        <div>
-          <div class="footer-title">What this is</div>
-          <div class="footer-text">
-            A personal lab: experiments, case-based research, and tools.<br />
-            Built to be fast, clean, and easy to extend.
+          <div>
+            <div class="footer-title">What this is</div>
+            <div class="footer-text">
+              A personal lab: experiments, case-based research, and tools.<br />
+              Built to be fast, clean, and easy to extend.
+            </div>
           </div>
-        </div>
 
-        <div>
-          <div class="footer-title">Status</div>
-          <div class="footer-text">
-            Site is live. I actively publish and update articles.
+          <div>
+            <div class="footer-title">Status</div>
+            <div class="footer-text">
+              Site is live. I actively publish and update articles.
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </footer>
 
     {hasCaseGalleries && (

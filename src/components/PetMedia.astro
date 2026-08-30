@@ -102,7 +102,7 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
 
       {gallerySize > 0 && (
         <details class="media-gallery">
-          <summary><span>{isEnglish ? "View the full gallery" : "Смотреть всю галерею"}</span><span>{totalMedia}</span></summary>
+          <summary><span>{isEnglish ? `View all ${totalMedia} photos and videos` : `Смотреть все ${totalMedia} фото и видео`}</span></summary>
           <div class="media-gallery-grid">
             {galleryPhotos.map((photo) => (
               <figure>
