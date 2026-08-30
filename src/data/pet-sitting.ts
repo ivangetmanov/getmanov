@@ -1,4 +1,4 @@
-import { petSittingUnavailablePeriods } from "./pet-sitting-availability.mjs";
+import { petSittingInitialMonth, petSittingUnavailablePeriods } from "./pet-sitting-availability.mjs";
 import { formatRsd, petSittingBusiness } from "../lib/pet-sitting-business.mjs";
 
 export type PetSittingPageKind = "main" | "dogs" | "cats";
@@ -10,6 +10,7 @@ export type PetSittingPageKind = "main" | "dogs" | "cats";
 export const petSittingConfig = {
   telegramUsername: petSittingBusiness.telegramUsername,
   contactPhone: petSittingBusiness.contactPhone,
+  initialMonth: petSittingInitialMonth,
   unavailablePeriods: petSittingUnavailablePeriods,
   prices: {
     oneAnimal: [

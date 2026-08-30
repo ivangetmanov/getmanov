@@ -24,6 +24,7 @@ const telegramDirectUrl = `https://t.me/${petSittingConfig.telegramUsername}`;
 const whatsappDirectUrl = `https://wa.me/${phoneDigits}`;
 const viberDirectUrl = `viber://chat?number=${encodeURIComponent(petSittingConfig.contactPhone)}`;
 const config = {
+  initialMonth: petSittingConfig.initialMonth,
   unavailablePeriods: petSittingConfig.unavailablePeriods,
   telegramUsername: petSittingConfig.telegramUsername,
   contactPhone: petSittingConfig.contactPhone,
@@ -129,7 +130,12 @@ const config = {
       ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
       : ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     const weekdays = isEnglish ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-    let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
+    const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const initialMonthMatch = /^(\d{4})-(0[1-9]|1[0-2])$/.exec(settings.initialMonth || '');
+    const configuredInitialMonth = initialMonthMatch
+      ? new Date(Number(initialMonthMatch[1]), Number(initialMonthMatch[2]) - 1, 1)
+      : currentMonth;
+    let cursor = configuredInitialMonth > currentMonth ? configuredInitialMonth : currentMonth;
     let start = '';
     let end = '';
     let submitting = false;

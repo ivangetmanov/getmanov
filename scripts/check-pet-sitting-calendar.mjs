@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { JSDOM } from "jsdom";
-import { petSittingUnavailablePeriods } from "../src/data/pet-sitting-availability.mjs";
+import { petSittingInitialMonth, petSittingUnavailablePeriods } from "../src/data/pet-sitting-availability.mjs";
 import { billableStayDays, isDateUnavailable, rangeHasUnavailable } from "../src/lib/pet-sitting-calendar.mjs";
 import {
   calculatePetSittingQuote,
@@ -12,6 +12,7 @@ import {
 } from "../src/lib/pet-sitting-business.mjs";
 
 const projectRoot = fileURLToPath(new URL("../", import.meta.url));
+assert.equal(petSittingInitialMonth, "2026-09");
 const blockedDates = [
   "2026-08-29",
   "2026-08-30",
@@ -141,6 +142,7 @@ for (const page of pages) {
   assert.equal(config.sourcePage, expectedSourcePage);
   assert.equal(config.articleSlug, page.articleSlug ?? "");
   assert.equal(config.toolType, page.articleSlug ? articleToolTypes[page.articleSlug] : "full_enquiry");
+  assert.equal(config.initialMonth, petSittingInitialMonth, `${page.path} should start from the shared initial month`);
   assert.deepEqual(config.unavailablePeriods, petSittingUnavailablePeriods, `${page.path} should use shared unavailable dates`);
   for (const key of blockedDates) {
     assert.equal(isDateUnavailable(key, config.unavailablePeriods), true, `${key} should be blocked on ${page.path}`);
@@ -232,6 +234,7 @@ for (const page of pages) {
 }
 
 const calendarSource = await readFile(`${projectRoot}src/components/PetSittingCalendar.astro`, "utf8");
+assert.match(calendarSource, /configuredInitialMonth > currentMonth \? configuredInitialMonth : currentMonth/);
 assert.match(calendarSource, /Estimated price: \$\{formatRsd\(quote\.total, 'en'\)\} RSD/);
 assert.match(calendarSource, /Предварительная стоимость: \$\{formatRsd\(quote\.total, 'ru'\)\} RSD/);
 assert.doesNotMatch(calendarSource, /Estimated total:/);
