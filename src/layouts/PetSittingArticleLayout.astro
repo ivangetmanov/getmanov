@@ -204,6 +204,7 @@ const alternates = alternatePath
     button.dataset.videoLoad = "";
     button.dataset.videoId = videoId;
     button.setAttribute("aria-label", title);
+    button.title = title;
 
     const thumbnail = document.createElement("img");
     thumbnail.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;

@@ -41,16 +41,16 @@ const slugs = [
 
 const copyHashes = {
   ru: {
-    "pet-sitter-vs-boarding": "806b39c54a53f60e8783c3463aff0d191d9ba74c0d625a847db741685b5dc4eb",
-    "can-cat-stay-alone-for-a-week": "b4dc6a701e29cd01f0e7f66983e417e5aeb0fb153bffb0383d2416f384b46531",
-    "prepare-dog-for-boarding": "f32ea9d2ab63aa1e4ca54cbbc5a483fe7d52b1f0da643c3e3b9b4455845bc897",
-    "prepare-cat-for-boarding": "d34eda12ab85d234ba92a8b6e7ac6a6571060be7592ef02fb96d6cf22d622059",
+    "pet-sitter-vs-boarding": "9fdc38326879b841dff6f01c8916fb56087591e9f550b8ec4d45676fb6e1f0a2",
+    "can-cat-stay-alone-for-a-week": "48b65c05094ecf6296df8c86f0cd33e090149fa69b83c3f1b191b09decbb725f",
+    "prepare-dog-for-boarding": "34ffafe3646ef0564b08d653761977f37fc4f0f5e930a007cce59cffcfbe7e56",
+    "prepare-cat-for-boarding": "23983a566099ab53970e888a1cfe69aafe65a48406bd4443e271dae8ae3a63f9",
   },
   en: {
-    "pet-sitter-vs-boarding": "83cec0965d126d012b6b2361d85b090b628702e3279ed53147ea3c760c74b9cd",
-    "can-cat-stay-alone-for-a-week": "97027267e345f15c2d51d088a80c879cfdfda47b2d2cb6ea5df41b8eccaa77c4",
-    "prepare-dog-for-boarding": "a2a98734ad53eddac5631f6bf6f97c7bfc3a3469355a70886a5ec92007ad2008",
-    "prepare-cat-for-boarding": "5ed81558d9922048877a0a7ef8d05355fbc51112a308c0d71cec7fd2917acd9a",
+    "pet-sitter-vs-boarding": "1217e5f820a1ac6fbf1ce1005254fc91ef892ad761bf4eb3bfad6172fb7c6afa",
+    "can-cat-stay-alone-for-a-week": "55e1c49213327cc98faf1b340dca4f3b2fe0a0bbc7e5ae5ffdd2095590af95a4",
+    "prepare-dog-for-boarding": "f3d37349b6acea2c6f17e65f55cead9fe74ad3664d9c62b6b2b0e75392a0bb38",
+    "prepare-cat-for-boarding": "beea7d8d96f5ed16925b2edf63337bc7a7ce513afdd064d8f4b0fe8ac2e5fabe",
   },
 };
 const interactionSelectors = {
@@ -58,6 +58,27 @@ const interactionSelectors = {
   "can-cat-stay-alone-for-a-week": '[data-cat-care-tool][data-tool-type="cat_care_options"]',
   "prepare-dog-for-boarding": '[data-article-checklist][data-tool-type="dog_preparation_checklist"]',
   "prepare-cat-for-boarding": '[data-article-checklist][data-tool-type="cat_preparation_checklist"]',
+};
+const namedImageTerms = {
+  "dog-guest-01.webp": { ru: ["Шэди"], en: ["Shady"] },
+  "dog-guest-02.webp": { ru: ["Шэди"], en: ["Shady"] },
+  "dog-guest-03.webp": { ru: ["Шэди"], en: ["Shady"] },
+  "dog-guest-06.webp": { ru: ["Шэди"], en: ["Shady"] },
+  "cat-guest-01.webp": { ru: ["Свит", "Пепе"], en: ["Sweet", "Pepe"] },
+  "cat-guest-02.webp": { ru: ["Пепе"], en: ["Pepe"] },
+  "cat-guest-03.webp": { ru: ["Пепе", "Аней"], en: ["Pepe", "Anna"] },
+  "cat-guest-04.webp": { ru: ["Пепе", "Пабло"], en: ["Pepe", "Pablo"] },
+  "cat-guest-05.webp": { ru: ["Пепе", "Аней"], en: ["Pepe", "Anna"] },
+  "pablo.webp": { ru: ["Пабло"], en: ["Pablo"] },
+  "sweet.webp": { ru: ["Свит"], en: ["Sweet"] },
+};
+const namedVideoTerms = {
+  IPpKV9xGk_s: { ru: ["Гинесс", "Ваней"], en: ["Guinness", "Ivan"] },
+  kTsjlgpyK_E: { ru: ["Сафа"], en: ["Safa"] },
+  NwHXwGqr1FM: { ru: ["Сафа"], en: ["Safa"] },
+  HiwjWxa9qfM: { ru: ["Сафа"], en: ["Safa"] },
+  unefUKL2sv8: { ru: ["Шэди"], en: ["Shady"] },
+  gzEpuT0el14: { ru: ["Пепе"], en: ["Pepe"] },
 };
 const placementBounds = {
   ru: {
@@ -118,6 +139,10 @@ for (const locale of ["ru", "en"]) {
     assert.equal(document.querySelectorAll("[data-pet-calendar]").length, 1, `${path} must render one shared calendar`);
     assert(calendar, `${path} needs the full shared calendar inside its booking block`);
     assert.equal(calendar.classList.contains("availability--compact"), false, `${path} must not use the removed compact variant`);
+    assert(calendar.classList.contains("availability--article"), `${path} needs the refined article calendar presentation`);
+    assert.equal(calendar.querySelector(".availability__intro"), null, `${path} must not repeat the availability heading inside the calendar`);
+    assert.equal(booking.querySelectorAll(".pet-article-booking__context h2").length, 1, `${path} needs one clear availability heading`);
+    assert.equal(booking.querySelector(".pet-article-booking__context .pet-article-tool__eyebrow"), null, `${path} must not stack a redundant availability eyebrow`);
     const calendarConfig = JSON.parse(calendar.getAttribute("data-pet-calendar"));
     assert.equal(calendarConfig.locale, locale);
     assert.equal(calendarConfig.articleSlug, article.slug);
@@ -179,6 +204,14 @@ for (const locale of ["ru", "en"]) {
       const bytes = await readFile(new URL(`public${src}`, root));
       assert.equal(bytes.subarray(0, 4).toString("ascii"), "RIFF", `${src} must be a genuine WebP`);
       assert.equal(bytes.subarray(8, 12).toString("ascii"), "WEBP", `${src} must be a genuine WebP`);
+      const caption = image.closest("figure")?.querySelector("figcaption")?.textContent.trim() ?? "";
+      const alt = image.getAttribute("alt") ?? "";
+      assert.equal(caption.replace(/[.!?]$/, ""), alt, `${path} visible caption and alt must describe the same image: ${src}`);
+      const filename = src.split("/").at(-1);
+      for (const term of namedImageTerms[filename]?.[locale] ?? []) {
+        assert(alt.includes(term), `${path} ${filename} alt must identify ${term}`);
+        assert(caption.includes(term), `${path} ${filename} caption must identify ${term}`);
+      }
     }
 
     const mediaMarkup = document.querySelector(".pet-article")?.innerHTML ?? "";
@@ -210,9 +243,26 @@ for (const locale of ["ru", "en"]) {
         `${path} must prepare privacy-enhanced embeds`,
       );
       for (const figure of mediaVideos) {
-        assert(figure.querySelector("a[href]"), `${path} video needs a no-JavaScript fallback link`);
+        const fallbackLink = figure.querySelector("a[href]");
+        const caption = figure.querySelector("figcaption")?.textContent.trim() ?? "";
+        assert(fallbackLink, `${path} video needs a no-JavaScript fallback link`);
+        const videoId = figure.getAttribute("data-video-id");
+        for (const term of namedVideoTerms[videoId]?.[locale] ?? []) {
+          assert(caption.includes(term), `${path} ${videoId} caption must identify ${term}`);
+          assert(fallbackLink.textContent.includes(term), `${path} ${videoId} accessible video label must identify ${term}`);
+        }
       }
     }
+
+    const mediaLabels = [
+      ...mediaImages.map((image) => image.getAttribute("alt") ?? ""),
+      ...[...document.querySelectorAll(".pet-article-media figcaption, .pet-article-video a[href]")]
+        .map((node) => node.textContent ?? ""),
+    ].join(" ");
+    const genericCaptionPattern = locale === "ru"
+      ? /Собак[аи]-гост|кошк[аи]-гост|Полосатая кошка|Две кошки/iu
+      : /\b(?:a )?guest (?:dog|cat)\b|\btwo cats\b|\bcats resting\b/iu;
+    assert.doesNotMatch(mediaLabels, genericCaptionPattern, `${path} still contains a generic media caption`);
 
     const schemas = [...document.querySelectorAll('script[type="application/ld+json"]')]
       .map((node) => JSON.parse(node.textContent || "{}"));

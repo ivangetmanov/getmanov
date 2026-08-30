@@ -125,7 +125,7 @@ for (const key of blockedDates) {
   assert.equal(isDateUnavailable(key, petSittingUnavailablePeriods), true, `${key} should be unavailable`);
 }
 
-const fullCalendarMarkup = new Map();
+const fullCalendarPanelMarkup = new Map();
 for (const page of pages) {
   const html = await readFile(`${projectRoot}dist/${page.path}`, "utf8");
   const dom = new JSDOM(html);
@@ -187,17 +187,25 @@ for (const page of pages) {
   const channels = [...calendar.querySelectorAll("[data-direct-contact]")].map((link) => link.dataset.channel);
   assert.deepEqual(channels, ["telegram"], `${page.path} should expose Telegram as the only direct-contact channel`);
   assert.equal(calendar.querySelector('[data-channel="whatsapp"], [data-channel="viber"]'), null);
-  const normalizedCalendar = calendar.cloneNode(true);
-  normalizedCalendar.setAttribute("data-pet-calendar", "");
+  const calendarPanelMarkup = calendar.querySelector(".calendar-panel")?.outerHTML;
+  assert(calendarPanelMarkup, `${page.path} needs the complete calendar and enquiry panel`);
   const parityKey = `${page.locale}:${page.kind}`;
   if (page.articleSlug) {
+    assert(calendar.classList.contains("availability--article"), `${page.path} needs the compact article presentation`);
+    assert.equal(calendar.querySelector(".availability__intro"), null, `${page.path} must not repeat the article availability heading`);
+    const booking = calendar.closest(".pet-article-booking");
+    const expectedHeading = page.locale === "en" ? "Check available dates" : "Проверьте свободные даты";
+    assert.equal(booking?.querySelector(".pet-article-booking__context h2")?.textContent.trim(), expectedHeading);
+    assert.equal(booking?.querySelector(".pet-article-booking__context .pet-article-tool__eyebrow"), null);
     assert.equal(
-      normalizedCalendar.outerHTML,
-      fullCalendarMarkup.get(parityKey),
-      `${page.path} calendar markup must exactly match its ${page.locale}/${page.kind} money page`,
+      calendarPanelMarkup,
+      fullCalendarPanelMarkup.get(parityKey),
+      `${page.path} calendar and enquiry controls must exactly match its ${page.locale}/${page.kind} money page`,
     );
   } else {
-    fullCalendarMarkup.set(parityKey, normalizedCalendar.outerHTML);
+    assert.equal(calendar.classList.contains("availability--article"), false);
+    assert(calendar.querySelector(".availability__intro"), `${page.path} money page should keep its standalone calendar introduction`);
+    fullCalendarPanelMarkup.set(parityKey, calendarPanelMarkup);
   }
 
   assert.equal(html.includes("PET_SITTING_TELEGRAM_BOT_TOKEN"), false);

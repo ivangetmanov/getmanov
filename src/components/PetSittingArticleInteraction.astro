@@ -37,13 +37,12 @@ const isEnglish = locale === "en";
 )}
 
 {configuration && placement === "booking" && (
-  <div class="pet-article-booking" data-article-interaction="booking" data-article-slug={articleSlug}>
+  <section class="pet-article-booking" data-article-interaction="booking" data-article-slug={articleSlug} aria-labelledby={`article-availability-${articleSlug}`}>
     <div class="pet-article-booking__context">
-      <p class="pet-article-tool__eyebrow">{isEnglish ? "Check your dates" : "Проверить даты"}</p>
-      <h2>{isEnglish ? "Considering home boarding?" : "Рассматриваете передержку?"}</h2>
+      <h2 id={`article-availability-${articleSlug}`}>{isEnglish ? "Check available dates" : "Проверьте свободные даты"}</h2>
       <p>{isEnglish
-        ? "Choose your dates to see whether they are available and get an immediate estimated price."
-        : "Выберите даты — сразу покажем, свободны ли они и сколько примерно будет стоить передержка."}</p>
+        ? "Choose approximate dates to see availability and an estimated price. We’ll confirm everything in Telegram."
+        : "Выберите примерные даты — сразу покажем доступность и стоимость. Окончательно подтвердим всё в Telegram."}</p>
     </div>
     <PetSittingCalendar
       locale={locale}
@@ -56,7 +55,7 @@ const isEnglish = locale === "en";
       <summary>{billingFaq.question}</summary>
       <p>{billingFaq.answer}</p>
     </details>
-  </div>
+  </section>
 )}
 
 <style is:global>
@@ -88,10 +87,10 @@ const isEnglish = locale === "en";
   .pet-article-checklist__items label { display:flex;min-height:50px;align-items:flex-start;gap:11px;border:1px solid #d4ded8;border-radius:10px;padding:12px;background:#fff;cursor:pointer;font-size:15px;line-height:1.4; }
   .pet-article-checklist__items input { flex:0 0 auto;width:19px;height:19px;margin:1px 0 0;accent-color:var(--pet-accent); }
   .pet-article-checklist__note { margin-bottom:0;font-size:13px; }
-  .pet-article-booking { container-type:inline-size;margin:4.5rem 0; }
-  .pet-article-booking__context { max-width:680px;margin-bottom:-28px; }
+  .pet-article-booking { container-type:inline-size;margin:4rem 0; }
+  .pet-article-booking__context { max-width:720px;margin-bottom:22px; }
   .pet-article .pet-article-booking__context h2 { margin:0;padding:0;border:0;font-size:clamp(29px,4vw,40px); }
-  .pet-article-booking__context>p:not(.pet-article-tool__eyebrow) { color:var(--pet-muted); }
+  .pet-article-booking__context>p { max-width:680px;margin:10px 0 0;color:var(--pet-muted); }
   .pet-article-billing-faq { margin-top:14px;border:1px solid var(--pet-line);border-radius:12px;background:#fff; }
   .pet-article-billing-faq summary { padding:16px 18px;cursor:pointer;font-weight:780; }
   .pet-article-billing-faq p { margin:0;padding:0 18px 18px;color:var(--pet-muted);font-size:15px;line-height:1.65;white-space:pre-line; }
@@ -101,6 +100,7 @@ const isEnglish = locale === "en";
     .pet-article-question legend { min-height:auto; }
     .pet-article-options span { min-height:48px;font-size:13px; }
     .pet-article-tool form button { grid-column:auto; }
-    .pet-article-booking__context { margin-bottom:-12px; }
+    .pet-article-booking { margin-block:3.5rem; }
+    .pet-article-booking__context { margin-bottom:18px; }
   }
 </style>
