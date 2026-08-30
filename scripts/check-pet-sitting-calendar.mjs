@@ -45,6 +45,32 @@ const articleToolTypes = {
   "prepare-dog-for-boarding": "dog_preparation_checklist",
   "prepare-cat-for-boarding": "cat_preparation_checklist",
 };
+const pricingExpectations = {
+  ru: {
+    headers: ["Срок", "1 животное", "2 животных"],
+    rows: [
+      ["1–3 дня", "2 000 RSD в сутки", "3 000 RSD в сутки"],
+      ["4–13 дней", "1 500 RSD в сутки", "2 500 RSD в сутки"],
+      ["14+ дней", "обсуждаем цену и возможную скидку отдельно", "обсуждаем отдельно"],
+    ],
+    extras: [
+      ["Знакомство · около 30 минут", "бесплатно"],
+      ["Пробная передержка · несколько часов", "1 000 RSD"],
+    ],
+  },
+  en: {
+    headers: ["Length", "1 pet", "2 pets"],
+    rows: [
+      ["1–3 days", "2,000 RSD per day", "3,000 RSD per day"],
+      ["4–13 days", "1,500 RSD per day", "2,500 RSD per day"],
+      ["14+ days", "Discuss individually", "Discuss individually"],
+    ],
+    extras: [
+      ["Free introduction · around 30 minutes", "Free"],
+      ["Trial stay · a few hours", "1,000 RSD"],
+    ],
+  },
+};
 
 assert.equal(billableStayDays("2026-08-29", "2026-08-30"), 2);
 assert.equal(billableStayDays("2026-08-29", "2026-09-05"), 7);
@@ -174,6 +200,34 @@ for (const page of pages) {
   assert.equal(html.includes("PET_SITTING_TELEGRAM_CHAT_ID"), false);
   if (!page.articleSlug && page.kind === "main") {
     assert.equal(dom.window.document.querySelector(".pet-hero img")?.getAttribute("src"), "/images/pet-sitting/main-hero.webp");
+  }
+  if (!page.articleSlug) {
+    const expectedPricing = pricingExpectations[page.locale];
+    const pricing = dom.window.document.querySelector("#pricing");
+    const table = pricing?.querySelector("table.price-table");
+    assert.ok(table, `${page.path} needs one semantic pricing table`);
+    assert.equal(pricing.querySelectorAll("table.price-table").length, 1, `${page.path} must not duplicate pricing for responsive layouts`);
+    assert.deepEqual(
+      [...table.querySelectorAll('thead th[scope="col"]')].map((cell) => cell.textContent.trim()),
+      expectedPricing.headers,
+      `${page.path} pricing headers changed`,
+    );
+    assert.deepEqual(
+      [...table.querySelectorAll("tbody tr")].map((row) => [
+        row.querySelector('th[scope="row"]')?.textContent.trim(),
+        ...[...row.querySelectorAll("td strong")].map((cell) => cell.textContent.trim()),
+      ]),
+      expectedPricing.rows,
+      `${page.path} pricing tiers or values changed`,
+    );
+    assert.deepEqual(
+      [...pricing.querySelectorAll(".price-extras > div")].map((row) => [
+        row.querySelector("dt")?.textContent.trim(),
+        row.querySelector("dd")?.textContent.trim(),
+      ]),
+      expectedPricing.extras,
+      `${page.path} introduction or trial pricing changed`,
+    );
   }
 }
 

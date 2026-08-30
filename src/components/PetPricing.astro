@@ -8,6 +8,21 @@ const durationLabel = (duration: string, index: number) => isEnglish ? englishDu
 const priceLabel = (price: string, index: number) => isEnglish
   ? index === 2 ? "Discuss individually" : price.replace(/(\d) (\d{3})/, "$1,$2").replace("в сутки", "per day")
   : price;
+const quantityLabels = isEnglish ? ["1 pet", "2 pets"] : ["1 животное", "2 животных"];
+const tiers = petSittingConfig.prices.oneAnimal.map((row, index) => ({
+  duration: durationLabel(row.duration, index),
+  onePet: priceLabel(row.price, index),
+  twoPets: priceLabel(petSittingConfig.prices.twoAnimals[index].price, index),
+}));
+const extras = isEnglish
+  ? [
+      { label: "Free introduction · around 30 minutes", price: "Free" },
+      { label: "Trial stay · a few hours", price: "1,000 RSD" },
+    ]
+  : [
+      { label: "Знакомство · около 30 минут", price: "бесплатно" },
+      { label: "Пробная передержка · несколько часов", price: "1 000 RSD" },
+    ];
 ---
 
 <section class="pricing-section" id="pricing">
@@ -16,28 +31,39 @@ const priceLabel = (price: string, index: number) => isEnglish
     <h2>{isEnglish ? "How much does pet boarding cost?" : "Без сложных тарифов"}</h2>
     <p>{isEnglish ? "Long stays can be discussed individually and may be possible for approximately up to two months." : "Для 14+ дней обсуждаем цену отдельно. Долгие проживания возможны примерно до двух месяцев."}</p>
   </div>
-  <div class="price-table" role="table" aria-label={isEnglish ? "Pet boarding prices" : "Стоимость передержки"}>
-    <div role="row" class="price-head">
-      <span role="columnheader">{isEnglish ? "Length" : "Срок"}</span>
-      <span role="columnheader">{isEnglish ? "1 pet" : "1 животное"}</span>
-      <span role="columnheader">{isEnglish ? "2 pets" : "2 животных"}</span>
-    </div>
-    {petSittingConfig.prices.oneAnimal.map((row, index) => (
-      <div role="row">
-        <span role="cell">{durationLabel(row.duration, index)}</span>
-        <strong role="cell" data-label={isEnglish ? "1 pet" : "1 животное"}>{priceLabel(row.price, index)}</strong>
-        <strong role="cell" data-label={isEnglish ? "2 pets" : "2 животных"}>{priceLabel(petSittingConfig.prices.twoAnimals[index].price, index)}</strong>
-      </div>
-    ))}
-    <div role="row" class="price-extra">
-      <span role="cell">{isEnglish ? "Free introduction · around 30 minutes" : "Знакомство · около 30 минут"}</span>
-      <strong role="cell">{isEnglish ? "Free" : "бесплатно"}</strong>
-      <span role="cell"></span>
-    </div>
-    <div role="row" class="price-extra">
-      <span role="cell">{isEnglish ? "Trial stay · a few hours" : "Пробная передержка · несколько часов"}</span>
-      <strong role="cell">{isEnglish ? "1,000 RSD" : "1 000 RSD"}</strong>
-      <span role="cell"></span>
-    </div>
+  <div class="pricing-content">
+    <table class="price-table" aria-label={isEnglish ? "Pet boarding prices" : "Стоимость передержки"}>
+      <thead>
+        <tr>
+          <th scope="col">{isEnglish ? "Length" : "Срок"}</th>
+          <th scope="col">{quantityLabels[0]}</th>
+          <th scope="col">{quantityLabels[1]}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {tiers.map((tier) => (
+          <tr>
+            <th scope="row">{tier.duration}</th>
+            <td>
+              <span class="price-cell__label" aria-hidden="true">{quantityLabels[0]}</span>
+              <strong>{tier.onePet}</strong>
+            </td>
+            <td>
+              <span class="price-cell__label" aria-hidden="true">{quantityLabels[1]}</span>
+              <strong>{tier.twoPets}</strong>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <dl class="price-extras" aria-label={isEnglish ? "Introduction and trial stay" : "Знакомство и пробная передержка"}>
+      {extras.map((extra) => (
+        <div>
+          <dt>{extra.label}</dt>
+          <dd>{extra.price}</dd>
+        </div>
+      ))}
+    </dl>
   </div>
 </section>
