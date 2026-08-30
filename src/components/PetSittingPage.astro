@@ -24,6 +24,19 @@ const isDogs = kind === "dogs";
 const isCats = kind === "cats";
 const priceLabel = isEnglish ? "From 1,500 RSD per day." : "От 1 500 RSD в сутки";
 const heroPhoto = petSittingConfig.heroPhotos[kind];
+const heroPhotoWidth = isMain ? 1290 : 720;
+const heroPhotoHeight = isMain ? 1039 : 1280;
+const heroAlt = isEnglish
+  ? isDogs
+    ? "A guest dog relaxing in our Petrovaradin apartment"
+    : isCats
+      ? "Two cats relaxing in our Petrovaradin apartment"
+      : "Anna holding one of our cats outside our Petrovaradin home"
+  : isDogs
+    ? "Собака-гость отдыхает у нас дома в Петроварадине"
+    : isCats
+      ? "Два кота отдыхают у нас дома в Петроварадине"
+      : "Аня с нашим котом у дома в Петроварадине";
 const videoLabel = isDogs
   ? isEnglish ? "Video of a dog staying with us" : "Видео с собакой на домашней передержке"
   : isCats
@@ -57,15 +70,15 @@ const mediaCopy = isEnglish
     : "Показываем, как питомец ест, спит, гуляет, играет, отдыхает и осваивается, — а не просто пишем, что всё хорошо.";
 const heroCopy = isEnglish
   ? isDogs
-    ? "We’re Anna and Ivan. Your dog stays with us in our Petrovaradin apartment, together with our two cats. We host no more than two guest pets at once and keep your dog’s usual walking and feeding routine."
+    ? "Looking for a dog sitter in Novi Sad? We’re Anna and Ivan, offering dog sitting and home dog boarding in our Petrovaradin apartment. Your dog stays with us and our two cats; we host up to two dogs from one household."
     : isCats
-      ? "We’re Anna and Ivan. Your cat stays with us in our Petrovaradin apartment, together with our two cats. We host no more than two guest pets at once, provide a separate room when needed, and never force introductions."
-      : "We’re Anna and Ivan. Your pet stays with us in our Petrovaradin apartment, together with our two cats. We host no more than two guest pets at the same time."
+      ? "Looking for a cat sitter in Novi Sad? We’re Anna and Ivan, offering cat sitting and home cat boarding in our Petrovaradin apartment. Your cat stays with us and our two cats; we host up to two cats from one household and provide a separate room when needed."
+      : "We’re Anna and Ivan. We provide home pet boarding and pet sitting in our Petrovaradin apartment, where your pet stays with us and our two cats. We host up to two guest pets from the same household."
   : isDogs
-    ? "Мы — Аня и Иван. Собака живёт с нами в квартире в Петроварадине вместе с нашими двумя котами. Одновременно принимаем не больше двух гостей, гуляем и кормим по привычному графику."
+    ? "Мы — Аня и Иван. Собака живёт с нами в квартире в Петроварадине вместе с нашими двумя котами. Берём максимум двух собак — от одних хозяев, гуляем и кормим по привычному графику."
     : isCats
-      ? "Мы — Аня и Иван. Кошка живёт с нами в квартире в Петроварадине вместе с нашими двумя котами. Одновременно принимаем не больше двух гостей, при необходимости выделяем отдельную комнату и не торопим знакомство."
-      : "Мы — Аня и Иван. Питомец живёт с нами в квартире в Петроварадине вместе с нашими двумя котами. Одновременно принимаем не больше двух гостей.";
+      ? "Мы — Аня и Иван. Кошка живёт с нами в квартире в Петроварадине вместе с нашими двумя котами. Берём максимум двух кошек — от одних хозяев, при необходимости выделяем отдельную комнату."
+      : "Мы — Аня и Иван. Питомец живёт с нами в квартире в Петроварадине вместе с нашими двумя котами. Одновременно берём максимум двух гостевых животных — от одних хозяев.";
 
 const faqByPage: Record<PetSittingPageKind, string[][]> = {
   main: [
@@ -82,6 +95,7 @@ const faqByPage: Record<PetSittingPageKind, string[][]> = {
     ["Будете присылать фото и видео?", "Да. Присылаем фото и видео минимум 3 раза в день и всегда остаёмся на связи."],
     ["Что если у моего питомца какой-то очень специфический режим?", "Расскажите нам. Мы не ждём, что все животные одинаковые. Если это что-то адекватное и выполнимое, сохраняем его обычный режим."],
     ["А если что-нибудь пойдёт не так?", "Мы точно не будем молча ждать вашего возвращения. Разберёмся в ситуации, сразу свяжемся с вами и вместе решим, что делать. Если вдруг случится срочная ситуация со здоровьем и ждать ответа будет опасно для животного, сделаем необходимое в моменте, при необходимости обратимся к ветеринару и сразу же сообщим вам."],
+    ["Чем отличаются передержка, петситтинг, зооняня и зоогостиница?", "Передержка — питомец временно живёт у другого человека. Петситтинг — более широкое понятие: петситтер может присматривать за питомцем у хозяев или у себя. Зооняня навещает, кормит, гуляет и ухаживает. Зоогостиница — отдельное специализированное место. У нас именно домашняя передержка: питомец временно живёт вместе с нами в квартире в Петроварадине."],
   ],
   dogs: [
     ["Кто мы такие?", "Мы — Аня и Иван, муж и жена. Три года жили во Вьетнаме, где взяли из приюта наших двух котов, а теперь живём вместе с ними в Петроварадине. Оба работаем удалённо: Иван — в маркетинге, Аня — CSM, поэтому почти всегда кто-то из нас дома."],
@@ -99,6 +113,7 @@ const faqByPage: Record<PetSittingPageKind, string[][]> = {
     ["Что взять с собой?", "Корм, миски, поводок, лекарства, игрушки, любимую лежанку — если она ей нужна. Если у собаки есть особенный ритуал, режим или странная привычка — обязательно расскажите нам. Мы это учтём."],
     ["Будете присылать фото и видео?", "Да. Присылаем фото и видео минимум 3 раза в день."],
     ["Что если что-то неожиданное случится, пока меня нет?", "Сразу свяжемся с вами и будем решать проблему, а не ждать вашего возвращения. Если ситуация срочная и связана со здоровьем, действуем в интересах собаки, при необходимости обращаемся к ветеринару и сразу сообщаем вам."],
+    ["Чем отличаются передержка, петситтинг, зооняня и зоогостиница?", "Передержка — питомец временно живёт у другого человека. Петситтинг — более широкое понятие: петситтер может присматривать за питомцем у хозяев или у себя. Зооняня навещает, кормит, гуляет и ухаживает. Зоогостиница — отдельное специализированное место. У нас именно домашняя передержка: питомец временно живёт вместе с нами в квартире в Петроварадине."],
   ],
   cats: [
     ["Кто мы такие?", "Мы — Аня и Иван, муж и жена. Три года жили во Вьетнаме, где взяли из приюта наших двух котов, а теперь живём вместе с ними в Петроварадине. Оба работаем удалённо: Иван — в маркетинге, Аня — CSM, поэтому почти всегда кто-то из нас дома."],
@@ -116,6 +131,7 @@ const faqByPage: Record<PetSittingPageKind, string[][]> = {
     ["Что взять с собой?", "Привозите привычный корм, миски, лоток, наполнитель, игрушки — всё это поможет кошке чувствовать себя спокойнее в новом месте."],
     ["Будете присылать фото и видео?", "Да. Мы всегда остаёмся на связи и присылаем фото и видео минимум 3 раза в день — даже если котик пока предпочитает проводить время в укрытии."],
     ["А если кошке внезапно станет плохо?", "Сразу свяжемся с вами, расскажем, что происходит, и вместе решим, что делать дальше. Не будем ждать вашего возвращения, если ситуацию нужно решать сейчас.\n\nЕсли ситуация срочная, действуем в интересах питомца и при необходимости обращаемся к ветеринару, не дожидаясь вашего возвращения."],
+    ["Чем отличаются передержка, петситтинг, зооняня и зоогостиница?", "Передержка — питомец временно живёт у другого человека. Петситтинг — более широкое понятие: петситтер может присматривать за питомцем у хозяев или у себя. Зооняня навещает, кормит, гуляет и ухаживает. Зоогостиница — отдельное специализированное место. У нас именно домашняя передержка: питомец временно живёт вместе с нами в квартире в Петроварадине."],
   ],
 };
 const faqByPageEn: Record<PetSittingPageKind, string[][]> = {
@@ -133,6 +149,7 @@ const faqByPageEn: Record<PetSittingPageKind, string[][]> = {
     ["Will you send photos and videos?", "Yes. We send photos and videos at least three times a day, not just one ceremonial update, and we stay in touch throughout the stay."],
     ["What if my pet has an unusual routine?", "Tell us about it. We do not expect every animal to live the same way. If the routine is practical for us to follow, we will try to keep it familiar."],
     ["What happens if something goes wrong?", "We will not quietly wait for you to return. We will assess the situation, contact you straight away and decide what to do together. If there is an urgent health problem and waiting would put the animal at risk, we will do what is necessary at the time, contact a vet if needed and tell you immediately."],
+    ["What’s the difference between pet sitting, pet boarding and a pet hotel?", "Pet sitting is a broad term for someone caring for your pet. Pet boarding means your pet stays at the sitter’s or provider’s home. A pet hotel or kennel is a dedicated facility. We provide home pet boarding: dogs and cats stay with us in our apartment in Petrovaradin."],
   ],
   dogs: [
     ["Who are we?", "We’re Anna and Ivan, a married couple. We spent three years in Vietnam, where we adopted our two cats from a shelter, and now the four of us live in Petrovaradin. We both work remotely—Ivan in marketing and Anna as a CSM—so one of us is almost always home."],
@@ -150,6 +167,7 @@ const faqByPageEn: Record<PetSittingPageKind, string[][]> = {
     ["What should I bring?", "Bring their normal food, bowls, lead, medication, toys and their own bed if they use one. If your dog has a particular routine, ritual or slightly strange habit, just tell us."],
     ["Will you send photos and videos?", "Yes. We send photos and videos at least three times a day. This is not something we want to reduce to one formal update."],
     ["What happens in an emergency?", "We will contact you straight away and deal with the situation rather than wait for you to return. If there is an urgent health issue, we will act in the dog's interest, contact a vet if needed and tell you immediately."],
+    ["What’s the difference between dog sitting and dog boarding?", "Dog sitting can mean someone cares for your dog in your home, while dog boarding means your dog stays with the sitter. We offer home dog boarding in Petrovaradin: your dog stays with us in our apartment."],
   ],
   cats: [
     ["Who are we?", "We’re Anna and Ivan, a married couple. We spent three years in Vietnam, where we adopted our two cats from a shelter, and now the four of us live in Petrovaradin. We both work remotely—Ivan in marketing and Anna as a CSM—so one of us is almost always home."],
@@ -167,15 +185,16 @@ const faqByPageEn: Record<PetSittingPageKind, string[][]> = {
     ["What should I bring?", "Bring their normal food, bowls, litter box, usual litter, toys and medication — whatever helps things feel normal."],
     ["Will you send photos and videos?", "Yes. We send photos and videos at least three times a day. We consider this a normal part of the stay."],
     ["What happens if my cat suddenly becomes ill?", "We will not simply wait for you to return. We will assess the situation, message or call you immediately and decide what to do together.\n\nIf the situation is urgent, we will first do what the cat needs at that moment, contact a vet if necessary and get in touch with you immediately."],
+    ["What’s the difference between cat sitting and cat boarding?", "Cat sitting often means someone visits and cares for your cat at home, while cat boarding means your cat stays with the sitter. We offer home cat boarding in Petrovaradin: your cat stays with us in our apartment."],
   ],
 };
 const billingFaq = petSittingBillingFaq[locale];
 const boardingDaysFaq = [billingFaq.question, billingFaq.answer];
 const faq = [boardingDaysFaq, ...(isEnglish ? faqByPageEn : faqByPage)[kind]];
 const faqGroupIndexes: Record<PetSittingPageKind, [number[], number[]]> = {
-  main: [[1, 2, 4, 5, 6, 7, 8, 9], [0, 3, 10, 11, 12, 13]],
-  dogs: [[1, 2, 3, 4, 5, 6, 10, 11, 12], [0, 7, 8, 9, 13, 14, 15]],
-  cats: [[1, 2, 4, 5, 6, 11, 12], [0, 3, 7, 8, 9, 10, 13, 14, 15]],
+  main: [[1, 2, 4, 5, 6, 7, 8, 9], [0, 3, 10, 11, 12, 13, 14]],
+  dogs: [[1, 2, 3, 4, 5, 6, 10, 11, 12], [0, 7, 8, 9, 13, 14, 15, 16]],
+  cats: [[1, 2, 4, 5, 6, 11, 12], [0, 3, 7, 8, 9, 10, 13, 14, 15, 16]],
 };
 const faqGroupTitles = isEnglish
   ? [isDogs ? "Your dog and our home" : isCats ? "Your cat and our home" : "Your pet and our home", "Routine and care"]
@@ -208,6 +227,7 @@ const structuredData = [
     name: serviceName,
     description: page.description,
     url: `https://getmanov.com${page.path}`,
+    image: `https://getmanov.com${heroPhoto}`,
     areaServed: "Petrovaradin, Novi Sad",
     serviceType: isEnglish ? "Home pet boarding" : "Домашняя передержка животных",
   },
@@ -232,21 +252,34 @@ const structuredData = [
 ];
 ---
 
-<BaseLayout title={page.title} description={page.description} canonical={page.path} lang={locale} structuredData={structuredData} alternates={alternates}>
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  canonical={page.path}
+  lang={locale}
+  structuredData={structuredData}
+  alternates={alternates}
+  image={heroPhoto}
+  imageAlt={heroAlt}
+  imageWidth={heroPhotoWidth}
+  imageHeight={heroPhotoHeight}
+>
   <div class:list={["pet-page", `pet-page--${kind}`]}>
     <section class="pet-hero">
-      <div class="pet-hero__copy">
+      <div class="pet-hero__heading">
         <p class="eyebrow">{isEnglish ? "Petrovaradin · Novi Sad" : "Петроварадин · Нови-Сад"}</p>
         <h1>{page.h1}</h1>
+      </div>
+      <div class="hero-media">
+        <img src={heroPhoto} alt={heroAlt} width={heroPhotoWidth} height={heroPhotoHeight} />
+      </div>
+      <div class="pet-hero__details">
         <p class="pet-hero__lead">{heroCopy}</p>
         <p class="pet-hero__price"><strong>{priceLabel}</strong></p>
         <div class="pet-actions">
           <a class="pet-button pet-button--primary" href="#dates">{isEnglish ? "Check available dates" : "Проверить даты"}</a>
           <a class="pet-button" href={telegram} target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : "Написать Ане в Telegram"}</a>
         </div>
-      </div>
-      <div class="hero-media">
-        <img src={heroPhoto} alt={isEnglish ? isDogs ? "Dog staying with us in our home" : isCats ? "Cat staying with us in our home" : "Pet staying with us in our home" : isDogs ? "Собака на домашней передержке" : isCats ? "Кошка на домашней передержке" : "Питомец на домашней передержке"} width="1200" height="900" />
       </div>
     </section>
 
@@ -311,12 +344,14 @@ const structuredData = [
   .pet-page h1,.pet-page h2,.pet-page h3 { overflow-wrap:normal; word-break:normal; hyphens:none; }
   .pet-hero,.early-media,.pricing-section,.pet-media,.pet-location,.faq-section,.useful-guides,.final-cta { width:min(1160px,100%); margin-inline:auto; }
   .eyebrow { margin:0 0 12px; color:var(--accent); font-size:12px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; }
-  .pet-hero { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr); gap:56px; align-items:center; min-height:610px; padding:70px 0 58px; }
+  .pet-hero { display:grid; grid-template-areas:"heading media" "details media"; grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr); grid-template-rows:auto auto; column-gap:56px; align-content:center; align-items:start; min-height:610px; padding:70px 0 58px; }
+  .pet-hero__heading { grid-area:heading; align-self:end; }
+  .pet-hero__details { grid-area:details; }
   .pet-hero h1 { max-width:760px; margin:0; font-size:clamp(48px,4.7vw,64px); line-height:1.02; letter-spacing:-.045em; }
   .pet-hero__lead { max-width:690px; margin:22px 0 0; color:var(--muted); font-size:21px; line-height:1.43; }
   .pet-hero__price { display:flex; flex-wrap:wrap; gap:8px 18px; margin:22px 0 0; }.pet-hero__price strong { font-size:18px; }.pet-hero__price span { color:var(--muted); }
   .pet-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }.pet-button { display:inline-flex; min-height:46px; align-items:center; justify-content:center; border:1px solid var(--ink); border-radius:8px; padding:10px 16px; font:inherit; font-weight:750; text-decoration:none; }.pet-page .pet-button--primary { border-color:var(--accent); background:var(--accent); color:#fff; }
-  .hero-media { aspect-ratio:4/3; overflow:hidden; background:#edf0eb; }.hero-media img { width:100%; height:100%; object-fit:cover; }
+  .hero-media { grid-area:media; align-self:center; aspect-ratio:4/3; overflow:hidden; background:#edf0eb; }.hero-media img { width:100%; height:100%; object-fit:cover; }
   .early-media { display:grid; grid-template-columns:minmax(230px,.54fr) minmax(0,1.46fr); gap:56px; align-items:start; padding:84px 0 40px; }.early-media h2,.pricing-section h2,.pet-location h2,.faq-section h2,.useful-guides h2,.final-cta h2 { margin:0; font-size:clamp(30px,3.5vw,46px); line-height:1.08; letter-spacing:-.04em; }.early-media p,.pricing-section>div:first-child p:not(.eyebrow) { color:var(--muted); font-size:17px; line-height:1.7; }.early-media .media-promise { margin:24px 0 8px; color:var(--ink); font-size:20px; font-weight:850; line-height:1.35; }.early-media .media-promise+p { margin-top:0; }
   .pet-media { padding:50px 0; }.early-media .pet-media { width:100%; padding:0; }.media-grid,.media-gallery-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }.media-grid figure,.media-gallery-grid figure { margin:0; }.video-frame,.photo-card { position:relative; display:block; width:100%; aspect-ratio:9/16; overflow:hidden; border:0; border-radius:16px; padding:0; background:#dfe7e2; box-shadow:0 10px 28px rgba(32,51,47,.1); }.video-frame iframe,.video-poster,.video-poster img,.photo-card img { display:block; width:100%; height:100%; border:0; }.video-frame iframe { background:#111; }.video-poster,.photo-card { cursor:pointer; }.video-poster { position:relative; padding:0; background:#dfe7e2; }.video-poster img,.photo-card img { object-fit:cover; }.video-poster::after,.photo-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 72%,rgba(9,24,19,.32)); opacity:.7; transition:opacity .18s ease; }.photo-card:hover::after,.photo-card:focus-visible::after { opacity:0; }.video-play { position:absolute; z-index:1; left:50%; top:50%; display:grid; width:58px; height:58px; place-items:center; border-radius:50%; background:rgba(255,255,255,.94); color:var(--accent); box-shadow:0 8px 24px rgba(17,42,33,.22); transform:translate(-50%,-50%); transition:transform .18s ease,background .18s ease; }.video-play svg { width:22px; margin-left:3px; }.video-poster:hover .video-play,.video-poster:focus-visible .video-play { background:#fff; transform:translate(-50%,-50%) scale(1.08); }.video-poster:focus-visible,.photo-card:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }.video-number { position:absolute; z-index:1; right:12px; bottom:12px; color:#fff; font-size:12px; font-weight:800; letter-spacing:.04em; }.media-grid figcaption,.media-gallery-grid figcaption { padding-top:8px; color:var(--muted); font-size:13px; line-height:1.4; }.media-gallery { margin-top:18px; }.media-gallery>summary { display:flex; min-height:52px; align-items:center; justify-content:space-between; gap:16px; border:1px solid var(--line); border-radius:12px; padding:12px 16px; cursor:pointer; list-style:none; background:#fff; font-weight:800; }.media-gallery>summary::-webkit-details-marker { display:none; }.media-gallery>summary::after { content:"+"; display:grid; width:30px; height:30px; place-items:center; border-radius:50%; background:#e8f0eb; color:var(--accent); font-size:22px; line-height:1; }.media-gallery[open]>summary::after { content:"−"; }.media-gallery>summary:hover { border-color:#9eb6aa; }.media-gallery-grid { margin-top:14px; }.photo-lightbox { width:min(900px,calc(100vw - 32px)); max-width:none; height:min(90vh,1100px); max-height:none; border:0; border-radius:18px; padding:0; overflow:hidden; background:#17231f; box-shadow:0 24px 80px rgba(0,0,0,.42); }.photo-lightbox::backdrop { background:rgba(15,23,20,.82); backdrop-filter:blur(5px); }.photo-lightbox img { width:100%; height:100%; object-fit:contain; }.photo-lightbox-close { position:absolute; z-index:1; top:12px; right:12px; display:grid; width:42px; height:42px; place-items:center; border:0; border-radius:50%; background:rgba(255,255,255,.92); color:var(--ink); cursor:pointer; font:inherit; font-size:27px; line-height:1; }.photo-lightbox-close:focus-visible { outline:3px solid #fff; outline-offset:3px; }.media-empty { min-height:250px; display:grid; place-content:center; gap:5px; border:1px solid var(--line); border-radius:16px; background:#f3f3ed; color:var(--muted); text-align:center; padding:30px; }.media-empty strong { color:var(--ink); }
   .pricing-section { display:grid; grid-template-columns:.55fr 1.45fr; gap:54px; padding:78px 0; border-top:1px solid var(--line); }.pricing-content { min-width:0; }.pricing-section .price-table { display:table; width:100%; margin:0; overflow:visible; border-collapse:collapse; border-top:1px solid var(--ink); table-layout:fixed; }.pricing-section .price-table th,.pricing-section .price-table td { min-width:0; border:0; border-bottom:1px solid var(--line); padding:17px 14px; background:transparent; text-align:left; vertical-align:top; }.price-table th:first-child,.price-table td:first-child { width:27%; padding-left:0; }.price-table th:last-child,.price-table td:last-child { padding-right:0; }.price-table thead th { padding-top:12px; padding-bottom:12px; color:var(--muted); font-size:12px; font-weight:700; }.price-table tbody th { color:var(--ink); font-size:16px; font-weight:800; }.price-table td strong { display:block; font-size:15px; line-height:1.45; }.price-cell__label { display:none; }.price-extras { display:grid; gap:0; margin:28px 0 0; border-top:1px solid var(--ink); }.price-extras>div { display:grid; grid-template-columns:minmax(0,1fr) minmax(150px,.65fr); gap:24px; align-items:center; border-bottom:1px solid var(--line); padding:17px 0; }.price-extras dt,.price-extras dd { margin:0; }.price-extras dt { font-weight:750; }.price-extras dd { font-weight:800; }
@@ -325,8 +360,8 @@ const structuredData = [
   .useful-guides { display:grid; grid-template-columns:minmax(220px,.58fr) minmax(0,1.42fr); gap:42px; align-items:start; margin-top:54px; padding-top:42px; border-top:1px solid var(--line); }.useful-guides h2 { font-size:clamp(28px,3vw,38px); }.useful-guides nav { display:grid; border-top:1px solid var(--ink); }.useful-guides nav a { display:flex; min-height:58px; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line); padding:14px 4px; font-weight:750; line-height:1.35; text-decoration:none; }.useful-guides nav a:hover { color:var(--accent); opacity:1; }.useful-guides nav b { color:var(--accent); font-size:20px; }
   .final-cta { display:flex; justify-content:space-between; gap:28px; align-items:center; margin-top:20px; border:1px solid var(--line); border-radius:18px; padding:28px 32px; background:#f0f4f1; }.final-cta h2 { font-size:clamp(26px,3vw,36px); }.final-cta .eyebrow { margin-bottom:7px; }.final-cta .pet-actions { flex:0 0 auto; margin:0; }
   .pet-page--dogs .hero-media { background:#eee8df; }.pet-page--cats .hero-media { background:#ebe8e1; }.pet-page--cats .hero-media img { object-position:center 44%; }
-  @media (max-width:1024px) { .pet-hero { grid-template-columns:1fr .78fr; gap:32px; min-height:540px; }.pet-hero h1 { font-size:clamp(46px,5.5vw,58px); }.pricing-section { gap:36px; }.media-grid,.media-gallery-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
-  @media (max-width:780px) { .pet-page { margin:-34px 0; padding-inline:18px; }.pet-hero { grid-template-columns:1fr; min-height:0; padding:48px 0 36px; }.pet-hero h1 { max-width:680px; font-size:clamp(40px,8vw,54px); }.hero-media { max-height:440px; }.early-media,.pricing-section,.pet-location,.useful-guides { grid-template-columns:1fr; }.early-media,.pricing-section { padding-block:54px; }.pet-location { gap:24px; }.faq-columns { grid-template-columns:1fr; gap:34px; }.final-cta { align-items:flex-start; padding:28px; }.faq-section { margin-top:64px; padding-block:54px; } }
+  @media (max-width:1024px) { .pet-hero { grid-template-columns:1fr .78fr; column-gap:32px; min-height:540px; }.pet-hero h1 { font-size:clamp(46px,5.5vw,58px); }.pricing-section { gap:36px; }.media-grid,.media-gallery-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  @media (max-width:780px) { .pet-page { margin:-34px 0; padding-inline:18px; }.pet-hero { grid-template-areas:"heading" "media" "details"; grid-template-columns:1fr; grid-template-rows:auto; min-height:0; padding:48px 0 36px; }.pet-hero h1 { max-width:680px; font-size:clamp(40px,8vw,54px); }.hero-media { width:100%; max-height:440px; margin-top:28px; }.pet-hero__lead { margin-top:24px; }.early-media,.pricing-section,.pet-location,.useful-guides { grid-template-columns:1fr; }.early-media,.pricing-section { padding-block:54px; }.pet-location { gap:24px; }.faq-columns { grid-template-columns:1fr; gap:34px; }.final-cta { align-items:flex-start; padding:28px; }.faq-section { margin-top:64px; padding-block:54px; } }
   @media (max-width:600px) { .pet-page { padding-inline:14px; font-size:16px; }.pet-hero h1 { font-size:clamp(36px,11.5vw,48px); line-height:1.04; }.pet-hero__lead { font-size:18px; }.pet-actions { display:grid; }.pet-button { width:100%; }.media-grid,.media-gallery-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }.video-frame,.photo-card { border-radius:12px; }.video-play { width:48px; height:48px; }.photo-lightbox { width:calc(100vw - 16px); height:calc(100dvh - 24px); border-radius:14px; }.media-empty { min-height:190px; }.pricing-section .price-table,.price-table tbody,.price-table tr,.price-table th,.price-table td { display:block; width:100%; }.price-table thead { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; }.price-table tbody tr { border-bottom:1px solid var(--line); padding:20px 0; }.pricing-section .price-table th,.pricing-section .price-table td { border:0; padding:0; }.price-table th:first-child,.price-table td:first-child { width:100%; padding-left:0; }.price-table tbody th { margin-bottom:17px; font-size:19px; line-height:1.25; }.price-table td+td { margin-top:15px; }.price-cell__label { display:block; margin-bottom:3px; color:var(--muted); font-size:12px; font-weight:650; }.price-table td strong { font-size:16px; line-height:1.45; }.price-extras { margin-top:26px; }.price-extras>div { grid-template-columns:1fr; gap:6px; padding:18px 0; }.price-extras dt { line-height:1.45; }.price-extras dd { font-size:17px; }.pet-location { margin-inline:-2px; padding:22px 18px; }.pet-location__map iframe { height:190px; }.pet-location__map span { right:7px;bottom:7px;max-width:230px;font-size:11px; }.faq-section { margin-inline:-2px; padding:44px 12px; border-radius:18px; }.faq-section>div:first-child { margin-bottom:26px; }.faq-group h3 { padding-inline:4px; }.faq-list summary { min-height:62px; padding:16px 54px 16px 16px; font-size:16px; }.faq-list summary::after { right:14px; }.faq-list p { padding:0 16px 18px; font-size:16px; }.useful-guides { gap:24px;margin-top:44px;padding-top:34px; }.final-cta { display:grid; margin-inline:-2px; padding:24px 20px; }.final-cta .pet-actions { width:100%; } }
   @media (max-width:350px) { .pet-page { padding-inline:12px; }.pet-hero h1 { font-size:36px; } }
 </style>

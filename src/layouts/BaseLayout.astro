@@ -12,10 +12,18 @@ const canonical = Astro.props.canonical ?? frontmatter.canonical;
 const structuredData = Astro.props.structuredData;
 const lang = Astro.props.lang ?? "en";
 const alternates = Astro.props.alternates ?? [];
+const preferredImage = Astro.props.image ?? frontmatter.image;
+const preferredImageAlt = Astro.props.imageAlt ?? frontmatter.imageAlt ?? title;
+const preferredImageWidth = Astro.props.imageWidth ?? frontmatter.imageWidth;
+const preferredImageHeight = Astro.props.imageHeight ?? frontmatter.imageHeight;
 
 const canonicalUrl = canonical
   ? new URL(canonical, "https://getmanov.com").href
   : `https://getmanov.com${Astro.url.pathname}`;
+const preferredImageUrl = preferredImage
+  ? new URL(preferredImage, "https://getmanov.com").href
+  : null;
+const robots = Astro.props.robots ?? (preferredImageUrl ? "index,follow,max-image-preview:large" : "index,follow");
 
 const galleryPages = new Set([
   "/case-studies/seo-case-b2b/",
@@ -176,15 +184,27 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
     {alternates.map((alternate: { hreflang: string; href: string }) => (
       <link rel="alternate" hreflang={alternate.hreflang} href={new URL(alternate.href, "https://getmanov.com").href} />
     ))}
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content={robots} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={lang === "ru" ? "ru_RU" : "en_US"} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta name="twitter:card" content="summary" />
+    {preferredImageUrl && (
+      <>
+        <meta property="og:image" content={preferredImageUrl} />
+        <meta property="og:image:secure_url" content={preferredImageUrl} />
+        <meta property="og:image:type" content="image/webp" />
+        {preferredImageWidth && <meta property="og:image:width" content={String(preferredImageWidth)} />}
+        {preferredImageHeight && <meta property="og:image:height" content={String(preferredImageHeight)} />}
+        <meta property="og:image:alt" content={preferredImageAlt} />
+      </>
+    )}
+    <meta name="twitter:card" content={preferredImageUrl ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {preferredImageUrl && <meta name="twitter:image" content={preferredImageUrl} />}
+    {preferredImageUrl && <meta name="twitter:image:alt" content={preferredImageAlt} />}
     <meta name="theme-color" content="#211d1e" />
     <meta name="apple-mobile-web-app-title" content="Getmanov" />
 

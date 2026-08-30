@@ -242,13 +242,15 @@ for (const locale of ["ru", "en"]) {
 }
 
 const moneyPageCases = [
-  { locale: "ru", service: "main", h1: "Домашняя передержка собак и кошек в Нови‑Саде", hero: "/images/pet-sitting/main-hero.webp" },
-  { locale: "ru", service: "dogs", h1: "Передержка собак в Нови‑Саде", hero: "/images/pet-sitting/dog-guest-02.webp" },
-  { locale: "ru", service: "cats", h1: "Передержка кошек в Нови‑Саде", hero: "/images/pet-sitting/cats-hero.webp" },
-  { locale: "en", service: "main", h1: "Home pet boarding for dogs and cats in Novi Sad", hero: "/images/pet-sitting/main-hero.webp" },
-  { locale: "en", service: "dogs", h1: "Dog boarding in Novi Sad", hero: "/images/pet-sitting/dog-guest-02.webp" },
-  { locale: "en", service: "cats", h1: "Cat boarding in Novi Sad", hero: "/images/pet-sitting/cats-hero.webp" },
+  { locale: "ru", service: "main", h1: "Домашняя передержка собак и кошек в Нови‑Саде", hero: "/images/pet-sitting/main-hero.webp", width: "1290", height: "1039", title: "Домашняя передержка собак и кошек в Нови-Саде | GETMANOV", description: "Домашняя передержка собак и кошек в Нови-Саде. Животное живёт с нами дома в Петроварадине — фото и видео минимум 3 раза в день." },
+  { locale: "ru", service: "dogs", h1: "Передержка собак в Нови‑Саде", hero: "/images/pet-sitting/dog-guest-02.webp", width: "720", height: "1280", title: "Передержка собак в Нови-Саде | Домашняя передержка в Петроварадине", description: "Домашняя передержка собак в Нови-Саде. Собака живёт с нами в квартире в Петроварадине — фото и видео минимум 3 раза в день." },
+  { locale: "ru", service: "cats", h1: "Передержка кошек в Нови‑Саде", hero: "/images/pet-sitting/cats-hero.webp", width: "720", height: "1280", title: "Передержка кошек в Нови-Саде | Домашняя передержка в Петроварадине", description: "Домашняя передержка кошек в Нови-Саде. Кошка живёт с нами дома в Петроварадине, при необходимости отдельно — фото и видео минимум 3 раза в день." },
+  { locale: "en", service: "main", h1: "Home pet boarding for dogs and cats in Novi Sad", hero: "/images/pet-sitting/main-hero.webp", width: "1290", height: "1039", title: "Home Pet Boarding in Novi Sad | Pet Sitting in Petrovaradin", description: "Home pet boarding in Novi Sad. Your pet stays with us in our home in Petrovaradin, with photo and video updates at least 3 times a day." },
+  { locale: "en", service: "dogs", h1: "Dog boarding in Novi Sad", hero: "/images/pet-sitting/dog-guest-02.webp", width: "720", height: "1280", title: "Home Dog Boarding in Novi Sad | Dog Sitting in Petrovaradin", description: "Home dog boarding in Novi Sad. Your dog stays with us in our Petrovaradin apartment, with photo and video updates at least 3 times a day." },
+  { locale: "en", service: "cats", h1: "Cat boarding in Novi Sad", hero: "/images/pet-sitting/cats-hero.webp", width: "720", height: "1280", title: "Home Cat Boarding in Novi Sad | Cat Sitting in Petrovaradin", description: "Home cat boarding in Novi Sad. Your cat stays with us in our Petrovaradin apartment, with photo and video updates at least 3 times a day." },
 ];
+assert.equal(new Set(moneyPageCases.map((page) => page.title)).size, moneyPageCases.length, "Money-page titles must be unique");
+assert.equal(new Set(moneyPageCases.map((page) => page.description)).size, moneyPageCases.length, "Money-page descriptions must be unique");
 const expectedMoneyPageSections = [
   "pet-hero",
   "early-media",
@@ -288,6 +290,7 @@ const requiredMoneyPageFaqs = {
       "Будете присылать фото и видео?",
       "Что если у моего питомца какой-то очень специфический режим?",
       "А если что-нибудь пойдёт не так?",
+      "Чем отличаются передержка, петситтинг, зооняня и зоогостиница?",
     ],
     dogs: [
       "Как считаются сутки передержки?",
@@ -306,6 +309,7 @@ const requiredMoneyPageFaqs = {
       "Что взять с собой?",
       "Будете присылать фото и видео?",
       "Что если что-то неожиданное случится, пока меня нет?",
+      "Чем отличаются передержка, петситтинг, зооняня и зоогостиница?",
     ],
     cats: [
       "Как считаются сутки передержки?",
@@ -324,6 +328,7 @@ const requiredMoneyPageFaqs = {
       "Что взять с собой?",
       "Будете присылать фото и видео?",
       "А если кошке внезапно станет плохо?",
+      "Чем отличаются передержка, петситтинг, зооняня и зоогостиница?",
     ],
   },
   en: {
@@ -342,6 +347,7 @@ const requiredMoneyPageFaqs = {
       "Will you send photos and videos?",
       "What if my pet has an unusual routine?",
       "What happens if something goes wrong?",
+      "What’s the difference between pet sitting, pet boarding and a pet hotel?",
     ],
     dogs: [
       "How are boarding days calculated?",
@@ -360,6 +366,7 @@ const requiredMoneyPageFaqs = {
       "What should I bring?",
       "Will you send photos and videos?",
       "What happens in an emergency?",
+      "What’s the difference between dog sitting and dog boarding?",
     ],
     cats: [
       "How are boarding days calculated?",
@@ -378,6 +385,7 @@ const requiredMoneyPageFaqs = {
       "What should I bring?",
       "Will you send photos and videos?",
       "What happens if my cat suddenly becomes ill?",
+      "What’s the difference between cat sitting and cat boarding?",
     ],
   },
 };
@@ -440,7 +448,34 @@ for (const page of moneyPageCases) {
   const pageRoot = document.querySelector(".pet-page");
   assert(pageRoot, path + " needs the shared money-page root");
   assert.equal(document.querySelector("h1")?.textContent.trim(), page.h1, path + " H1 changed");
-  assert.equal(document.querySelector(".pet-hero img")?.getAttribute("src"), page.hero, path + " hero asset changed without a confirmed couple photo");
+  const heroImage = document.querySelector(".pet-hero img");
+  assert.equal(heroImage?.getAttribute("src"), page.hero, path + " hero asset changed without a confirmed couple photo");
+  assert.equal(heroImage?.getAttribute("width"), page.width, path + " hero width must match the source asset");
+  assert.equal(heroImage?.getAttribute("height"), page.height, path + " hero height must match the source asset");
+  assert(heroImage?.getAttribute("alt")?.length > 15, path + " needs a natural descriptive hero alt");
+
+  assert.equal(document.querySelector("title")?.textContent, page.title, path + " needs its approved unique title");
+  assert.equal(document.querySelector('meta[name="description"]')?.getAttribute("content"), page.description, path + " needs its approved unique description");
+  assert.equal(document.querySelector('meta[name="robots"]')?.getAttribute("content"), "index,follow,max-image-preview:large", path + " must allow large image previews and indexing");
+  assert.equal(document.querySelector('link[rel="canonical"]')?.getAttribute("href"), `https://getmanov.com${path}`, path + " canonical changed");
+  for (const alternateLocale of ["ru", "en"]) {
+    assert.equal(
+      document.querySelector(`link[rel="alternate"][hreflang="${alternateLocale}"]`)?.getAttribute("href"),
+      `https://getmanov.com${servicePath(alternateLocale, page.service)}`,
+      path + " hreflang changed",
+    );
+  }
+
+  const preferredImageUrl = `https://getmanov.com${page.hero}`;
+  assert.equal(document.querySelector('meta[property="og:image"]')?.getAttribute("content"), preferredImageUrl, path + " needs its page-specific OG image");
+  assert.equal(document.querySelector('meta[property="og:image:width"]')?.getAttribute("content"), page.width, path + " OG image width changed");
+  assert.equal(document.querySelector('meta[property="og:image:height"]')?.getAttribute("content"), page.height, path + " OG image height changed");
+  assert(document.querySelector('meta[property="og:image:alt"]')?.getAttribute("content")?.length > 15, path + " needs descriptive OG image alt text");
+  assert.equal(document.querySelector('meta[name="twitter:card"]')?.getAttribute("content"), "summary_large_image", path + " needs the large Twitter card");
+  assert.equal(document.querySelector('meta[name="twitter:image"]')?.getAttribute("content"), preferredImageUrl, path + " needs its page-specific Twitter image");
+
+  const heroOrder = [...document.querySelector(".pet-hero").children].map((item) => item.className);
+  assert.deepEqual(heroOrder, ["pet-hero__heading", "hero-media", "pet-hero__details"], path + " needs heading, image, then supporting details in mobile DOM order");
 
   const sectionOrder = [...pageRoot.querySelectorAll(":scope > section")].map((section) =>
     section.className.split(/\s+/)[0],
@@ -503,6 +538,10 @@ for (const page of moneyPageCases) {
   const faqSchema = schemas
     .flatMap((schema) => Array.isArray(schema) ? schema : schema["@graph"] ?? [schema])
     .find((item) => item["@type"] === "FAQPage");
+  const serviceSchema = schemas
+    .flatMap((schema) => Array.isArray(schema) ? schema : schema["@graph"] ?? [schema])
+    .find((item) => item["@type"] === "Service");
+  assert.equal(serviceSchema?.image, preferredImageUrl, path + " Service schema needs the preferred image");
   const schemaFaq = new Map(faqSchema.mainEntity.map((item) => [
     item.name.replace(/\s+/g, " ").trim(),
     item.acceptedAnswer.text.replace(/\s+/g, " ").trim(),
