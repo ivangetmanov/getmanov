@@ -81,21 +81,37 @@ const archiveLinks = [
 >
   <div class="portfolio-home">
     <section class="hero">
-      <p class="kicker">Growth portfolio</p>
-      <h1>Ivan Getmanov</h1>
-      <p class="hero__lead">
-        I work on growth problems where acquisition, product flow, billing
-        logic, and revenue observability collide.
-      </p>
-      <p class="hero__note">
-        The core portfolio is a three-part self-service series: rebuild the
-        flow, diagnose the invoice-to-paid constraint, then make the payment
-        system observable enough to scale.
-      </p>
-      <div class="hero__actions" aria-label="Primary links">
-        <a class="button button--primary" href="#featured-cases">View cases</a>
-        <a class="button" href="mailto:ivangetmanov@icloud.com">Contact</a>
+      <div class="hero__copy">
+        <p class="kicker">Growth portfolio</p>
+        <h1>Ivan Getmanov</h1>
+        <p class="hero__lead">
+          I work on growth problems where acquisition, product flow, billing
+          logic, and revenue observability collide.
+        </p>
+        <p class="hero__note">
+          The core portfolio is a three-part self-service series: rebuild the
+          flow, diagnose the invoice-to-paid constraint, then make the payment
+          system observable enough to scale.
+        </p>
+        <div class="hero__actions" aria-label="Primary links">
+          <a class="button button--primary" href="#featured-cases">View cases</a>
+          <a class="button" href="mailto:ivangetmanov@icloud.com">Contact</a>
+        </div>
       </div>
+
+      <figure class="hero__portrait">
+        <img
+          src="/images/ivan-getmanov-hero-960.jpg"
+          srcset="/images/ivan-getmanov-hero-640.jpg 640w, /images/ivan-getmanov-hero-960.jpg 960w, /images/ivan-getmanov-hero-1200.jpg 1200w"
+          sizes="(max-width: 920px) calc(100vw - 40px), 390px"
+          width="960"
+          height="1280"
+          alt="Black-and-white portrait of Ivan Getmanov"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </figure>
     </section>
 
     <section class="signal-strip" aria-label="Growth focus areas">
@@ -232,9 +248,16 @@ const archiveLinks = [
     .hero {
       min-height: 72vh;
       display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.75fr);
+      align-items: center;
       align-content: center;
+      gap: clamp(36px, 6vw, 76px);
       padding: 72px 0 56px;
       border-bottom: 1px solid var(--line);
+    }
+
+    .hero__copy {
+      min-width: 0;
     }
 
     .kicker {
@@ -248,15 +271,16 @@ const archiveLinks = [
 
     .hero h1 {
       margin: 0;
-      font-size: clamp(58px, 12vw, 148px);
+      font-size: clamp(58px, 9vw, 124px);
       line-height: 0.92;
       font-weight: 900;
+      letter-spacing: -0.055em;
     }
 
     .hero__lead {
       max-width: 820px;
       margin: 28px 0 0;
-      font-size: clamp(25px, 4vw, 48px);
+      font-size: clamp(25px, 3.4vw, 44px);
       line-height: 1.08;
       font-weight: 780;
     }
@@ -273,6 +297,25 @@ const archiveLinks = [
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 30px;
+    }
+
+    .hero__portrait {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #e8e9e7;
+    }
+
+    .hero__portrait img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      margin: 0;
+      object-fit: cover;
+      object-position: 50% 31%;
     }
 
     .button {
@@ -478,7 +521,18 @@ const archiveLinks = [
     @media (max-width: 920px) {
       .hero {
         min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 34px;
         padding-top: 56px;
+      }
+
+      .hero__portrait {
+        max-height: 460px;
+        aspect-ratio: 16 / 10;
+      }
+
+      .hero__portrait img {
+        object-position: 50% 28%;
       }
 
       .signal-strip,
@@ -497,6 +551,26 @@ const archiveLinks = [
         min-height: 220px;
         border-right: 0;
         border-bottom: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        gap: 30px;
+        padding-top: 46px;
+        padding-bottom: 42px;
+      }
+
+      .hero h1 {
+        font-size: clamp(54px, 18vw, 78px);
+      }
+
+      .hero__lead {
+        margin-top: 22px;
+      }
+
+      .hero__portrait {
+        aspect-ratio: 4 / 3;
       }
     }
   </style>
