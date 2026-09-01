@@ -11,17 +11,7 @@ const heroImageUrl = frontmatter.heroImage
   : undefined;
 const faqItems = frontmatter.faq ?? [];
 const b2bSeoPaths = new Set([
-  "/notes/seo-b2b-2024/",
-  "/notes/b2b-seo-agency/",
-  "/notes/b2b-seo-audit/",
-  "/notes/b2b-seo-branding/",
-  "/notes/b2b-seo-checklist/",
-  "/notes/b2b-seo-kpi/",
-  "/notes/b2b-seo-links/",
-  "/notes/b2b-seo-mail/",
-  "/notes/b2b-seo-smm/",
-  "/notes/b2b-seo-technical/",
-  "/notes/b2b-seo-trends/",
+  "/notes/b2b-seo-guides-postmortem/",
 ]);
 const currentPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
@@ -95,18 +85,22 @@ const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     articleSchema,
-    {
-      "@type": "FAQPage",
-      "@id": `${canonicalUrl}#faq`,
-      mainEntity: faqItems.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: item.answer,
-        },
-      })),
-    },
+    ...(faqItems.length
+      ? [
+          {
+            "@type": "FAQPage",
+            "@id": `${canonicalUrl}#faq`,
+            mainEntity: faqItems.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.answer,
+              },
+            })),
+          },
+        ]
+      : []),
     {
       "@type": "BreadcrumbList",
       "@id": `${canonicalUrl}#breadcrumbs`,
@@ -141,6 +135,13 @@ const structuredData = {
   description={frontmatter.description}
   canonical={frontmatter.canonical}
   structuredData={structuredData}
+  image={frontmatter.heroImage}
+  imageAlt={frontmatter.heroImageAlt ?? frontmatter.title}
+  imageWidth={frontmatter.heroImageWidth}
+  imageHeight={frontmatter.heroImageHeight}
+  ogType="article"
+  articlePublishedTime={frontmatter.datePublished}
+  articleModifiedTime={frontmatter.dateModified}
 >
   <slot />
 </BaseLayout>

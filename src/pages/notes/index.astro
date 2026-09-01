@@ -3,6 +3,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const notes = [
   {
+    title: "I Built 11 B2B SEO Guides. They Got 1.29K Google Impressions and One Click.",
+    slug: "b2b-seo-guides-postmortem",
+    status: "postmortem",
+    description: "What failed in a topical-authority experiment, what Search Console showed, and why the cluster was deleted."
+  },
+  {
     title: "How to Export Long ChatGPT Chats Without Losing Context",
     slug: "export-long-chatgpt-chats",
     status: "pillar guide",
@@ -118,63 +124,6 @@ const notes = [
   },
 ];
 
-const b2bSeoPlaybook = [
-  {
-    slug: "seo-b2b-2024",
-    title: "SEO in B2B: Do You Really Need It?",
-    description: "Start with the 2026 strategy: AI search, buyer enablement, ROI, and pipeline."
-  },
-  {
-    slug: "b2b-seo-agency",
-    title: "How to Choose a B2B SEO Partner",
-    description: "Evaluate agency, consultant, in-house, and hybrid models."
-  },
-  {
-    slug: "b2b-seo-audit",
-    title: "B2B SEO Audit",
-    description: "Find technical, content, authority, and measurement constraints."
-  },
-  {
-    slug: "b2b-seo-branding",
-    title: "Brand Positioning Through B2B SEO",
-    description: "Use search to make expertise and market position visible."
-  },
-  {
-    slug: "b2b-seo-checklist",
-    title: "B2B SEO Checklist",
-    description: "Run the channel from business baseline to revenue."
-  },
-  {
-    slug: "b2b-seo-kpi",
-    title: "B2B SEO KPIs",
-    description: "Connect rankings and traffic to pipeline and revenue."
-  },
-  {
-    slug: "b2b-seo-links",
-    title: "B2B Link Building",
-    description: "Build authority through evidence, relevance, and relationships."
-  },
-  {
-    slug: "b2b-seo-mail",
-    title: "How Email Supports B2B SEO",
-    description: "Extend search discovery through distribution and nurturing."
-  },
-  {
-    slug: "b2b-seo-smm",
-    title: "How Social Distribution Supports B2B SEO",
-    description: "Help useful expertise reach people who can reference it."
-  },
-  {
-    slug: "b2b-seo-technical",
-    title: "Technical SEO for B2B Websites",
-    description: "Crawling, indexation, performance, and site architecture."
-  },
-  {
-    slug: "b2b-seo-trends",
-    title: "B2B SEO Trends",
-    description: "AI search, authority, UX, and changing discovery surfaces."
-  },
-];
 ---
 
 <BaseLayout title="Notes">
@@ -191,20 +140,6 @@ const b2bSeoPlaybook = [
       <li>
         <a href={`/notes/${note.slug}/`}>{note.title}</a>
         <small> — {note.status}</small>
-        <p>{note.description}</p>
-      </li>
-    ))}
-  </ul>
-
-  <h2>B2B SEO playbook</h2>
-  <p>
-    Ten connected guides for building B2B organic growth as a commercial
-    system, supported by the <a href="/case-studies/seo-case-b2b/">full case study</a>.
-  </p>
-  <ul>
-    {b2bSeoPlaybook.map(note => (
-      <li>
-        <a href={`/notes/${note.slug}/`}>{note.title}</a>
         <p>{note.description}</p>
       </li>
     ))}

@@ -38,70 +38,6 @@ const galleryPages = new Set([
 ]);
 const hasCaseGalleries = galleryPages.has(Astro.url.pathname);
 
-const b2bSeoCase = {
-  href: "/case-studies/seo-case-b2b/",
-  title: "B2B SEO: Full Growth Case Study",
-  description: "Technical work, content, visibility, leads, revenue, and ROI.",
-};
-
-const b2bSeoGuides = [
-  {
-    href: "/notes/seo-b2b-2024/",
-    title: "SEO in B2B: Do You Really Need It?",
-    description: "AI search, buyer enablement, ROI, and pipeline strategy.",
-  },
-  {
-    href: "/notes/b2b-seo-agency/",
-    title: "Choosing a B2B SEO Partner",
-    description: "Agency, consultant, in-house, and hybrid evaluation.",
-  },
-  {
-    href: "/notes/b2b-seo-audit/",
-    title: "B2B SEO Audit",
-    description: "Technical, content, authority, and measurement diagnosis.",
-  },
-  {
-    href: "/notes/b2b-seo-branding/",
-    title: "Brand Positioning",
-    description: "Turn search visibility into a coherent market position.",
-  },
-  {
-    href: "/notes/b2b-seo-checklist/",
-    title: "B2B SEO Checklist",
-    description: "An operating sequence from baseline to revenue.",
-  },
-  {
-    href: "/notes/b2b-seo-kpi/",
-    title: "B2B SEO KPIs",
-    description: "Connect visibility to pipeline, revenue, and efficiency.",
-  },
-  {
-    href: "/notes/b2b-seo-links/",
-    title: "B2B Link Building",
-    description: "Authority, referrals, evidence, and market relevance.",
-  },
-  {
-    href: "/notes/b2b-seo-mail/",
-    title: "Email and B2B SEO",
-    description: "Extend search discovery through distribution and nurture.",
-  },
-  {
-    href: "/notes/b2b-seo-smm/",
-    title: "Social Distribution",
-    description: "Help expertise reach people who can use and reference it.",
-  },
-  {
-    href: "/notes/b2b-seo-technical/",
-    title: "Technical SEO",
-    description: "Crawling, indexation, performance, and site architecture.",
-  },
-  {
-    href: "/notes/b2b-seo-trends/",
-    title: "B2B SEO Trends",
-    description: "AI search, authority, UX, and changing discovery surfaces.",
-  },
-];
-
 const currentPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`;
@@ -133,12 +69,12 @@ const hasArticleNavigation =
   (currentPath.startsWith("/case-studies/") &&
     currentPath !== "/case-studies/") ||
   isPetSittingArticle;
-const b2bSeoPaths = new Set([
-  b2bSeoCase.href,
-  ...b2bSeoGuides.map((guide) => guide.href),
+const b2bSeoArticlePaths = new Set([
+  "/case-studies/seo-case-b2b/",
+  "/notes/b2b-seo-guides-postmortem/",
 ]);
-const hasB2BSeoMap = b2bSeoPaths.has(currentPath);
-const articleCta = hasB2BSeoMap
+const isB2BSeoArticle = b2bSeoArticlePaths.has(currentPath);
+const articleCta = isB2BSeoArticle
   ? {
       href: "/tools/seo-roi-calculator/",
       eyebrow: "Free planning tool",
@@ -327,48 +263,6 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
         <!-- Markdown content is wrapped in .prose. -->
         <article id="article-content" class="prose">
           <slot />
-          {hasB2BSeoMap && (
-            <aside class="b2b-seo-map" aria-labelledby="b2b-seo-map-title">
-              <div class="b2b-seo-map__intro">
-                <p class="b2b-seo-map__eyebrow">B2B SEO knowledge map</p>
-                <h2 id="b2b-seo-map-title">Continue through the system</h2>
-                <p>
-                  The case study shows the work in practice. These guides break
-                  the operating system into reusable decisions.
-                </p>
-              </div>
-
-              <div class="b2b-seo-map__case">
-                {currentPath === b2bSeoCase.href ? (
-                  <span aria-current="page">
-                    <strong>{b2bSeoCase.title}</strong>
-                    <small>{b2bSeoCase.description}</small>
-                  </span>
-                ) : (
-                  <a href={b2bSeoCase.href}>
-                    <strong>{b2bSeoCase.title}</strong>
-                    <small>{b2bSeoCase.description}</small>
-                  </a>
-                )}
-              </div>
-
-              <div class="b2b-seo-map__grid">
-                {b2bSeoGuides.map((guide) => (
-                  currentPath === guide.href ? (
-                    <span class="b2b-seo-map__item" aria-current="page">
-                      <strong>{guide.title}</strong>
-                      <small>{guide.description}</small>
-                    </span>
-                  ) : (
-                    <a class="b2b-seo-map__item" href={guide.href}>
-                      <strong>{guide.title}</strong>
-                      <small>{guide.description}</small>
-                    </a>
-                  )
-                ))}
-              </div>
-            </aside>
-          )}
         </article>
 
         {hasArticleNavigation && (
