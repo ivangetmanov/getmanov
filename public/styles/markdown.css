@@ -418,10 +418,190 @@ body[data-path="/case-studies/seo-case-b2b/"] .prose {
 
 body[data-path="/case-studies/seo-case-b2b/"] .prose h1 {
   max-width: 880px;
-  margin: 40px 0 30px;
-  font-size: clamp(48px, 8vw, 94px);
-  line-height: 0.98;
+  margin: 12px 0 22px;
+  font-size: clamp(46px, 7vw, 76px);
+  line-height: 1;
   letter-spacing: -0.055em;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-eyebrow,
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results__heading > p,
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact__eyebrow {
+  margin: 0;
+  color: #126b5d;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-deck {
+  max-width: 780px;
+  margin: 0 0 30px;
+  color: #596460;
+  font-size: clamp(20px, 2.5vw, 27px);
+  line-height: 1.4;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results {
+  margin: 34px 0 40px;
+  padding: clamp(22px, 4vw, 38px);
+  border: 1px solid #cfded7;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(18, 107, 93, 0.15), transparent 34%),
+    #f4f8f6;
+  box-shadow: 0 20px 56px rgba(19, 31, 27, 0.09);
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results__heading h2,
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact h2 {
+  margin: 6px 0 18px;
+  padding: 0;
+  border: 0;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.05;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results__flow {
+  max-width: 780px;
+  margin: 0;
+  color: #2f3b37;
+  font-size: clamp(18px, 2.1vw, 23px);
+  line-height: 1.45;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 26px 0 18px;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results dl > div {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #d7e3dd;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results dt {
+  color: #64706c;
+  font-size: 12px;
+  font-weight: 760;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results dd {
+  margin: 6px 0 0;
+  color: #16231f;
+  font-size: clamp(25px, 3.5vw, 38px);
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results__note,
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-updated {
+  color: #68726e;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results__note {
+  margin: 0;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-orientation {
+  margin: 34px 0 12px;
+  padding: 20px 22px;
+  border-left: 5px solid #126b5d;
+  border-radius: 0 14px 14px 0;
+  background: #f2f7f4;
+  color: #283530;
+  font-size: 18px;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-updated {
+  margin: 10px 0 34px;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-evidence {
+  width: 100%;
+  margin: 38px 0;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-evidence > .case-gallery,
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-evidence > .case-gallery-shell {
+  width: 100%;
+  margin: 0;
+  transform: none;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-evidence > img {
+  width: 100%;
+  margin: 0;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-evidence--portrait > img {
+  width: min(716px, 100%);
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-evidence > figcaption {
+  margin-top: 11px;
+  color: #68726e;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-evidence--signature {
+  width: min(240px, 100%);
+  margin-bottom: 14px;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact {
+  margin: 56px 0 34px;
+  padding: clamp(24px, 5vw, 44px);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(72, 191, 159, 0.2), transparent 38%),
+    #171f1d;
+  color: #f7faf8;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact h2 {
+  color: #fff;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact > p:not(.case-contact__eyebrow) {
+  max-width: 720px;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact__actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 11px 18px;
+  border: 1px solid rgba(142, 224, 200, 0.55);
+  border-radius: 999px;
+  background: #8ee0c8;
+  color: #10211c;
+  font-weight: 820;
+  text-decoration: none;
+}
+
+body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact__actions a:hover {
+  background: #fff;
 }
 
 body[data-path="/case-studies/seo-case-b2b/"] .prose h2 {
@@ -706,6 +886,46 @@ body[data-path="/case-studies/seo-case-b2b/"] .prose .case-gallery img {
 
   body[data-path="/case-studies/seo-case-b2b/"] .prose {
     font-size: 17px;
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose h1 {
+    font-size: clamp(42px, 12vw, 62px);
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose .case-results dl > div {
+    padding: 14px;
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact__actions {
+    flex-direction: column;
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose .case-contact__actions a {
+    justify-content: center;
+    text-align: center;
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose .article-mobile-toc__list {
+    margin: 0;
+    padding: 0 10px 12px;
+    counter-reset: none;
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose .article-mobile-toc__list > li {
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  body[data-path="/case-studies/seo-case-b2b/"] .prose .article-mobile-toc__list > li::before {
+    display: none;
   }
 
   body[data-path="/case-studies/seo-case-b2b/"] .prose ol > li {

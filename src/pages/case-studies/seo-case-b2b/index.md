@@ -1,38 +1,62 @@
 ---
-layout: ../../../layouts/BaseLayout.astro
-title: "Make Your Competitors Suffer: SEO for B2B Full Case Study"
-description: "A long-form B2B SEO case connecting technical improvements, niche research, search visibility, leads, revenue, and ROI."
+layout: ../../../layouts/ArticleLayout.astro
+title: "B2B SEO Case Study: 620 Inquiries, 41 Customers & 60% ROI"
+description: "A firsthand B2B SEO case study showing how a manufacturer generated 620 inquiries, 41 new customers, ₽1.218M revenue, and 60% realized ROI."
 canonical: "/case-studies/seo-case-b2b/"
+dateModified: "2026-09-01"
+heroImage: "/images/tild3765-3162-4334-b337-336639663863___.webp"
+heroImageAlt: "3D render of rubber bushings produced by the B2B SEO client"
+heroImageWidth: 1024
+heroImageHeight: 1024
 ---
 
-[<img src="/images/tild3639-3865-4435-b133-353933313234__2020-11-17__1616.webp" alt="Getmanov Marketing" />](/)
+<p class="case-eyebrow">Make Your Competitors Suffer</p>
 
-# Make Your Competitors Suffer: SEO for B2B Full Case Study
+# B2B SEO Case Study: 620 Inquiries, 41 Customers & 60% ROI
 
-<div class="case-gallery case-gallery--hero" aria-label="B2B SEO case study cover">
-  <img src="/images/tild3765-3162-4334-b337-336639663863___.webp" alt="3D render of rubber bushings produced by the client" loading="lazy" />
-</div>
+<p class="case-deck">A firsthand account of technical SEO, niche research, content structure, and measurement for a Russian B2B manufacturer.</p>
+
+<section class="case-results" aria-labelledby="results-at-a-glance">
+  <div class="case-results__heading">
+    <p>Measured business outcomes</p>
+    <h2 id="results-at-a-glance">Results at a glance</h2>
+  </div>
+  <p class="case-results__flow"><strong>620 website inquiries</strong> progressed to <strong>168 price negotiations</strong>, <strong>41 new customers</strong>, and <strong>47 closed deals</strong>.</p>
+  <dl>
+    <div><dt>Inquiries</dt><dd>620</dd></div>
+    <div><dt>Price negotiations</dt><dd>168</dd></div>
+    <div><dt>New customers</dt><dd>41</dd></div>
+    <div><dt>Closed deals</dt><dd>47</dd></div>
+    <div><dt>Realized revenue</dt><dd>₽1.218M</dd></div>
+    <div><dt>Realized net profit</dt><dd>₽816k</dd></div>
+    <div><dt>Realized ROI</dt><dd>60%</dd></div>
+  </dl>
+  <p class="case-results__note">These are realized results from new website inquiries. The separate 380% figure later in the case is a projection, not a realized outcome.</p>
+</section>
+
+<figure class="case-evidence case-evidence--hero">
+  <div class="case-gallery case-gallery--hero" aria-label="B2B SEO case study cover">
+    <img src="/images/tild3765-3162-4334-b337-336639663863___.webp" alt="3D render of rubber bushings produced by the B2B SEO client" width="1024" height="1024" loading="eager" fetchpriority="high" />
+  </div>
+  <figcaption>The project focused on search demand for rubber bushings while improving the manufacturer’s wider site visibility.</figcaption>
+</figure>
+
+<p class="case-orientation">This real B2B SEO case follows the work for Rentgen, a Russian manufacturer of rubber and plastic products: the starting problem, the changes and experiments, the search-visibility evidence, and the measured inquiry-to-revenue results.</p>
+
+<p class="case-updated">Updated September 2026</p>
 
 As a marketing professional, I'm always on the lookout for a new challenge to push my skills to the limit. And when I decided to tackle the world of website SEO, I knew I was in for an exciting ride. In this independent case study, I'll be sharing with you how I helped a Russian B2B client achieve significant success through SEO promotion. And even show you REAL figures! I could not find a single similar case in the B2B sphere with concrete ROI and revenue growth numbers from SEO improvements.
 
 Over the course of almost two years, I worked closely with the client to optimize their website, improve their search engine rankings, and increase their online visibility. In this article, I'll provide a detailed analysis of the SEO strategies I implemented, as well as the incredible revenue growth that resulted. So if you're ready to learn how to enhance your B2B business's online presence and boost revenue, then keep reading. This case study is a must-read for anyone interested in unleashing the power of SEO for B2B businesses!
 
-## In this case study
-
-1. [Chapter 1: Recalling Previous Experience](#chapter-1)
-2. [Chapter 2: Redesign and Performance](#chapter-2)
-3. [Chapter 3: The Experimental Stage](#chapter-3)
-4. [Chapter 4: Online Visibility Growth](#chapter-4)
-5. [Chapter 5: Financial Results](#chapter-5)
-6. [Chapter 6: What I Learned](#chapter-6)
-7. [Bonus: B2B SEO Tactics](#bonus)
-8. [Conclusions](#conclusions)
-
 ## Project Overview
 
 ### A Little Story About My Client's Company
 
-<img src="/images/tild3162-6538-4132-b766-333833316636__img_3360.jpg" alt="" />
+<figure class="case-evidence">
+  <img src="/images/tild3162-6538-4132-b766-333833316636__img_3360.jpg" alt="Rubber and plastic injection molding equipment inside the Rentgen factory" width="1680" height="945" loading="lazy" />
+  <figcaption>Production equipment inside Rentgen, the B2B manufacturer featured in this case study.</figcaption>
+</figure>
 
 My client is a company called ["Rentgen"](https://rentgen.pro/?utm_source=case-ivan), an old manufacturer of rubber and plastic products mostly in the B2B sphere. We have been working together for almost two years now, and I have completed several projects for "Rentgen" as well as other projects for the company's owner. I will write more articles about these interesting projects later.
 
@@ -44,12 +68,15 @@ The goal this time was straightforward: Rentgen aimed to explore a new profitabl
 
 ### What Are Rubber Bushings?
 
-<div class="case-gallery case-gallery--hero" aria-label="Examples of rubber bushings">
-  <img src="/images/tild6638-6365-4366-b366-326130383836__1430082368_898989898.jpeg" alt="Collection of industrial rubber bushings" loading="lazy" />
-  <img src="/images/tild3239-3935-4164-b733-653132336234__.webp" alt="Assorted rubber bushings in a product tray" loading="lazy" />
-  <img src="/images/tild3030-3734-4763-a531-353361623965__.webp" alt="Individual black rubber bushing" loading="lazy" />
-  <img src="/images/tild3936-6634-4136-a435-363564656462__imgonline-com-ua-res.jpg" alt="White industrial bushings" loading="lazy" />
-</div>
+<figure class="case-evidence">
+  <div class="case-gallery case-gallery--hero" aria-label="Examples of rubber bushings">
+    <img src="/images/tild6638-6365-4366-b366-326130383836__1430082368_898989898.jpeg" alt="Collection of industrial rubber bushings" width="530" height="272" loading="lazy" />
+    <img src="/images/tild3239-3935-4164-b733-653132336234__.webp" alt="Assorted rubber bushings in a product tray" width="956" height="616" loading="lazy" />
+    <img src="/images/tild3030-3734-4763-a531-353361623965__.webp" alt="Individual black rubber bushing" width="1680" height="1030" loading="lazy" />
+    <img src="/images/tild3936-6634-4136-a435-363564656462__imgonline-com-ua-res.jpg" alt="White industrial bushings" width="750" height="543" loading="lazy" />
+  </div>
+  <figcaption>Examples of the rubber bushing products around which the new search-demand strategy was built.</figcaption>
+</figure>
 
 Rubber bushings are used to absorb shock and reduce vibration in mechanical systems. They are commonly used in applications where two metal components meet and need to move against each other, such as suspension systems, steering linkages, and engine mounts.
 
@@ -85,7 +112,10 @@ The thing is – of course, if you want to make really great results, you need f
 
 So, after few weeks of weighing all the pros and cons, I made a strategy:
 
-<img src="/images/tild3539-3162-4465-a363-306261646261__2023-05-25__232336.webp" alt="" />
+<figure class="case-evidence case-evidence--portrait">
+  <img src="/images/tild3539-3162-4465-a363-306261646261__2023-05-25__232336.webp" alt="Four-step SEO strategy for Rentgen covering experiments, a new domain, implementation, and link support" width="716" height="1658" loading="lazy" />
+  <figcaption>The original four-step SEO strategy prepared for Rentgen.</figcaption>
+</figure>
 
 We discussed in detail the strategy that I came up with. Then I prescribed all the works that need to be included in the contract in order to achieve the desired goals, signed it and I started working.
 
@@ -173,11 +203,14 @@ First 1 month
 
 First 2 months
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Website performance after the first changes">
-  <img src="/images/tild3731-3039-4564-b734-376561356533__photo-output_11.jpg" alt="Website analytics two weeks after the changes" loading="lazy" />
-  <img src="/images/tild3862-6339-4461-b931-353730333861__photo-output_12.jpg" alt="Website analytics one month after the changes" loading="lazy" />
-  <img src="/images/tild3936-3138-4335-a163-353161363435__photo-output_10.jpg" alt="Website analytics two months after the changes" loading="lazy" />
+  <img src="/images/tild3731-3039-4564-b734-376561356533__photo-output_11.jpg" alt="Website analytics two weeks after the changes" width="1680" height="1478" loading="lazy" />
+  <img src="/images/tild3862-6339-4461-b931-353730333861__photo-output_12.jpg" alt="Website analytics one month after the changes" width="1680" height="1532" loading="lazy" />
+  <img src="/images/tild3936-3138-4335-a163-353161363435__photo-output_10.jpg" alt="Website analytics two months after the changes" width="1680" height="1527" loading="lazy" />
 </div>
+<figcaption>Analytics snapshots after two weeks, one month, and two months of the first website changes.</figcaption>
+</figure>
 
 Implementations definitely improved Google's and Yandex attitude to the site, as well as usability for the user.
 
@@ -209,13 +242,16 @@ Yandex Search
 
 Of course, not with every product it goes so smoothly. Sometimes there are competitors :)
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="New SEO landing pages and their search positions">
-  <img src="/images/tild3831-3039-4534-b434-613234316639__2023-04-02__231249.webp" alt="New SEO landing pages in the site structure" loading="lazy" />
-  <img src="/images/tild3439-6238-4437-b261-666464303737__2023-04-02__231343.webp" alt="Expanded product page structure for SEO" loading="lazy" />
-  <img src="/images/tild3164-3031-4865-b963-663131353139__2023-04-04__134836.webp" alt="New page ranking in Google search" loading="lazy" />
-  <img src="/images/tild3039-3634-4535-b332-346136643836__2023-04-04__134847.webp" alt="Additional page ranking in Google search" loading="lazy" />
-  <img src="/images/tild3930-6362-4366-b637-313631313766__2023-04-04__135410.webp" alt="New page ranking in Yandex search" loading="lazy" />
+  <img src="/images/tild3831-3039-4534-b434-613234316639__2023-04-02__231249.webp" alt="New SEO landing pages in the site structure" width="1680" height="610" loading="lazy" />
+  <img src="/images/tild3439-6238-4437-b261-666464303737__2023-04-02__231343.webp" alt="Expanded product page structure for SEO" width="1680" height="914" loading="lazy" />
+  <img src="/images/tild3164-3031-4865-b963-663131353139__2023-04-04__134836.webp" alt="New page ranking in Google search" width="1070" height="1538" loading="lazy" />
+  <img src="/images/tild3039-3634-4535-b332-346136643836__2023-04-04__134847.webp" alt="Additional page ranking in Google search" width="1074" height="1536" loading="lazy" />
+  <img src="/images/tild3930-6362-4366-b637-313631313766__2023-04-04__135410.webp" alt="New page ranking in Yandex search" width="1276" height="786" loading="lazy" />
 </div>
+<figcaption>New landing pages, expanded product structure, and examples of their Google and Yandex positions.</figcaption>
+</figure>
 
 ### Technique 2: Repair What Is Broken
 
@@ -247,12 +283,15 @@ And it still growing, also this growing from 20% of new snippets (because it was
 
 Now we have these figures :)
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="CTR experiment results">
-  <img src="/images/tild3564-3039-4934-a437-386631656132__photo-output_4.jpg" alt="CTR before the title and description update" loading="lazy" />
-  <img src="/images/tild3631-3038-4665-b032-343332383536__2023-04-03__214430.webp" alt="CTR experiment result after the update" loading="lazy" />
-  <img src="/images/tild6231-6361-4332-b661-373531623363__2023-04-03__214455.webp" alt="Continued CTR growth after the experiment" loading="lazy" />
-  <img src="/images/tild6265-6638-4635-a437-346333303839__2023-04-04__142203.webp" alt="Search snippet performance after optimization" loading="lazy" />
+  <img src="/images/tild3564-3039-4934-a437-386631656132__photo-output_4.jpg" alt="CTR before the title and description update" width="1680" height="748" loading="lazy" />
+  <img src="/images/tild3631-3038-4665-b032-343332383536__2023-04-03__214430.webp" alt="CTR experiment result after the update" width="1680" height="618" loading="lazy" />
+  <img src="/images/tild6231-6361-4332-b661-373531623363__2023-04-03__214455.webp" alt="Continued CTR growth after the experiment" width="1680" height="623" loading="lazy" />
+  <img src="/images/tild6265-6638-4635-a437-346333303839__2023-04-04__142203.webp" alt="Search snippet performance after optimization" width="1680" height="742" loading="lazy" />
 </div>
+<figcaption>Search Console evidence from the title and description experiment, including the reported CTR improvement.</figcaption>
+</figure>
 
 ### Technique 6: Refresh Industry Directory Links
 
@@ -260,11 +299,14 @@ Yeah, excluding the fact these link is free, easy to set, also they could just g
 **
 Results:** unclear, can say for sure right now, but I made this only on couple websites and need more time to collect data!
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Industry directory backlink updates">
-  <img src="/images/tild6666-6533-4262-b962-656333643066__2023-04-03__225349.webp" alt="Updated company listing in an industry directory" loading="lazy" />
-  <img src="/images/tild3833-6166-4639-b764-313463326266__2023-04-03__225007.webp" alt="Updated product information in an industry directory" loading="lazy" />
-  <img src="/images/tild3234-3531-4238-b162-333932323866__2023-04-03__224641.webp" alt="Directory backlink and company profile update" loading="lazy" />
+  <img src="/images/tild6666-6533-4262-b962-656333643066__2023-04-03__225349.webp" alt="Updated company listing in an industry directory" width="1680" height="1485" loading="lazy" />
+  <img src="/images/tild3833-6166-4639-b764-313463326266__2023-04-03__225007.webp" alt="Updated product information in an industry directory" width="1680" height="1174" loading="lazy" />
+  <img src="/images/tild3234-3531-4238-b162-333932323866__2023-04-03__224641.webp" alt="Directory backlink and company profile update" width="1680" height="1420" loading="lazy" />
 </div>
+<figcaption>Updated company profiles and product information in industry directories used as free link sources.</figcaption>
+</figure>
 
 ### Technique 7: Build SEO Silos
 
@@ -278,11 +320,14 @@ First of all, I made these 3 categories
 
 And after that I made others – and I'll continue this process of making new pages for other keywords as well
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="SEO silo category structure">
-  <img src="/images/tild6664-3066-4862-b737-643063396239__2023-04-04__002115.webp" alt="Product structure before SEO categories were added" loading="lazy" />
-  <img src="/images/tild3735-6632-4962-a564-386135366133__2023-04-04__002045.webp" alt="First three SEO product categories" loading="lazy" />
-  <img src="/images/tild6632-6265-4663-a339-346139353439__2023-04-04__002100.webp" alt="Expanded SEO silo with additional categories" loading="lazy" />
+  <img src="/images/tild6664-3066-4862-b737-643063396239__2023-04-04__002115.webp" alt="Product structure before SEO categories were added" width="1680" height="1201" loading="lazy" />
+  <img src="/images/tild3735-6632-4962-a564-386135366133__2023-04-04__002045.webp" alt="First three SEO product categories" width="1556" height="718" loading="lazy" />
+  <img src="/images/tild6632-6265-4663-a339-346139353439__2023-04-04__002100.webp" alt="Expanded SEO silo with additional categories" width="1030" height="1158" loading="lazy" />
 </div>
+<figcaption>The product structure before categories, after the first three categories, and after further expansion.</figcaption>
+</figure>
 
 ### Technique 8: Add Products to Search Feeds
 
@@ -304,9 +349,12 @@ Use this in B2B niches, it's really convenient for the user and better for perfo
 
 May be 3,26% of raising the characteristic is not something huge, but multiply each small improvement of the site by one fifty (yeah, it's possible to find so many little things to improve) and you will already get very interesting figures
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Product comparison engagement result">
-  <img src="/images/tild3137-3061-4462-a531-643266386433__2023-04-04__112702.webp" alt="Engagement metrics after improving product comparison links" loading="lazy" />
+  <img src="/images/tild3137-3061-4462-a531-643266386433__2023-04-04__112702.webp" alt="Engagement metrics after improving product comparison links" width="1272" height="348" loading="lazy" />
 </div>
+<figcaption>Engagement metrics after comparison links were changed to open in separate tabs.</figcaption>
+</figure>
 
 ### Technique 11: Create Product Videos and Optimize Them for Search
 
@@ -320,16 +368,22 @@ Video for the page of Category
 
 Videos about different rubber products he produces
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Product video implementation">
-  <img src="/images/tild3865-3632-4232-b161-306436353664__2023-04-04__115231.webp" alt="Product video embedded on a rubber bushing category page" loading="lazy" />
-  <img src="/images/tild3463-3136-4335-b332-643738386363__2023-04-04__115252.webp" alt="Video library covering different rubber products" loading="lazy" />
+  <img src="/images/tild3865-3632-4232-b161-306436353664__2023-04-04__115231.webp" alt="Product video embedded on a rubber bushing category page" width="1572" height="864" loading="lazy" />
+  <img src="/images/tild3463-3136-4335-b332-643738386363__2023-04-04__115252.webp" alt="Video library covering different rubber products" width="878" height="1122" loading="lazy" />
 </div>
+<figcaption>Competitor examples showing a category-page video and a product video library.</figcaption>
+</figure>
 
 <h2 id="chapter-4">Chapter 4: How Online Visibility Grew Over Time</h2>
 
 ### How I Divided Keywords Into Groups
 
-<img src="/images/tild6465-6366-4261-a437-633036386361__blue_step_by_step_so.jpg" alt="" />
+<figure class="case-evidence case-evidence--portrait">
+  <img src="/images/tild6465-6366-4261-a437-633036386361__blue_step_by_step_so.jpg" alt="Six keyword groups used in the Rentgen B2B SEO strategy, totaling 1,131 keywords" width="1680" height="4200" loading="lazy" />
+  <figcaption>The six keyword groups used to organize 1,131 commercially relevant queries.</figcaption>
+</figure>
 
 All in all, 1131 keywords.
 
@@ -343,25 +397,34 @@ Here you can see the gradual growth of positions on low-frequency queries in Yan
 
 And here... The difference in the algorithms of different search engines... In fact, gradual growth is also visible, but some pages sometimes fly out of the index, and there are many other problems that have yet to be investigated and eliminated
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Search visibility growth">
-  <img src="/images/tild3266-6266-4664-a339-353339353036__2023-04-04__140335.webp" alt="Gradual ranking growth for low-frequency queries in Yandex" loading="lazy" />
-  <img src="/images/tild3230-3666-4634-b036-333939346338__2023-04-04__140417.webp" alt="Search visibility changes across different search engines" loading="lazy" />
+  <img src="/images/tild3266-6266-4664-a339-353339353036__2023-04-04__140335.webp" alt="Gradual ranking growth for low-frequency queries in Yandex" width="1680" height="684" loading="lazy" />
+  <img src="/images/tild3230-3666-4634-b036-333939346338__2023-04-04__140417.webp" alt="Search visibility changes across different search engines" width="1680" height="692" loading="lazy" />
 </div>
+<figcaption>Search-position evidence showing low-frequency query growth and differences between search engines.</figcaption>
+</figure>
 
 ### Positions Growing
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Keyword position growth">
-  <img src="/images/tild3135-3739-4065-a139-316666336163__2023-04-04__141854.webp" alt="Keyword position growth report, first period" loading="lazy" />
-  <img src="/images/tild6134-3936-4136-a634-326236616232__2023-04-04__141834.webp" alt="Keyword position growth report, second period" loading="lazy" />
-  <img src="/images/tild3939-6364-4361-b661-303836636265__2023-04-04__141759.webp" alt="Keyword position growth report, third period" loading="lazy" />
-  <img src="/images/tild3532-3036-4332-b238-663265306332__2023-04-04__141717.webp" alt="Keyword position growth report, fourth period" loading="lazy" />
+  <img src="/images/tild3135-3739-4065-a139-316666336163__2023-04-04__141854.webp" alt="Keyword position growth report, first period" width="1680" height="687" loading="lazy" />
+  <img src="/images/tild6134-3936-4136-a634-326236616232__2023-04-04__141834.webp" alt="Keyword position growth report, second period" width="1680" height="692" loading="lazy" />
+  <img src="/images/tild3939-6364-4361-b661-303836636265__2023-04-04__141759.webp" alt="Keyword position growth report, third period" width="1680" height="690" loading="lazy" />
+  <img src="/images/tild3532-3036-4332-b238-663265306332__2023-04-04__141717.webp" alt="Keyword position growth report, fourth period" width="1680" height="690" loading="lazy" />
 </div>
+<figcaption>Four reporting snapshots documenting keyword-position growth during the project.</figcaption>
+</figure>
 
 ### Search Engine Traffic Growing
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Search engine traffic growth">
-  <img src="/images/tild3661-3365-4133-b263-643134663636__photo-output_6.jpg" alt="Organic search traffic growth over the project period" loading="lazy" />
+  <img src="/images/tild3661-3365-4133-b263-643134663636__photo-output_6.jpg" alt="Organic search traffic growth over the project period" width="1680" height="600" loading="lazy" />
 </div>
+<figcaption>Organic search traffic growth across the project period.</figcaption>
+</figure>
 
 <h2 id="chapter-5">Chapter 5: Financial Results</h2>
 
@@ -371,38 +434,50 @@ The most delicious chapter. Did all these things, some of which even different f
 
 1\. **All leads come in commercial Mailbox**. Every Mail message are tagged by employees. Sometimes potencial clients call first – but employees ask them to send a mail anyway.
 
-<div class="case-gallery case-gallery--hero" aria-label="Lead collection through the commercial mailbox">
-  <img src="/images/tild3166-6638-4266-a363-323666323262__2023-03-29__155809.webp" alt="Commercial mailbox used to collect incoming B2B leads" loading="lazy" />
-  <img src="/images/tild3938-3866-4431-a666-623262366530__2023-03-29__155817.webp" alt="Tagged incoming leads in the commercial mailbox" loading="lazy" />
+<figure class="case-evidence">
+<div class="case-gallery case-gallery--hero" aria-label="Inquiry collection through the commercial mailbox">
+  <img src="/images/tild3166-6638-4266-a363-323666323262__2023-03-29__155809.webp" alt="Commercial mailbox used to collect incoming B2B leads" width="1680" height="920" loading="lazy" />
+  <img src="/images/tild3938-3866-4431-a666-623262366530__2023-03-29__155817.webp" alt="Tagged incoming leads in the commercial mailbox" width="1680" height="919" loading="lazy" />
 </div>
+<figcaption>The commercial mailbox and tagging process used to collect incoming B2B inquiries.</figcaption>
+</figure>
 
 2\. **To understand, which leads are new** — we use AMOCRM. There we carefully write potential cost of the deal. Also we tag every unsuccessful deal by reason, why it was not succeeded.
 
-<div class="case-gallery case-gallery--hero" aria-label="CRM lead qualification">
-  <img src="/images/tild3364-3564-4539-b361-656531326431__photo-output_8.jpg" alt="Successful B2B deal tracked in the CRM" loading="lazy" />
-  <img src="/images/tild3462-6565-4362-a433-323836633838__photo-output_9.jpg" alt="CRM rejection reasons used for unsuccessful deals" loading="lazy" />
+<figure class="case-evidence">
+<div class="case-gallery case-gallery--hero" aria-label="CRM inquiry qualification">
+  <img src="/images/tild3364-3564-4539-b361-656531326431__photo-output_8.jpg" alt="Successful B2B deal tracked in the CRM" width="1680" height="819" loading="lazy" />
+  <img src="/images/tild3462-6565-4362-a433-323836633838__photo-output_9.jpg" alt="CRM rejection reasons used for unsuccessful deals" width="1680" height="891" loading="lazy" />
 </div>
+<figcaption>AMOCRM records used to track successful deals and reasons for unsuccessful ones.</figcaption>
+</figure>
 
 3\. **To assess the full impact of SEO** across all categories (even those that were not the focus of my work), all other inquiries from the website were additionally tagged, as I also conducted overall website optimization, including all pages.
 
-<div class="case-gallery case-gallery--hero" aria-label="Lead tagging and CRM analysis">
-  <img src="/images/tild3230-6430-4238-a266-613732623234__2023-05-27__235754.webp" alt="Tagged B2B leads in the CRM, first segment" loading="lazy" />
-  <img src="/images/tild3763-3835-4763-b064-386437353665__2023-05-27__235805.webp" alt="Tagged B2B leads in the CRM, second segment" loading="lazy" />
-  <img src="/images/tild3263-6162-4562-b162-316632663563__2023-05-27__235948.webp" alt="Tagged B2B leads in the CRM, third segment" loading="lazy" />
-  <img src="/images/tild3233-3037-4235-b963-333034393134__2023-05-28__000012.webp" alt="Tagged B2B leads in the CRM, fourth segment" loading="lazy" />
+<figure class="case-evidence">
+<div class="case-gallery case-gallery--hero" aria-label="Inquiry tagging and CRM analysis">
+  <img src="/images/tild3230-6430-4238-a266-613732623234__2023-05-27__235754.webp" alt="Tagged B2B leads in the CRM, first segment" width="1680" height="968" loading="lazy" />
+  <img src="/images/tild3763-3835-4763-b064-386437353665__2023-05-27__235805.webp" alt="Tagged B2B leads in the CRM, second segment" width="1680" height="967" loading="lazy" />
+  <img src="/images/tild3263-6162-4562-b162-316632663563__2023-05-27__235948.webp" alt="Tagged B2B leads in the CRM, third segment" width="1680" height="742" loading="lazy" />
+  <img src="/images/tild3233-3037-4235-b963-333034393134__2023-05-28__000012.webp" alt="Tagged B2B leads in the CRM, fourth segment" width="1314" height="434" loading="lazy" />
 </div>
+<figcaption>Tagged inquiry segments used to assess SEO’s contribution across the wider website.</figcaption>
+</figure>
 
 ### Results and Analysis
 
 We have carefully separated all bushing transactions from old customers from all bushing transactions from new customers who came thanks to my work. New customers in the green column: successfully implemented. Almost all other leads in different columns also will go in "successfully implemented" column.
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="SEO-generated customers and revenue analysis">
-  <img src="/images/tild6661-3732-4539-b538-666235656266__2023-05-28__065644.webp" alt="New customers generated through SEO in the CRM" loading="lazy" />
-  <img src="/images/tild6464-3030-4466-a135-363331636633__2023-05-28__065742.webp" alt="Revenue distribution for SEO-generated customers" loading="lazy" />
-  <img src="/images/tild6665-3530-4736-b239-386365663538__2023-03-29__163142.webp" alt="Successful SEO-generated deal in the CRM" loading="lazy" />
+  <img src="/images/tild6661-3732-4539-b538-666235656266__2023-05-28__065644.webp" alt="New customers generated through SEO in the CRM" width="1680" height="919" loading="lazy" />
+  <img src="/images/tild6464-3030-4466-a135-363331636633__2023-05-28__065742.webp" alt="Revenue distribution for SEO-generated customers" width="1680" height="450" loading="lazy" />
+  <img src="/images/tild6665-3530-4736-b239-386365663538__2023-03-29__163142.webp" alt="Successful SEO-generated deal in the CRM" width="1680" height="920" loading="lazy" />
 </div>
+<figcaption>CRM evidence separating new SEO-generated customers, realized revenue, and closed deals.</figcaption>
+</figure>
 
-the contract was for 1 yearDue to the fact that the client is ready to share any information on the project, I can provide accurate financial data on the project.
+Due to the fact that the client is ready to share any information on the project, I can provide accurate financial data on the project.
 
 **New inquiries from the Rentgen.pro website for bushings:** 620 pieces
 
@@ -420,9 +495,12 @@ Out of those, there were **41 new clients** and **47** **closed deals**
 **ROI (Return on Investment) for SEO:**
 (816 199 – 510 000)/510 000\*100% = 60.04% currently
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Current SEO ROI metrics">
-  <img src="/images/tild6131-6232-4335-b261-306166373434__2023-06-12__014015.webp" alt="Current SEO revenue and ROI metrics" loading="lazy" />
+  <img src="/images/tild6131-6232-4335-b261-306166373434__2023-06-12__014015.webp" alt="Current SEO revenue and ROI metrics" width="1680" height="405" loading="lazy" />
 </div>
+<figcaption>The realized financial result: ₽1,218,208 in revenue, ₽816,199 in net profit, and 60.04% ROI at the measurement date.</figcaption>
+</figure>
 
 **But that's not all!** Let's calculate the return on investment until the end to understand the actual ROI of the SEO work.
 
@@ -435,16 +513,22 @@ Thus, **Potential revenue during the period after SEO optimization:**
 
 **ROI Fina****l: (2 448 598 – 510 000)/510 000 \* 100% = 380%**
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Projected SEO ROI metrics">
-  <img src="/images/tild3036-3435-4530-b331-663764643638__2023-06-12__013703.webp" alt="Projected long-term SEO revenue and ROI metrics" loading="lazy" />
+  <img src="/images/tild3036-3435-4530-b331-663764643638__2023-06-12__013703.webp" alt="Projected long-term SEO revenue and ROI metrics" width="1680" height="407" loading="lazy" />
 </div>
+<figcaption>The case’s separate three-year projection; this is not a realized result.</figcaption>
+</figure>
 
 And here I don't even take into account repeat sales to these new customers – and in the B2B market, the percentage of repeat purchases after the first one, as you know, is much higher than in the B2C market.
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--hero" aria-label="Long-term SEO growth">
-  <img src="/images/tild3238-3430-4163-a562-653736626166__seo_growth_over_21_m.webp" alt="Tenfold growth in organic visibility over 21 months" loading="lazy" />
-  <img src="/images/tild3064-3533-4335-a461-623336326337__2024-01-12__154345.webp" alt="Five-hundred-percent growth in referral traffic after B2B SEO work" loading="lazy" />
+  <img src="/images/tild3238-3430-4163-a562-653736626166__seo_growth_over_21_m.webp" alt="Tenfold growth in organic visibility over 21 months" width="2402" height="1800" loading="lazy" />
+  <img src="/images/tild3064-3533-4335-a461-623336326337__2024-01-12__154345.webp" alt="Five-hundred-percent growth in referral traffic after B2B SEO work" width="2402" height="1800" loading="lazy" />
 </div>
+<figcaption>Later evidence showing tenfold organic-visibility growth and increased referral traffic.</figcaption>
+</figure>
 
 <h2 id="chapter-6">Chapter 6: Thoughts After the First Year of Work</h2>
 
@@ -464,7 +548,7 @@ And here I don't even take into account repeat sales to these new customers – 
 
 If you are looking for MORE things, which most likely no one of your B2B competitors do – have a look at my ideas!
 
-<h3 class="case-trick">Trick 1: Manipulating Search Result</h3>
+<h3 id="trick-1-manipulating-search-result" class="case-trick">Trick 1: Manipulating Search Result</h3>
 
 When I made YouTube channel for myself and for one of my clients, I used techniques for boost performance of the video. Here you can do the same thing — just open in couple of days Google and write down keyword which you're currently working on, and try to pretend that you are a real user. Have a look on competitors websites and after this go to your own website from search results.
 
@@ -478,13 +562,13 @@ When I made YouTube channel for myself and for one of my clients, I used techniq
 
 4\. It works for B2B only. May be for some B2C niches also — but it requires low-frequency keywords with low competition there.
 
-<h3 class="case-trick">Trick 2: Email at the Head</h3>
+<h3 id="trick-2-email-at-the-head" class="case-trick">Trick 2: Email at the Head</h3>
 
 If you receive 95% of leads through mailing, why are you making standard forms with number, name etc? From different B2B projects which I worked with, I saw one pattern — through mail you get real clients. 99% chance. Use this hint to make more conversations through greater emphasis in any forms or design on the ability to send an email!
 
 **Don't forget:** [use this JavaScript tracking guide](/tools/track-email-copy/) to measure when a person copies an email address and opens their own mail client.
 
-<h3 class="case-trick">3 trick: crush your opponents with power of... IMAGES SEO. And your images will get you more traffic from GOOGLE IMAGES also</h3>
+<h3 id="trick-3-image-seo" class="case-trick">3 trick: crush your opponents with power of... IMAGES SEO. And your images will get you more traffic from GOOGLE IMAGES also</h3>
 
 Almost nobody think about traffic which you can get through proper seo for images. But this might become powerful instrument, especially if you use it right!
 
@@ -498,13 +582,26 @@ For implementation, use descriptive filenames, useful alt text, correct dimensio
   <p>And since you have mastered all these 5782 words, here is a free gift from me personally… If you need an SEO specialist that your competitors do not have… If you are looking for unique solutions that your competitors did not think of… If you want to aggressively squeeze the market share of your competitors (and you like my approach to solving problems of this kind), <a href="mailto:ivangetmanov@icloud.com">write to me</a>.</p>
 </aside>
 
+<figure class="case-evidence">
 <div class="case-gallery case-gallery--portraits" aria-label="Getmanov Marketing team">
-  <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.webp" alt="Getmanov Marketing team at work" loading="lazy" />
+  <img src="/images/tild3566-3939-4234-b061-623531326439__2020-10-31__204042.webp" alt="Getmanov Marketing team at work" width="987" height="738" loading="lazy" />
 </div>
+<figcaption>The Getmanov Marketing team.</figcaption>
+</figure>
 
-**Thank you for reading my case! Do you want the same and even better? Leave a request and info about your project via [Telegram](https://t.me/getmanov_marketing) or [LinkedIn](https://www.linkedin.com/in/ivan-getmanov/).**
+<section class="case-contact" aria-labelledby="discuss-your-project">
+  <p class="case-contact__eyebrow">Discuss a project</p>
+  <h2 id="discuss-your-project">Want to connect SEO work to pipeline and revenue?</h2>
+  <p>Send the current situation, the market, and what you need SEO to change. I’ll reply directly—no generic sales funnel.</p>
+  <div class="case-contact__actions">
+    <a href="https://t.me/getmanov_marketing" target="_blank" rel="noopener noreferrer" data-cta-location="case_end">Message me on Telegram</a>
+    <a href="https://www.linkedin.com/in/ivan-getmanov/" target="_blank" rel="noopener noreferrer" data-cta-location="case_end">Connect on LinkedIn</a>
+  </div>
+</section>
 
-<img src="/images/ivan-getmanov.webp" alt="Ivan Getmanov" />
+<figure class="case-evidence case-evidence--signature">
+  <img src="/images/ivan-getmanov.webp" alt="Ivan Getmanov" width="1200" height="1600" loading="lazy" />
+</figure>
 
 Ivan Getmanov
 

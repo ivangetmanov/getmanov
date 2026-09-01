@@ -263,6 +263,12 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
         <!-- Markdown content is wrapped in .prose. -->
         <article id="article-content" class="prose">
           <slot />
+          {hasArticleNavigation && (
+            <details class="article-mobile-toc">
+              <summary>{lang === "ru" ? "Содержание" : "Table of contents"}</summary>
+              <ol class="article-mobile-toc__list"></ol>
+            </details>
+          )}
         </article>
 
         {hasArticleNavigation && (

@@ -90,6 +90,7 @@ a:hover{opacity:.85}
   padding-right:0;
   padding-left:0;
 }
+.article-mobile-toc{display:none}
 .article-toc{
   position:sticky;
   top:92px;
@@ -302,6 +303,30 @@ a:hover{opacity:.85}
     padding-left:16px;
   }
   .article-toc{display:none}
+  .article-mobile-toc{
+    display:block;
+    margin:24px 0 30px;
+    border:1px solid #cfded7;
+    border-radius:16px;
+    background:#f4f8f6;
+  }
+  .article-mobile-toc summary{
+    padding:16px 18px;
+    color:#17211e;
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .article-mobile-toc__list{
+    display:grid;
+    gap:2px;
+    max-height:min(60vh,520px);
+    margin:0;
+    padding:0 10px 12px;
+    overflow-y:auto;
+    list-style:none;
+  }
+  .article-mobile-toc__list::before{display:none}
 }
 
 @media (prefers-reduced-motion:reduce){

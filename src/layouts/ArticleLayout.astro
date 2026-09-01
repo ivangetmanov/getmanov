@@ -11,12 +11,14 @@ const heroImageUrl = frontmatter.heroImage
   : undefined;
 const faqItems = frontmatter.faq ?? [];
 const b2bSeoPaths = new Set([
+  "/case-studies/seo-case-b2b/",
   "/notes/b2b-seo-guides-postmortem/",
 ]);
 const currentPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`;
 const isB2BSeoArticle = b2bSeoPaths.has(currentPath);
+const isCaseStudy = currentPath.startsWith("/case-studies/");
 const mentionedToolId = isB2BSeoArticle
   ? "https://getmanov.com/tools/seo-roi-calculator/#application"
   : "https://getmanov.com/tools/session-saver/#software";
@@ -114,8 +116,10 @@ const structuredData = {
         {
           "@type": "ListItem",
           position: 2,
-          name: "Notes",
-          item: "https://getmanov.com/notes/",
+          name: isCaseStudy ? "Case studies" : "Notes",
+          item: isCaseStudy
+            ? "https://getmanov.com/case-studies/"
+            : "https://getmanov.com/notes/",
         },
         {
           "@type": "ListItem",

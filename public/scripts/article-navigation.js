@@ -2,6 +2,8 @@
   const article = document.querySelector("#article-content");
   const progressBar = document.querySelector(".reading-progress__bar");
   const tocList = document.querySelector(".article-toc__list");
+  const mobileToc = document.querySelector(".article-mobile-toc");
+  const mobileTocList = document.querySelector(".article-mobile-toc__list");
 
   if (!article || !progressBar || !tocList) return;
 
@@ -55,19 +57,31 @@
     heading.id = id;
     usedIds.add(id);
 
-    const item = document.createElement("li");
-    item.className = `article-toc__item article-toc__item--${heading.tagName.toLowerCase()}`;
+    [tocList, mobileTocList].filter(Boolean).forEach((list) => {
+      const item = document.createElement("li");
+      item.className = `article-toc__item article-toc__item--${heading.tagName.toLowerCase()}`;
 
-    const link = document.createElement("a");
-    link.href = `#${id}`;
-    link.textContent = heading.textContent;
-    link.dataset.headingId = id;
+      const link = document.createElement("a");
+      link.href = `#${id}`;
+      link.textContent = heading.textContent;
+      link.dataset.headingId = id;
 
-    item.append(link);
-    tocList.append(item);
+      item.append(link);
+      list.append(item);
+    });
   });
 
-  const tocLinks = [...tocList.querySelectorAll("a")];
+  if (mobileToc) {
+    const insertionAnchor =
+      headingRoot.querySelector(":scope > .case-deck") ||
+      headingRoot.querySelector(":scope > h1");
+    insertionAnchor?.insertAdjacentElement("afterend", mobileToc);
+  }
+
+  const tocLinks = [
+    ...tocList.querySelectorAll("a"),
+    ...(mobileTocList?.querySelectorAll("a") || []),
+  ];
   const tocNav = tocList.closest("nav");
   let currentActiveId = "";
 
@@ -128,8 +142,10 @@
       link.classList.toggle("is-active", isActive);
       if (isActive) {
         link.setAttribute("aria-current", "location");
-        moveActiveIndicator(link);
-        if (activeChanged) keepActiveLinkInPlace(link);
+        if (link.closest(".article-toc__list") === tocList) {
+          moveActiveIndicator(link);
+          if (activeChanged) keepActiveLinkInPlace(link);
+        }
       } else {
         link.removeAttribute("aria-current");
       }
