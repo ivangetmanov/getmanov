@@ -74,7 +74,10 @@ export function prepareHomeVisitInquiry(payload) {
   const dateTo = typeof payload.dateTo === "string" ? payload.dateTo : "";
   const animal = typeof payload.animal === "string" ? payload.animal : "";
   const quantity = Number(payload.quantity);
+  const visitsPerDay = Number(payload.visitsPerDay);
+  const dogWalk = payload.dogWalk === true;
   const neighborhood = cleanField(payload.neighborhood, 120);
+  const specialCare = cleanField(payload.specialCare, 300);
   const notes = cleanField(payload.notes, 1000);
   const telegramUsername = normalizeTelegramUsername(payload.telegramUsername);
 
@@ -84,6 +87,8 @@ export function prepareHomeVisitInquiry(payload) {
   if (dateTo < dateFrom) return { ok: false, error: "invalid_dates" };
   if (!homeVisitAnimals.has(animal)) return { ok: false, error: "invalid_pet" };
   if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) return { ok: false, error: "invalid_quantity" };
+  if (!petSittingBusiness.homeVisits.visitsPerDay.includes(visitsPerDay)) return { ok: false, error: "invalid_visit_frequency" };
+  if (dogWalk && animal !== "dog") return { ok: false, error: "invalid_dog_walk" };
   if (!neighborhood) return { ok: false, error: "missing_neighborhood" };
   if (!/^@[A-Za-z0-9_]{5,32}$/.test(telegramUsername)) return { ok: false, error: "invalid_telegram" };
 
@@ -98,7 +103,10 @@ export function prepareHomeVisitInquiry(payload) {
       dateTo,
       animal,
       quantity,
+      visitsPerDay,
+      dogWalk,
       neighborhood,
+      specialCare,
       notes,
       telegramUsername,
     },
@@ -179,7 +187,10 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     `Dates: ${inquiry.dateFrom} — ${inquiry.dateTo}`,
     `Pet: ${animal}`,
     `Number of pets: ${inquiry.quantity}`,
+    `Visits per day: ${inquiry.visitsPerDay}`,
+    `Dog walk needed: ${inquiry.dogWalk ? "yes" : "no"}`,
     `Approximate neighborhood: ${inquiry.neighborhood}`,
+    `Medication / special care: ${inquiry.specialCare || "not provided"}`,
     `Care details: ${inquiry.notes || "not provided"}`,
     `Customer Telegram: ${inquiry.telegramUsername}`,
     "Language: EN",
@@ -193,7 +204,10 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     `Даты: ${inquiry.dateFrom} — ${inquiry.dateTo}`,
     `Питомец: ${animal}`,
     `Количество: ${inquiry.quantity}`,
+    `Визитов в день: ${inquiry.visitsPerDay}`,
+    `Нужна прогулка с собакой: ${inquiry.dogWalk ? "да" : "нет"}`,
     `Примерный район: ${inquiry.neighborhood}`,
+    `Лекарства / особый уход: ${inquiry.specialCare || "не указаны"}`,
     `Детали ухода: ${inquiry.notes || "не указаны"}`,
     `Telegram клиента: ${inquiry.telegramUsername}`,
     "Язык: RU",

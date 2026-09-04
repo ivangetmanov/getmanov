@@ -73,7 +73,10 @@ const validHomeVisitPayload = {
   dateTo: "2026-09-14",
   animal: "cat",
   quantity: 2,
+  visitsPerDay: 2,
+  dogWalk: false,
   neighborhood: "Liman",
+  specialCare: "One tablet with food.",
   notes: "Food, water, litter box and play.",
   telegramUsername: "@test_user",
   website: "",
@@ -84,10 +87,14 @@ const homeVisitPrepared = preparePetSittingInquiry(validHomeVisitPayload);
 assert.equal(homeVisitPrepared.ok, true);
 assert.equal(homeVisitPrepared.inquiry.serviceType, "home_visit");
 assert.equal(homeVisitPrepared.inquiry.neighborhood, "Liman");
+assert.equal(homeVisitPrepared.inquiry.visitsPerDay, 2);
+assert.equal(homeVisitPrepared.inquiry.dogWalk, false);
 const homeVisitNotification = buildPetSittingTelegramMessage(homeVisitPrepared.inquiry, "2026-09-04T12:00:00.000Z");
 assert.match(homeVisitNotification, /New home-visit pet-sitting request/);
 assert.match(homeVisitNotification, /Service type: home_visit/);
 assert.match(homeVisitNotification, /Approximate neighborhood: Liman/);
+assert.match(homeVisitNotification, /Visits per day: 2/);
+assert.match(homeVisitNotification, /Medication \/ special care: One tablet with food\./);
 assert.doesNotMatch(homeVisitNotification, /Estimated price/);
 assert.deepEqual(
   preparePetSittingInquiry({ ...validHomeVisitPayload, sourcePage: "/en/novi-sad/pet-sitting/" }),
@@ -97,6 +104,17 @@ assert.deepEqual(
   preparePetSittingInquiry({ ...validHomeVisitPayload, neighborhood: "" }),
   { ok: false, error: "missing_neighborhood" },
 );
+assert.deepEqual(
+  preparePetSittingInquiry({ ...validHomeVisitPayload, visitsPerDay: 3 }),
+  { ok: false, error: "invalid_visit_frequency" },
+);
+assert.deepEqual(
+  preparePetSittingInquiry({ ...validHomeVisitPayload, dogWalk: true }),
+  { ok: false, error: "invalid_dog_walk" },
+);
+const dogHomeVisit = preparePetSittingInquiry({ ...validHomeVisitPayload, animal: "dog", dogWalk: true });
+assert.equal(dogHomeVisit.ok, true);
+assert.equal(dogHomeVisit.inquiry.dogWalk, true);
 
 const originalToken = process.env.PET_SITTING_TELEGRAM_BOT_TOKEN;
 const originalChatId = process.env.PET_SITTING_TELEGRAM_CHAT_ID;
@@ -125,6 +143,7 @@ try {
   assert.equal(fetchCalls.length, 2);
   const homeVisitTelegramBody = JSON.parse(fetchCalls[1].options.body);
   assert.match(homeVisitTelegramBody.text, /Service type: home_visit/);
+  assert.match(homeVisitTelegramBody.text, /Visits per day: 2/);
   assert.match(homeVisitTelegramBody.text, /Care details: Food, water, litter box and play\./);
 
   const invalidUsername = await handler({

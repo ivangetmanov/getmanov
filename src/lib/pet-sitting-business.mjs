@@ -2,6 +2,34 @@ import { billableStayDays } from "./pet-sitting-calendar.mjs";
 
 export const petSittingBusiness = {
   telegramUsername: "ya_kushka",
+  homeVisits: {
+    provisional: true,
+    usualDurationMinutes: { min: 45, max: 60 },
+    visitsPerDay: [1, 2],
+    additionalVisitByAgreement: 3,
+    oneOffVisitsAllowed: true,
+    priceBasis: "visit_and_travel",
+    zones: {
+      zone1: {
+        label: { ru: "Зона 1", en: "Zone 1" },
+        description: { ru: "Стандартная зона выезда", en: "Standard visit area" },
+        confirmedAreas: ["Petrovaradin"],
+        pricing: { oneVisit: 1500, twoVisitsPerDay: 2500 },
+      },
+      zone2: {
+        label: { ru: "Зона 2", en: "Zone 2" },
+        description: { ru: "Более дальняя зона / выше стоимость дороги", en: "Farther area / higher travel cost" },
+        confirmedAreas: [],
+        pricing: { oneVisit: 2000, twoVisitsPerDay: 3000 },
+      },
+    },
+    introductoryMeetingFree: true,
+    dogWalkIncludedWhenRelevant: true,
+    routineMedication: ["tablets", "drops", "other_simple_routine_medication"],
+    medicalProceduresOffered: false,
+    updateAfterEveryVisit: true,
+    smallHomeTasksByAgreement: ["water_a_few_plants", "feed_fish", "briefly_air_apartment", "basic_home_check"],
+  },
   longStayFromDays: 14,
   pricing: {
     1: { shortStayMaxDays: 3, shortStayDailyRate: 2000, standardDailyRate: 1500 },

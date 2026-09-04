@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import { JSDOM } from "jsdom";
 import { petSittingSchemaIds } from "../src/lib/pet-sitting-seo.mjs";
+import { formatRsd, petSittingBusiness } from "../src/lib/pet-sitting-business.mjs";
 
 const projectRoot = new URL("../", import.meta.url);
 const locales = ["ru", "en"];
@@ -283,6 +284,14 @@ for (const locale of locales) {
       assert.equal(service["@id"], petSittingSchemaIds.services.homeVisits);
       assert.notEqual(service["@id"], petSittingSchemaIds.services.main);
       assert(document.querySelector('form[data-home-form]'), `${path} needs the home-visit enquiry form`);
+      assert(document.querySelector('[name="visitsPerDay"]'), `${path} needs structured visit-frequency options`);
+      assert.deepEqual([...document.querySelectorAll('[name="visitsPerDay"] option')].map((option) => Number(option.value)), petSittingBusiness.homeVisits.visitsPerDay);
+      assert(document.querySelector('[name="dogWalk"]'), `${path} needs the conditional dog-walk field`);
+      assert(document.querySelector('[name="specialCare"]'), `${path} needs the medication/special-care field`);
+      for (const zone of Object.values(petSittingBusiness.homeVisits.zones)) {
+        assert(document.body.textContent.includes(`${formatRsd(zone.pricing.oneVisit, locale)} RSD`), `${path} needs the configured one-visit zone price`);
+        assert(document.body.textContent.includes(`${formatRsd(zone.pricing.twoVisitsPerDay, locale)} RSD`), `${path} needs the configured two-visit zone price`);
+      }
       assert(document.querySelector('img[src="/images/pet-sitting/home-visits-area.svg"]'), `${path} needs the static service-area visual`);
       assert(document.body.textContent.includes("Novi Sad") || document.body.textContent.includes("Нови-Сад"));
       assert(document.querySelector(`a[href="${servicePath(locale, "main")}"]`), `${path} must link back to boarding`);
