@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+  <title id="title">Home-visit service area in Novi Sad</title>
+  <desc id="desc">A simplified illustration marking Novi Sad as the service area, without an exact address or home location.</desc>
+  <rect width="960" height="560" rx="28" fill="#edf3ef"/>
+  <path d="M-35 430C130 355 210 375 335 308C454 244 525 115 668 71C774 38 875 52 1005 4" fill="none" stroke="#a9c8d0" stroke-width="74" stroke-linecap="round"/>
+  <path d="M-35 430C130 355 210 375 335 308C454 244 525 115 668 71C774 38 875 52 1005 4" fill="none" stroke="#dcebee" stroke-width="52" stroke-linecap="round"/>
+  <path d="M145 132h410c44 0 80 36 80 80v145c0 44-36 80-80 80H145c-44 0-80-36-80-80V212c0-44 36-80 80-80Z" fill="#dce9e1" stroke="#6e9a86" stroke-width="4" stroke-dasharray="12 10"/>
+  <circle cx="350" cy="281" r="76" fill="#275f4b"/>
+  <path d="M320 291v-47l30-24 30 24v47h-22v-35h-16v35Z" fill="#fff"/>
+  <text x="350" y="385" fill="#20332f" font-family="Arial, sans-serif" font-size="40" font-weight="700" text-anchor="middle">Novi Sad</text>
+  <text x="694" y="166" fill="#58736b" font-family="Arial, sans-serif" font-size="24" transform="rotate(-25 694 166)">Danube</text>
+  <g transform="translate(690 340)">
+    <rect width="205" height="132" rx="18" fill="#fff" stroke="#cbd8d1" stroke-width="3"/>
+    <circle cx="34" cy="38" r="11" fill="#275f4b"/>
+    <text x="57" y="46" fill="#20332f" font-family="Arial, sans-serif" font-size="22" font-weight="700">Service area</text>
+    <text x="24" y="87" fill="#52645d" font-family="Arial, sans-serif" font-size="18">Exact route confirmed</text>
+    <text x="24" y="112" fill="#52645d" font-family="Arial, sans-serif" font-size="18">with each request</text>
+  </g>
+</svg>

@@ -45,6 +45,7 @@ const petSittingSectionMatch = currentPath.match(/^\/(ru|en)\/novi-sad\/pet-sitt
 const isPetSittingSection = Boolean(petSittingSectionMatch);
 const petSectionLocale = petSittingSectionMatch?.[1] === "ru" ? "ru" : "en";
 const petSectionBase = `/${petSectionLocale}/novi-sad/pet-sitting/`;
+const isHomeVisitsPage = currentPath === `${petSectionBase}home-visits/`;
 const petSectionAlternatePath = currentPath.replace(
   `/${petSectionLocale}/`,
   petSectionLocale === "ru" ? "/en/" : "/ru/",
@@ -54,7 +55,7 @@ const petSittingArticleMatch = currentPath.match(
   /^\/(ru|en)\/novi-sad\/pet-sitting\/([^/]+)\/$/,
 );
 const isPetSittingArticle = Boolean(
-  petSittingArticleMatch && !["cats", "dogs"].includes(petSittingArticleMatch[2]),
+  petSittingArticleMatch && !["cats", "dogs", "home-visits"].includes(petSittingArticleMatch[2]),
 );
 const petArticleLocale = petSittingArticleMatch?.[1] === "ru" ? "ru" : "en";
 const petArticleSlug = petSittingArticleMatch?.[2] ?? "";
@@ -236,11 +237,12 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
         </a>
 
         {isPetSittingSection ? (
-          <nav class="nav pet-nav" aria-label={petSectionLocale === "ru" ? "Передержка животных" : "Pet boarding"}>
-            <a href={petSectionBase} aria-current={currentPath === petSectionBase ? "page" : undefined}>{petSectionLocale === "ru" ? "Главная" : "Overview"}</a>
+          <nav class="nav pet-nav" aria-label={petSectionLocale === "ru" ? "Уход за питомцами" : "Pet care"}>
+            <a href={petSectionBase} aria-current={currentPath === petSectionBase ? "page" : undefined}>{petSectionLocale === "ru" ? "Главная" : "Home"}</a>
             <a href={`${petSectionBase}dogs/`} aria-current={currentPath === `${petSectionBase}dogs/` ? "page" : undefined}>{petSectionLocale === "ru" ? "Собаки" : "Dogs"}</a>
             <a href={`${petSectionBase}cats/`} aria-current={currentPath === `${petSectionBase}cats/` ? "page" : undefined}>{petSectionLocale === "ru" ? "Кошки" : "Cats"}</a>
-            <a href={`${petSectionBase}#guides`}>{petSectionLocale === "ru" ? "Полезное" : "Guides"}</a>
+            <a href={`${petSectionBase}home-visits/`} aria-current={currentPath === `${petSectionBase}home-visits/` ? "page" : undefined}>{petSectionLocale === "ru" ? "Выезды домой" : "Home visits"}</a>
+            <a href={isHomeVisitsPage ? "#guides" : `${petSectionBase}#guides`}>{petSectionLocale === "ru" ? "Полезное" : "Guides"}</a>
             <a class="pet-nav__locale" href={petSectionAlternatePath} hreflang={petSectionLocale === "ru" ? "en" : "ru"}>{petSectionLocale === "ru" ? "EN" : "RU"}</a>
           </nav>
         ) : (
@@ -311,8 +313,8 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
       {isPetSittingSection ? (
         <div class="container footer-grid pet-footer-grid">
           <div>
-            <div class="footer-title">{petSectionLocale === "ru" ? "Домашняя передержка" : "Home pet boarding"}</div>
-            <div class="footer-text">{petSectionLocale === "ru" ? "Петроварадин, Нови-Сад" : "Petrovaradin, Novi Sad"}<br />{petSectionLocale === "ru" ? "Собаки и кошки живут у нас дома." : "Dogs and cats stay with us in our home."}</div>
+            <div class="footer-title">{isHomeVisitsPage ? petSectionLocale === "ru" ? "Выезды к питомцам домой" : "In-home pet sitting" : petSectionLocale === "ru" ? "Домашняя передержка" : "Home pet boarding"}</div>
+            <div class="footer-text">{isHomeVisitsPage ? petSectionLocale === "ru" ? "Нови-Сад" : "Novi Sad" : petSectionLocale === "ru" ? "Петроварадин, Нови-Сад" : "Petrovaradin, Novi Sad"}<br />{isHomeVisitsPage ? petSectionLocale === "ru" ? "Питомец остаётся дома, а мы приезжаем к нему." : "Your pet stays home, and we come to them." : petSectionLocale === "ru" ? "Собаки и кошки живут у нас дома." : "Dogs and cats stay with us in our home."}</div>
           </div>
           <div>
             <div class="footer-title">{petSectionLocale === "ru" ? "Раздел" : "Explore"}</div>
@@ -320,6 +322,7 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
               <a href={petSectionBase}>{petSectionLocale === "ru" ? "Все условия" : "Pet boarding"}</a>
               <a href={`${petSectionBase}dogs/`}>{petSectionLocale === "ru" ? "Собаки" : "Dogs"}</a>
               <a href={`${petSectionBase}cats/`}>{petSectionLocale === "ru" ? "Кошки" : "Cats"}</a>
+              <a href={`${petSectionBase}home-visits/`}>{petSectionLocale === "ru" ? "Выезды домой" : "Home visits"}</a>
               <a href={`${petSectionBase}#guides`}>{petSectionLocale === "ru" ? "Полезные статьи" : "Useful guides"}</a>
             </nav>
           </div>

@@ -8,6 +8,7 @@ export const petSittingSchemaIds = Object.freeze({
     main: `${siteOrigin}/#home-pet-boarding-service`,
     dogs: `${siteOrigin}/#home-dog-boarding-service`,
     cats: `${siteOrigin}/#home-cat-boarding-service`,
+    homeVisits: `${siteOrigin}/#in-home-pet-sitting-service`,
   }),
 });
 

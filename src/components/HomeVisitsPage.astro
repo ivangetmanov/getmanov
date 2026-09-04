@@ -1,0 +1,286 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { petSittingConfig, telegramUrl } from "../data/pet-sitting";
+import { petSittingBusiness } from "../lib/pet-sitting-business.mjs";
+import {
+  absoluteSiteUrl,
+  annaEntity,
+  ivanEntity,
+  petSittingSchemaIds,
+  petSittingWebsiteEntity,
+  primaryImageEntity,
+} from "../lib/pet-sitting-seo.mjs";
+
+const { locale = "ru" } = Astro.props as { locale?: "ru" | "en" };
+const isEnglish = locale === "en";
+const path = petSittingBusiness.pagePaths[locale].homeVisits;
+const counterpart = petSittingBusiness.pagePaths[isEnglish ? "ru" : "en"].homeVisits;
+const title = isEnglish
+  ? "In-Home Pet Sitting in Novi Sad | Cat & Dog Home Visits"
+  : "Петситтер с выездом на дом в Нови-Саде | Уход за кошками и собаками";
+const description = isEnglish
+  ? "Anna and Ivan visit cats and dogs in their own homes in Novi Sad for practical care, company, and photo and video updates after each visit."
+  : "Аня и Ваня приезжают к кошкам и собакам домой в Нови-Саде: практический уход, общение и фото- и видеоотчёт после визита.";
+const h1 = isEnglish ? "Pet Sitting at Your Home in Novi Sad" : "Петситтер с выездом на дом в Нови-Саде";
+const heroPhoto = petSittingConfig.heroPhotos.main;
+const heroAlt = isEnglish ? "Anna holding one of her cats" : "Аня с одним из своих котов";
+const canonicalUrl = absoluteSiteUrl(path);
+const imageUrl = absoluteSiteUrl(heroPhoto);
+const imageId = `${imageUrl}#image`;
+const webPageId = `${canonicalUrl}#webpage`;
+const breadcrumbId = `${canonicalUrl}#breadcrumb`;
+const serviceId = petSittingSchemaIds.services.homeVisits;
+const telegram = telegramUrl();
+
+const faq = isEnglish ? [
+  ["What does a pet sitter do during a home visit?", "We agree the care list in advance. A visit can include feeding, fresh water, litter-box cleaning, play and company, a basic check of the pet and home, and a photo or video update."],
+  ["Can you visit a cat over several days?", "Yes. Send the dates, number of pets, approximate neighborhood, and care details. We will confirm whether we can cover the full period."],
+  ["Which parts of Novi Sad do you visit?", "The service is for Novi Sad. Because route and timing depend on the address, tell us your approximate neighborhood in the request and we will confirm it before arranging anything."],
+  ["Will you send photos and videos?", "Yes. After a visit, we send photos or video and tell you how your pet is doing."],
+  ["How are home visits different from boarding?", "With a home visit, your pet stays in their own home and we come to them. With boarding, your pet temporarily lives with us in our Petrovaradin apartment."],
+  ["Who will come to my home?", "Anna or Ivan will come—we are a married couple, not a marketplace or an anonymous rotating team. We agree who will visit with you in advance."],
+] : [
+  ["Что делает петситтер во время визита?", "Заранее согласуем список ухода. Визит может включать кормление, свежую воду, уборку лотка, игры и общение, базовую проверку питомца и дома, а также фото- или видеоотчёт."],
+  ["Можно ли приходить к кошке несколько дней подряд?", "Да. Укажите даты, количество питомцев, примерный район и детали ухода. Мы подтвердим, сможем ли приезжать весь нужный период."],
+  ["В какие районы Нови-Сада вы приезжаете?", "Услуга доступна в Нови-Саде. Маршрут и время зависят от адреса, поэтому укажите примерный район в заявке — до договорённости мы подтвердим, что сможем приехать."],
+  ["Будете присылать фото и видео?", "Да. После визита присылаем фото или видео и рассказываем, как питомец."],
+  ["Чем визиты на дом отличаются от передержки?", "При выезде питомец остаётся у себя дома, а мы приезжаем к нему. При передержке питомец временно живёт у нас в квартире в Петроварадине."],
+  ["Кто именно будет приходить?", "Аня или Ваня. Мы муж и жена, а не маркетплейс или анонимная сменная команда. Заранее договоримся с вами, кто будет приезжать."],
+];
+
+const careItems = isEnglish
+  ? ["Food and fresh water", "Litter-box cleaning", "Play and quiet company", "Basic pet and home check", "Photos or video after the visit"]
+  : ["Корм и свежая вода", "Уборка лотка", "Игры и спокойное общение", "Базовая проверка питомца и дома", "Фото или видео после визита"];
+const fitItems = isEnglish
+  ? ["Your cat is calmer in familiar territory", "Your pet does not need overnight boarding", "You are away and need someone to check, feed, and spend time with your pet", "A journey and a new home would be an unnecessary change"]
+  : ["Кошке спокойнее на знакомой территории", "Питомцу не нужна передержка с ночёвкой", "Вы уезжаете, а питомца нужно проверить, покормить и не оставлять совсем без общения", "Поездка и новое место будут лишней переменой"];
+const guides = isEnglish ? [
+  { href: "/en/novi-sad/pet-sitting/pet-sitter-vs-boarding/", title: "Pet sitter, home boarding, or pet hotel" },
+  { href: "/en/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/", title: "Can a cat stay alone for a week?" },
+] : [
+  { href: "/ru/novi-sad/pet-sitting/pet-sitter-vs-boarding/", title: "Петситтер, домашняя передержка или зоогостиница" },
+  { href: "/ru/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/", title: "Можно ли оставить кошку одну на неделю" },
+];
+const proofPhotos = isEnglish ? [
+  { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Shady resting while staying with Anna and Ivan", caption: "Shady. Our existing media shows our real experience with pets; it is not presented as a client-home visit." },
+  { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Pepe resting next to Anna", caption: "Pepe resting next to Anna." },
+  { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Guinness playing with Ivan", caption: "Guinness playing with Ivan." },
+  { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Pepe and Pablo resting together", caption: "Pepe and Pablo resting together." },
+] : [
+  { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Шэди отдыхает рядом с Аней и Ваней", caption: "Шэди. Здесь наш опыт с животными; мы не выдаём фото с передержки за визит в доме клиента." },
+  { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Пепе отдыхает рядом с Аней", caption: "Пепе отдыхает рядом с Аней." },
+  { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Гинесс играет с Ваней", caption: "Гинесс играет с Ваней." },
+  { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Пепе и Пабло отдыхают вместе", caption: "Пепе и Пабло отдыхают вместе." },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    petSittingWebsiteEntity(),
+    ivanEntity(),
+    annaEntity(),
+    primaryImageEntity({ url: imageUrl, width: 1290, height: 1039 }),
+    {
+      "@type": "WebPage", "@id": webPageId, url: canonicalUrl, name: title, description,
+      inLanguage: locale, isPartOf: { "@id": petSittingSchemaIds.website },
+      primaryImageOfPage: { "@id": imageId }, mainEntity: { "@id": serviceId }, breadcrumb: { "@id": breadcrumbId },
+    },
+    {
+      "@type": "Service", "@id": serviceId,
+      name: isEnglish ? "In-home pet sitting in Novi Sad" : "Петситтинг с выездом на дом в Нови-Саде",
+      description, serviceType: "In-home pet sitting and pet home visits", image: { "@id": imageId },
+      provider: [{ "@id": petSittingSchemaIds.anna }, { "@id": petSittingSchemaIds.ivan }],
+      areaServed: [{ "@type": "City", name: "Novi Sad" }], subjectOf: { "@id": webPageId },
+    },
+    {
+      "@type": "BreadcrumbList", "@id": breadcrumbId,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: isEnglish ? "Home" : "Главная", item: "https://getmanov.com/" },
+        { "@type": "ListItem", position: 2, name: isEnglish ? "Pet sitting in Novi Sad" : "Уход за питомцами в Нови-Саде", item: absoluteSiteUrl(petSittingBusiness.pagePaths[locale].main) },
+        { "@type": "ListItem", position: 3, name: isEnglish ? "Home visits" : "Выезды домой", item: canonicalUrl },
+      ],
+    },
+    {
+      "@type": "FAQPage", "@id": `${canonicalUrl}#faq`, isPartOf: { "@id": webPageId },
+      mainEntity: faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={path}
+  lang={locale}
+  structuredData={structuredData}
+  alternates={[
+    { hreflang: "ru", href: isEnglish ? counterpart : path },
+    { hreflang: "en", href: isEnglish ? path : counterpart },
+    { hreflang: "x-default", href: isEnglish ? path : counterpart },
+  ]}
+  image={heroPhoto}
+  imageAlt={heroAlt}
+  imageWidth={1290}
+  imageHeight={1039}
+>
+  <div class="home-visits-page">
+    <section class="hv-hero">
+      <div class="hv-hero__heading">
+        <p class="eyebrow">{isEnglish ? "Home visits · Novi Sad" : "Выезды домой · Нови-Сад"}</p>
+        <h1>{h1}</h1>
+      </div>
+      <figure class="hv-hero__media">
+        <img src={heroPhoto} alt={heroAlt} width="1290" height="1039" />
+        <figcaption>{isEnglish ? "Anna, one of the two people who may visit your pet." : "Аня — один из двух людей, которые могут приезжать к питомцу."}</figcaption>
+      </figure>
+      <div class="hv-hero__details">
+        <p>{isEnglish ? "We’re Anna and Ivan. If your pet is calmer at home, we can come to them in Novi Sad: provide food and fresh water, clean the litter box, play or spend quiet time together, and send you photos or video after the visit." : "Мы — Аня и Ваня. Если питомцу спокойнее остаться дома, можем приезжать к нему в Нови-Саде: покормить, поменять воду, убрать лоток, поиграть или спокойно провести время вместе и прислать фото или видео после визита."}</p>
+        <div class="actions">
+          <a class="button button--primary" href="#request">{isEnglish ? "Send a request" : "Оставить запрос"}</a>
+          <a class="button" href={telegram} data-home-telegram data-cta-location="hero" target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : "Написать Ане в Telegram"}</a>
+        </div>
+      </div>
+    </section>
+
+    <aside class="service-definition" aria-label={isEnglish ? "Difference between services" : "Разница между услугами"}>
+      <div><strong>{isEnglish ? "Home boarding" : "Домашняя передержка"}</strong><span>{isEnglish ? "Your pet stays in our home." : "Питомец живёт у нас дома."}</span></div>
+      <div><strong>{isEnglish ? "Home visits" : "Выезды домой"}</strong><span>{isEnglish ? "Your pet stays home; we come to them." : "Питомец остаётся дома; мы приезжаем к нему."}</span></div>
+    </aside>
+
+    <section class="split-section" aria-labelledby="visit-includes-title">
+      <div><p class="eyebrow">{isEnglish ? "Practical care" : "Практический уход"}</p><h2 id="visit-includes-title">{isEnglish ? "What a visit can include" : "Что может входить в визит"}</h2><p>{isEnglish ? "We agree the exact care list before confirming the request." : "Точный список заранее согласуем перед подтверждением заявки."}</p></div>
+      <ul class="check-grid">{careItems.map((item) => <li>{item}</li>)}</ul>
+    </section>
+
+    <section class="split-section split-section--soft" aria-labelledby="fit-title">
+      <div><p class="eyebrow">{isEnglish ? "A familiar environment" : "Знакомая обстановка"}</p><h2 id="fit-title">{isEnglish ? "When home visits make sense" : "Кому подойдут выезды домой"}</h2></div>
+      <ul class="check-grid">{fitItems.map((item) => <li>{item}</li>)}</ul>
+    </section>
+
+    <section class="trust-section" aria-labelledby="trust-title">
+      <div><p class="eyebrow">{isEnglish ? "Specific people, not a marketplace" : "Конкретные люди, не маркетплейс"}</p><h2 id="trust-title">{isEnglish ? "Anna and Ivan" : "Аня и Ваня"}</h2></div>
+      <div class="trust-copy">
+        <p>{isEnglish ? "We are a married couple. We lived in Vietnam for three years, adopted our two cats from a shelter there, and now live with them in Petrovaradin. We both work remotely—Ivan in marketing and Anna as a CSM." : "Мы муж и жена. Три года жили во Вьетнаме, там взяли из приюта двух котов, а теперь живём вместе с ними в Петроварадине. Оба работаем удалённо: Ваня — в маркетинге, Аня — CSM."}</p>
+        <p>{isEnglish ? "We genuinely enjoy caring for different animals. Your visit is arranged with us directly, and we confirm in advance whether Anna or Ivan will come." : "Нам правда нравится заботиться о разных животных. Вы договариваетесь напрямую с нами, и мы заранее подтверждаем, кто именно — Аня или Ваня — будет приезжать."}</p>
+      </div>
+    </section>
+
+    <section class="area-section" aria-labelledby="area-title">
+      <div class="area-copy">
+        <p class="eyebrow">{isEnglish ? "Service area" : "Зона выезда"}</p>
+        <h2 id="area-title">{isEnglish ? "Home visits in Novi Sad" : "Выезды по Нови-Саду"}</h2>
+        <p>{isEnglish ? "The confirmed public service area is Novi Sad. Tell us your approximate neighborhood in the request; we check the route and timing before confirming." : "Подтверждённая публичная зона услуги — Нови-Сад. Укажите примерный район в заявке: до подтверждения мы проверим маршрут и время."}</p>
+        <p class="area-note">{isEnglish ? "The illustration does not show our home, an exact address, or residential coordinates." : "На схеме нет нашего дома, точного адреса или координат жилья."}</p>
+      </div>
+      <img src="/images/pet-sitting/home-visits-area.svg" alt={isEnglish ? "Simplified home-visit service area: Novi Sad" : "Упрощённая зона выездов: Нови-Сад"} width="960" height="560" loading="lazy" />
+    </section>
+
+    <section class="split-section" aria-labelledby="format-title">
+      <div><p class="eyebrow">{isEnglish ? "Visit options" : "Формат визитов"}</p><h2 id="format-title">{isEnglish ? "Built around your pet’s actual routine" : "Под привычный режим питомца"}</h2></div>
+      <div class="format-copy"><p>{isEnglish ? "Send the dates, pet details, approximate neighborhood, and the care you need. We will confirm what we can do and agree the schedule directly with you." : "Пришлите даты, информацию о питомце, примерный район и нужный уход. Мы подтвердим, что сможем сделать, и отдельно согласуем график."}</p><p><strong>{isEnglish ? "Price is agreed after we understand the request." : "Стоимость согласуем после того, как поймём задачу."}</strong> {isEnglish ? "There is no unverified flat price or visit duration on this page." : "На странице нет неподтверждённой фиксированной цены или длительности визита."}</p></div>
+    </section>
+
+    <section class="proof-section" aria-labelledby="proof-title">
+      <div><p class="eyebrow">{isEnglish ? "Real animals, real care" : "Реальные животные и забота"}</p><h2 id="proof-title">{isEnglish ? "Our experience with pets" : "Наш опыт с питомцами"}</h2><p>{isEnglish ? "These are animals we have cared for. The photos document that experience; they are not claimed to be from client-home visits." : "Это животные, о которых мы заботились. Фото подтверждают опыт, но мы не выдаём их за съёмку во время выездов к клиентам."}</p></div>
+      <div class="proof-grid">{proofPhotos.map((photo) => <figure><img src={photo.src} alt={photo.alt} width="720" height="1280" loading="lazy" /><figcaption>{photo.caption}</figcaption></figure>)}</div>
+    </section>
+
+    <section class="request-section" id="request" aria-labelledby="request-title" data-home-visits-form-root data-locale={locale} data-source-page={path} data-telegram={petSittingConfig.telegramUsername}>
+      <div class="request-intro"><p class="eyebrow">{isEnglish ? "Request a visit" : "Запрос на выезд"}</p><h2 id="request-title">{isEnglish ? "Tell us what your pet needs" : "Расскажите, что нужно питомцу"}</h2><p>{isEnglish ? "This is a request, not an automatic booking. We will check the route, dates, and details and reply in Telegram." : "Это запрос, а не автоматическое бронирование. Проверим маршрут, даты и детали и ответим в Telegram."}</p></div>
+      <form class="home-form" data-home-form novalidate>
+        <div class="form-grid">
+          <label>{isEnglish ? "From" : "Дата с"}<input type="date" name="dateFrom" required /></label>
+          <label>{isEnglish ? "To" : "Дата по"}<input type="date" name="dateTo" required /></label>
+          <label>{isEnglish ? "Animal" : "Питомец"}<select name="animal" required><option value="cat">{isEnglish ? "Cat" : "Кошка"}</option><option value="dog">{isEnglish ? "Dog" : "Собака"}</option><option value="other">{isEnglish ? "Other" : "Другой"}</option></select></label>
+          <label>{isEnglish ? "Number of pets" : "Количество питомцев"}<input type="number" name="quantity" min="1" max="20" value="1" required /></label>
+          <label class="form-wide">{isEnglish ? "Approximate neighborhood" : "Примерный район"}<input type="text" name="neighborhood" maxlength="120" autocomplete="address-level3" placeholder={isEnglish ? "For example, the neighborhood name" : "Например, название района"} required /><small>{isEnglish ? "No exact address is needed at this stage." : "Точный адрес на этом этапе не нужен."}</small></label>
+          <label class="form-wide">{isEnglish ? "Care details (optional)" : "Что нужно сделать (необязательно)"}<textarea name="notes" rows="4" maxlength="1000" placeholder={isEnglish ? "Food, water, litter box, play, routines, or anything important" : "Корм, вода, лоток, игры, привычки и всё важное"}></textarea></label>
+          <label class="form-wide">{isEnglish ? "Your Telegram" : "Ваш Telegram"}<input type="text" name="telegramUsername" autocomplete="username" placeholder="@username" pattern="@?[A-Za-z0-9_]{5,32}" required /><small>{isEnglish ? "We need this only to reply to your request." : "Нужен только для ответа на запрос."}</small></label>
+        </div>
+        <div class="honeypot" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+        <button class="button button--primary" type="submit">{isEnglish ? "Send request" : "Отправить запрос"}</button>
+        <p class="form-status" data-form-status role="status" aria-live="polite">{isEnglish ? "We’ll reply in Telegram after checking the details." : "Ответим в Telegram после проверки деталей."}</p>
+        <p class="direct-link">{isEnglish ? "Prefer to write directly?" : "Удобнее написать напрямую?"} <a href={telegram} data-home-telegram data-cta-location="form" target="_blank" rel="noreferrer">Telegram · @{petSittingConfig.telegramUsername}</a></p>
+      </form>
+    </section>
+
+    <aside class="boarding-link" aria-labelledby="boarding-link-title"><div><p class="eyebrow">{isEnglish ? "Need a different format?" : "Нужен другой формат?"}</p><h2 id="boarding-link-title">{isEnglish ? "Would you like your pet to stay with us?" : "Хотите, чтобы питомец жил у нас?"}</h2><p>{isEnglish ? "See our home boarding service for cats and dogs in Petrovaradin." : "Посмотрите домашнюю передержку кошек и собак в Петроварадине."}</p></div><nav><a href={petSittingBusiness.pagePaths[locale].main}>{isEnglish ? "All boarding details" : "Все условия передержки"}</a><a href={petSittingBusiness.pagePaths[locale].dogs}>{isEnglish ? "Dog boarding" : "Передержка собак"}</a><a href={petSittingBusiness.pagePaths[locale].cats}>{isEnglish ? "Cat boarding" : "Передержка кошек"}</a></nav></aside>
+
+    <section class="guides-section" id="guides" aria-labelledby="guides-title"><div><p class="eyebrow">{isEnglish ? "Useful guides" : "Полезно"}</p><h2 id="guides-title">{isEnglish ? "Choose the right care format" : "Как выбрать формат ухода"}</h2></div><nav>{guides.map((guide) => <a href={guide.href}><span>{guide.title}</span><b aria-hidden="true">→</b></a>)}</nav></section>
+
+    <section class="faq-section" id="faq" aria-labelledby="faq-title"><div><p class="eyebrow">{isEnglish ? "Frequently asked questions" : "Частые вопросы"}</p><h2 id="faq-title">{isEnglish ? "About home visits" : "О выездах домой"}</h2></div><div class="faq-list">{faq.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div></section>
+  </div>
+</BaseLayout>
+
+<script>
+  const root = document.querySelector('[data-home-visits-form-root]');
+  if (root) {
+    const form = root.querySelector('[data-home-form]');
+    const status = root.querySelector('[data-form-status]');
+    const submit = form.querySelector('button[type="submit"]');
+    const isEnglish = root.dataset.locale === 'en';
+    let started = false;
+    const track = (name, extra = {}) => {
+      if (typeof window.gtag !== 'function') return;
+      window.gtag('event', name, { source_page: root.dataset.sourcePage, locale: root.dataset.locale, service_type: 'home_visit', ...extra });
+    };
+    const markStarted = () => { if (!started) { started = true; track('home_visits_form_start'); } };
+    const today = new Date();
+    const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    for (const input of form.querySelectorAll('input[type="date"]')) input.min = todayKey;
+    form.addEventListener('focusin', markStarted);
+    form.addEventListener('input', markStarted);
+    document.querySelectorAll('[data-home-telegram]').forEach((link) => link.addEventListener('click', () => track('home_visits_telegram_click', { cta_location: link.dataset.ctaLocation || 'content' })));
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const dateFrom = String(data.get('dateFrom') || '');
+      const dateTo = String(data.get('dateTo') || '');
+      if (!form.reportValidity()) return;
+      if (dateTo < dateFrom) { status.textContent = isEnglish ? 'The end date must be on or after the start date.' : 'Дата окончания должна быть не раньше даты начала.'; status.className = 'form-status is-error'; return; }
+      const usernameRaw = String(data.get('telegramUsername') || '').trim();
+      const telegramUsername = usernameRaw.startsWith('@') ? usernameRaw : `@${usernameRaw}`;
+      if (!/^@[A-Za-z0-9_]{5,32}$/.test(telegramUsername)) { status.textContent = isEnglish ? 'Enter a valid Telegram username: @username.' : 'Укажите корректный Telegram username: @username.'; status.className = 'form-status is-error'; return; }
+      submit.disabled = true;
+      status.textContent = isEnglish ? 'Sending…' : 'Отправляем…';
+      status.className = 'form-status';
+      const animal = String(data.get('animal'));
+      track('home_visits_form_submit', { animal_type: animal });
+      try {
+        const response = await fetch('/.netlify/functions/pet-sitting-inquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ serviceType: 'home_visit', sourcePage: root.dataset.sourcePage, locale: root.dataset.locale, dateFrom, dateTo, animal, quantity: Number(data.get('quantity')), neighborhood: String(data.get('neighborhood') || ''), notes: String(data.get('notes') || ''), telegramUsername, website: String(data.get('website') || '') }) });
+        if (!response.ok) throw new Error('request_failed');
+        status.textContent = isEnglish ? 'Sent! We’ll reply in Telegram.' : 'Готово! Ответим в Telegram.';
+        status.className = 'form-status is-success';
+        form.reset();
+      } catch {
+        status.textContent = isEnglish ? 'Could not send the request. Please message Anna directly in Telegram.' : 'Не получилось отправить запрос. Напишите Ане напрямую в Telegram.';
+        status.className = 'form-status is-error';
+      } finally { submit.disabled = false; }
+    });
+  }
+</script>
+
+<style is:inline>
+  html[lang] { scroll-padding-top:92px; }
+  .prose:has(.home-visits-page) { width:100%; max-width:none; padding:0; }
+  .home-visits-page { --ink:#20332f; --muted:#52645d; --line:#d9e2dc; --paper:#fbfaf6; --accent:#275f4b; overflow-x:clip; margin:-34px 0; padding:0 24px 72px; background:var(--paper); color:var(--ink); font-size:17px; }
+  .home-visits-page * { min-width:0; box-sizing:border-box; }.home-visits-page a { color:inherit; }.home-visits-page p { text-wrap:pretty; }.home-visits-page h1,.home-visits-page h2 { overflow-wrap:normal; word-break:normal; hyphens:none; }
+  .hv-hero,.service-definition,.split-section,.trust-section,.area-section,.proof-section,.request-section,.boarding-link,.guides-section,.faq-section { width:min(1160px,100%); margin-inline:auto; }
+  .eyebrow { margin:0 0 12px; color:var(--accent); font-size:12px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; }
+  .hv-hero { display:grid; grid-template-areas:"heading media" "details media"; grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr); gap:0 56px; align-items:start; min-height:610px; padding:70px 0 54px; }.hv-hero__heading { grid-area:heading; align-self:end; }.hv-hero__details { grid-area:details; }.hv-hero h1 { max-width:740px; margin:0; font-size:clamp(46px,4.6vw,64px); line-height:1.02; letter-spacing:-.045em; }.hv-hero__details>p { max-width:690px; margin:22px 0 0; color:var(--muted); font-size:20px; line-height:1.5; }.hv-hero__media { grid-area:media; align-self:center; margin:0; }.hv-hero__media img { display:block; width:100%; aspect-ratio:4/3; object-fit:cover; }.hv-hero__media figcaption { margin-top:9px; color:var(--muted); font-size:13px; line-height:1.4; }
+  .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }.button { display:inline-flex; min-height:48px; align-items:center; justify-content:center; border:1px solid var(--ink); border-radius:8px; padding:10px 17px; background:transparent; color:var(--ink); cursor:pointer; font:inherit; font-weight:780; text-decoration:none; }.home-visits-page .button--primary { border-color:var(--accent); background:var(--accent); color:#fff; }.button:disabled { cursor:wait; opacity:.65; }
+  .service-definition { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line); border-radius:18px; overflow:hidden; background:#fff; }.service-definition>div { display:grid; gap:4px; padding:24px 28px; }.service-definition>div+div { border-left:1px solid var(--line); background:#eaf1ed; }.service-definition strong { font-size:19px; }.service-definition span { color:var(--muted); }
+  .split-section,.trust-section { display:grid; grid-template-columns:minmax(220px,.62fr) minmax(0,1.38fr); gap:54px; padding:78px 0; border-bottom:1px solid var(--line); }.split-section h2,.trust-section h2,.area-section h2,.proof-section h2,.request-section h2,.boarding-link h2,.guides-section h2,.faq-section h2 { margin:0; font-size:clamp(30px,3.6vw,46px); line-height:1.08; letter-spacing:-.04em; }.split-section>div:first-child>p:last-child,.proof-section>div:first-child>p:last-child { color:var(--muted); line-height:1.65; }.split-section--soft { margin-top:0; }.check-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:0; padding:0; list-style:none; }.check-grid li { position:relative; min-height:76px; border:1px solid var(--line); border-radius:12px; padding:18px 18px 18px 48px; background:#fff; font-weight:730; line-height:1.4; }.check-grid li::before { content:"✓"; position:absolute; left:18px; top:18px; color:var(--accent); font-weight:900; }
+  .trust-copy { display:grid; grid-template-columns:1fr 1fr; gap:26px; }.trust-copy p { margin:0; color:var(--muted); font-size:18px; line-height:1.65; }
+  .area-section { display:grid; grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr); gap:42px; align-items:center; margin-top:68px; border:1px solid var(--line); border-radius:22px; padding:30px; background:#f0f4f1; }.area-copy p:not(.eyebrow) { color:var(--muted); line-height:1.6; }.area-copy .area-note { font-size:14px; }.area-section>img { display:block; width:100%; height:auto; border:1px solid #cbd8d1; border-radius:15px; }
+  .format-copy p { margin:0; color:var(--muted); font-size:18px; line-height:1.65; }.format-copy p+p { margin-top:18px; }.format-copy strong { color:var(--ink); }
+  .proof-section { padding:78px 0; }.proof-section>div:first-child { max-width:760px; }.proof-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:34px; }.proof-grid figure { margin:0; }.proof-grid img { display:block; width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:14px; }.proof-grid figcaption { padding-top:9px; color:var(--muted); font-size:13px; line-height:1.45; }
+  .request-section { display:grid; grid-template-columns:minmax(240px,.58fr) minmax(0,1.42fr); gap:52px; align-items:start; padding:54px; border-radius:24px; background:#eaf1ed; }.request-intro>p:last-child { color:var(--muted); line-height:1.65; }.home-form { border:1px solid var(--line); border-radius:16px; padding:26px; background:#fff; }.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }.home-form label { display:grid; gap:7px; color:var(--ink); font-size:14px; font-weight:750; }.home-form input,.home-form select,.home-form textarea { width:100%; border:1px solid #b9c9c0; border-radius:8px; padding:11px 12px; background:#fff; color:var(--ink); font:inherit; }.home-form input,.home-form select { min-height:46px; }.home-form textarea { resize:vertical; }.home-form input:focus,.home-form select:focus,.home-form textarea:focus { outline:3px solid rgba(39,95,75,.18); border-color:var(--accent); }.home-form small { color:var(--muted); font-size:12px; font-weight:500; }.form-wide { grid-column:1/-1; }.honeypot { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; }.home-form>.button { margin-top:22px; }.form-status { margin:12px 0 0; color:var(--muted); font-size:14px; }.form-status.is-success { color:#17613f; font-weight:750; }.form-status.is-error { color:#9f3028; font-weight:750; }.direct-link { margin:22px 0 0; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:14px; }.direct-link a { color:var(--accent); font-weight:780; }
+  .boarding-link { display:grid; grid-template-columns:1fr minmax(260px,.55fr); gap:40px; align-items:center; margin-top:54px; border:1px solid var(--line); border-radius:18px; padding:30px; background:#fff; }.boarding-link h2 { font-size:clamp(27px,3vw,38px); }.boarding-link p:not(.eyebrow) { margin:11px 0 0; color:var(--muted); }.boarding-link nav { display:grid; border-top:1px solid var(--ink); }.boarding-link nav a,.guides-section nav a { display:flex; justify-content:space-between; gap:20px; border-bottom:1px solid var(--line); padding:13px 3px; font-weight:750; text-decoration:none; }.boarding-link nav a:hover,.guides-section nav a:hover { color:var(--accent); }
+  .guides-section { display:grid; grid-template-columns:minmax(220px,.58fr) minmax(0,1.42fr); gap:42px; margin-top:60px; padding-top:44px; border-top:1px solid var(--line); }.guides-section h2 { font-size:clamp(28px,3vw,38px); }.guides-section nav { display:grid; border-top:1px solid var(--ink); }.guides-section nav a { min-height:58px; align-items:center; }.guides-section nav b { color:var(--accent); font-size:20px; }
+  .faq-section { margin-top:70px; padding:58px; border:1px solid var(--line); border-radius:24px; background:#f0f4f1; }.faq-section>div:first-child { max-width:720px; margin:0 auto 34px; text-align:center; }.faq-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start; }.faq-list details { overflow:hidden; border:1px solid #d3ded7; border-radius:12px; background:#fff; }.faq-list summary { position:relative; display:flex; min-height:68px; align-items:center; padding:18px 58px 18px 20px; cursor:pointer; list-style:none; font-size:17px; font-weight:780; line-height:1.35; }.faq-list summary::-webkit-details-marker { display:none; }.faq-list summary::after { content:"+"; position:absolute; right:18px; display:grid; width:30px; height:30px; place-items:center; border-radius:50%; background:#e8f0eb; color:var(--accent); font-size:22px; }.faq-list details[open] summary::after { content:"−"; }.faq-list p { margin:0; padding:0 20px 20px; color:var(--muted); font-size:15px; line-height:1.65; }
+  @media (max-width:900px) { .hv-hero { column-gap:30px; }.proof-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.request-section { padding:36px; } }
+  @media (max-width:780px) { .home-visits-page { padding-inline:18px; }.hv-hero { grid-template-areas:"heading" "details" "media"; grid-template-columns:1fr; min-height:0; padding:48px 0 42px; }.hv-hero h1 { font-size:clamp(39px,8.4vw,54px); }.hv-hero__media { margin-top:30px; }.hv-hero__media img { max-height:430px; }.split-section,.trust-section,.area-section,.request-section,.guides-section { grid-template-columns:1fr; }.split-section,.trust-section { gap:28px; padding:56px 0; }.area-section { gap:26px; }.request-section { gap:28px; }.boarding-link { grid-template-columns:1fr; }.faq-list { grid-template-columns:1fr; } }
+  @media (max-width:600px) { .home-visits-page { padding-inline:14px; font-size:16px; }.hv-hero h1 { font-size:clamp(35px,10.7vw,47px); }.hv-hero__details>p { font-size:18px; }.actions { display:grid; }.button { width:100%; }.service-definition { grid-template-columns:1fr; }.service-definition>div+div { border-top:1px solid var(--line); border-left:0; }.service-definition>div { padding:20px; }.check-grid,.trust-copy,.form-grid { grid-template-columns:1fr; }.check-grid li { min-height:0; }.area-section { margin-inline:-2px; padding:20px 16px; }.proof-grid { gap:10px; }.proof-grid img { border-radius:10px; }.request-section { margin-inline:-2px; padding:32px 16px; border-radius:18px; }.home-form { padding:20px 14px; }.form-wide { grid-column:auto; }.boarding-link { padding:24px 18px; }.faq-section { margin-inline:-2px; padding:44px 12px; border-radius:18px; }.faq-list summary { padding-inline:16px 52px; font-size:16px; }.faq-list p { padding-inline:16px; }.guides-section { gap:24px; } }
+</style>

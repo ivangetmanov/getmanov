@@ -5,8 +5,8 @@ import { petSittingSchemaIds } from "../src/lib/pet-sitting-seo.mjs";
 
 const projectRoot = new URL("../", import.meta.url);
 const locales = ["ru", "en"];
-const serviceKinds = ["main", "dogs", "cats"];
-const servicePath = (locale, kind) => `/${locale}/novi-sad/pet-sitting/${kind === "main" ? "" : `${kind}/`}`;
+const serviceKinds = ["main", "dogs", "cats", "homeVisits"];
+const servicePath = (locale, kind) => `/${locale}/novi-sad/pet-sitting/${kind === "main" ? "" : kind === "homeVisits" ? "home-visits/" : `${kind}/`}`;
 const articlePath = (locale, slug) => `/${locale}/novi-sad/pet-sitting/${slug}/`;
 const absolute = (path) => new URL(path, "https://getmanov.com").href;
 
@@ -204,7 +204,7 @@ for (const locale of locales) {
     const { document } = await renderedDocument(path);
     renderedMoneyPages.set(`${locale}:${kind}`, document);
     const counterpart = servicePath(locale === "ru" ? "en" : "ru", kind);
-    const hero = document.querySelector(".pet-hero img");
+    const hero = document.querySelector(".pet-hero img, .hv-hero img");
     const expectedImage = absolute(hero?.getAttribute("src"));
     const width = Number(hero?.getAttribute("width"));
     const height = Number(hero?.getAttribute("height"));
@@ -223,7 +223,10 @@ for (const locale of locales) {
       { "@id": petSittingSchemaIds.anna },
       { "@id": petSittingSchemaIds.ivan },
     ]);
-    assert.deepEqual(new Set(service.areaServed.map((area) => area.name)), new Set(["Novi Sad", "Petrovaradin"]));
+    assert.deepEqual(
+      new Set(service.areaServed.map((area) => area.name)),
+      kind === "homeVisits" ? new Set(["Novi Sad"]) : new Set(["Novi Sad", "Petrovaradin"]),
+    );
     assert.deepEqual(new Set(entitiesOfType(graph, "Person").map((person) => person["@id"])), new Set([petSittingSchemaIds.ivan, petSittingSchemaIds.anna]));
     const ivan = graph.find((entity) => entity["@id"] === petSittingSchemaIds.ivan);
     const anna = graph.find((entity) => entity["@id"] === petSittingSchemaIds.anna);
@@ -275,6 +278,15 @@ for (const locale of locales) {
         expectedCapacityAnswer,
         `${path} capacity policy must match in visible copy and FAQ schema`,
       );
+    }
+    if (kind === "homeVisits") {
+      assert.equal(service["@id"], petSittingSchemaIds.services.homeVisits);
+      assert.notEqual(service["@id"], petSittingSchemaIds.services.main);
+      assert(document.querySelector('form[data-home-form]'), `${path} needs the home-visit enquiry form`);
+      assert(document.querySelector('img[src="/images/pet-sitting/home-visits-area.svg"]'), `${path} needs the static service-area visual`);
+      assert(document.body.textContent.includes("Novi Sad") || document.body.textContent.includes("Нови-Сад"));
+      assert(document.querySelector(`a[href="${servicePath(locale, "main")}"]`), `${path} must link back to boarding`);
+      assert(!document.querySelector('[data-pet-calendar]'), `${path} must not reuse the boarding calendar`);
     }
     validateVisibleFaq(graph, document, path);
     allTitles.push(head.title);
@@ -382,4 +394,4 @@ for (const file of await filesBelow(new URL("dist/", projectRoot))) {
   assert.equal(contents.includes(Buffer.from(privatePhoneDigits)), false, `Private phone number leaked into ${file.pathname}`);
 }
 
-console.log(`Pet-sitting SEO checks passed for 6 money pages and ${articles.length} discovered localized support articles.`);
+console.log(`Pet-sitting SEO checks passed for 8 money pages and ${articles.length} discovered localized support articles.`);

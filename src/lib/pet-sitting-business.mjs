@@ -12,16 +12,18 @@ export const petSittingBusiness = {
       main: "/ru/novi-sad/pet-sitting/",
       dogs: "/ru/novi-sad/pet-sitting/dogs/",
       cats: "/ru/novi-sad/pet-sitting/cats/",
+      homeVisits: "/ru/novi-sad/pet-sitting/home-visits/",
     },
     en: {
       main: "/en/novi-sad/pet-sitting/",
       dogs: "/en/novi-sad/pet-sitting/dogs/",
       cats: "/en/novi-sad/pet-sitting/cats/",
+      homeVisits: "/en/novi-sad/pet-sitting/home-visits/",
     },
   },
   pageLabels: {
-    ru: { main: "Домашняя передержка", dogs: "Передержка собак", cats: "Передержка кошек" },
-    en: { main: "Pet boarding", dogs: "Dog boarding", cats: "Cat boarding" },
+    ru: { main: "Домашняя передержка", dogs: "Передержка собак", cats: "Передержка кошек", homeVisits: "Выезды к питомцу домой" },
+    en: { main: "Pet boarding", dogs: "Dog boarding", cats: "Cat boarding", homeVisits: "In-home pet sitting" },
   },
   articlePaths: {
     ru: {

@@ -5,6 +5,7 @@ import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration, isAllow
 const animals = new Set(["dog", "cat"]);
 const locales = new Set(["ru", "en"]);
 const pageKinds = new Set(["main", "dogs", "cats"]);
+const homeVisitAnimals = new Set(["dog", "cat", "other"]);
 
 export function normalizeTelegramUsername(value) {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -19,6 +20,8 @@ export function preparePetSittingInquiry(payload) {
   if (typeof payload.website === "string" && payload.website.trim()) {
     return { ok: true, ignored: true };
   }
+
+  if (payload.serviceType === "home_visit") return prepareHomeVisitInquiry(payload);
 
   const locale = typeof payload.locale === "string" ? payload.locale : "";
   const pageKind = typeof payload.pageKind === "string" ? payload.pageKind : "";
@@ -60,6 +63,48 @@ export function preparePetSittingInquiry(payload) {
   };
 }
 
+function cleanField(value, maxLength) {
+  return typeof value === "string" ? sanitizePlainText(value, maxLength) : "";
+}
+
+export function prepareHomeVisitInquiry(payload) {
+  const locale = typeof payload.locale === "string" ? payload.locale : "";
+  const sourcePage = typeof payload.sourcePage === "string" ? payload.sourcePage : "";
+  const dateFrom = typeof payload.dateFrom === "string" ? payload.dateFrom : "";
+  const dateTo = typeof payload.dateTo === "string" ? payload.dateTo : "";
+  const animal = typeof payload.animal === "string" ? payload.animal : "";
+  const quantity = Number(payload.quantity);
+  const neighborhood = cleanField(payload.neighborhood, 120);
+  const notes = cleanField(payload.notes, 1000);
+  const telegramUsername = normalizeTelegramUsername(payload.telegramUsername);
+
+  if (!locales.has(locale)) return { ok: false, error: "invalid_page" };
+  if (sourcePage !== petSittingBusiness.pagePaths[locale].homeVisits) return { ok: false, error: "invalid_source" };
+  if (!isCalendarDateKey(dateFrom) || !isCalendarDateKey(dateTo)) return { ok: false, error: "missing_dates" };
+  if (dateTo < dateFrom) return { ok: false, error: "invalid_dates" };
+  if (!homeVisitAnimals.has(animal)) return { ok: false, error: "invalid_pet" };
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) return { ok: false, error: "invalid_quantity" };
+  if (!neighborhood) return { ok: false, error: "missing_neighborhood" };
+  if (!/^@[A-Za-z0-9_]{5,32}$/.test(telegramUsername)) return { ok: false, error: "invalid_telegram" };
+
+  return {
+    ok: true,
+    inquiry: {
+      serviceType: "home_visit",
+      locale,
+      pageLabel: petSittingBusiness.pageLabels[locale].homeVisits,
+      sourcePage,
+      dateFrom,
+      dateTo,
+      animal,
+      quantity,
+      neighborhood,
+      notes,
+      telegramUsername,
+    },
+  };
+}
+
 function formatCalendarDate(key, locale) {
   const months = locale === "en"
     ? ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -76,6 +121,7 @@ function sanitizePlainText(value, maxLength = 240) {
 }
 
 export function buildPetSittingTelegramMessage(inquiry, submittedAt = new Date().toISOString()) {
+  if (inquiry.serviceType === "home_visit") return buildHomeVisitTelegramMessage(inquiry, submittedAt);
   const isEnglish = inquiry.locale === "en";
   const animal = isEnglish
     ? inquiry.pet
@@ -117,4 +163,42 @@ export function buildPetSittingTelegramMessage(inquiry, submittedAt = new Date()
   ];
 
   return lines.map((line) => sanitizePlainText(line)).join("\n");
+}
+
+export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().toISOString()) {
+  const isEnglish = inquiry.locale === "en";
+  const animal = isEnglish
+    ? inquiry.animal
+    : inquiry.animal === "dog" ? "собака" : inquiry.animal === "cat" ? "кошка" : "другой";
+  const sourceUrl = `https://getmanov.com${inquiry.sourcePage}`;
+  const lines = isEnglish ? [
+    "🏠 New home-visit pet-sitting request",
+    "",
+    "Service type: home_visit",
+    `Page: ${inquiry.pageLabel}`,
+    `Dates: ${inquiry.dateFrom} — ${inquiry.dateTo}`,
+    `Pet: ${animal}`,
+    `Number of pets: ${inquiry.quantity}`,
+    `Approximate neighborhood: ${inquiry.neighborhood}`,
+    `Care details: ${inquiry.notes || "not provided"}`,
+    `Customer Telegram: ${inquiry.telegramUsername}`,
+    "Language: EN",
+    `Source: ${sourceUrl}`,
+    `Submitted: ${submittedAt}`,
+  ] : [
+    "🏠 Новый запрос на выезд к питомцу",
+    "",
+    "Тип услуги: home_visit",
+    `Страница: ${inquiry.pageLabel}`,
+    `Даты: ${inquiry.dateFrom} — ${inquiry.dateTo}`,
+    `Питомец: ${animal}`,
+    `Количество: ${inquiry.quantity}`,
+    `Примерный район: ${inquiry.neighborhood}`,
+    `Детали ухода: ${inquiry.notes || "не указаны"}`,
+    `Telegram клиента: ${inquiry.telegramUsername}`,
+    "Язык: RU",
+    `Источник: ${sourceUrl}`,
+    `Отправлено: ${submittedAt}`,
+  ];
+  return lines.map((line) => sanitizePlainText(line, 1200)).join("\n");
 }

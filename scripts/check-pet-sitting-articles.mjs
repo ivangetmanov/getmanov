@@ -284,6 +284,7 @@ for (const locale of ["ru", "en"]) {
     const copyWithoutInteractionsOrMedia = source
       .replace(/^import PetSittingArticleInteraction[^\n]*\n\s*/m, "")
       .replace(/^<PetSittingArticleInteraction[^\n]*\/>\n\s*/gm, "")
+      .replace(/^\[(?:Посмотреть наши выезды к (?:питомцам|кошкам) домой в Нови-Саде|See our home visits for (?:pets|cats) in Novi Sad) →\]\(\/(?:ru|en)\/novi-sad\/pet-sitting\/home-visits\/\)\n\s*/gm, "")
       .replace(/<div class="pet-article-media-group[^"]*">[\s\S]*?<\/div>\s*/g, "")
       .replace(/<figure class="pet-article-media[\s\S]*?<\/figure>\s*/g, "");
     const actualHash = createHash("sha256").update(copyWithoutInteractionsOrMedia).digest("hex");

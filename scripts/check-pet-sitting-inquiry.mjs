@@ -67,6 +67,37 @@ assert.deepEqual(
   { ok: true, ignored: true },
 );
 
+const validHomeVisitPayload = {
+  serviceType: "home_visit",
+  dateFrom: "2026-09-12",
+  dateTo: "2026-09-14",
+  animal: "cat",
+  quantity: 2,
+  neighborhood: "Liman",
+  notes: "Food, water, litter box and play.",
+  telegramUsername: "@test_user",
+  website: "",
+  locale: "en",
+  sourcePage: "/en/novi-sad/pet-sitting/home-visits/",
+};
+const homeVisitPrepared = preparePetSittingInquiry(validHomeVisitPayload);
+assert.equal(homeVisitPrepared.ok, true);
+assert.equal(homeVisitPrepared.inquiry.serviceType, "home_visit");
+assert.equal(homeVisitPrepared.inquiry.neighborhood, "Liman");
+const homeVisitNotification = buildPetSittingTelegramMessage(homeVisitPrepared.inquiry, "2026-09-04T12:00:00.000Z");
+assert.match(homeVisitNotification, /New home-visit pet-sitting request/);
+assert.match(homeVisitNotification, /Service type: home_visit/);
+assert.match(homeVisitNotification, /Approximate neighborhood: Liman/);
+assert.doesNotMatch(homeVisitNotification, /Estimated price/);
+assert.deepEqual(
+  preparePetSittingInquiry({ ...validHomeVisitPayload, sourcePage: "/en/novi-sad/pet-sitting/" }),
+  { ok: false, error: "invalid_source" },
+);
+assert.deepEqual(
+  preparePetSittingInquiry({ ...validHomeVisitPayload, neighborhood: "" }),
+  { ok: false, error: "missing_neighborhood" },
+);
+
 const originalToken = process.env.PET_SITTING_TELEGRAM_BOT_TOKEN;
 const originalChatId = process.env.PET_SITTING_TELEGRAM_CHAT_ID;
 const originalFetch = globalThis.fetch;
@@ -89,26 +120,33 @@ try {
   assert.equal("parse_mode" in telegramBody, false);
   assert.match(telegramBody.text, /Customer Telegram: @test_user/);
 
+  const acceptedHomeVisit = await handler({ httpMethod: "POST", body: JSON.stringify(validHomeVisitPayload) });
+  assert.equal(acceptedHomeVisit.statusCode, 200);
+  assert.equal(fetchCalls.length, 2);
+  const homeVisitTelegramBody = JSON.parse(fetchCalls[1].options.body);
+  assert.match(homeVisitTelegramBody.text, /Service type: home_visit/);
+  assert.match(homeVisitTelegramBody.text, /Care details: Food, water, litter box and play\./);
+
   const invalidUsername = await handler({
     httpMethod: "POST",
     body: JSON.stringify({ ...validPayload, telegramUsername: "bad" }),
   });
   assert.equal(invalidUsername.statusCode, 400);
-  assert.equal(fetchCalls.length, 1);
+  assert.equal(fetchCalls.length, 2);
 
   const missingDates = await handler({
     httpMethod: "POST",
     body: JSON.stringify({ ...validPayload, arrival: "", departure: "" }),
   });
   assert.equal(missingDates.statusCode, 400);
-  assert.equal(fetchCalls.length, 1);
+  assert.equal(fetchCalls.length, 2);
 
   const honeypot = await handler({
     httpMethod: "POST",
     body: JSON.stringify({ ...validPayload, website: "spam.example" }),
   });
   assert.equal(honeypot.statusCode, 200);
-  assert.equal(fetchCalls.length, 1);
+  assert.equal(fetchCalls.length, 2);
 
   delete process.env.PET_SITTING_TELEGRAM_BOT_TOKEN;
   delete process.env.PET_SITTING_TELEGRAM_CHAT_ID;
