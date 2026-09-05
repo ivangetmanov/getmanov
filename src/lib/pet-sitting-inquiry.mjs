@@ -1,11 +1,11 @@
 import { petSittingUnavailablePeriods } from "../data/pet-sitting-availability.mjs";
 import { calendarDayDifference, isCalendarDateKey, rangeHasUnavailable } from "./pet-sitting-calendar.mjs";
-import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration, isAllowedPetSittingSourcePage, petSittingBusiness } from "./pet-sitting-business.mjs";
+import { calculateHomeVisitQuote, calculatePetSittingQuote, formatRsd, formatRussianStayDuration, isAllowedPetSittingSourcePage, petSittingBusiness } from "./pet-sitting-business.mjs";
 
 const animals = new Set(["dog", "cat"]);
 const locales = new Set(["ru", "en"]);
 const pageKinds = new Set(["main", "dogs", "cats"]);
-const homeVisitAnimals = new Set(["dog", "cat", "other"]);
+const homeVisitAnimals = new Set(petSittingBusiness.homeVisits.animals);
 
 export function normalizeTelegramUsername(value) {
   const trimmed = typeof value === "string" ? value.trim() : "";
@@ -91,6 +91,8 @@ export function prepareHomeVisitInquiry(payload) {
   if (dogWalk && animal !== "dog") return { ok: false, error: "invalid_dog_walk" };
   if (!neighborhood) return { ok: false, error: "missing_neighborhood" };
   if (!/^@[A-Za-z0-9_]{5,32}$/.test(telegramUsername)) return { ok: false, error: "invalid_telegram" };
+  const quote = calculateHomeVisitQuote(dateFrom, dateTo, quantity, visitsPerDay, dogWalk);
+  if (!quote) return { ok: false, error: "invalid_quote" };
 
   return {
     ok: true,
@@ -109,6 +111,7 @@ export function prepareHomeVisitInquiry(payload) {
       specialCare,
       notes,
       telegramUsername,
+      quote,
     },
   };
 }
@@ -179,6 +182,14 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     ? inquiry.animal
     : inquiry.animal === "dog" ? "собака" : inquiry.animal === "cat" ? "кошка" : "другой";
   const sourceUrl = `https://getmanov.com${inquiry.sourcePage}`;
+  const reason = inquiry.quote.confirmationReason === "special_care"
+    ? isEnglish ? "special care" : "особый уход"
+    : isEnglish ? "more than 2 pets" : "больше 2 питомцев";
+  const price = inquiry.quote.needsConfirmation
+    ? isEnglish
+      ? `confirm individually (${reason}); base rate ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD per visit`
+      : `уточнить индивидуально (${reason}); базовый тариф ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD за визит`
+    : `${formatRsd(inquiry.quote.total, inquiry.locale)} RSD (${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD × ${inquiry.quote.visitCount})${inquiry.specialCare ? isEnglish ? "; special care to confirm" : "; особый уход нужно подтвердить" : ""}`;
   const lines = isEnglish ? [
     "🏠 New home-visit pet-sitting request",
     "",
@@ -192,6 +203,7 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     `Approximate neighborhood: ${inquiry.neighborhood}`,
     `Medication / special care: ${inquiry.specialCare || "not provided"}`,
     `Care details: ${inquiry.notes || "not provided"}`,
+    `Base price: ${price}`,
     `Customer Telegram: ${inquiry.telegramUsername}`,
     "Language: EN",
     `Source: ${sourceUrl}`,
@@ -209,6 +221,7 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     `Примерный район: ${inquiry.neighborhood}`,
     `Лекарства / особый уход: ${inquiry.specialCare || "не указаны"}`,
     `Детали ухода: ${inquiry.notes || "не указаны"}`,
+    `Базовая стоимость: ${price}`,
     `Telegram клиента: ${inquiry.telegramUsername}`,
     "Язык: RU",
     `Источник: ${sourceUrl}`,

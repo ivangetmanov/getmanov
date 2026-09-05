@@ -288,10 +288,13 @@ for (const locale of locales) {
       assert.deepEqual([...document.querySelectorAll('[name="visitsPerDay"] option')].map((option) => Number(option.value)), petSittingBusiness.homeVisits.visitsPerDay);
       assert(document.querySelector('[name="dogWalk"]'), `${path} needs the conditional dog-walk field`);
       assert(document.querySelector('[name="specialCare"]'), `${path} needs the medication/special-care field`);
-      for (const zone of Object.values(petSittingBusiness.homeVisits.zones)) {
-        assert(document.body.textContent.includes(`${formatRsd(zone.pricing.oneVisit, locale)} RSD`), `${path} needs the configured one-visit zone price`);
-        assert(document.body.textContent.includes(`${formatRsd(zone.pricing.twoVisitsPerDay, locale)} RSD`), `${path} needs the configured two-visit zone price`);
-      }
+      assert(document.body.textContent.includes(`${formatRsd(petSittingBusiness.homeVisits.standardVisitPrice, locale)} RSD`), `${path} needs the configured standard-visit price`);
+      assert(document.body.textContent.includes(`${formatRsd(petSittingBusiness.homeVisits.dogVisitWithWalkPrice, locale)} RSD`), `${path} needs the configured dog-with-walk price`);
+      assert(document.body.textContent.includes(`${formatRsd(petSittingBusiness.homeVisits.standaloneDogWalkPrice, locale)} RSD`), `${path} needs the configured standalone-walk price`);
+      assert.deepEqual([...document.querySelectorAll('[name="animal"] option')].map((option) => option.value), ["cat", "dog"]);
+      assert(!document.body.textContent.includes("Zone 1") && !document.body.textContent.includes("Zone 2"), `${path} must not expose retired zone pricing`);
+      assert(document.body.textContent.includes(petSittingBusiness.homeVisits.paymentCopy[locale]), `${path} needs the configured payment and cancellation policy`);
+      assert(document.body.textContent.includes(petSittingBusiness.homeVisits.reportingCopy[locale]), `${path} needs the configured after-every-visit reporting promise`);
       assert(document.querySelector('img[src="/images/pet-sitting/home-visits-area.svg"]'), `${path} needs the static service-area visual`);
       assert(document.body.textContent.includes("Novi Sad") || document.body.textContent.includes("Нови-Сад"));
       assert(document.querySelector(`a[href="${servicePath(locale, "main")}"]`), `${path} must link back to boarding`);
