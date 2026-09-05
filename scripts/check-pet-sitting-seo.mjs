@@ -5,6 +5,11 @@ import { petSittingSchemaIds } from "../src/lib/pet-sitting-seo.mjs";
 import { formatRsd, petSittingBusiness } from "../src/lib/pet-sitting-business.mjs";
 
 const projectRoot = new URL("../", import.meta.url);
+const homeVisitGeoJson = JSON.parse(await readFile(new URL("public/data/home-visits-service-areas.geojson", projectRoot), "utf8"));
+assert.equal(homeVisitGeoJson.type, "FeatureCollection");
+assert.deepEqual(homeVisitGeoJson.features.map((feature) => feature.properties.zone).sort(), ["base", "extended"]);
+assert(homeVisitGeoJson.features.every((feature) => feature.geometry.type === "Polygon"));
+assert(!JSON.stringify(homeVisitGeoJson.features).toLowerCase().includes("home"), "Service-area GeoJSON must not contain a home marker or label");
 const locales = ["ru", "en"];
 const serviceKinds = ["main", "dogs", "cats", "homeVisits"];
 const servicePath = (locale, kind) => `/${locale}/novi-sad/pet-sitting/${kind === "main" ? "" : kind === "homeVisits" ? "home-visits/" : `${kind}/`}`;
@@ -295,7 +300,10 @@ for (const locale of locales) {
       assert(!document.body.textContent.includes("Zone 1") && !document.body.textContent.includes("Zone 2"), `${path} must not expose retired zone pricing`);
       assert(document.body.textContent.includes(petSittingBusiness.homeVisits.paymentCopy[locale]), `${path} needs the configured payment and cancellation policy`);
       assert(document.body.textContent.includes(petSittingBusiness.homeVisits.reportingCopy[locale]), `${path} needs the configured after-every-visit reporting promise`);
-      assert(document.querySelector('img[src="/images/pet-sitting/home-visits-area.svg"]'), `${path} needs the static service-area visual`);
+      assert(document.querySelector('[data-service-area-map][data-geojson="/data/home-visits-service-areas.geojson"]'), `${path} needs the interactive GeoJSON service-area map`);
+      assert(document.querySelector('[data-map-canvas][role="application"]'), `${path} needs an accessible interactive map label`);
+      assert(document.querySelector(".service-map-legend"), `${path} needs a visible map legend`);
+      assert(!document.querySelector('img[src="/images/pet-sitting/home-visits-area.svg"]'), `${path} must not retain the static map`);
       assert(document.body.textContent.includes("Novi Sad") || document.body.textContent.includes("Нови-Сад"));
       assert(document.querySelector(`a[href="${servicePath(locale, "main")}"]`), `${path} must link back to boarding`);
       assert(!document.querySelector('[data-pet-calendar]'), `${path} must not reuse the boarding calendar`);

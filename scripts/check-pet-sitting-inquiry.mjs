@@ -98,6 +98,7 @@ const homeVisitNotification = buildPetSittingTelegramMessage(homeVisitPrepared.i
 assert.match(homeVisitNotification, /New home-visit pet-sitting request/);
 assert.match(homeVisitNotification, /Service type: home_visit/);
 assert.match(homeVisitNotification, /Approximate neighborhood: Liman/);
+assert.match(homeVisitNotification, /Area pricing: confirm from neighborhood; extended area adds 500 RSD per visit/);
 assert.match(homeVisitNotification, /Visits per day: 2/);
 assert.match(homeVisitNotification, /Medication \/ special care: not provided/);
 assert.match(homeVisitNotification, /Base price: 9,000 RSD \(1,500 RSD × 6\)/);

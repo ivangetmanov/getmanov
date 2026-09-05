@@ -14,21 +14,36 @@ export const petSittingBusiness = {
     oneOffVisitsAllowed: true,
     animals: ["cat", "dog"],
     serviceArea: {
-      normal: [
+      geoJsonPath: "/data/home-visits-service-areas.geojson",
+      extendedVisitSurcharge: 500,
+      baseAreas: [
         { ru: "Петроварадин", en: "Petrovaradin" },
         { ru: "центр Нови-Сада", en: "central Novi Sad" },
         { ru: "Лиман", en: "Liman" },
         { ru: "Грбавица", en: "Grbavica" },
-        { ru: "ближайшие центральные районы, если дорога остаётся разумной", en: "nearby practical central districts where travel remains reasonable" },
+        { ru: "Мишелук и ближайшие удобные районы вдоль основного маршрута", en: "Mišeluk and nearby practical areas along the main route" },
       ],
-      askFirst: [
-        { ru: "Телеп, Адице и Ветерник", en: "Telep, Adice, and Veternik" },
-        { ru: "Мали-Београд и другие удалённые северные районы", en: "Mali Beograd and similarly distant northern areas" },
-        { ru: "другие районы далеко от обычного маршрута", en: "other areas far outside our normal route" },
+      extendedAreas: [
+        { ru: "Клиса, Найлон-пияца и район Big", en: "Klisa, Najlon pijaca, and the Big area" },
+        { ru: "более удалённые западные и юго-западные части Нови-Сада", en: "farther western and southwestern parts of Novi Sad" },
+        { ru: "более удалённые части вокруг Сремской Каменицы", en: "farther parts around Sremska Kamenica" },
       ],
       copy: {
-        ru: "Обычно приезжаем в Петроварадин, центр Нови-Сада, на Лиман, Грбавицу и в ближайшие центральные районы, если дорога остаётся разумной. Для Телепа, Адице, Ветерника, Мали-Београда и других удалённых районов сначала уточните возможность выезда — границы приблизительные, не по улицам.",
-        en: "We normally visit Petrovaradin, central Novi Sad, Liman, Grbavica, and nearby practical central districts where travel remains reasonable. For Telep, Adice, Veternik, Mali Beograd, and similarly distant areas, please ask first—the boundary is approximate, not street by street.",
+        ru: "В зелёной зоне действует базовая цена. В жёлтой зоне к стоимости визита добавляется 500 RSD. Другие районы — уточните у нас. Зоны показывают нашу примерную рабочую географию, а не официальные границы районов.",
+        en: "Base pricing applies in the green zone. Visits in the yellow zone cost an additional 500 RSD. Other areas—ask us. The zones show our approximate working coverage, not official district boundaries.",
+      },
+      noteCopy: {
+        ru: "Если не уверены, к какой зоне относится ваш адрес, укажите район в заявке — подтвердим стоимость.",
+        en: "If you're not sure which zone your address is in, include your neighborhood in the request and we'll confirm the price.",
+      },
+      legend: {
+        base: { ru: "Базовая зона · 1 500 RSD", en: "Base area · 1,500 RSD" },
+        extended: { ru: "Расширенная зона · +500 RSD за визит", en: "Extended area · +500 RSD per visit" },
+        other: { ru: "Другие районы · уточните у нас", en: "Other areas · ask us" },
+      },
+      popup: {
+        base: { ru: "Базовая зона\n1 500 RSD за стандартный визит", en: "Base area\n1,500 RSD per standard visit" },
+        extended: { ru: "Расширенная зона\n+500 RSD за визит", en: "Extended area\n+500 RSD per visit" },
       },
     },
     introductoryMeeting: { optional: true, free: true, usuallyHandledBy: "Anna" },
