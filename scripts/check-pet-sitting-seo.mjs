@@ -289,10 +289,13 @@ for (const locale of locales) {
       assert.equal(service["@id"], petSittingSchemaIds.services.homeVisits);
       assert.notEqual(service["@id"], petSittingSchemaIds.services.main);
       assert(document.querySelector('form[data-home-form]'), `${path} needs the home-visit enquiry form`);
-      assert(document.querySelector('[name="visitsPerDay"]'), `${path} needs structured visit-frequency options`);
-      assert.deepEqual([...document.querySelectorAll('[name="visitsPerDay"] option')].map((option) => Number(option.value)), petSittingBusiness.homeVisits.visitsPerDay);
-      assert(document.querySelector('[name="dogWalk"]'), `${path} needs the conditional dog-walk field`);
-      assert(document.querySelector('[name="specialCare"]'), `${path} needs the medication/special-care field`);
+      assert(!document.querySelector('[name="quantity"]'), `${path} short form must not ask for pet quantity`);
+      assert(!document.querySelector('[name="visitsPerDay"]'), `${path} short form must not ask for visit frequency`);
+      assert(!document.querySelector('[name="dogWalk"]'), `${path} short form must not ask for dog-walk details`);
+      assert(!document.querySelector('[name="specialCare"]'), `${path} short form must not ask for medication separately`);
+      assert(document.querySelector('[name="notes"]:not([required])'), `${path} needs one optional comment field`);
+      const requiredPublicFields = [...document.querySelectorAll('form[data-home-form] [required]')].map((field) => field.name);
+      assert.deepEqual(requiredPublicFields, ["dateFrom", "dateTo", "animal", "neighborhood", "telegramUsername"]);
       assert(document.body.textContent.includes(`${formatRsd(petSittingBusiness.homeVisits.standardVisitPrice, locale)} RSD`), `${path} needs the configured standard-visit price`);
       assert(document.body.textContent.includes(`${formatRsd(petSittingBusiness.homeVisits.dogVisitWithWalkPrice, locale)} RSD`), `${path} needs the configured dog-with-walk price`);
       assert(document.body.textContent.includes(`${formatRsd(petSittingBusiness.homeVisits.standaloneDogWalkPrice, locale)} RSD`), `${path} needs the configured standalone-walk price`);
@@ -307,6 +310,11 @@ for (const locale of locales) {
       assert(document.body.textContent.includes("Novi Sad") || document.body.textContent.includes("Нови-Сад"));
       assert(document.querySelector(`a[href="${servicePath(locale, "main")}"]`), `${path} must link back to boarding`);
       assert(!document.querySelector('[data-pet-calendar]'), `${path} must not reuse the boarding calendar`);
+      assert.deepEqual(
+        [...document.querySelectorAll("[data-page-section]")].map((section) => section.dataset.pageSection),
+        ["hero", "proof", "includes", "people", "area-price", "request", "how", "fit", "boarding", "guides", "faq", "final-cta"],
+        `${path} needs the requested conversion hierarchy`,
+      );
     }
     validateVisibleFaq(graph, document, path);
     allTitles.push(head.title);

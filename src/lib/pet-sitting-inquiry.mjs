@@ -73,8 +73,9 @@ export function prepareHomeVisitInquiry(payload) {
   const dateFrom = typeof payload.dateFrom === "string" ? payload.dateFrom : "";
   const dateTo = typeof payload.dateTo === "string" ? payload.dateTo : "";
   const animal = typeof payload.animal === "string" ? payload.animal : "";
-  const quantity = Number(payload.quantity);
-  const visitsPerDay = Number(payload.visitsPerDay);
+  const detailsPending = payload.quantity === undefined && payload.visitsPerDay === undefined && payload.dogWalk === undefined && payload.specialCare === undefined;
+  const quantity = payload.quantity === undefined ? 1 : Number(payload.quantity);
+  const visitsPerDay = payload.visitsPerDay === undefined ? 1 : Number(payload.visitsPerDay);
   const dogWalk = payload.dogWalk === true;
   const neighborhood = cleanField(payload.neighborhood, 120);
   const specialCare = cleanField(payload.specialCare, 300);
@@ -112,6 +113,7 @@ export function prepareHomeVisitInquiry(payload) {
       notes,
       telegramUsername,
       quote,
+      detailsPending,
     },
   };
 }
@@ -185,7 +187,11 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
   const reason = inquiry.quote.confirmationReason === "special_care"
     ? isEnglish ? "special care" : "особый уход"
     : isEnglish ? "more than 2 pets" : "больше 2 питомцев";
-  const price = inquiry.quote.needsConfirmation
+  const price = inquiry.detailsPending
+    ? isEnglish
+      ? `from ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD per visit; frequency, walk, care, and area to confirm`
+      : `от ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD за визит; частоту, прогулку, уход и зону нужно подтвердить`
+    : inquiry.quote.needsConfirmation
     ? isEnglish
       ? `confirm individually (${reason}); base rate ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD per visit`
       : `уточнить индивидуально (${reason}); базовый тариф ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD за визит`
@@ -197,12 +203,12 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     `Page: ${inquiry.pageLabel}`,
     `Dates: ${inquiry.dateFrom} — ${inquiry.dateTo}`,
     `Pet: ${animal}`,
-    `Number of pets: ${inquiry.quantity}`,
-    `Visits per day: ${inquiry.visitsPerDay}`,
-    `Dog walk needed: ${inquiry.dogWalk ? "yes" : "no"}`,
+    `Number of pets: ${inquiry.detailsPending ? "to confirm" : inquiry.quantity}`,
+    `Visits per day: ${inquiry.detailsPending ? "to confirm" : inquiry.visitsPerDay}`,
+    `Dog walk needed: ${inquiry.detailsPending ? "to confirm" : inquiry.dogWalk ? "yes" : "no"}`,
     `Approximate neighborhood: ${inquiry.neighborhood}`,
     `Area pricing: confirm from neighborhood; extended area adds ${formatRsd(petSittingBusiness.homeVisits.serviceArea.extendedVisitSurcharge, "en")} RSD per visit`,
-    `Medication / special care: ${inquiry.specialCare || "not provided"}`,
+    `Medication / special care: ${inquiry.detailsPending ? "see comment / confirm" : inquiry.specialCare || "not provided"}`,
     `Care details: ${inquiry.notes || "not provided"}`,
     `Base price: ${price}`,
     `Customer Telegram: ${inquiry.telegramUsername}`,
@@ -216,12 +222,12 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     `Страница: ${inquiry.pageLabel}`,
     `Даты: ${inquiry.dateFrom} — ${inquiry.dateTo}`,
     `Питомец: ${animal}`,
-    `Количество: ${inquiry.quantity}`,
-    `Визитов в день: ${inquiry.visitsPerDay}`,
-    `Нужна прогулка с собакой: ${inquiry.dogWalk ? "да" : "нет"}`,
+    `Количество: ${inquiry.detailsPending ? "уточнить" : inquiry.quantity}`,
+    `Визитов в день: ${inquiry.detailsPending ? "уточнить" : inquiry.visitsPerDay}`,
+    `Нужна прогулка с собакой: ${inquiry.detailsPending ? "уточнить" : inquiry.dogWalk ? "да" : "нет"}`,
     `Примерный район: ${inquiry.neighborhood}`,
     `Цена по зоне: подтвердить по району; в расширенной зоне +${formatRsd(petSittingBusiness.homeVisits.serviceArea.extendedVisitSurcharge, "ru")} RSD за визит`,
-    `Лекарства / особый уход: ${inquiry.specialCare || "не указаны"}`,
+    `Лекарства / особый уход: ${inquiry.detailsPending ? "см. комментарий / уточнить" : inquiry.specialCare || "не указаны"}`,
     `Детали ухода: ${inquiry.notes || "не указаны"}`,
     `Базовая стоимость: ${price}`,
     `Telegram клиента: ${inquiry.telegramUsername}`,

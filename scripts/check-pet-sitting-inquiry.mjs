@@ -139,6 +139,29 @@ assert.deepEqual(
   preparePetSittingInquiry({ ...validHomeVisitPayload, animal: "other" }),
   { ok: false, error: "invalid_pet" },
 );
+const shortHomeVisitPayload = {
+  serviceType: "home_visit",
+  dateFrom: "2026-09-12",
+  dateTo: "2026-09-14",
+  animal: "dog",
+  neighborhood: "Petrovaradin",
+  notes: "Two dogs; one needs a walk and medication.",
+  telegramUsername: "@test_user",
+  website: "",
+  locale: "en",
+  sourcePage: "/en/novi-sad/pet-sitting/home-visits/",
+};
+const shortHomeVisit = preparePetSittingInquiry(shortHomeVisitPayload);
+assert.equal(shortHomeVisit.ok, true);
+assert.equal(shortHomeVisit.inquiry.detailsPending, true);
+assert.equal(shortHomeVisit.inquiry.quantity, 1);
+assert.equal(shortHomeVisit.inquiry.visitsPerDay, 1);
+assert.equal(shortHomeVisit.inquiry.dogWalk, false);
+const shortHomeVisitMessage = buildPetSittingTelegramMessage(shortHomeVisit.inquiry);
+assert.match(shortHomeVisitMessage, /Number of pets: to confirm/);
+assert.match(shortHomeVisitMessage, /Dog walk needed: to confirm/);
+assert.match(shortHomeVisitMessage, /Base price: from 1,500 RSD per visit; frequency, walk, care, and area to confirm/);
+assert.match(shortHomeVisitMessage, /Care details: Two dogs; one needs a walk and medication\./);
 
 const originalToken = process.env.PET_SITTING_TELEGRAM_BOT_TOKEN;
 const originalChatId = process.env.PET_SITTING_TELEGRAM_CHAT_ID;
