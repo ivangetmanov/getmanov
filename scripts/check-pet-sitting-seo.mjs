@@ -290,19 +290,23 @@ for (const locale of locales) {
       assert.notEqual(service["@id"], petSittingSchemaIds.services.main);
       assert(document.querySelector('form[data-home-form]'), `${path} needs the home-visit enquiry form`);
       assert(!document.querySelector('[name="quantity"]'), `${path} short form must not ask for pet quantity`);
-      assert(!document.querySelector('[name="visitsPerDay"]'), `${path} short form must not ask for visit frequency`);
-      assert(!document.querySelector('[name="dogWalk"]'), `${path} short form must not ask for dog-walk details`);
+      assert.deepEqual([...document.querySelectorAll('[name="visitsPerDay"]')].map((input) => Number(input.value)), [1, 2, 3]);
+      assert.equal(document.querySelectorAll('[name="dogWalk"]').length, 2, `${path} needs one-tap dog-walk options`);
       assert(!document.querySelector('[name="specialCare"]'), `${path} short form must not ask for medication separately`);
-      assert(document.querySelector('[name="notes"]:not([required])'), `${path} needs one optional comment field`);
-      const requiredPublicFields = [...document.querySelectorAll('form[data-home-form] [required]')].map((field) => field.name);
-      assert.deepEqual(requiredPublicFields, ["dateFrom", "dateTo", "animal", "neighborhood", "telegramUsername"]);
+      assert(document.querySelector('[name="optionalComment"]:not([required])'), `${path} needs one optional comment field`);
+      assert.deepEqual([...document.querySelectorAll('[name="petType"]')].map((input) => input.value), ["cat", "dog", "cat_and_dog"]);
+      assert(!document.querySelector('select[name="petType"], select[name="visitsPerDay"]'), `${path} one-tap controls must not be dropdowns`);
+      assert(document.querySelector('[data-home-visit-dates]'), `${path} needs the date-range calendar`);
+      assert(document.querySelector('[name="telegramUsername"][required]'), `${path} needs Telegram as the only required text field`);
+      assert(document.querySelector('[name="serviceZone"]'), `${path} needs map-derived service zone input`);
+      assert(document.querySelector('[name="approximateLatitude"]') && document.querySelector('[name="approximateLongitude"]'), `${path} needs coarse map location inputs`);
       assert(document.body.textContent.includes(`${formatRsd(petSittingBusiness.homeVisits.standardVisitPrice, locale)} RSD`), `${path} needs the configured standard-visit price`);
       assert(document.body.textContent.includes(`${formatRsd(petSittingBusiness.homeVisits.dogVisitWithWalkPrice, locale)} RSD`), `${path} needs the configured dog-with-walk price`);
-      assert(document.body.textContent.includes(`${formatRsd(petSittingBusiness.homeVisits.standaloneDogWalkPrice, locale)} RSD`), `${path} needs the configured standalone-walk price`);
-      assert.deepEqual([...document.querySelectorAll('[name="animal"] option')].map((option) => option.value), ["cat", "dog"]);
+      assert(!/Standalone ~30|Отдельная прогулка/.test(document.body.textContent), `${path} must not sell a standalone walk`);
       assert(!document.body.textContent.includes("Zone 1") && !document.body.textContent.includes("Zone 2"), `${path} must not expose retired zone pricing`);
-      assert(document.body.textContent.includes(petSittingBusiness.homeVisits.paymentCopy[locale]), `${path} needs the configured payment and cancellation policy`);
       assert(document.body.textContent.includes(petSittingBusiness.homeVisits.reportingCopy[locale]), `${path} needs the configured after-every-visit reporting promise`);
+      assert.equal(document.querySelectorAll('.home-visits-page .eyebrow').length, 1, `${path} should keep only the useful hero context label`);
+      assert(document.querySelector('.proof-section .media-gallery'), `${path} needs the expandable full gallery`);
       assert(document.querySelector('[data-service-area-map][data-geojson="/data/home-visits-service-areas.geojson"]'), `${path} needs the interactive GeoJSON service-area map`);
       assert(document.querySelector('[data-map-canvas][role="application"]'), `${path} needs an accessible interactive map label`);
       assert(document.querySelector(".service-map-legend"), `${path} needs a visible map legend`);
@@ -312,7 +316,7 @@ for (const locale of locales) {
       assert(!document.querySelector('[data-pet-calendar]'), `${path} must not reuse the boarding calendar`);
       assert.deepEqual(
         [...document.querySelectorAll("[data-page-section]")].map((section) => section.dataset.pageSection),
-        ["hero", "proof", "includes", "people", "area-price", "request", "how", "fit", "boarding", "guides", "faq", "final-cta"],
+        ["hero", "proof", "area-price", "request", "how", "includes", "people", "fit", "boarding", "guides", "faq", "final-cta"],
         `${path} needs the requested conversion hierarchy`,
       );
     }

@@ -5,14 +5,13 @@ export const petSittingBusiness = {
   homeVisits: {
     standardVisitPrice: 1500,
     dogVisitWithWalkPrice: 2000,
-    standaloneDogWalkPrice: 2000,
-    includedPetQuantity: { min: 1, max: 2 },
+    includedPetQuantity: { min: 1, max: 3 },
     dogWalkMinutes: 30,
     usualDurationMinutes: { min: 30, max: 60 },
     visitsPerDay: [1, 2, 3],
     minimumVisits: 1,
     oneOffVisitsAllowed: true,
-    animals: ["cat", "dog"],
+    animals: ["cat", "dog", "cat_and_dog"],
     serviceArea: {
       geoJsonPath: "/data/home-visits-service-areas.geojson",
       extendedVisitSurcharge: 500,
@@ -24,22 +23,22 @@ export const petSittingBusiness = {
         { ru: "Мишелук и ближайшие удобные районы вдоль основного маршрута", en: "Mišeluk and nearby practical areas along the main route" },
       ],
       extendedAreas: [
-        { ru: "Клиса, Найлон-пияца и район Big", en: "Klisa, Najlon pijaca, and the Big area" },
+        { ru: "Клиса и Найлон-пияца", en: "Klisa and Najlon pijaca" },
         { ru: "более удалённые западные и юго-западные части Нови-Сада", en: "farther western and southwestern parts of Novi Sad" },
         { ru: "более удалённые части вокруг Сремской Каменицы", en: "farther parts around Sremska Kamenica" },
       ],
       copy: {
-        ru: "В зелёной зоне действует базовая цена. В жёлтой зоне к стоимости визита добавляется 500 RSD. Другие районы — уточните у нас. Зоны показывают нашу примерную рабочую географию, а не официальные границы районов.",
-        en: "Base pricing applies in the green zone. Visits in the yellow zone cost an additional 500 RSD. Other areas—ask us. The zones show our approximate working coverage, not official district boundaries.",
+        ru: "В зелёной зоне действует базовая цена. В жёлтой к стоимости визита добавляется 500 RSD.",
+        en: "The base price applies in the green area. In the yellow area, 500 RSD is added per visit.",
       },
       noteCopy: {
-        ru: "Если не уверены, к какой зоне относится ваш адрес, укажите район в заявке — подтвердим стоимость.",
-        en: "If you're not sure which zone your address is in, include your neighborhood in the request and we'll confirm the price.",
+        ru: "Если не уверены, к какой зоне относится ваш адрес, отметьте примерное место на карте — стоимость покажем сразу.",
+        en: "If you are not sure which area your address is in, mark the approximate location on the map and the price will update straight away.",
       },
       legend: {
         base: { ru: "Базовая зона · 1 500 RSD", en: "Base area · 1,500 RSD" },
         extended: { ru: "Расширенная зона · +500 RSD за визит", en: "Extended area · +500 RSD per visit" },
-        other: { ru: "Другие районы · уточните у нас", en: "Other areas · ask us" },
+        other: { ru: "За пределами обычной зоны", en: "Outside the usual service area" },
       },
       popup: {
         base: { ru: "Базовая зона\n1 500 RSD за стандартный визит", en: "Base area\n1,500 RSD per standard visit" },
@@ -47,18 +46,18 @@ export const petSittingBusiness = {
       },
     },
     introductoryMeeting: { optional: true, free: true, usuallyHandledBy: "Anna" },
-    dogWalk: { optional: true, standaloneAllowed: true },
+    dogWalk: { optional: true, standaloneAllowed: false },
     medication: { accordingToOwnerInstructions: true, complexCareByAgreement: true, injectionsPromised: false },
     reporting: { afterEveryVisit: true, photos: 2, videos: 2, writtenUpdate: true },
     reportingCopy: {
-      ru: "После каждого визита присылаем пару фотографий, пару видео и короткий письменный отчёт: как питомец и что мы сделали.",
-      en: "After every visit, we send a couple of photos, a couple of videos, and a short written update explaining how your pet is doing and what we did.",
+      ru: "После каждого визита присылаем фото и видео и подробно рассказываем, как питомец себя чувствует и что мы сделали.",
+      en: "After every visit, we send photos and videos and tell you how your pet is doing and what we did.",
     },
     smallHomeTasksByAgreement: ["water_a_few_plants", "feed_fish", "briefly_air_apartment", "basic_home_check"],
     payment: { method: "cash", timing: "in_advance", cancellationsAfterPaymentRefundable: false },
     paymentCopy: {
-      ru: "Оплата наличными вносится заранее, до начала визитов. Если после оплаты вы отменяете визиты или сокращаете количество дней, внесённая сумма не возвращается.",
-      en: "Payment is made in cash in advance, before the visits begin. If you cancel visits or reduce the number of booked days after payment, the amount paid is non-refundable.",
+      ru: "Визиты оплачиваются наличными заранее, до начала услуги.",
+      en: "Visits are paid for in cash before the service begins.",
     },
     accessCopy: {
       ru: "Ключи и доступ передаём так, как удобно вам и нам — обычно договариваемся об этом заранее.",
@@ -66,7 +65,7 @@ export const petSittingBusiness = {
     },
     whoVisitsCopy: {
       ru: "Приезжает кто-то из нас — Аня или Ваня, а иногда можем приехать вдвоём. Если для вас важно, чтобы приходил кто-то конкретный, просто скажите об этом заранее.",
-      en: "One of us — Anna or Ivan — will usually visit, and sometimes we may come together. If you prefer a specific person, tell us in advance.",
+      en: "One of us — Anna or Ivan — will visit, and sometimes we may come together. If you prefer a specific person, just tell us in advance.",
     },
   },
   longStayFromDays: 14,
@@ -172,9 +171,8 @@ export function calculatePetSittingQuote(arrival, departure, quantity) {
   };
 }
 
-export function calculateHomeVisitQuote(dateFrom, dateTo, quantity, visitsPerDay, dogWalk) {
+export function calculateHomeVisitQuote(dateFrom, dateTo, visitsPerDay, dogWalk, serviceZone) {
   const rules = petSittingBusiness.homeVisits;
-  const petQuantity = Number(quantity);
   const dailyVisits = Number(visitsPerDay);
   let dayDifference;
   try {
@@ -182,18 +180,22 @@ export function calculateHomeVisitQuote(dateFrom, dateTo, quantity, visitsPerDay
   } catch {
     return null;
   }
-  if (dayDifference < 0 || !Number.isInteger(petQuantity) || petQuantity < 1 || !rules.visitsPerDay.includes(dailyVisits)) return null;
+  if (dayDifference < 0 || !rules.visitsPerDay.includes(dailyVisits) || !["green", "yellow", "outside"].includes(serviceZone)) return null;
 
   const days = dayDifference + 1;
   const visitCount = days * dailyVisits;
-  const perVisit = dogWalk ? rules.dogVisitWithWalkPrice : rules.standardVisitPrice;
-  const needsConfirmation = petQuantity > rules.includedPetQuantity.max;
+  const basePerVisit = dogWalk ? rules.dogVisitWithWalkPrice : rules.standardVisitPrice;
+  const surcharge = serviceZone === "yellow" ? rules.serviceArea.extendedVisitSurcharge : 0;
+  const perVisit = basePerVisit + surcharge;
+  const needsConfirmation = serviceZone === "outside";
   return {
     days,
     visitCount,
+    basePerVisit,
+    surcharge,
     perVisit,
     total: needsConfirmation ? null : visitCount * perVisit,
     needsConfirmation,
-    confirmationReason: needsConfirmation ? "more_than_two_pets" : null,
+    confirmationReason: needsConfirmation ? "outside_service_area" : null,
   };
 }

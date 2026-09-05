@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeVisitsServiceMap from "./HomeVisitsServiceMap.astro";
+import HomeVisitsDateRange from "./HomeVisitsDateRange.astro";
+import PetMedia from "./PetMedia.astro";
 import { petSittingConfig, telegramUrl } from "../data/pet-sitting";
 import { formatRsd, petSittingBusiness } from "../lib/pet-sitting-business.mjs";
 import {
@@ -24,7 +26,7 @@ const description = isEnglish
   : "Аня и Ваня приезжают к кошкам и собакам домой в Нови-Саде: практический уход, общение и фото- и видеоотчёт после визита.";
 const h1 = isEnglish ? "Pet Sitting at Your Home in Novi Sad" : "Петситтер с выездом на дом в Нови-Саде";
 const heroPhoto = petSittingConfig.heroPhotos.main;
-const heroAlt = isEnglish ? "Anna holding one of her cats" : "Аня с одним из своих котов";
+const heroAlt = isEnglish ? "Anna holding Sweet, one of her cats" : "Аня со Свит, одной из своих кошек";
 const canonicalUrl = absoluteSiteUrl(path);
 const imageUrl = absoluteSiteUrl(heroPhoto);
 const imageId = `${imageUrl}#image`;
@@ -35,53 +37,51 @@ const telegram = telegramUrl();
 const homeVisitRules = petSittingBusiness.homeVisits;
 
 const faq = isEnglish ? [
-  ["What does a pet sitter do during a home visit?", "We agree the care list in advance. A visit can include food, fresh water, basic cleaning around the pet, play and company, medication following your instructions, and an update. If agreed, we can also water plants, feed fish, briefly air the apartment, or handle another small basic task."],
-  ["Can you visit a cat over several days?", "Yes. Send the dates, number of pets, approximate neighborhood, and care details. We will confirm whether we can cover the full period."],
-  ["Which parts of Novi Sad do you visit?", homeVisitRules.serviceArea.copy.en],
-  ["Will you send photos and videos?", homeVisitRules.reportingCopy.en],
-  ["How are home visits different from boarding?", "With a home visit, your pet stays in their own home and we come to them. With boarding, your pet temporarily lives with us in Petrovaradin. Longer periods are possible; for a long absence, we discuss which format fits your pet best."],
-  ["How long is a visit?", `Usually around ${homeVisitRules.usualDurationMinutes.min}–${homeVisitRules.usualDurationMinutes.max} minutes, depending on the pet and what needs to be done.`],
-  ["How many visits per day can I request?", "You can request one, two, or three visits per day. One-off visits are also welcome, and the minimum order is one visit."],
-  ["Can you walk my dog?", `Yes. A dog visit with an approximately ${homeVisitRules.dogWalkMinutes}-minute walk costs ${formatRsd(homeVisitRules.dogVisitWithWalkPrice, "en")} RSD. A standalone walk of the same approximate length is also available at the same price.`],
-  ["Can you give medication?", "We can give medication according to your instructions. Veterinary procedures, injections, and more complex medical care must be discussed individually."],
-  ["Can we meet before the first booking?", "Yes. The optional introductory meeting is free and Anna will usually handle it. We meet the pet, learn the routine, locate food, bowls, litter, medication, leash, and toys, arrange keys or access, check that the space is safe, and discuss emergency instructions."],
-  ["Who will come to my home?", homeVisitRules.whoVisitsCopy.en],
-  ["How do keys and access work?", homeVisitRules.accessCopy.en],
-  ["Can I use a home camera?", "Absolutely. If you notice something worrying, contact us; depending on availability, we may be able to make an additional urgent visit, but we cannot guarantee an emergency response at every hour."],
-  ["How do payment and cancellations work?", homeVisitRules.paymentCopy.en],
-  ["What happens in an emergency?", "We contact you immediately and do not silently wait if something is wrong. If waiting would endanger your pet, we act reasonably, contact a veterinarian if necessary, and update you as quickly as possible."],
+  ["What's included in a visit?", "A standard visit includes food, fresh water, cleaning the litter box or pet area, play, and company. If needed, we can give familiar medication following your instructions. After every visit, we send photos and videos and tell you how your pet is doing and what we did."],
+  ["How long does a visit usually take?", "Usually around 30–60 minutes, depending on your pet and what needs to be done."],
+  ["How many times a day can you visit?", "We can arrange one, two, or three visits a day. The minimum order is one visit."],
+  ["Can you walk my dog?", "Yes. A visit with an approximately 30-minute walk costs 2,000 RSD. Without a walk, a standard visit costs 1,500 RSD."],
+  ["Can you give my pet medication?", "Yes, we can give familiar medication following your instructions. If your pet needs more complex care, we will discuss it with you in advance."],
+  ["Will Anna or Ivan be the one visiting?", "One of us will visit, and sometimes we may come together. If you would prefer one particular person, just tell us in advance."],
+  ["Can we meet beforehand?", "Yes. If you like, one of us can visit for free to meet your pet, learn their routine, and see where everything is kept."],
+  ["How do I give you the keys?", "We will arrange whatever is easiest. You can give them to us when we meet your pet or we can meet separately before you leave."],
+  ["Which parts of Novi Sad do you cover?", "You can see our service area on the map above. The base price applies in the green area, while visits in the yellow area cost an extra 500 RSD. If you are unsure, simply mark your approximate location on the map."],
+  ["What if I have several pets?", "The standard price covers care for up to three pets at one address. If you have more animals or their care will take substantially longer, we will agree the price in advance."],
+  ["Will you send photos and videos?", "Yes. After every visit, we send photos and videos and tell you how your pet is doing and what we did."],
+  ["Can I leave my home camera on?", "Of course. If having a camera at home helps you feel more comfortable, we do not mind at all."],
+  ["What happens if something goes wrong?", "We will contact you immediately and explain what is happening. If it is urgent and waiting for a reply would be unsafe for your pet, we will contact a veterinarian if needed and let you know as soon as possible."],
+  ["How do I pay for the visits?", "Visits are paid for in cash before the service begins."],
 ] : [
-  ["Что делает петситтер во время визита?", "Заранее согласуем список ухода. Визит может включать корм, свежую воду, базовую уборку места питомца, игры и общение, лекарства по вашей инструкции и отчёт. По договорённости также можем полить растения, покормить рыб, ненадолго проветрить квартиру или сделать другую небольшую базовую вещь."],
-  ["Можно ли приходить к кошке несколько дней подряд?", "Да. Укажите даты, количество питомцев, примерный район и детали ухода. Мы подтвердим, сможем ли приезжать весь нужный период."],
-  ["В какие районы Нови-Сада вы приезжаете?", homeVisitRules.serviceArea.copy.ru],
-  ["Будете присылать фото и видео?", homeVisitRules.reportingCopy.ru],
-  ["Чем визиты на дом отличаются от передержки?", "При выезде питомец остаётся у себя дома, а мы приезжаем к нему. При передержке питомец временно живёт у нас в Петроварадине. Долгие периоды возможны; если уезжаете надолго, обсудим, какой формат лучше подходит питомцу."],
-  ["Сколько длится визит?", `Обычно визит занимает около ${homeVisitRules.usualDurationMinutes.min}–${homeVisitRules.usualDurationMinutes.max} минут — в зависимости от питомца и того, что нужно сделать.`],
-  ["Сколько раз в день можно приезжать?", "Можно выбрать один, два или три визита в день. Разовый визит тоже возможен, минимальный заказ — один визит."],
-  ["Можно ли погулять с собакой?", `Да. Визит с прогулкой около ${homeVisitRules.dogWalkMinutes} минут стоит ${formatRsd(homeVisitRules.dogVisitWithWalkPrice, "ru")} RSD. Отдельную прогулку примерно такой же длительности тоже можно заказать по той же цене.`],
-  ["Можно ли дать питомцу лекарства?", "Можем дать лекарства по вашей инструкции. Ветеринарные процедуры, уколы и более сложный медицинский уход обсуждаем индивидуально."],
-  ["Можно познакомиться до первого заказа?", "Да. Встреча необязательна и бесплатна; обычно приезжает Аня. Познакомимся с питомцем, узнаем режим, найдём корм, миски, лоток, лекарства, поводок и игрушки, договоримся о ключах или доступе, проверим безопасность пространства и обсудим экстренные инструкции."],
-  ["Кто именно будет приходить?", homeVisitRules.whoVisitsCopy.ru],
-  ["Как передать ключи и организовать доступ?", homeVisitRules.accessCopy.ru],
-  ["Можно ли оставить включённой домашнюю камеру?", "Конечно. Если заметите через камеру что-то тревожное, напишите нам: в зависимости от графика мы, возможно, сможем приехать дополнительно, но не обещаем экстренный выезд в любое время."],
-  ["Как устроены оплата и отмена?", homeVisitRules.paymentCopy.ru],
-  ["Что будет в экстренной ситуации?", "Сразу связываемся с вами и не ждём молча, если что-то не так. Если ожидание опасно для питомца, действуем разумно, при необходимости обращаемся к ветеринару и как можно быстрее сообщаем вам."],
+  ["Что входит в визит?", "В обычный визит входят кормление, свежая вода, уборка лотка или места питомца, игры и общение. Если нужно, можем дать привычные лекарства по вашей инструкции. После каждого визита присылаем фото и видео и рассказываем, как питомец себя чувствует и что мы сделали."],
+  ["Сколько длится один визит?", "Обычно около 30–60 минут — в зависимости от питомца и того, что нужно сделать."],
+  ["Сколько раз в день вы можете приезжать?", "Можно договориться об одном, двух или трёх визитах в день. Минимальный заказ — один визит."],
+  ["Можно ли погулять с собакой?", "Да. Визит с прогулкой около 30 минут стоит 2 000 RSD. Если прогулка не нужна, обычный визит стоит 1 500 RSD."],
+  ["Можно ли дать питомцу лекарства?", "Да, можем дать привычные лекарства по вашей инструкции. Если уход сложнее обычного, обсудим его заранее."],
+  ["Кто будет приходить — Аня или Ваня?", "На визит приезжает кто-то из нас, а иногда можем приехать вдвоём. Если для вас важно, чтобы приходил конкретно кто-то один, скажите об этом заранее."],
+  ["Можно ли познакомиться заранее?", "Да. Если хотите, один из нас бесплатно приедет познакомиться с питомцем, узнать его режим и посмотреть, где лежит всё необходимое."],
+  ["Как передать ключи?", "Договоримся так, как будет удобно. Можно передать их при знакомстве или встретиться отдельно перед вашим отъездом."],
+  ["В какие районы Нови-Сада вы приезжаете?", "Зону выезда можно посмотреть на карте выше. В зелёной зоне действует базовая цена, в жёлтой к стоимости визита добавляется 500 RSD. Если не уверены, просто отметьте примерное место на карте."],
+  ["Что если у меня несколько питомцев?", "В обычную стоимость входит уход максимум за тремя питомцами по одному адресу. Если животных больше или уход требует заметно больше времени, договоримся о цене заранее."],
+  ["Будете присылать фото и видео?", "Да. После каждого визита присылаем фото и видео и рассказываем, как питомец себя чувствует и что мы сделали."],
+  ["Можно оставить включённой домашнюю камеру?", "Конечно. Если дома есть камера и вам спокойнее дополнительно наблюдать за питомцем, мы совершенно не против."],
+  ["Что будет, если с питомцем что-то случится?", "Сразу свяжемся с вами и расскажем, что происходит. Если ситуация срочная и ждать ответа небезопасно для питомца, при необходимости обратимся к ветеринару и сообщим вам об этом как можно скорее."],
+  ["Как оплачиваются визиты?", "Визиты оплачиваются наличными заранее, до начала услуги."],
 ];
 
 const careItems = isEnglish
-  ? ["Food, bowls, and fresh water", "Litter-box and basic pet-area cleaning", "Play and quiet company", "Simple routine medication following your instructions", "Basic pet care", "A photo, video, and written update"]
-  : ["Корм, миски и свежая вода", "Лоток и базовая уборка места питомца", "Игры и спокойное общение", "Простые регулярные лекарства по инструкции", "Базовый уход за питомцем", "Фото, видео и письменный отчёт"];
+  ? ["Food, bowls, and fresh water", "Litter box and basic cleaning around your pet", "Play and company", "Familiar medication following your instructions", "Photos and videos", "An update on how your pet is doing and what we did"]
+  : ["Корм, миски и свежая вода", "Лоток и базовая уборка места питомца", "Игры и общение", "Привычные лекарства по инструкции", "Фото и видео", "Рассказ о состоянии питомца и о том, что сделали"];
 const fitItems = isEnglish
   ? ["Your cat is calmer in familiar territory", "Your pet does not need overnight boarding", "You are away and need someone to check, feed, and spend time with your pet", "A journey and a new home would be an unnecessary change"]
   : ["Кошке спокойнее на знакомой территории", "Питомцу не нужна передержка с ночёвкой", "Вы уезжаете, а питомца нужно проверить, покормить и не оставлять совсем без общения", "Поездка и новое место будут лишней переменой"];
 const howItWorks = isEnglish ? [
   ["Send a request", "We check the neighborhood, dates, and whether we can visit."],
-  ["Meet beforehand if you like", "Anna can visit for free to meet your pet and see where everything is kept."],
-  ["We follow the agreed schedule", "After every visit, we send photos, videos, and a short update."],
+  ["Meet beforehand if you like", "One of us can visit for free to meet your pet and see where everything is kept."],
+  ["We follow the agreed schedule", "After every visit, we send photos and videos and tell you how your pet is doing and what we did."],
 ] : [
   ["Оставляете запрос", "Проверяем район, даты и возможность приезжать."],
-  ["При желании знакомимся заранее", "Аня может бесплатно приехать, познакомиться с питомцем и посмотреть, где что лежит."],
-  ["Приезжаем по графику", "После каждого визита отправляем фото, видео и короткий отчёт."],
+  ["Если хотите, знакомимся заранее", "Один из нас может бесплатно приехать, чтобы познакомиться с питомцем и посмотреть, где что лежит."],
+  ["Приезжаем по графику", "После каждого визита присылаем фото и видео и рассказываем, как питомец себя чувствует и что мы сделали."],
 ];
 const guides = isEnglish ? [
   { href: "/en/novi-sad/pet-sitting/pet-sitter-vs-boarding/", title: "Pet sitter, home boarding, or pet hotel" },
@@ -90,17 +90,27 @@ const guides = isEnglish ? [
   { href: "/ru/novi-sad/pet-sitting/pet-sitter-vs-boarding/", title: "Петситтер, домашняя передержка или зоогостиница" },
   { href: "/ru/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/", title: "Можно ли оставить кошку одну на неделю" },
 ];
-const proofPhotos = isEnglish ? [
-  { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Shady resting while staying with Anna and Ivan", caption: "Shady relaxing in our home." },
-  { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Pepe resting next to Anna", caption: "Pepe resting next to Anna." },
-  { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Guinness playing with Ivan", caption: "Guinness playing with Ivan." },
-  { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Pepe and Pablo resting together", caption: "Pepe and Pablo resting together." },
+const knownProof = isEnglish ? [
+  { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Small ginger dog Shady resting in Anna and Ivan's home", caption: "Shady relaxing in our home." },
+  { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Striped cat Pepe resting next to Anna", caption: "Pepe resting next to Anna." },
+  { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Small ginger dog Shady playing with Ivan", caption: "Shady playing with Ivan." },
+  { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Striped cat Pepe and Pablo resting together", caption: "Pepe and Pablo resting together." },
 ] : [
-  { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Шэди отдыхает рядом с Аней и Ваней", caption: "Шэди отдыхает у нас дома." },
-  { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Пепе отдыхает рядом с Аней", caption: "Пепе отдыхает рядом с Аней." },
-  { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Гинесс играет с Ваней", caption: "Гинесс играет с Ваней." },
-  { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Пепе и Пабло отдыхают вместе", caption: "Пепе и Пабло отдыхают вместе." },
+  { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Маленькая рыжая собака Шэди отдыхает у Ани и Вани дома", caption: "Шэди отдыхает у нас дома." },
+  { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Полосатый кот Пепе отдыхает рядом с Аней", caption: "Пепе отдыхает рядом с Аней." },
+  { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Маленькая рыжая собака Шэди играет с Ваней", caption: "Шэди играет с Ваней." },
+  { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Полосатый кот Пепе и Пабло отдыхают вместе", caption: "Пепе и Пабло отдыхают вместе." },
 ];
+const knownSources = new Set(knownProof.map((photo) => photo.src));
+const galleryPhotos = [
+  ...knownProof,
+  ...petSittingConfig.guestPhotos.filter((photo) => !knownSources.has(photo.src)).map((photo) => ({ src: photo.src, alt: isEnglish ? photo.altEn : photo.alt })),
+  ...petSittingConfig.residentCats.map((cat) => ({ src: cat.image, alt: isEnglish ? `${cat.nameEn}, our cat` : `${cat.name}, наш кот` })),
+];
+const galleryVideos = petSittingConfig.guestVideos.map((video) => ({
+  ...video,
+  title: isEnglish ? video.animal === "cat" ? "A cat we cared for" : "A dog we cared for" : video.animal === "cat" ? "Кошка, о которой мы заботились" : "Собака, о которой мы заботились",
+}));
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -161,11 +171,11 @@ const structuredData = {
       </div>
       <figure class="hv-hero__media">
         <img src={heroPhoto} alt={heroAlt} width="1290" height="1039" />
-        <figcaption>{isEnglish ? "Anna with Pablo, one of our cats." : "Аня с Пабло, одним из наших котов."}</figcaption>
+        <figcaption>{isEnglish ? "Anna with Sweet, one of our cats." : "Аня со Свит, одной из наших кошек."}</figcaption>
       </figure>
       <div class="hv-hero__details">
         <p>{isEnglish ? "We’re Anna and Ivan. If your pet is calmer at home, we can visit them in Novi Sad, take care of the essentials, and keep them company." : "Мы — Аня и Ваня. Если питомцу спокойнее остаться дома, можем приезжать к нему в Нови-Саде, заботиться обо всём необходимом и составлять компанию."}</p>
-        <p class="hero-facts">{isEnglish ? `From ${formatRsd(homeVisitRules.standardVisitPrice, "en")} RSD per visit · around ${homeVisitRules.usualDurationMinutes.min}–${homeVisitRules.usualDurationMinutes.max} minutes · photos, videos, and an update after every visit` : `От ${formatRsd(homeVisitRules.standardVisitPrice, "ru")} RSD за визит · около ${homeVisitRules.usualDurationMinutes.min}–${homeVisitRules.usualDurationMinutes.max} минут · фото, видео и отчёт после каждого визита`}</p>
+        <p class="hero-facts">{isEnglish ? `From ${formatRsd(homeVisitRules.standardVisitPrice, "en")} RSD per visit · around ${homeVisitRules.usualDurationMinutes.min}–${homeVisitRules.usualDurationMinutes.max} minutes · photos and videos after every visit` : `От ${formatRsd(homeVisitRules.standardVisitPrice, "ru")} RSD за визит · около ${homeVisitRules.usualDurationMinutes.min}–${homeVisitRules.usualDurationMinutes.max} минут · фото и видео после каждого визита`}</p>
         <div class="actions">
           <a class="button button--primary" href="#request">{isEnglish ? "Send a request" : "Оставить запрос"}</a>
           <a class="button" href={telegram} data-home-telegram data-cta-location="hero" target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : "Написать Ане в Telegram"}</a>
@@ -174,91 +184,61 @@ const structuredData = {
     </section>
 
     <section class="proof-section" aria-labelledby="proof-title" data-page-section="proof">
-      <div><p class="eyebrow">{isEnglish ? "Real animals, real care" : "Реальные животные и забота"}</p><h2 id="proof-title">{isEnglish ? "Our experience with pets" : "Наш опыт с питомцами"}</h2><p>{isEnglish ? "Some of the pets we have already cared for. Some photos were taken during home boarding." : "Некоторые животные, о которых мы уже заботились. Часть фотографий сделана во время домашней передержки."}</p></div>
-      <div class="proof-grid">{proofPhotos.map((photo) => <figure><img src={photo.src} alt={photo.alt} width="720" height="1280" loading="lazy" /><figcaption>{photo.caption}</figcaption></figure>)}</div>
-      <p class="reporting-callout">{isEnglish ? "After every visit, we send several photos and videos and briefly explain how your pet is doing and what we did." : "После каждого визита присылаем несколько фото и видео и коротко рассказываем, как питомец себя чувствует и что мы сделали."}</p>
-    </section>
-
-    <section class="split-section" aria-labelledby="visit-includes-title" data-page-section="includes">
-      <div><p class="eyebrow">{isEnglish ? "Practical care" : "Практический уход"}</p><h2 id="visit-includes-title">{isEnglish ? "What a visit can include" : "Что может входить в визит"}</h2><p>{isEnglish ? "We agree the exact care list before confirming the request." : "Точный список заранее согласуем перед подтверждением заявки."}</p></div>
-      <ul class="check-grid">{careItems.map((item) => <li>{item}</li>)}</ul>
-    </section>
-
-    <section class="trust-section" aria-labelledby="trust-title" data-page-section="people">
-      <div><p class="eyebrow">{isEnglish ? "Specific people, not a marketplace" : "Конкретные люди, не маркетплейс"}</p><h2 id="trust-title">{isEnglish ? "Anna and Ivan" : "Аня и Ваня"}</h2></div>
-      <div class="trust-copy">
-        <p>{isEnglish ? "We are a married couple. We lived in Vietnam for three years, adopted our two cats from a shelter there, and now live with them in Petrovaradin. We both work remotely—Ivan in marketing and Anna as a CSM." : "Мы муж и жена. Три года жили во Вьетнаме, там взяли из приюта двух котов, а теперь живём вместе с ними в Петроварадине. Оба работаем удалённо: Ваня — в маркетинге, Аня — CSM."}</p>
-        <p>{homeVisitRules.whoVisitsCopy[locale]}</p>
-      </div>
+      <div><h2 id="proof-title">{isEnglish ? "Our experience with pets" : "Наш опыт с питомцами"}</h2><p>{isEnglish ? "Some of the animals we have already cared for. Some photos were taken during home boarding." : "Некоторые животные, о которых мы уже заботились. Часть фотографий сделана во время домашней передержки."}</p></div>
+      <PetMedia photos={galleryPhotos} videos={galleryVideos} label={isEnglish ? "pets we have cared for" : "питомцев, о которых мы заботились"} videoLabel={isEnglish ? "Pet care video" : "Видео с питомцем"} locale={locale} primaryPhotosFirst />
+      <p class="reporting-callout">{homeVisitRules.reportingCopy[locale]}</p>
     </section>
 
     <section class="area-section" aria-labelledby="area-title" data-page-section="area-price">
-      <div class="area-copy">
-        <p class="eyebrow">{isEnglish ? "Service area" : "Зона выезда"}</p>
-        <h2 id="area-title">{isEnglish ? "Our service area in Novi Sad" : "Зона выезда по Нови-Саду"}</h2>
-        <p>{homeVisitRules.serviceArea.copy[locale]}</p>
-        <div class="area-lists">
-          <div><strong>{homeVisitRules.serviceArea.legend.base[locale]}</strong><ul>{homeVisitRules.serviceArea.baseAreas.map((area) => <li>{area[locale]}</li>)}</ul></div>
-          <div><strong>{homeVisitRules.serviceArea.legend.extended[locale]}</strong><ul>{homeVisitRules.serviceArea.extendedAreas.map((area) => <li>{area[locale]}</li>)}</ul></div>
-        </div>
-        <p class="area-note">{homeVisitRules.serviceArea.legend.other[locale]}. {homeVisitRules.serviceArea.noteCopy[locale]}</p>
-      </div>
+      <div class="area-copy"><h2 id="area-title">{isEnglish ? "Service area in Novi Sad" : "Зона выезда по Нови-Саду"}</h2><p>{homeVisitRules.serviceArea.copy[locale]}</p><p>{homeVisitRules.serviceArea.noteCopy[locale]}</p></div>
       <HomeVisitsServiceMap locale={locale} />
-      <div class="pricing-wrap" aria-labelledby="format-title">
-        <h3 id="format-title">{isEnglish ? "Visit pricing" : "Стоимость визита"}</h3>
-        <p>{isEnglish ? "You can book one, two, or three visits per day. The minimum order is one visit." : "Можно заказать один, два или три визита в день. Минимальный заказ — один визит."}</p>
-        <div class="price-cards">
-          <div><span>{isEnglish ? "Standard home visit" : "Обычный визит домой"}</span><strong>{formatRsd(homeVisitRules.standardVisitPrice, locale)} RSD</strong></div>
-          <div><span>{isEnglish ? `Dog visit + ~${homeVisitRules.dogWalkMinutes}-minute walk` : `Визит к собаке + прогулка ~${homeVisitRules.dogWalkMinutes} минут`}</span><strong>{formatRsd(homeVisitRules.dogVisitWithWalkPrice, locale)} RSD</strong></div>
-          <div><span>{isEnglish ? `Standalone ~${homeVisitRules.dogWalkMinutes}-minute dog walk` : `Отдельная прогулка ~${homeVisitRules.dogWalkMinutes} минут`}</span><strong>{formatRsd(homeVisitRules.standaloneDogWalkPrice, locale)} RSD</strong></div>
-        </div>
-        <p>{isEnglish ? `One or two pets are included in the standard visit price; there is no per-pet surcharge. In the yellow extended area, add ${formatRsd(homeVisitRules.serviceArea.extendedVisitSurcharge, locale)} RSD per visit. Care that needs substantially more time is agreed in advance.` : `В стоимость обычного визита входят один или два питомца — доплаты за каждого из них нет. В жёлтой расширенной зоне добавляется ${formatRsd(homeVisitRules.serviceArea.extendedVisitSurcharge, locale)} RSD за визит. Уход, который требует заметно больше времени, согласуем заранее.`}</p>
-      </div>
+      <div class="pricing-wrap"><h3>{isEnglish ? "Visit pricing" : "Стоимость визита"}</h3><div class="price-cards"><div><span>{isEnglish ? "Standard home visit" : "Обычный визит домой"}</span><strong>{formatRsd(homeVisitRules.standardVisitPrice, locale)} RSD</strong></div><div><span>{isEnglish ? "Dog visit with an approximately 30-minute walk" : "Визит к собаке с прогулкой около 30 минут"}</span><strong>{formatRsd(homeVisitRules.dogVisitWithWalkPrice, locale)} RSD</strong></div></div><p>{isEnglish ? "You can book one, two, or three visits a day. The minimum order is one visit." : "Можно заказать один, два или три визита в день. Минимальный заказ — один визит."}</p><p>{isEnglish ? "A standard visit covers care for up to three pets at one address. If you have more animals or their care will take substantially longer, we will agree the price in advance." : "В стоимость обычного визита входит уход максимум за тремя питомцами по одному адресу. Если животных больше или уход требует заметно больше времени, договоримся о цене заранее."}</p></div>
     </section>
 
-    <section class="request-section" id="request" aria-labelledby="request-title" data-page-section="request" data-home-visits-form-root data-locale={locale} data-source-page={path} data-telegram={petSittingConfig.telegramUsername}>
-      <div class="request-intro"><p class="eyebrow">{isEnglish ? "Request a visit" : "Запрос на выезд"}</p><h2 id="request-title">{isEnglish ? "Send a short request or message Anna directly on Telegram" : "Заполните короткую форму или сразу напишите Ане в Telegram"}</h2><p>{isEnglish ? "Share your dates and a few details. We’ll check the route and availability, then reply in Telegram." : "Укажите даты и несколько деталей. Проверим маршрут и возможность приезжать в эти дни и ответим вам в Telegram."}</p><a class="button request-telegram" href={telegram} data-home-telegram data-cta-location="form-choice" target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : "Написать Ане в Telegram"}</a></div>
+    <section class="request-section" id="request" aria-labelledby="request-title" data-page-section="request" data-home-visits-form-root data-locale={locale} data-source-page={path}>
+      <div class="request-intro"><h2 id="request-title">{isEnglish ? "Fill in the short form or message Anna directly on Telegram" : "Заполните короткую форму или сразу напишите Ане в Telegram"}</h2><p>{isEnglish ? "Share your dates and a few details. We’ll check the route and whether we can visit on those days, then reply in Telegram." : "Укажите даты и несколько деталей. Проверим маршрут и возможность приехать в эти дни и ответим вам в Telegram."}</p><a class="button request-telegram" href={telegram} data-home-telegram data-cta-location="form-choice" target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : "Написать Ане в Telegram"}</a></div>
       <form class="home-form" data-home-form novalidate>
-        <div class="form-grid">
-          <label>{isEnglish ? "From" : "Дата с"}<input type="date" name="dateFrom" required /></label>
-          <label>{isEnglish ? "To" : "Дата по"}<input type="date" name="dateTo" required /></label>
-          <label>{isEnglish ? "Animal" : "Питомец"}<select name="animal" required><option value="cat">{isEnglish ? "Cat" : "Кошка"}</option><option value="dog">{isEnglish ? "Dog" : "Собака"}</option></select></label>
-          <label>{isEnglish ? "Approximate neighborhood" : "Примерный район"}<input type="text" name="neighborhood" maxlength="120" autocomplete="address-level3" placeholder={isEnglish ? "For example: Liman 2, Grbavica, Petrovaradin" : "Например: Лиман 2, Грбавица, Петроварадин"} required /><small>{isEnglish ? "No exact address is needed." : "Точный адрес не нужен."}</small></label>
-          <label class="form-wide">{isEnglish ? "Comment — optional" : "Комментарий — необязательно"}<textarea name="notes" rows="3" maxlength="1000" placeholder={isEnglish ? "For example: needs a walk, two cats, medication, or something important about your pet" : "Например: нужна прогулка, два кота, лекарства или что-то важное про питомца"}></textarea></label>
-          <label class="form-wide">{isEnglish ? "Your Telegram" : "Ваш Telegram"}<input type="text" name="telegramUsername" autocomplete="username" placeholder="@username" pattern="@?[A-Za-z0-9_]{5,32}" required /><small>{isEnglish ? "We need this only to reply to your request." : "Нужен только для ответа на запрос."}</small></label>
-        </div>
+        <HomeVisitsDateRange locale={locale} />
+        <fieldset><legend>{isEnglish ? "Pet" : "Питомец"}</legend><div class="segments"><label><input type="radio" name="petType" value="cat" checked /><span>{isEnglish ? "Cat" : "Кошка"}</span></label><label><input type="radio" name="petType" value="dog" /><span>{isEnglish ? "Dog" : "Собака"}</span></label><label><input type="radio" name="petType" value="cat_and_dog" /><span>{isEnglish ? "Cat & dog" : "Кошка и собака"}</span></label></div></fieldset>
+        <fieldset><legend>{isEnglish ? "Visits per day" : "Визитов в день"}</legend><div class="segments segments--numbers"><label><input type="radio" name="visitsPerDay" value="1" checked /><span>1</span></label><label><input type="radio" name="visitsPerDay" value="2" /><span>2</span></label><label><input type="radio" name="visitsPerDay" value="3" /><span>3</span></label></div></fieldset>
+        <fieldset data-dog-walk hidden><legend>{isEnglish ? "Does your dog need a walk?" : "Нужна прогулка?"}</legend><div class="segments segments--walk"><label><input type="radio" name="dogWalk" value="false" checked /><span>{isEnglish ? "No" : "Нет"}</span></label><label><input type="radio" name="dogWalk" value="true" /><span>{isEnglish ? "Yes, around 30 minutes" : "Да, около 30 минут"}</span></label></div></fieldset>
+        <div class="location-choice"><strong>{isEnglish ? "Location" : "Место"}</strong><p data-location-summary>{isEnglish ? "Mark your approximate location on the map above" : "Отметьте примерное место на карте выше"}</p><a href="#area-title" data-location-action>{isEnglish ? "Choose on the map" : "Отметить на карте"}</a></div>
+        <input type="hidden" name="serviceZone" /><input type="hidden" name="approximateLatitude" /><input type="hidden" name="approximateLongitude" />
+        <label class="location-fallback" data-location-fallback hidden>{isEnglish ? "Approximate neighborhood" : "Примерный район"}<input type="text" name="neighborhood" maxlength="120" placeholder={isEnglish ? "For example: Liman 2 or Petrovaradin" : "Например: Лиман 2 или Петроварадин"} /></label>
+        <label>{isEnglish ? "Comment — optional" : "Комментарий — необязательно"}<textarea name="optionalComment" rows="3" maxlength="1000" placeholder={isEnglish ? "For example: two cats, medication, or something important about your pet" : "Например: два кота, нужны лекарства или что-то важное про питомца"}></textarea></label>
+        <label>{isEnglish ? "Your Telegram" : "Ваш Telegram"}<input type="text" name="telegramUsername" autocomplete="username" placeholder="@username" pattern="@?[A-Za-z0-9_]{5,32}" required /></label>
+        <p class="live-price" data-live-price aria-live="polite">{isEnglish ? "Choose dates and mark your location to see an estimate." : "Выберите даты и отметьте место на карте, чтобы увидеть примерную стоимость."}</p>
         <div class="honeypot" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
         <button class="button button--primary" type="submit">{isEnglish ? "Send request" : "Отправить запрос"}</button>
-        <p class="form-status" data-form-status role="status" aria-live="polite">{isEnglish ? "We’ll reply in Telegram after checking the details. Sending the form does not confirm a booking automatically." : "Ответим в Telegram после проверки деталей. Отправка формы не подтверждает бронирование автоматически."}</p>
+        <p class="form-status" data-form-status role="status" aria-live="polite">{isEnglish ? "We’ll reply in Telegram after checking the details." : "Ответим в Telegram после проверки деталей."}</p>
       </form>
     </section>
 
-    <section class="how-section" aria-labelledby="how-title" data-page-section="how">
-      <div><p class="eyebrow">{isEnglish ? "Three simple steps" : "Три простых шага"}</p><h2 id="how-title">{isEnglish ? "How it works" : "Как всё происходит"}</h2></div>
-      <ol>{howItWorks.map(([stepTitle, copy], index) => <li><span>{index + 1}</span><div><strong>{stepTitle}</strong><p>{copy}</p></div></li>)}</ol>
-    </section>
-
-    <section class="split-section split-section--soft" aria-labelledby="fit-title" data-page-section="fit">
-      <div><p class="eyebrow">{isEnglish ? "A familiar environment" : "Знакомая обстановка"}</p><h2 id="fit-title">{isEnglish ? "When home visits make sense" : "Кому подойдут выезды домой"}</h2></div>
-      <ul class="check-grid">{fitItems.map((item) => <li>{item}</li>)}</ul>
-    </section>
-
-    <aside class="boarding-link" aria-labelledby="boarding-link-title" data-page-section="boarding"><div><p class="eyebrow">{isEnglish ? "Need a different format?" : "Нужен другой формат?"}</p><h2 id="boarding-link-title">{isEnglish ? "Would you like your pet to stay with us?" : "Хотите, чтобы питомец жил у нас?"}</h2><p>{isEnglish ? "For a longer trip, the best format depends on the animal. See our home boarding service for cats and dogs in Petrovaradin." : "Для долгой поездки лучший формат зависит от питомца. Посмотрите домашнюю передержку кошек и собак в Петроварадине."}</p></div><nav><a href={petSittingBusiness.pagePaths[locale].main}>{isEnglish ? "All boarding details" : "Все условия передержки"}</a><a href={petSittingBusiness.pagePaths[locale].dogs}>{isEnglish ? "Dog boarding" : "Передержка собак"}</a><a href={petSittingBusiness.pagePaths[locale].cats}>{isEnglish ? "Cat boarding" : "Передержка кошек"}</a></nav></aside>
-
-    <section class="guides-section" id="guides" aria-labelledby="guides-title" data-page-section="guides"><div><p class="eyebrow">{isEnglish ? "Useful guides" : "Полезно"}</p><h2 id="guides-title">{isEnglish ? "Choose the right care format" : "Как выбрать формат ухода"}</h2></div><nav>{guides.map((guide) => <a href={guide.href}><span>{guide.title}</span><b aria-hidden="true">→</b></a>)}</nav></section>
-
-    <section class="faq-section" id="faq" aria-labelledby="faq-title" data-page-section="faq"><div><p class="eyebrow">{isEnglish ? "Frequently asked questions" : "Частые вопросы"}</p><h2 id="faq-title">{isEnglish ? "About home visits" : "О выездах домой"}</h2></div><div class="faq-list">{faq.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div></section>
+    <section class="how-section" aria-labelledby="how-title" data-page-section="how"><div><h2 id="how-title">{isEnglish ? "How it works" : "Как всё происходит"}</h2></div><ol>{howItWorks.map(([stepTitle, copy], index) => <li><span>{index + 1}</span><div><strong>{stepTitle}</strong><p>{copy}</p></div></li>)}</ol></section>
+    <section class="split-section" aria-labelledby="visit-includes-title" data-page-section="includes"><div><h2 id="visit-includes-title">{isEnglish ? "What's included in a visit" : "Что входит в визит"}</h2><p>{isEnglish ? "Before the first visit, we will agree exactly what your pet needs." : "Перед первым визитом договоримся, что именно нужно вашему питомцу."}</p></div><ul class="check-grid">{careItems.map((item) => <li>{item}</li>)}</ul></section>
+    <section class="trust-section" aria-labelledby="trust-title" data-page-section="people"><div><h2 id="trust-title">{isEnglish ? "Anna and Ivan" : "Аня и Ваня"}</h2></div><div class="trust-copy"><p>{isEnglish ? "We are Anna and Ivan, a married couple. We lived in Vietnam for three years, where we adopted two cats from a shelter, and now live with them in Petrovaradin. We both work remotely: Ivan in marketing and Anna as a CSM." : "Мы — Аня и Ваня, муж и жена. Три года жили во Вьетнаме, где взяли из приюта двух котов, а теперь живём вместе с ними в Петроварадине. Оба работаем удалённо: Ваня — в маркетинге, Аня — CSM."}</p><p>{homeVisitRules.whoVisitsCopy[locale]}</p></div></section>
+    <section class="split-section split-section--soft" aria-labelledby="fit-title" data-page-section="fit"><div><h2 id="fit-title">{isEnglish ? "Who home visits are good for" : "Кому подойдут выезды домой"}</h2></div><ul class="check-grid">{fitItems.map((item) => <li>{item}</li>)}</ul></section>
+    <aside class="boarding-link" aria-labelledby="boarding-link-title" data-page-section="boarding"><div><h2 id="boarding-link-title">{isEnglish ? "Would you like your pet to stay with us?" : "Хотите, чтобы питомец жил у нас?"}</h2><p>{isEnglish ? "See our home boarding service for cats and dogs in Petrovaradin." : "Посмотрите домашнюю передержку кошек и собак в Петроварадине."}</p></div><nav><a href={petSittingBusiness.pagePaths[locale].main}>{isEnglish ? "All boarding details" : "Все условия передержки"}</a><a href={petSittingBusiness.pagePaths[locale].dogs}>{isEnglish ? "Dog boarding" : "Передержка собак"}</a><a href={petSittingBusiness.pagePaths[locale].cats}>{isEnglish ? "Cat boarding" : "Передержка кошек"}</a></nav></aside>
+    <section class="guides-section" id="guides" aria-labelledby="guides-title" data-page-section="guides"><div><h2 id="guides-title">{isEnglish ? "Useful guides" : "Полезные материалы"}</h2></div><nav>{guides.map((guide) => <a href={guide.href}><span>{guide.title}</span><b aria-hidden="true">→</b></a>)}</nav></section>
+    <section class="faq-section" id="faq" aria-labelledby="faq-title" data-page-section="faq"><div><h2 id="faq-title">{isEnglish ? "Questions about home visits" : "Вопросы о выездах домой"}</h2></div><div class="faq-list">{faq.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div></section>
 
     <section class="final-cta" aria-labelledby="final-cta-title" data-page-section="final-cta"><h2 id="final-cta-title">{isEnglish ? "Need a pet sitter to visit your home?" : "Нужен петситтер с выездом домой?"}</h2><div class="actions"><a class="button button--primary" href="#request">{isEnglish ? "Send a request" : "Оставить запрос"}</a><a class="button" href={telegram} data-home-telegram data-cta-location="final" target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : "Написать Ане в Telegram"}</a></div></section>
   </div>
 </BaseLayout>
 
 <script>
+  import { calculateHomeVisitQuote, formatRsd } from '../lib/pet-sitting-business.mjs';
+
   const root = document.querySelector('[data-home-visits-form-root]');
   if (root) {
     const form = root.querySelector('[data-home-form]');
     const status = root.querySelector('[data-form-status]');
     const submit = form.querySelector('button[type="submit"]');
+    const dogWalkField = form.querySelector('[data-dog-walk]');
+    const locationSummary = form.querySelector('[data-location-summary]');
+    const locationAction = form.querySelector('[data-location-action]');
+    const locationFallback = form.querySelector('[data-location-fallback]');
+    const priceSummary = form.querySelector('[data-live-price]');
     const isEnglish = root.dataset.locale === 'en';
     let started = false;
     const track = (name, extra = {}) => {
@@ -266,29 +246,86 @@ const structuredData = {
       window.gtag('event', name, { source_page: root.dataset.sourcePage, locale: root.dataset.locale, service_type: 'home_visit', ...extra });
     };
     const markStarted = () => { if (!started) { started = true; track('home_visits_form_start'); } };
-    const today = new Date();
-    const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-    for (const input of form.querySelectorAll('input[type="date"]')) input.min = todayKey;
+    const values = () => {
+      const data = new FormData(form);
+      const dates = form.querySelector('[data-home-visit-dates]');
+      return {
+        dateFrom: dates.dataset.dateFrom || String(data.get('dateFrom') || ''),
+        dateTo: dates.dataset.dateTo || String(data.get('dateTo') || ''),
+        petType: String(data.get('petType') || 'cat'),
+        visitsPerDay: Number(data.get('visitsPerDay') || 1),
+        dogWalk: data.get('dogWalk') === 'true',
+        serviceZone: root.dataset.serviceZone || String(data.get('serviceZone') || ''),
+      };
+    };
+    const updateForm = () => {
+      const current = values();
+      const dogInvolved = current.petType === 'dog' || current.petType === 'cat_and_dog';
+      dogWalkField.hidden = !dogInvolved;
+      if (!dogInvolved) form.querySelector('[name="dogWalk"][value="false"]').checked = true;
+      const refreshed = values();
+      const quote = refreshed.dateFrom && refreshed.dateTo && refreshed.serviceZone
+        ? calculateHomeVisitQuote(refreshed.dateFrom, refreshed.dateTo, refreshed.visitsPerDay, refreshed.dogWalk, refreshed.serviceZone)
+        : null;
+      priceSummary.textContent = quote?.total
+        ? isEnglish ? `Estimated: ${formatRsd(quote.total, 'en')} RSD` : `Ориентировочно: ${formatRsd(quote.total, 'ru')} RSD`
+        : quote?.needsConfirmation
+          ? isEnglish ? 'We’ll confirm the price after you contact us.' : 'Стоимость подтвердим после связи.'
+          : isEnglish ? 'Choose dates and mark your location to see an estimate.' : 'Выберите даты и отметьте место на карте, чтобы увидеть примерную стоимость.';
+    };
     form.addEventListener('focusin', markStarted);
-    form.addEventListener('input', markStarted);
+    form.addEventListener('input', () => { markStarted(); updateForm(); });
+    root.addEventListener('homevisit-dates-change', updateForm);
+    window.addEventListener('homevisit-location-selected', (event) => {
+      const { zone, latitude, longitude } = event.detail;
+      root.dataset.serviceZone = zone;
+      root.dataset.approximateLatitude = String(latitude);
+      root.dataset.approximateLongitude = String(longitude);
+      form.querySelector('[name="serviceZone"]').value = zone;
+      form.querySelector('[name="approximateLatitude"]').value = String(latitude);
+      form.querySelector('[name="approximateLongitude"]').value = String(longitude);
+      form.querySelector('[name="serviceZone"]').setAttribute('value', zone);
+      form.querySelector('[name="approximateLatitude"]').setAttribute('value', String(latitude));
+      form.querySelector('[name="approximateLongitude"]').setAttribute('value', String(longitude));
+      locationSummary.textContent = zone === 'green'
+        ? isEnglish ? 'Green area · base price' : 'Зелёная зона · базовая цена'
+        : zone === 'yellow'
+          ? isEnglish ? 'Yellow area · +500 RSD per visit' : 'Жёлтая зона · +500 RSD за визит'
+          : isEnglish ? 'Outside our usual service area · price on request' : 'За пределами обычной зоны · стоимость по запросу';
+      locationAction.textContent = isEnglish ? 'Change on the map' : 'Изменить на карте';
+      locationFallback.hidden = true;
+      updateForm();
+    });
+    window.addEventListener('homevisit-map-error', () => {
+      locationFallback.hidden = false;
+      locationFallback.querySelector('input').required = true;
+      locationSummary.textContent = isEnglish ? 'Enter your approximate neighborhood below.' : 'Укажите примерный район ниже.';
+    });
     document.querySelectorAll('[data-home-telegram]').forEach((link) => link.addEventListener('click', () => track('home_visits_telegram_click', { cta_location: link.dataset.ctaLocation || 'content' })));
+    updateForm();
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const data = new FormData(form);
-      const dateFrom = String(data.get('dateFrom') || '');
-      const dateTo = String(data.get('dateTo') || '');
+      const current = values();
+      const dateFrom = current.dateFrom;
+      const dateTo = current.dateTo;
       if (!form.reportValidity()) return;
-      if (dateTo < dateFrom) { status.textContent = isEnglish ? 'The end date must be on or after the start date.' : 'Дата окончания должна быть не раньше даты начала.'; status.className = 'form-status is-error'; return; }
+      if (!dateFrom || !dateTo) { status.textContent = isEnglish ? 'Choose the first and last day.' : 'Выберите первый и последний день.'; status.className = 'form-status is-error'; return; }
+      const serviceZone = root.dataset.serviceZone || String(data.get('serviceZone') || '');
+      const neighborhood = String(data.get('neighborhood') || '').trim();
+      if (!serviceZone && !neighborhood) { status.textContent = isEnglish ? 'Mark your approximate location on the map above.' : 'Отметьте примерное место на карте выше.'; status.className = 'form-status is-error'; return; }
       const usernameRaw = String(data.get('telegramUsername') || '').trim();
       const telegramUsername = usernameRaw.startsWith('@') ? usernameRaw : `@${usernameRaw}`;
       if (!/^@[A-Za-z0-9_]{5,32}$/.test(telegramUsername)) { status.textContent = isEnglish ? 'Enter a valid Telegram username: @username.' : 'Укажите корректный Telegram username: @username.'; status.className = 'form-status is-error'; return; }
       submit.disabled = true;
       status.textContent = isEnglish ? 'Sending…' : 'Отправляем…';
       status.className = 'form-status';
-      const animal = String(data.get('animal'));
-      track('home_visits_form_submit', { animal_type: animal });
+      const petType = String(data.get('petType'));
+      const visitsPerDay = Number(data.get('visitsPerDay'));
+      const dogWalk = data.get('dogWalk') === 'true' && petType !== 'cat';
+      track('home_visits_form_submit', { pet_type: petType, service_zone: serviceZone || 'fallback' });
       try {
-        const response = await fetch('/.netlify/functions/pet-sitting-inquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ serviceType: 'home_visit', sourcePage: root.dataset.sourcePage, locale: root.dataset.locale, dateFrom, dateTo, animal, neighborhood: String(data.get('neighborhood') || ''), notes: String(data.get('notes') || ''), telegramUsername, website: String(data.get('website') || '') }) });
+        const response = await fetch('/.netlify/functions/pet-sitting-inquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ service_type: 'home_visit', sourcePage: root.dataset.sourcePage, locale: root.dataset.locale, date_from: dateFrom, date_to: dateTo, pet_type: petType, visits_per_day: visitsPerDay, dog_walk: dogWalk, service_zone: serviceZone, approximate_location: serviceZone ? { latitude: Number(root.dataset.approximateLatitude), longitude: Number(root.dataset.approximateLongitude) } : undefined, neighborhood, telegram_username: telegramUsername, optional_comment: String(data.get('optionalComment') || ''), website: String(data.get('website') || '') }) });
         if (!response.ok) throw new Error('request_failed');
         status.textContent = isEnglish ? 'Sent! We’ll reply in Telegram.' : 'Готово! Ответим в Telegram.';
         status.className = 'form-status is-success';
@@ -323,17 +360,53 @@ const structuredData = {
   @media (max-width:780px) { .home-visits-page { padding-inline:18px; }.hv-hero { grid-template-areas:"heading" "details" "media"; grid-template-columns:1fr; min-height:0; padding:48px 0 42px; }.hv-hero h1 { font-size:clamp(39px,8.4vw,54px); }.hv-hero__media { margin-top:30px; }.hv-hero__media img { max-height:430px; }.split-section,.trust-section,.area-section,.meeting-section,.request-section,.guides-section { grid-template-columns:1fr; }.split-section,.trust-section,.meeting-section { gap:28px; padding:56px 0; }.area-section { gap:26px; }.request-section { gap:28px; }.boarding-link { grid-template-columns:1fr; }.faq-list { grid-template-columns:1fr; } }
   @media (max-width:600px) { .home-visits-page { padding-inline:14px; font-size:16px; }.hv-hero h1 { font-size:clamp(35px,10.7vw,47px); }.hv-hero__details>p { font-size:18px; }.actions { display:grid; }.button { width:100%; }.service-definition { grid-template-columns:1fr; }.service-definition>div+div { border-top:1px solid var(--line); border-left:0; }.service-definition>div { padding:20px; }.check-grid,.trust-copy,.form-grid,.meeting-section>div:last-child { grid-template-columns:1fr; }.check-grid li { min-height:0; }.area-section { margin-inline:-2px; padding:20px 16px; }.price-cards>div { align-items:flex-start; flex-direction:column; gap:6px; }.proof-grid { gap:10px; }.proof-grid img { border-radius:10px; }.request-section { margin-inline:-2px; padding:32px 16px; border-radius:18px; }.home-form { padding:20px 14px; }.form-wide { grid-column:auto; }.boarding-link { padding:24px 18px; }.faq-section { margin-inline:-2px; padding:44px 12px; border-radius:18px; }.faq-list summary { padding-inline:16px 52px; font-size:16px; }.faq-list p { padding-inline:16px; }.guides-section { gap:24px; } }
   .home-form [hidden] { display:none; }
+  .home-form { display:grid; gap:20px; }
+  .home-form fieldset { margin:0; border:0; padding:0; }
+  .home-form legend { margin-bottom:8px; font-size:14px; font-weight:750; }
+  .segments { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
+  .segments--walk { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .segments label { display:block; }
+  .segments input { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
+  .segments span { display:flex; min-height:46px; align-items:center; justify-content:center; border:1px solid #b9c9c0; border-radius:9px; padding:8px 10px; background:#fff; cursor:pointer; font-size:14px; font-weight:700; text-align:center; }
+  .segments input:checked+span { border-color:var(--accent); background:var(--accent); color:#fff; }
+  .segments input:focus-visible+span { outline:3px solid rgba(39,95,75,.2); outline-offset:2px; }
+  .location-choice { border:1px solid var(--line); border-radius:11px; padding:15px; background:#f7f9f7; }
+  .location-choice p { margin:5px 0 7px; color:var(--muted); font-size:14px; }
+  .location-choice a { color:var(--accent); font-size:13px; font-weight:760; }
+  .live-price { margin:0; border-radius:10px; padding:15px; background:#e8f0eb; color:var(--ink); font-size:18px; font-weight:800; }
+  .home-form>.button { margin-top:0; }
   .hv-hero__details .hero-facts { margin-top:16px; color:var(--ink); font-size:15px; font-weight:780; line-height:1.45; }
   .area-section { grid-template-areas:"copy map" "price price"; gap:30px 42px; }
   .area-copy { grid-area:copy; }
-  .area-section :global(.service-map-shell) { grid-area:map; }
+  .area-section .service-map-shell { grid-area:map; }
   .pricing-wrap { grid-area:price; }
   .pricing-wrap h3 { margin:0; font-size:28px; letter-spacing:-.025em; }
   .pricing-wrap>p { margin:10px 0 18px; }
-  .price-cards { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .price-cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .price-cards>div { align-items:flex-start; gap:14px; }
   .proof-section { padding-top:42px; }
   .reporting-callout { margin:28px 0 0; border-left:4px solid var(--accent); padding:16px 20px; background:#eaf1ed; font-size:19px; font-weight:760; line-height:1.5; }
+  .proof-section .pet-media { width:100%; padding:30px 0 0; }
+  .proof-section .media-grid,.proof-section .media-gallery-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+  .proof-section .media-grid figure,.proof-section .media-gallery-grid figure { margin:0; }
+  .proof-section .video-frame,.proof-section .photo-card { position:relative; display:block; width:100%; aspect-ratio:9/16; overflow:hidden; border:0; border-radius:14px; padding:0; background:#dfe7e2; }
+  .proof-section .video-frame iframe,.proof-section .video-poster,.proof-section .video-poster img,.proof-section .photo-card img { display:block; width:100%; height:100%; border:0; }
+  .proof-section .video-poster,.proof-section .photo-card { cursor:pointer; }
+  .proof-section .video-poster img,.proof-section .photo-card img { object-fit:cover; }
+  .proof-section .video-play { position:absolute; z-index:1; left:50%; top:50%; display:grid; width:54px; height:54px; place-items:center; border-radius:50%; background:rgba(255,255,255,.94); color:var(--accent); transform:translate(-50%,-50%); }
+  .proof-section .video-play svg { width:22px; margin-left:3px; }
+  .proof-section .video-number { position:absolute; z-index:1; right:12px; bottom:12px; color:#fff; font-size:12px; font-weight:800; }
+  .proof-section figcaption { padding-top:8px; color:var(--muted); font-size:13px; line-height:1.4; }
+  .proof-section .media-gallery { margin-top:18px; }
+  .proof-section .media-gallery>summary { display:flex; min-height:52px; align-items:center; justify-content:space-between; gap:16px; border:1px solid var(--line); border-radius:12px; padding:12px 16px; cursor:pointer; list-style:none; background:#fff; font-weight:800; }
+  .proof-section .media-gallery>summary::-webkit-details-marker { display:none; }
+  .proof-section .media-gallery>summary::after { content:"+"; display:grid; width:30px; height:30px; place-items:center; border-radius:50%; background:#e8f0eb; color:var(--accent); font-size:22px; }
+  .proof-section .media-gallery[open]>summary::after { content:"−"; }
+  .proof-section .media-gallery-grid { margin-top:14px; }
+  .proof-section .photo-lightbox { width:min(900px,calc(100vw - 32px)); max-width:none; height:min(90vh,1100px); max-height:none; border:0; border-radius:18px; padding:0; overflow:hidden; background:#17231f; }
+  .proof-section .photo-lightbox::backdrop { background:rgba(15,23,20,.82); }
+  .proof-section .photo-lightbox img { width:100%; height:100%; object-fit:contain; }
+  .proof-section .photo-lightbox-close { position:absolute; z-index:1; top:12px; right:12px; display:grid; width:42px; height:42px; place-items:center; border:0; border-radius:50%; background:#fff; cursor:pointer; font-size:27px; }
   .request-section { grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr); margin-top:54px; }
   .request-intro>p { color:var(--muted); line-height:1.65; }
   .request-telegram { margin-top:12px; border-color:var(--accent); background:#fff; color:var(--accent); }
@@ -357,6 +430,8 @@ const structuredData = {
     .hv-hero__details .hero-facts { font-size:14px; }
     .proof-section { padding-top:24px; }
     .reporting-callout { font-size:17px; }
+    .proof-section .media-grid,.proof-section .media-gallery-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .proof-section .photo-lightbox { width:calc(100vw - 16px); height:calc(100dvh - 24px); }
     .final-cta { margin-inline:-2px; padding:24px 18px; }
   }
 </style>

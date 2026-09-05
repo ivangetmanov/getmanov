@@ -2,7 +2,7 @@
   "type": "FeatureCollection",
   "name": "Home visits service areas",
   "properties": {
-    "description": "Approximate operational coverage, not administrative boundaries",
+    "description": "Operational home-visit service coverage",
     "initialBounds": [[45.197, 19.744], [45.331, 19.934]]
   },
   "features": [

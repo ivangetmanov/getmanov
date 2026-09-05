@@ -1,0 +1,139 @@
+---
+const { locale = "ru" } = Astro.props as { locale?: "ru" | "en" };
+const isEnglish = locale === "en";
+---
+
+<div class="visit-dates" data-home-visit-dates data-locale={locale}>
+  <div class="visit-dates__header">
+    <div>
+      <strong>{isEnglish ? "Dates" : "Даты"}</strong>
+      <p data-date-status aria-live="polite">{isEnglish ? "Choose the first day." : "Сначала выберите первый день."}</p>
+    </div>
+    <div class="visit-dates__controls" aria-label={isEnglish ? "Month navigation" : "Навигация по месяцам"}>
+      <button type="button" data-date-prev aria-label={isEnglish ? "Previous month" : "Предыдущий месяц"}>←</button>
+      <button type="button" data-date-next aria-label={isEnglish ? "Next month" : "Следующий месяц"}>→</button>
+    </div>
+  </div>
+  <div class="visit-dates__month" data-date-month></div>
+  <input type="hidden" name="dateFrom" data-date-from />
+  <input type="hidden" name="dateTo" data-date-to />
+</div>
+
+<script>
+  document.querySelectorAll('[data-home-visit-dates]').forEach((root) => {
+    if (root.dataset.ready === 'true') return;
+    root.dataset.ready = 'true';
+    const isEnglish = root.dataset.locale === 'en';
+    const monthNode = root.querySelector('[data-date-month]');
+    const status = root.querySelector('[data-date-status]');
+    const fromInput = root.querySelector('[data-date-from]');
+    const toInput = root.querySelector('[data-date-to]');
+    const today = new Date();
+    const todayKey = toKey(today.getFullYear(), today.getMonth(), today.getDate());
+    let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
+    let start = '';
+    let end = '';
+    const monthNames = isEnglish
+      ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      : ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    const weekdays = isEnglish ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+    function toKey(year, month, day) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
+    function fromKey(key) {
+      const [year, month, day] = key.split('-').map(Number);
+      return new Date(year, month - 1, day);
+    }
+    function formatDate(key) {
+      return new Intl.DateTimeFormat(isEnglish ? 'en-GB' : 'ru-RU', { day: 'numeric', month: 'long' }).format(fromKey(key));
+    }
+    function sync() {
+      root.dataset.dateFrom = start;
+      root.dataset.dateTo = end;
+      fromInput.value = start;
+      toInput.value = end;
+      fromInput.setAttribute('value', start);
+      toInput.setAttribute('value', end);
+      status.textContent = !start
+        ? isEnglish ? 'Choose the first day.' : 'Сначала выберите первый день.'
+        : !end
+          ? isEnglish ? `${formatDate(start)} — now choose the last day.` : `${formatDate(start)} — теперь выберите последний день.`
+          : `${formatDate(start)} — ${formatDate(end)}`;
+      root.dispatchEvent(new CustomEvent('homevisit-dates-change', { bubbles: true, detail: { dateFrom: start, dateTo: end } }));
+      render();
+    }
+    function selectDate(key) {
+      if (!start || end) {
+        start = key;
+        end = '';
+      } else if (key < start) {
+        start = key;
+      } else {
+        end = key;
+      }
+      sync();
+    }
+    function render() {
+      const year = cursor.getFullYear();
+      const month = cursor.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+      const heading = document.createElement('h3');
+      heading.textContent = `${monthNames[month]} ${year}`;
+      const grid = document.createElement('div');
+      grid.className = 'visit-dates__grid';
+      for (const weekday of weekdays) {
+        const label = document.createElement('span');
+        label.className = 'visit-dates__weekday';
+        label.textContent = weekday;
+        grid.append(label);
+      }
+      for (let index = 0; index < firstWeekday; index += 1) grid.append(document.createElement('span'));
+      for (let day = 1; day <= daysInMonth; day += 1) {
+        const key = toKey(year, month, day);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = String(day);
+        button.dataset.dateKey = key;
+        button.disabled = key < todayKey;
+        button.classList.toggle('is-start', key === start);
+        button.classList.toggle('is-end', key === end);
+        button.classList.toggle('is-range', Boolean(start && end && key > start && key < end));
+        button.setAttribute('aria-label', new Intl.DateTimeFormat(isEnglish ? 'en-GB' : 'ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(year, month, day)));
+        button.addEventListener('click', () => selectDate(key));
+        grid.append(button);
+      }
+      monthNode.replaceChildren(heading, grid);
+      const previousMonth = new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1);
+      root.querySelector('[data-date-prev]').disabled = previousMonth < new Date(today.getFullYear(), today.getMonth(), 1);
+    }
+
+    root.querySelector('[data-date-prev]').addEventListener('click', () => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1); render(); });
+    root.querySelector('[data-date-next]').addEventListener('click', () => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1); render(); });
+    render();
+  });
+</script>
+
+<style is:inline>
+  .visit-dates { border:1px solid #d9e2dc; border-radius:14px; padding:18px; background:#fff; }
+  .visit-dates__header { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; }
+  .visit-dates__header strong { font-size:18px; }
+  .visit-dates__header p { margin:4px 0 0; color:#52645d; font-size:14px; }
+  .visit-dates__controls { display:flex; gap:8px; }
+  .visit-dates__controls button { width:40px; height:40px; border:1px solid #cbd8d1; border-radius:50%; background:#fff; color:#20332f; cursor:pointer; font-size:20px; }
+  .visit-dates__controls button:disabled { cursor:default; opacity:.35; }
+  .visit-dates__month h3 { margin:22px 0 12px; font-size:21px; }
+  .visit-dates__grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; }
+  .visit-dates__weekday { padding:4px 0 7px; color:#52645d; font-size:12px; text-align:center; }
+  .visit-dates__grid button { min-height:42px; border:0; border-radius:8px; background:transparent; color:#20332f; cursor:pointer; font:inherit; }
+  .visit-dates__grid button:hover:not(:disabled) { background:#e8f0eb; }
+  .visit-dates__grid button:disabled { color:#aeb9b3; cursor:default; text-decoration:line-through; }
+  .visit-dates__grid button.is-range { border-radius:0; background:#dce9e2; }
+  .visit-dates__grid button.is-start,.visit-dates__grid button.is-end { background:#275f4b; color:#fff; font-weight:800; }
+  @media (max-width:600px) {
+    .visit-dates { padding:15px 12px; }
+    .visit-dates__grid { gap:2px; }
+    .visit-dates__grid button { min-height:40px; }
+  }
+</style>

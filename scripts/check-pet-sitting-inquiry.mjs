@@ -68,17 +68,16 @@ assert.deepEqual(
 );
 
 const validHomeVisitPayload = {
-  serviceType: "home_visit",
-  dateFrom: "2026-09-12",
-  dateTo: "2026-09-14",
-  animal: "cat",
-  quantity: 2,
-  visitsPerDay: 2,
-  dogWalk: false,
-  neighborhood: "Liman",
-  specialCare: "",
-  notes: "Food, water, litter box and play.",
-  telegramUsername: "@test_user",
+  service_type: "home_visit",
+  date_from: "2026-09-12",
+  date_to: "2026-09-14",
+  pet_type: "cat_and_dog",
+  visits_per_day: 2,
+  dog_walk: false,
+  service_zone: "green",
+  approximate_location: { latitude: 45.25541, longitude: 19.84462 },
+  telegram_username: "@test_user",
+  optional_comment: "Food, water, litter box and play.",
   website: "",
   locale: "en",
   sourcePage: "/en/novi-sad/pet-sitting/home-visits/",
@@ -86,82 +85,77 @@ const validHomeVisitPayload = {
 const homeVisitPrepared = preparePetSittingInquiry(validHomeVisitPayload);
 assert.equal(homeVisitPrepared.ok, true);
 assert.equal(homeVisitPrepared.inquiry.serviceType, "home_visit");
-assert.equal(homeVisitPrepared.inquiry.neighborhood, "Liman");
+assert.equal(homeVisitPrepared.inquiry.animal, "cat_and_dog");
 assert.equal(homeVisitPrepared.inquiry.visitsPerDay, 2);
 assert.equal(homeVisitPrepared.inquiry.dogWalk, false);
+assert.equal(homeVisitPrepared.inquiry.serviceZone, "green");
+assert.deepEqual(homeVisitPrepared.inquiry.approximateLocation, { latitude: 45.255, longitude: 19.845 });
 assert.equal(homeVisitPrepared.inquiry.quote.perVisit, 1500);
 assert.equal(homeVisitPrepared.inquiry.quote.visitCount, 6);
 assert.equal(homeVisitPrepared.inquiry.quote.total, 9000);
-const onePetHomeVisit = preparePetSittingInquiry({ ...validHomeVisitPayload, quantity: 1 });
-assert.equal(onePetHomeVisit.inquiry.quote.total, homeVisitPrepared.inquiry.quote.total, "One and two pets must have the same base price");
 const homeVisitNotification = buildPetSittingTelegramMessage(homeVisitPrepared.inquiry, "2026-09-04T12:00:00.000Z");
 assert.match(homeVisitNotification, /New home-visit pet-sitting request/);
 assert.match(homeVisitNotification, /Service type: home_visit/);
-assert.match(homeVisitNotification, /Approximate neighborhood: Liman/);
-assert.match(homeVisitNotification, /Area pricing: confirm from neighborhood; extended area adds 500 RSD per visit/);
+assert.match(homeVisitNotification, /Pet: cat and dog/);
+assert.match(homeVisitNotification, /Service zone: green/);
+assert.match(homeVisitNotification, /Approximate location: 45.255, 19.845/);
 assert.match(homeVisitNotification, /Visits per day: 2/);
-assert.match(homeVisitNotification, /Medication \/ special care: not provided/);
-assert.match(homeVisitNotification, /Base price: 9,000 RSD \(1,500 RSD × 6\)/);
-assert.doesNotMatch(homeVisitNotification, /Estimated price/);
+assert.match(homeVisitNotification, /Comment: Food, water, litter box and play\./);
+assert.match(homeVisitNotification, /Estimated price: 9,000 RSD \(1,500 RSD × 6\)/);
+assert.doesNotMatch(homeVisitNotification, /Number of pets|Medication \/ special care/);
 assert.deepEqual(
   preparePetSittingInquiry({ ...validHomeVisitPayload, sourcePage: "/en/novi-sad/pet-sitting/" }),
   { ok: false, error: "invalid_source" },
 );
 assert.deepEqual(
-  preparePetSittingInquiry({ ...validHomeVisitPayload, neighborhood: "" }),
-  { ok: false, error: "missing_neighborhood" },
+  preparePetSittingInquiry({ ...validHomeVisitPayload, approximate_location: undefined }),
+  { ok: false, error: "missing_location" },
 );
 assert.deepEqual(
-  preparePetSittingInquiry({ ...validHomeVisitPayload, visitsPerDay: 4 }),
+  preparePetSittingInquiry({ ...validHomeVisitPayload, visits_per_day: 4 }),
   { ok: false, error: "invalid_visit_frequency" },
 );
-const threeDailyVisits = preparePetSittingInquiry({ ...validHomeVisitPayload, visitsPerDay: 3 });
+const threeDailyVisits = preparePetSittingInquiry({ ...validHomeVisitPayload, visits_per_day: 3 });
 assert.equal(threeDailyVisits.ok, true);
 assert.equal(threeDailyVisits.inquiry.quote.visitCount, 9);
 assert.deepEqual(
-  preparePetSittingInquiry({ ...validHomeVisitPayload, dogWalk: true }),
+  preparePetSittingInquiry({ ...validHomeVisitPayload, pet_type: "cat", dog_walk: true }),
   { ok: false, error: "invalid_dog_walk" },
 );
-const dogHomeVisit = preparePetSittingInquiry({ ...validHomeVisitPayload, animal: "dog", dogWalk: true });
+const dogHomeVisit = preparePetSittingInquiry({ ...validHomeVisitPayload, pet_type: "dog", dog_walk: true });
 assert.equal(dogHomeVisit.ok, true);
 assert.equal(dogHomeVisit.inquiry.dogWalk, true);
 assert.equal(dogHomeVisit.inquiry.quote.perVisit, 2000);
 assert.equal(dogHomeVisit.inquiry.quote.total, 12000);
-const customCareVisit = preparePetSittingInquiry({ ...validHomeVisitPayload, specialCare: "One tablet with food." });
-assert.equal(customCareVisit.ok, true);
-assert.equal(customCareVisit.inquiry.quote.total, 9000);
-assert.match(buildPetSittingTelegramMessage(customCareVisit.inquiry), /Base price: 9,000 RSD \(1,500 RSD × 6\); special care to confirm/);
-const threePetVisit = preparePetSittingInquiry({ ...validHomeVisitPayload, quantity: 3 });
-assert.equal(threePetVisit.ok, true);
-assert.equal(threePetVisit.inquiry.quote.total, null);
-assert.match(buildPetSittingTelegramMessage(threePetVisit.inquiry), /confirm individually \(more than 2 pets\); base rate 1,500 RSD per visit/);
+const yellowDogVisit = preparePetSittingInquiry({ ...validHomeVisitPayload, pet_type: "dog", dog_walk: true, service_zone: "yellow" });
+assert.equal(yellowDogVisit.inquiry.quote.perVisit, 2500);
+assert.equal(yellowDogVisit.inquiry.quote.total, 15000);
+const outsideVisit = preparePetSittingInquiry({ ...validHomeVisitPayload, service_zone: "outside" });
+assert.equal(outsideVisit.inquiry.quote.total, null);
+assert.match(buildPetSittingTelegramMessage(outsideVisit.inquiry), /Estimated price: confirm after contact/);
 assert.deepEqual(
-  preparePetSittingInquiry({ ...validHomeVisitPayload, animal: "other" }),
+  preparePetSittingInquiry({ ...validHomeVisitPayload, pet_type: "other" }),
   { ok: false, error: "invalid_pet" },
 );
-const shortHomeVisitPayload = {
-  serviceType: "home_visit",
-  dateFrom: "2026-09-12",
-  dateTo: "2026-09-14",
-  animal: "dog",
+const fallbackHomeVisitPayload = {
+  service_type: "home_visit",
+  date_from: "2026-09-12",
+  date_to: "2026-09-14",
+  pet_type: "dog",
+  visits_per_day: 1,
+  dog_walk: false,
+  service_zone: "",
   neighborhood: "Petrovaradin",
-  notes: "Two dogs; one needs a walk and medication.",
-  telegramUsername: "@test_user",
+  optional_comment: "Two dogs; one needs medication.",
+  telegram_username: "@test_user",
   website: "",
   locale: "en",
   sourcePage: "/en/novi-sad/pet-sitting/home-visits/",
 };
-const shortHomeVisit = preparePetSittingInquiry(shortHomeVisitPayload);
-assert.equal(shortHomeVisit.ok, true);
-assert.equal(shortHomeVisit.inquiry.detailsPending, true);
-assert.equal(shortHomeVisit.inquiry.quantity, 1);
-assert.equal(shortHomeVisit.inquiry.visitsPerDay, 1);
-assert.equal(shortHomeVisit.inquiry.dogWalk, false);
-const shortHomeVisitMessage = buildPetSittingTelegramMessage(shortHomeVisit.inquiry);
-assert.match(shortHomeVisitMessage, /Number of pets: to confirm/);
-assert.match(shortHomeVisitMessage, /Dog walk needed: to confirm/);
-assert.match(shortHomeVisitMessage, /Base price: from 1,500 RSD per visit; frequency, walk, care, and area to confirm/);
-assert.match(shortHomeVisitMessage, /Care details: Two dogs; one needs a walk and medication\./);
+const fallbackHomeVisit = preparePetSittingInquiry(fallbackHomeVisitPayload);
+assert.equal(fallbackHomeVisit.ok, true);
+assert.equal(fallbackHomeVisit.inquiry.quote, null);
+assert.match(buildPetSittingTelegramMessage(fallbackHomeVisit.inquiry), /Approximate location: Petrovaradin/);
 
 const originalToken = process.env.PET_SITTING_TELEGRAM_BOT_TOKEN;
 const originalChatId = process.env.PET_SITTING_TELEGRAM_CHAT_ID;
@@ -191,7 +185,7 @@ try {
   const homeVisitTelegramBody = JSON.parse(fetchCalls[1].options.body);
   assert.match(homeVisitTelegramBody.text, /Service type: home_visit/);
   assert.match(homeVisitTelegramBody.text, /Visits per day: 2/);
-  assert.match(homeVisitTelegramBody.text, /Care details: Food, water, litter box and play\./);
+  assert.match(homeVisitTelegramBody.text, /Comment: Food, water, litter box and play\./);
 
   const invalidUsername = await handler({
     httpMethod: "POST",

@@ -1,10 +1,11 @@
 ---
 interface Props {
-  photos: Array<{ src: string; alt: string }>;
+  photos: Array<{ src: string; alt: string; caption?: string }>;
   videos: Array<{ url: string; title?: string; featured?: boolean }>;
   label: string;
   videoLabel: string;
   locale?: "ru" | "en";
+  primaryPhotosFirst?: boolean;
 }
 
 type ResolvedVideo = Props["videos"][number] & {
@@ -13,7 +14,7 @@ type ResolvedVideo = Props["videos"][number] & {
   thumbnailUrl: string;
 };
 
-const { photos, videos, label, videoLabel, locale = "ru" } = Astro.props;
+const { photos, videos, label, videoLabel, locale = "ru", primaryPhotosFirst = false } = Astro.props;
 const isEnglish = locale === "en";
 
 function youtubeVideoId(url: string) {
@@ -49,8 +50,8 @@ const resolvedVideos = videos.reduce<ResolvedVideo[]>((items, video) => {
   return items;
 }, []);
 
-const primaryVideos = resolvedVideos.slice(0, 4);
-const primaryPhotos = photos.slice(0, Math.max(0, 4 - primaryVideos.length));
+const primaryPhotos = primaryPhotosFirst ? photos.slice(0, 4) : photos.slice(0, Math.max(0, 4 - resolvedVideos.length));
+const primaryVideos = primaryPhotosFirst ? [] : resolvedVideos.slice(0, Math.max(0, 4 - primaryPhotos.length));
 const galleryVideos = resolvedVideos.slice(primaryVideos.length);
 const galleryPhotos = photos.slice(primaryPhotos.length);
 const gallerySize = galleryVideos.length + galleryPhotos.length;
@@ -96,6 +97,7 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
             >
               <img src={photo.src} alt={photo.alt} width="720" height="1280" loading="lazy" />
             </button>
+            {photo.caption && <figcaption>{photo.caption}</figcaption>}
           </figure>
         ))}
       </div>
@@ -116,6 +118,7 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
                 >
                   <img src={photo.src} alt={photo.alt} width="720" height="1280" loading="lazy" />
                 </button>
+                {photo.caption && <figcaption>{photo.caption}</figcaption>}
               </figure>
             ))}
             {galleryVideos.map((video, index) => {

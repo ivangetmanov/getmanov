@@ -21,7 +21,7 @@ export function preparePetSittingInquiry(payload) {
     return { ok: true, ignored: true };
   }
 
-  if (payload.serviceType === "home_visit") return prepareHomeVisitInquiry(payload);
+  if (payload.service_type === "home_visit" || payload.serviceType === "home_visit") return prepareHomeVisitInquiry(payload);
 
   const locale = typeof payload.locale === "string" ? payload.locale : "";
   const pageKind = typeof payload.pageKind === "string" ? payload.pageKind : "";
@@ -70,30 +70,35 @@ function cleanField(value, maxLength) {
 export function prepareHomeVisitInquiry(payload) {
   const locale = typeof payload.locale === "string" ? payload.locale : "";
   const sourcePage = typeof payload.sourcePage === "string" ? payload.sourcePage : "";
-  const dateFrom = typeof payload.dateFrom === "string" ? payload.dateFrom : "";
-  const dateTo = typeof payload.dateTo === "string" ? payload.dateTo : "";
-  const animal = typeof payload.animal === "string" ? payload.animal : "";
-  const detailsPending = payload.quantity === undefined && payload.visitsPerDay === undefined && payload.dogWalk === undefined && payload.specialCare === undefined;
-  const quantity = payload.quantity === undefined ? 1 : Number(payload.quantity);
-  const visitsPerDay = payload.visitsPerDay === undefined ? 1 : Number(payload.visitsPerDay);
-  const dogWalk = payload.dogWalk === true;
+  const dateFrom = typeof payload.date_from === "string" ? payload.date_from : typeof payload.dateFrom === "string" ? payload.dateFrom : "";
+  const dateTo = typeof payload.date_to === "string" ? payload.date_to : typeof payload.dateTo === "string" ? payload.dateTo : "";
+  const animal = typeof payload.pet_type === "string" ? payload.pet_type : typeof payload.animal === "string" ? payload.animal : "";
+  const visitsPerDay = Number(payload.visits_per_day ?? payload.visitsPerDay);
+  const dogWalk = (payload.dog_walk ?? payload.dogWalk) === true;
+  const serviceZone = typeof payload.service_zone === "string" ? payload.service_zone : typeof payload.serviceZone === "string" ? payload.serviceZone : "";
   const neighborhood = cleanField(payload.neighborhood, 120);
-  const specialCare = cleanField(payload.specialCare, 300);
-  const notes = cleanField(payload.notes, 1000);
-  const telegramUsername = normalizeTelegramUsername(payload.telegramUsername);
+  const notes = cleanField(payload.optional_comment ?? payload.notes, 1000);
+  const telegramUsername = normalizeTelegramUsername(payload.telegram_username ?? payload.telegramUsername);
+  const rawLocation = payload.approximate_location;
+  const latitude = Number(rawLocation?.latitude ?? payload.approximateLatitude);
+  const longitude = Number(rawLocation?.longitude ?? payload.approximateLongitude);
+  const approximateLocation = Number.isFinite(latitude) && Number.isFinite(longitude)
+    ? { latitude: Number(latitude.toFixed(3)), longitude: Number(longitude.toFixed(3)) }
+    : null;
 
   if (!locales.has(locale)) return { ok: false, error: "invalid_page" };
   if (sourcePage !== petSittingBusiness.pagePaths[locale].homeVisits) return { ok: false, error: "invalid_source" };
   if (!isCalendarDateKey(dateFrom) || !isCalendarDateKey(dateTo)) return { ok: false, error: "missing_dates" };
   if (dateTo < dateFrom) return { ok: false, error: "invalid_dates" };
   if (!homeVisitAnimals.has(animal)) return { ok: false, error: "invalid_pet" };
-  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) return { ok: false, error: "invalid_quantity" };
   if (!petSittingBusiness.homeVisits.visitsPerDay.includes(visitsPerDay)) return { ok: false, error: "invalid_visit_frequency" };
-  if (dogWalk && animal !== "dog") return { ok: false, error: "invalid_dog_walk" };
-  if (!neighborhood) return { ok: false, error: "missing_neighborhood" };
+  if (dogWalk && !["dog", "cat_and_dog"].includes(animal)) return { ok: false, error: "invalid_dog_walk" };
+  if (serviceZone && !["green", "yellow", "outside"].includes(serviceZone)) return { ok: false, error: "invalid_service_zone" };
+  if (!serviceZone && !neighborhood) return { ok: false, error: "missing_location" };
+  if (serviceZone && !approximateLocation) return { ok: false, error: "missing_location" };
   if (!/^@[A-Za-z0-9_]{5,32}$/.test(telegramUsername)) return { ok: false, error: "invalid_telegram" };
-  const quote = calculateHomeVisitQuote(dateFrom, dateTo, quantity, visitsPerDay, dogWalk);
-  if (!quote) return { ok: false, error: "invalid_quote" };
+  const quote = serviceZone ? calculateHomeVisitQuote(dateFrom, dateTo, visitsPerDay, dogWalk, serviceZone) : null;
+  if (serviceZone && !quote) return { ok: false, error: "invalid_quote" };
 
   return {
     ok: true,
@@ -105,15 +110,14 @@ export function prepareHomeVisitInquiry(payload) {
       dateFrom,
       dateTo,
       animal,
-      quantity,
       visitsPerDay,
       dogWalk,
+      serviceZone,
+      approximateLocation,
       neighborhood,
-      specialCare,
       notes,
       telegramUsername,
       quote,
-      detailsPending,
     },
   };
 }
@@ -181,21 +185,17 @@ export function buildPetSittingTelegramMessage(inquiry, submittedAt = new Date()
 export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().toISOString()) {
   const isEnglish = inquiry.locale === "en";
   const animal = isEnglish
-    ? inquiry.animal
-    : inquiry.animal === "dog" ? "собака" : inquiry.animal === "cat" ? "кошка" : "другой";
+    ? inquiry.animal === "cat_and_dog" ? "cat and dog" : inquiry.animal
+    : inquiry.animal === "dog" ? "собака" : inquiry.animal === "cat" ? "кошка" : "кошка и собака";
   const sourceUrl = `https://getmanov.com${inquiry.sourcePage}`;
-  const reason = inquiry.quote.confirmationReason === "special_care"
-    ? isEnglish ? "special care" : "особый уход"
-    : isEnglish ? "more than 2 pets" : "больше 2 питомцев";
-  const price = inquiry.detailsPending
+  const price = !inquiry.quote || inquiry.quote.needsConfirmation
     ? isEnglish
-      ? `from ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD per visit; frequency, walk, care, and area to confirm`
-      : `от ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD за визит; частоту, прогулку, уход и зону нужно подтвердить`
-    : inquiry.quote.needsConfirmation
-    ? isEnglish
-      ? `confirm individually (${reason}); base rate ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD per visit`
-      : `уточнить индивидуально (${reason}); базовый тариф ${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD за визит`
-    : `${formatRsd(inquiry.quote.total, inquiry.locale)} RSD (${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD × ${inquiry.quote.visitCount})${inquiry.specialCare ? isEnglish ? "; special care to confirm" : "; особый уход нужно подтвердить" : ""}`;
+      ? "confirm after contact"
+      : "подтвердить после связи"
+    : `${formatRsd(inquiry.quote.total, inquiry.locale)} RSD (${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD × ${inquiry.quote.visitCount})`;
+  const location = inquiry.approximateLocation
+    ? `${inquiry.approximateLocation.latitude}, ${inquiry.approximateLocation.longitude}`
+    : inquiry.neighborhood;
   const lines = isEnglish ? [
     "🏠 New home-visit pet-sitting request",
     "",
@@ -203,14 +203,12 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     `Page: ${inquiry.pageLabel}`,
     `Dates: ${inquiry.dateFrom} — ${inquiry.dateTo}`,
     `Pet: ${animal}`,
-    `Number of pets: ${inquiry.detailsPending ? "to confirm" : inquiry.quantity}`,
-    `Visits per day: ${inquiry.detailsPending ? "to confirm" : inquiry.visitsPerDay}`,
-    `Dog walk needed: ${inquiry.detailsPending ? "to confirm" : inquiry.dogWalk ? "yes" : "no"}`,
-    `Approximate neighborhood: ${inquiry.neighborhood}`,
-    `Area pricing: confirm from neighborhood; extended area adds ${formatRsd(petSittingBusiness.homeVisits.serviceArea.extendedVisitSurcharge, "en")} RSD per visit`,
-    `Medication / special care: ${inquiry.detailsPending ? "see comment / confirm" : inquiry.specialCare || "not provided"}`,
-    `Care details: ${inquiry.notes || "not provided"}`,
-    `Base price: ${price}`,
+    `Visits per day: ${inquiry.visitsPerDay}`,
+    `Dog walk needed: ${inquiry.dogWalk ? "yes" : "no"}`,
+    `Service zone: ${inquiry.serviceZone || "map unavailable"}`,
+    `Approximate location: ${location}`,
+    `Comment: ${inquiry.notes || "not provided"}`,
+    `Estimated price: ${price}`,
     `Customer Telegram: ${inquiry.telegramUsername}`,
     "Language: EN",
     `Source: ${sourceUrl}`,
@@ -222,14 +220,12 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     `Страница: ${inquiry.pageLabel}`,
     `Даты: ${inquiry.dateFrom} — ${inquiry.dateTo}`,
     `Питомец: ${animal}`,
-    `Количество: ${inquiry.detailsPending ? "уточнить" : inquiry.quantity}`,
-    `Визитов в день: ${inquiry.detailsPending ? "уточнить" : inquiry.visitsPerDay}`,
-    `Нужна прогулка с собакой: ${inquiry.detailsPending ? "уточнить" : inquiry.dogWalk ? "да" : "нет"}`,
-    `Примерный район: ${inquiry.neighborhood}`,
-    `Цена по зоне: подтвердить по району; в расширенной зоне +${formatRsd(petSittingBusiness.homeVisits.serviceArea.extendedVisitSurcharge, "ru")} RSD за визит`,
-    `Лекарства / особый уход: ${inquiry.detailsPending ? "см. комментарий / уточнить" : inquiry.specialCare || "не указаны"}`,
-    `Детали ухода: ${inquiry.notes || "не указаны"}`,
-    `Базовая стоимость: ${price}`,
+    `Визитов в день: ${inquiry.visitsPerDay}`,
+    `Нужна прогулка с собакой: ${inquiry.dogWalk ? "да" : "нет"}`,
+    `Зона выезда: ${inquiry.serviceZone || "карта недоступна"}`,
+    `Примерное место: ${location}`,
+    `Комментарий: ${inquiry.notes || "не указан"}`,
+    `Ориентировочная стоимость: ${price}`,
     `Telegram клиента: ${inquiry.telegramUsername}`,
     "Язык: RU",
     `Источник: ${sourceUrl}`,
