@@ -6,15 +6,15 @@ This repository contains a static website built with Astro and deployed to Netli
 
 **Project type:** Static website  
 **Primary goal:** Content-driven site with tools, notes, projects, and case studies  
-**Rendering model:** Static generation with one isolated Netlify Function for pet-sitting enquiry delivery
+**Rendering model:** Static generation with isolated Netlify Functions for pet-sitting enquiry delivery and opt-in Session Saver telemetry forwarding
 
 ### Explicit non-goals (important)
 
-- ❌ No general application backend beyond the isolated pet-sitting notification function
+- ❌ No general application backend beyond the isolated pet-sitting notification and Session Saver telemetry functions
 - ❌ No databases
 - ❌ No authentication
 - ❌ No SSR
-- ❌ No API routes
+- ❌ No Astro SSR/API routes
 
 The project follows a **static-first** philosophy.
 
@@ -84,7 +84,8 @@ src/
 
 netlify/
  └─ functions/
-     └─ pet-sitting-inquiry.mjs     -> Telegram delivery for pet-sitting enquiries
+     ├─ pet-sitting-inquiry.mjs     -> Telegram delivery for pet-sitting enquiries
+     └─ session-saver-events.mjs    -> strict opt-in event forwarding to GA4
 ````
 ### Structural rules
 
@@ -149,6 +150,8 @@ The `pet-sitting-inquiry` Netlify Function requires these production environment
 * `PET_SITTING_TELEGRAM_CHAT_ID`
 
 They are server-side secrets and must never be exposed through Astro page data or client-side JavaScript. If either variable is unavailable, the function returns a temporary delivery error while the direct Telegram, WhatsApp, and Viber links remain usable.
+
+The `session-saver-events` Netlify Function requires `GA4_API_SECRET` and the exact comma-separated extension origins in `SESSION_SAVER_EXTENSION_ORIGINS`. It accepts only the schema documented in [`docs/session-saver-telemetry.md`](docs/session-saver-telemetry.md). Its GA4 secret must remain server-side. The endpoint is not active in the extension until the later extension release adds explicit opt-in behavior.
 
 Continue
 

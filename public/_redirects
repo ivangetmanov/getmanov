@@ -1,5 +1,8 @@
 /sitemap.xml /sitemap-index.xml 301
 
+# Anonymous Session Saver telemetry is handled by the existing Netlify Functions platform.
+/api/session-saver/events /.netlify/functions/session-saver-events 200!
+
 # Permanently retired page. Keep these URLs as explicit 404 responses so
 # crawlers can remove them from their indexes instead of following a redirect.
 /case-studies/taekwondo             /404.html                            404!

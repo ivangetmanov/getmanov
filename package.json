@@ -6,11 +6,13 @@
     "build": "astro build",
     "preview": "astro preview",
     "check:links": "node scripts/check-site-links.mjs",
+    "check:analytics": "node scripts/check-analytics.mjs",
+    "test:session-saver": "node --test tests/session-saver-events.test.mjs",
     "check:pet-calendar": "node scripts/check-pet-sitting-calendar.mjs",
     "check:pet-inquiry": "node scripts/check-pet-sitting-inquiry.mjs",
     "check:pet-articles": "node scripts/check-pet-sitting-articles.mjs",
     "check:pet-seo": "node scripts/check-pet-sitting-seo.mjs",
-    "verify": "npm run build && npm run check:links && npm run check:pet-calendar && npm run check:pet-inquiry && npm run check:pet-articles && npm run check:pet-seo"
+    "verify": "npm run build && npm run check:links && npm run check:analytics && npm run check:pet-calendar && npm run check:pet-inquiry && npm run check:pet-articles && npm run check:pet-seo"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.9",
