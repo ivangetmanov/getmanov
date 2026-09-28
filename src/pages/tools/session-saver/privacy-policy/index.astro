@@ -11,7 +11,7 @@ const canonical = "/tools/session-saver/privacy-policy/";
   <section class="policy-page">
     <p class="eyebrow">ChatGPT Session Saver</p>
     <h1>Privacy Policy</h1>
-    <p class="effective-date">Effective date: June 1, 2026</p>
+    <p class="effective-date">Effective date: September 28, 2026</p>
 
     <p>
       This Privacy Policy explains how the ChatGPT Session Saver browser
@@ -28,14 +28,36 @@ const canonical = "/tools/session-saver/privacy-policy/";
     </p>
     <p>
       The extension does not send your conversation content to external servers,
-      analytics tools, advertising networks, or third parties.
+      advertising networks, or analytics providers.
+    </p>
+
+    <h2>Optional Product Analytics</h2>
+    <p>
+      ChatGPT Session Saver may collect limited usage and diagnostic analytics
+      only after you explicitly enable analytics in the extension. If you do
+      not enable analytics, the extension does not send analytics requests.
+    </p>
+    <p>
+      When enabled, the extension uses a randomly generated persistent
+      pseudonymous installation identifier and may send product events such as
+      saves, job completion status, exports, recovery actions, and review
+      interactions. These events help us understand how the extension works
+      and where it can be improved.
+    </p>
+    <p>
+      Analytics events do not include conversation content, questions, answers,
+      conversation URLs or IDs, search queries, DOM content, raw error messages,
+      or stack traces. The extension sends opted-in analytics events to
+      getmanov.com infrastructure hosted on Netlify, where approved events may
+      be processed using Google Analytics 4.
     </p>
 
     <h2>Data Storage</h2>
     <p>
       Saved sessions are stored locally on your device using browser storage.
-      We do not operate a backend server for collecting, storing, transmitting,
-      or sharing your saved ChatGPT sessions.
+      getmanov.com does not receive or store your saved ChatGPT sessions. The
+      telemetry endpoint validates and forwards opted-in analytics events; it
+      does not write event request bodies to an application database.
     </p>
 
     <h2>Permissions</h2>
@@ -47,12 +69,20 @@ const canonical = "/tools/session-saver/privacy-policy/";
     </ul>
 
     <h2>User Control</h2>
-    <p>You remain in control of your saved data. You can view or delete saved sessions from the extension interface or by clearing the extension's browser storage.</p>
+    <p>
+      You remain in control of your saved data and analytics preference. You
+      can view or delete saved sessions from the extension interface or by
+      clearing the extension's browser storage. You can disable analytics in
+      the extension at any time; after you disable it, the extension stops
+      sending analytics events.
+    </p>
 
     <h2>Data Sharing</h2>
     <p>
       We do not sell, rent, trade, or share your saved ChatGPT sessions or
-      personal data with third parties.
+      conversation content. If you enable analytics, limited product events are
+      sent to getmanov.com and may be processed using Netlify and Google
+      Analytics 4 as described above.
     </p>
 
     <h2>Changes to This Policy</h2>
