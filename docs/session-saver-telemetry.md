@@ -95,12 +95,16 @@ Chrome match patterns do not enforce a path restriction in `host_permissions`, s
 
 - Uses Measurement ID `G-Q9Y8XEE6EF` and the server-only `GA4_API_SECRET`.
 - Sends one event to the GA4 Measurement Protocol `mp/collect` endpoint. The event name and the validated properties keep their names and values.
-- Maps the lowercase install UUID to `client_id = hex(SHA-256(install_id))`; the raw UUID is not sent as an event parameter. This deterministic 64-character ID is only a pseudonymous extension-install identifier.
-- Maps `timestamp` to request-level `timestamp_micros` (clamping an accepted future clock skew to receipt time) and enables `ENFORCE_RECOMMENDATIONS` validation.
+- Maps the lowercase install UUID to `client_id = (first 128 SHA-256 bits + 1) + "." + (last 128 SHA-256 bits + 1)`, with each half interpreted as a big-endian hexadecimal integer. This is deterministic, contains two positive decimal integers in Google's recommended format, and never sends the original UUID.
+- Maps `timestamp` to request-level `timestamp_micros` (clamping an accepted future clock skew to receipt time). Production omits `validation_behavior`; Google's current guidance recommends strict validation during development and omitting this setting in production to minimize rejected data.
 - Marks `analytics_storage` as `GRANTED` because the endpoint contract is opt-in only. The extension must enforce consent and send nothing on decline; the backend cannot prove a public caller's consent.
 - Sends no `user_id`, session ID, IP override, user location, device profile, conversation data, or extra analytics fields.
+- Does not synthesize `session_id` or `engagement_time_msec`. GA4 says these help session, engagement, and Realtime reporting. Session Saver currently provides neither a GA session identifier nor an elapsed user-engagement interval in its agreed schema; inventing these values would misrepresent the events. The event payload may therefore have reduced session/Realtime reporting.
 - No website GA cookie is read or shared. Extension IDs cannot be joined to the website's browser `client_id`, so GA4 can report aggregate website and extension event volumes but this design does not attribute an individual website visit to a particular extension install.
-- GA4 Measurement Protocol returns 2xx when it receives a request even if it later drops or ignores invalid data. Local schema checks plus `ENFORCE_RECOMMENDATIONS` reduce that risk, but the endpoint can only report transport-level delivery, not confirm report inclusion.
+- GA4 Measurement Protocol returns 2xx when it receives a request even if it later drops or ignores invalid data. Local schema checks and mocked strict-format coverage reduce payload risk, but the production endpoint can only report transport-level delivery, not confirm report inclusion.
+- For development-only validation, the handler factory supports dependency injection of Google's `/debug/mp/collect` URL and strict validation mode. Automated tests mock this request; the public function always uses `/mp/collect` and the production payload.
+
+Official references: [GA4 Measurement Protocol reference](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference?client_type=gtag), [validate events](https://developers.google.com/analytics/devguides/collection/protocol/ga4/validating-events), [Realtime verification](https://developers.google.com/analytics/devguides/collection/protocol/ga4/verify-implementation?client_type=gtag).
 
 ## Environment and deployment
 

@@ -169,15 +169,17 @@ function createRateLimiter({ now = Date.now } = {}) {
 }
 
 export function ga4ClientId(installId) {
-  return createHash("sha256").update(installId.toLowerCase()).digest("hex");
+  const digest = createHash("sha256").update(installId.toLowerCase()).digest("hex");
+  const part1 = BigInt(`0x${digest.slice(0, 32)}`) + 1n;
+  const part2 = BigInt(`0x${digest.slice(32)}`) + 1n;
+  return `${part1}.${part2}`;
 }
 
-function buildGa4Payload(validated) {
-  return {
+function buildGa4Payload(validated, { strictValidation = false } = {}) {
+  const payload = {
     client_id: ga4ClientId(validated.installId),
     timestamp_micros: validated.gaTimestampMs * 1_000,
     consent: { analytics_storage: "GRANTED" },
-    validation_behavior: "ENFORCE_RECOMMENDATIONS",
     events: [
       {
         name: validated.event,
@@ -185,10 +187,12 @@ function buildGa4Payload(validated) {
       },
     ],
   };
+  if (strictValidation) payload.validation_behavior = "ENFORCE_RECOMMENDATIONS";
+  return payload;
 }
 
-async function forwardToGa4({ validated, secret, fetchImpl, timeoutMs }) {
-  const url = new URL(GA4_ENDPOINT);
+async function forwardToGa4({ validated, secret, fetchImpl, timeoutMs, endpoint, strictValidation }) {
+  const url = new URL(endpoint);
   url.searchParams.set("measurement_id", MEASUREMENT_ID);
   url.searchParams.set("api_secret", secret);
   const controller = new AbortController();
@@ -199,7 +203,7 @@ async function forwardToGa4({ validated, secret, fetchImpl, timeoutMs }) {
     const response = await fetchImpl(url, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(buildGa4Payload(validated)),
+      body: JSON.stringify(buildGa4Payload(validated, { strictValidation })),
       signal: controller.signal,
     });
     return response.ok;
@@ -216,6 +220,8 @@ export function createHandler({
   now = Date.now,
   timeoutMs = 4_000,
   rateLimit,
+  ga4Endpoint = GA4_ENDPOINT,
+  strictValidation = false,
 } = {}) {
   const isRateLimited = rateLimit || createRateLimiter({ now });
 
@@ -258,7 +264,14 @@ export function createHandler({
       return jsonResponse(503, { ok: false, error: "telemetry_unavailable" }, cors);
     }
 
-    const delivered = await forwardToGa4({ validated, secret: secret.trim(), fetchImpl, timeoutMs });
+    const delivered = await forwardToGa4({
+      validated,
+      secret: secret.trim(),
+      fetchImpl,
+      timeoutMs,
+      endpoint: ga4Endpoint,
+      strictValidation,
+    });
     if (!delivered) return jsonResponse(502, { ok: false, error: "forwarding_failed" }, cors);
     return jsonResponse(202, { ok: true }, cors);
   };

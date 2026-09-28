@@ -44,7 +44,13 @@ function makeRequest(payload, overrides = {}) {
   };
 }
 
-function setup({ response = { ok: true, status: 204 }, secret = SECRET, fetchImpl } = {}) {
+function setup({
+  response = { ok: true, status: 204 },
+  secret = SECRET,
+  fetchImpl,
+  ga4Endpoint,
+  strictValidation,
+} = {}) {
   const calls = [];
   const handler = createHandler({
     env: {
@@ -52,6 +58,8 @@ function setup({ response = { ok: true, status: 204 }, secret = SECRET, fetchImp
       SESSION_SAVER_EXTENSION_ORIGINS: ORIGIN,
     },
     now: () => NOW,
+    ...(ga4Endpoint ? { ga4Endpoint } : {}),
+    ...(strictValidation !== undefined ? { strictValidation } : {}),
     fetchImpl:
       fetchImpl ||
       (async (url, options) => {
@@ -74,12 +82,70 @@ test("valid job_completed event is accepted and forwarded with only approved fie
   assert.deepEqual(JSON.parse(response.body), { ok: true });
   assert.equal(calls.length, 1);
   assert.equal(calls[0].options.method, "POST");
+  assert.equal(calls[0].url.pathname, "/mp/collect");
   const forwarded = JSON.parse(calls[0].options.body);
   assert.equal(forwarded.client_id, ga4ClientId(validPayload().install_id));
+  assert.match(forwarded.client_id, /^[0-9]+\.[0-9]+$/);
   assert.equal(forwarded.events[0].name, "job_completed");
   assert.deepEqual(forwarded.events[0].params, validPayload().properties);
   assert.equal(forwarded.events[0].params.install_id, undefined);
   assert.equal(forwarded.timestamp_micros, NOW * 1_000);
+  assert.equal(forwarded.validation_behavior, undefined);
+  assert.equal(calls[0].url.searchParams.get("measurement_id"), "G-Q9Y8XEE6EF");
+  assert.equal(calls[0].url.searchParams.get("api_secret"), SECRET);
+});
+
+test("GA4 client ID derivation is deterministic and follows Google's numeric format", () => {
+  const installId = validPayload().install_id;
+  const first = ga4ClientId(installId);
+  const again = ga4ClientId(installId);
+  const [part1, part2] = first.split(".");
+
+  assert.equal(first, again);
+  assert.match(first, /^[0-9]+\.[0-9]+$/);
+  assert.ok(BigInt(part1) > 0n);
+  assert.ok(BigInt(part2) > 0n);
+});
+
+test("different install UUIDs derive different GA4 client IDs", () => {
+  const first = ga4ClientId("123e4567-e89b-42d3-a456-426614174000");
+  const second = ga4ClientId("123e4567-e89b-42d3-a456-426614174001");
+
+  assert.notEqual(first, second);
+});
+
+test("GA4 forwarding does not include the original install UUID", async () => {
+  const { handler, calls } = setup();
+  const installId = validPayload().install_id;
+  const response = await send(handler, validPayload());
+  const forwardedBody = calls[0].options.body;
+
+  assert.equal(response.statusCode, 202);
+  assert.doesNotMatch(forwardedBody, new RegExp(installId));
+  assert.notEqual(JSON.parse(forwardedBody).client_id, installId);
+});
+
+test("mocked GA4 validation request uses Google's debug payload format", async () => {
+  const { handler, calls } = setup({
+    ga4Endpoint: "https://region1.google-analytics.com/debug/mp/collect",
+    strictValidation: true,
+  });
+  const response = await send(handler, validPayload());
+
+  assert.equal(response.statusCode, 202);
+  assert.equal(calls[0].url.pathname, "/debug/mp/collect");
+  const validationPayload = JSON.parse(calls[0].options.body);
+  assert.match(validationPayload.client_id, /^[0-9]+\.[0-9]+$/);
+  assert.equal(validationPayload.validation_behavior, "ENFORCE_RECOMMENDATIONS");
+  assert.deepEqual(validationPayload.events, [
+    {
+      name: "job_completed",
+      params: validPayload().properties,
+    },
+  ]);
+  assert.equal(validationPayload.timestamp_micros, NOW * 1_000);
+  assert.equal(validationPayload.consent.analytics_storage, "GRANTED");
+  assert.equal(validationPayload.events[0].params.install_id, undefined);
 });
 
 test("unknown event names are rejected", async () => {
