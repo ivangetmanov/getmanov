@@ -1,147 +1,312 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
+const groups = [
+  {
+    id: "export-and-save",
+    title: "ChatGPT export and saving guides",
+    description: "Choose a way to save one conversation, download a full chat, or keep a temporary chat."
+  },
+  {
+    id: "formats-and-reuse",
+    title: "Formats, Q&A and conversation reuse",
+    description: "Choose a file format and turn saved conversations into notes you can use again."
+  },
+  {
+    id: "privacy-and-technology",
+    title: "Privacy, permissions and technical explanations",
+    description: "Understand extension permissions, data handling, and how active-page export works."
+  },
+  {
+    id: "practical-workflows",
+    title: "Practical workflows",
+    description: "Keep useful context from writing, debugging, research, and study sessions."
+  },
+  {
+    id: "marketing-and-research",
+    title: "Marketing, growth and research",
+    description: "Explore experiment results and frameworks for publishing useful research."
+  }
+];
+
 const notes = [
   {
     title: "I Built 11 B2B SEO Guides. They Got 1.29K Google Impressions and One Click.",
     slug: "b2b-seo-guides-postmortem",
+    group: "marketing-and-research",
     status: "postmortem",
     description: "What failed in a topical-authority experiment, what Search Console showed, and why the cluster was deleted."
   },
   {
     title: "How to Export Long ChatGPT Chats Without Losing Context",
     slug: "export-long-chatgpt-chats",
+    group: "export-and-save",
     status: "pillar guide",
     description: "Compare account export, shared links, PDF, copy-paste, and local Q&A export."
   },
   {
     title: "ChatGPT Export Glossary: Key Terms Explained",
     slug: "chatgpt-export-glossary",
+    group: "formats-and-reuse",
     status: "reference guide",
     description: "Define single-chat export, account export, Q&A notes, formats, and extension permissions."
   },
   {
     title: "Is It Safe to Use a ChatGPT Export Extension?",
     slug: "is-chatgpt-export-extension-safe",
+    group: "privacy-and-technology",
     status: "safety guide",
     description: "Evaluate permissions, privacy policies, local and cloud data flow, uploads, and red flags."
   },
   {
     title: "How Browser Extensions Read an Active ChatGPT Page",
     slug: "how-browser-extensions-read-active-chatgpt-page",
+    group: "privacy-and-technology",
     status: "technical guide",
     description: "Understand content scripts, the DOM, activeTab, host permissions, and local processing."
   },
   {
     title: "Why ChatGPT Export Extensions Break When OpenAI Updates the Interface",
     slug: "why-chatgpt-export-extensions-break-interface-updates",
+    group: "privacy-and-technology",
     status: "maintenance guide",
     description: "Understand how DOM, selector, rendering, and scrolling changes can break active-page extraction."
   },
   {
     title: "TXT vs Markdown vs PDF vs JSON for ChatGPT Export",
     slug: "chatgpt-export-formats-txt-markdown-pdf-json",
+    group: "formats-and-reuse",
     status: "comparison guide",
     description: "Choose the right format for reusable notes, documentation, sharing, or automation."
   },
   {
     title: "How to Export ChatGPT Chats as TXT",
     slug: "export-chatgpt-chats-as-txt",
+    group: "formats-and-reuse",
     status: "format guide",
     description: "Save durable Q&A notes, organize TXT files, and convert them into downstream formats."
   },
   {
     title: "How to Export a Single ChatGPT Conversation",
     slug: "export-single-chatgpt-conversation",
+    group: "export-and-save",
     status: "supporting guide",
     description: "Save one specific active chat without downloading your full account history."
   },
   {
     title: "ChatGPT Shared Links vs Local Export: What's the Difference?",
     slug: "chatgpt-shared-links-vs-local-export",
+    group: "export-and-save",
     status: "comparison guide",
     description: "Choose between link-based sharing and a reusable local file you can edit, search, and archive."
   },
   {
     title: "How to Export ChatGPT Conversations as Question-Answer Pairs",
     slug: "export-chatgpt-question-answer-pairs",
+    group: "formats-and-reuse",
     status: "supporting guide",
     description: "Preserve prompts and answers as structured pairs for searchable, reusable notes."
   },
   {
     title: "How Writers Can Archive ChatGPT Brainstorming Sessions",
     slug: "writers-archive-chatgpt-brainstorming-sessions",
+    group: "practical-workflows",
     status: "writer workflow guide",
     description: "Preserve prompts, drafts, rewrites, tone variants, rejected ideas, and final copy."
   },
   {
     title: "How Developers Can Save ChatGPT Debugging Conversations",
     slug: "developers-save-chatgpt-debugging-conversations",
+    group: "practical-workflows",
     status: "developer workflow guide",
     description: "Preserve errors, attempted fixes, code blocks, final solutions, and verification context."
   },
   {
     title: "How Researchers Can Save ChatGPT Conversations as Structured Notes",
     slug: "researchers-save-chatgpt-conversations-structured-notes",
+    group: "practical-workflows",
     status: "research workflow guide",
     description: "Preserve research questions, hypotheses, source ideas, comparisons, decisions, and next steps."
   },
   {
     title: "How Students Can Turn ChatGPT Chats into Study Notes",
     slug: "students-turn-chatgpt-chats-into-study-notes",
+    group: "practical-workflows",
     status: "student workflow guide",
     description: "Turn explanations, examples, corrections, and practice questions into reusable study notes."
   },
   {
     title: "Why Long ChatGPT Chats Are Hard to Reuse Later",
     slug: "why-long-chatgpt-chats-are-hard-to-reuse-later",
+    group: "formats-and-reuse",
     status: "supporting guide",
     description: "Understand how lost prompts, decisions, and structure make saved chats difficult to reuse."
   },
   {
     title: "How to Turn a Messy ChatGPT Thread into Clean Q&A Notes",
     slug: "chatgpt-thread-to-qa-notes",
+    group: "formats-and-reuse",
     status: "supporting guide",
     description: "Preserve prompts and answers as structured, searchable, reusable notes."
   },
   {
     title: "How to Save a Long ChatGPT Conversation Without Scrolling Forever",
     slug: "save-long-chatgpt-conversation-without-scrolling",
+    group: "export-and-save",
     status: "supporting guide",
     description: "Save one long active chat without endless scrolling or broken manual reconstruction."
   },
   {
     title: "Why Copy-Paste Fails for Long ChatGPT Conversations",
     slug: "why-copy-paste-fails-long-chatgpt-conversations",
+    group: "export-and-save",
     status: "supporting guide",
     description: "Understand where manual copying loses messages, formatting, structure, and context."
   },
   {
     title: "How to make case-based research visible to LLMs",
     slug: "llm-visible-research",
+    group: "marketing-and-research",
     status: "draft",
     description: "Draft framework for structuring evidence-first content."
+  },
+  {
+    title: "ChatGPT Data Export vs Single-Chat Export: What's the Difference?",
+    slug: "chatgpt-data-export-vs-single-chat-export",
+    group: "export-and-save",
+    status: "comparison guide",
+    description: "Compare downloading your account data with saving one conversation for a specific task."
+  },
+  {
+    title: "How to Copy an Entire ChatGPT Conversation",
+    slug: "copy-entire-chatgpt-conversation",
+    group: "export-and-save",
+    status: "copying guide",
+    description: "Compare ways to copy a full chat and check that prompts, answers, and formatting survive."
+  },
+  {
+    title: "How to Download a Full ChatGPT Conversation",
+    slug: "download-full-chatgpt-conversation",
+    group: "export-and-save",
+    status: "download guide",
+    description: "Choose a way to download a complete conversation as a file you can keep and reuse."
+  },
+  {
+    title: "How to Save a ChatGPT Conversation as PDF",
+    slug: "save-chatgpt-conversation-as-pdf",
+    group: "formats-and-reuse",
+    status: "PDF guide",
+    description: "Use browser printing to save a PDF and check the result for missing messages and layout problems."
+  },
+  {
+    title: "How to Save or Export a Temporary Chat in ChatGPT",
+    slug: "save-export-chatgpt-temporary-chat",
+    group: "export-and-save",
+    status: "temporary chat guide",
+    description: "Save useful messages from a temporary chat before leaving the conversation."
   },
 ];
 
 ---
 
 <BaseLayout title="Notes">
-  <h1>Notes</h1>
+  <div class="notes-index">
+    <h1>Notes</h1>
 
-  <p>
-    Thinking, frameworks, and drafts.
-    These notes document how experiments are designed,
-    interpreted, and turned into reusable knowledge.
-  </p>
+    <p>
+      Thinking, frameworks, and drafts.
+      These notes document how experiments are designed,
+      interpreted, and turned into reusable knowledge.
+    </p>
 
-  <ul>
-    {notes.map(note => (
-      <li>
-        <a href={`/notes/${note.slug}/`}>{note.title}</a>
-        <small> — {note.status}</small>
-        <p>{note.description}</p>
-      </li>
+    <nav aria-label="Browse note topics">
+      <ul class="notes-topics">
+        {groups.map(group => (
+          <li><a href={`#${group.id}`}>{group.title}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    {groups.map(group => (
+      <section aria-labelledby={group.id}>
+        <h2 id={group.id}>{group.title}</h2>
+        <p class="group-description">{group.description}</p>
+        <ul class="notes-list">
+          {notes.filter(note => note.group === group.id).map(note => (
+            <li>
+              <a href={`/notes/${note.slug}/`}>{note.title}</a>
+              <small>{note.status}</small>
+              <p>{note.description}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
     ))}
-  </ul>
+  </div>
 </BaseLayout>
+
+<style>
+  .notes-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 1.5rem 0 2rem;
+    padding: 0;
+  }
+
+  .notes-topics li {
+    margin: 0;
+  }
+
+  .notes-topics a {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .notes-topics a:hover {
+    text-decoration: underline;
+  }
+
+  .notes-index a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  .notes-index section {
+    margin-top: 2.5rem;
+  }
+
+  .group-description,
+  .notes-list small {
+    color: var(--muted);
+  }
+
+  .notes-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .notes-list li {
+    border-bottom: 1px solid var(--line);
+    margin: 0;
+    padding: 1rem 0;
+  }
+
+  .notes-list a {
+    font-weight: 600;
+  }
+
+  .notes-list small {
+    display: block;
+    margin-top: 0.25rem;
+  }
+
+  .notes-list p {
+    margin: 0.5rem 0 0;
+  }
+</style>
