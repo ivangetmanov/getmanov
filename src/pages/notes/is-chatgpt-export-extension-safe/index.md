@@ -485,6 +485,10 @@ For a deeper comparison of these trust models, read [ChatGPT Shared Links vs Loc
 
 It is designed for users who want a local file rather than a cloud backup workflow.
 
+Session Saver processes chat conversation content locally in your browser. Conversation text, messages, titles, conversation URLs and conversation identifiers are not transmitted as telemetry.
+
+Optional usage and performance analytics are **off by default**. They require explicit user opt-in and can be disabled at any time. Opt-in events do not include conversation content. See the [Privacy Policy](/tools/session-saver/privacy-policy/) for data handling details.
+
 It is best for:
 
 * one active ChatGPT conversation;
