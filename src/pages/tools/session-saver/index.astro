@@ -13,36 +13,36 @@ const canonical = "/tools/session-saver/";
 
 const features = [
   {
-    title: "Export entire conversations",
-    text: "Save a whole ChatGPT chat as structured Question & Answer pairs.",
+    title: "Entire Chat export",
+    text: "Save a long conversation as Q&A pairs, including older history that ChatGPT loads as you scroll.",
   },
   {
-    title: "Handle very long chats",
-    text: "Preserve long-running research, coding, study, and planning sessions.",
+    title: "Last 10, 20 or 30 pairs",
+    text: "Save just the latest Question & Answer pairs when you only need the recent part of a conversation.",
   },
   {
-    title: "Start from your position",
-    text: "Export from the message you are currently reading instead of starting over.",
+    title: "Current Position Up or Down",
+    text: "Start where you are reading. Choose Up for earlier messages or Down for the messages that follow.",
   },
   {
-    title: "Search Q&A pairs",
-    text: "Find matching questions or answers before you copy or export them.",
+    title: "Save across multiple tabs",
+    text: "Start an independent export in each ChatGPT tab. Each conversation keeps its own job and progress.",
   },
   {
-    title: "Clean TXT export",
-    text: "Create a lightweight local file that is easy to search, store, and reuse.",
+    title: "Close the popup, keep saving",
+    text: "Keep the original ChatGPT tab open while you work elsewhere. Reopen the popup to see the saved progress.",
   },
   {
-    title: "Local processing only",
-    text: "Conversation processing happens in your browser, not on an external server.",
+    title: "Recover a saved run",
+    text: "Restore an available saved run to review its recovered Q&A pairs and export them as TXT.",
   },
   {
-    title: "No API key required",
-    text: "Use the extension directly with the ChatGPT conversation open in Chrome.",
+    title: "Search Questions & Answers",
+    text: "Review separate Questions and Answers columns, search each one, and jump between matching passages.",
   },
   {
-    title: "Progress recovery",
-    text: "Auto-save helps preserve extraction progress if a very long export is interrupted.",
+    title: "Copy or export TXT",
+    text: "Copy Questions or Answers separately, or save the Q&A result as a searchable local TXT file.",
   },
 ];
 
@@ -59,17 +59,17 @@ const faqItems = [
   {
     question: "How do I export a long ChatGPT conversation?",
     answer:
-      "Open the conversation in ChatGPT, launch ChatGPT Session Saver, choose the entire chat or a starting position, and export the extracted Question & Answer pairs as a TXT file.",
+      "Open your conversation and launch ChatGPT Session Saver. Choose Entire Chat, the last 10, 20 or 30 Q&A pairs, or Current Position Up or Down, then start saving. Keep the original ChatGPT tab open, review the extracted pairs, and export them as a TXT file.",
   },
   {
     question: "How do I save an entire ChatGPT chat?",
     answer:
-      "Select the entire-chat export scope in Session Saver. The extension reads the active conversation, keeps the message order, separates questions from answers, and saves the result locally.",
+      "Select Entire Chat. Version 2.65 improves extraction of long conversations where ChatGPT loads older history or shows only part of the chat at a time. The result is saved locally as Q&A pairs. Some messages may still be unavailable during extraction, so check the result for completeness before relying on it as an archive.",
   },
   {
     question: "Can I export ChatGPT to TXT?",
     answer:
-      "Yes. ChatGPT Session Saver creates a clean TXT export that is easy to search, edit, archive, and reuse in other note-taking or knowledge-management tools.",
+      "Yes. Export the extracted Question & Answer pairs as a local TXT file that is easy to search, edit, archive, and reuse. You can also copy Questions or Answers separately from their columns.",
   },
   {
     question: "What is the best way to save ChatGPT conversations?",
@@ -80,6 +80,26 @@ const faqItems = [
     question: "Does ChatGPT support exporting individual chats?",
     answer:
       "ChatGPT provides account-level data export and conversation sharing. Session Saver is designed for saving one active conversation directly as a local, structured TXT file.",
+  },
+  {
+    question: "Can I close the popup while saving?",
+    answer:
+      "Yes. The extraction job continues when you close the popup or switch tabs, as long as the original ChatGPT tab stays open. Reopen the popup to restore the progress view. Processing pauses while your computer sleeps and resumes after it wakes.",
+  },
+  {
+    question: "Can I save conversations from multiple ChatGPT tabs?",
+    answer:
+      "Yes. Each ChatGPT tab can run its own independent extraction job. Start saving in each tab and return to that tab's popup to check its progress. Keep the original tabs open while their jobs run.",
+  },
+  {
+    question: "Can I recover a previous run?",
+    answer:
+      "When a saved run is available, you can select it in the extension to restore its saved Q&A content for review and TXT export. An interrupted run may contain only the pairs saved before the interruption; recovery does not guarantee a complete conversation.",
+  },
+  {
+    question: "Does Session Saver send my conversations to a server?",
+    answer:
+      "No. Conversation text, questions, answers, titles, conversation URLs and conversation IDs are processed locally and are not sent to the developer's servers. Optional usage and performance analytics are off by default, require your explicit opt-in, and can be disabled at any time. Those events do not include conversation content.",
   },
 ];
 
@@ -132,8 +152,8 @@ const structuredData = {
         <h1>Save and Export Long ChatGPT Conversations</h1>
         <p class="lead">
           Turn long ChatGPT chats into clean Question &amp; Answer exports.
-          Export entire conversations, save important discussions, and keep
-          your ChatGPT knowledge accessible.
+          Save the whole chat or just the part you need, then search, copy,
+          and export it as a local TXT file.
         </p>
         <div class="hero-actions">
           <a
@@ -149,7 +169,7 @@ const structuredData = {
           <a class="button button--secondary" href="#features">View Features</a>
         </div>
         <p class="hero-note">
-          Installs from the official Chrome Web Store. No ChatGPT API key,
+          Free Chrome extension from the official Chrome Web Store. No ChatGPT API key,
           external account, or manual ZIP setup required.
         </p>
       </div>
@@ -183,12 +203,12 @@ const structuredData = {
 
     <section id="features" class="section features-section">
       <div class="section-heading">
-        <p class="eyebrow">Built for conversations worth keeping</p>
+        <p class="eyebrow">What's new · September 2026 · v2.65</p>
         <h2>Save the knowledge hidden inside long ChatGPT chats</h2>
         <p>
-          Session Saver is a ChatGPT conversation exporter for people who need
-          more than screenshots or fragile copy-paste. Search the active chat,
-          preserve its Q&A structure, and create a local TXT export.
+          Version 2.65 improves reliability when ChatGPT loads older history or
+          shows only part of a long conversation at a time. Choose how much to
+          save, work across tabs, and return to your saved progress.
         </p>
       </div>
 
@@ -201,6 +221,14 @@ const structuredData = {
           </article>
         ))}
       </div>
+      <aside class="reliability-note" aria-label="Long conversation test result">
+        <p><strong>584 Q&A pairs in a real manual test.</strong></p>
+        <p>
+          One very long conversation produced an export containing 584 pairs.
+          This is a test result, not a guarantee that every historical message
+          in every long chat can be extracted. Check your saved result for completeness.
+        </p>
+      </aside>
     </section>
 
     <section id="workflow" class="section workflow-section">
@@ -208,15 +236,16 @@ const structuredData = {
         <p class="eyebrow">See the workflow</p>
         <h2>From an active ChatGPT thread to a local TXT file</h2>
         <p>
-          Choose the export scope, watch the Q&A pairs appear, search the
-          result, and save the structured conversation locally.
+          Choose your export scope, then review Questions and Answers in
+          separate columns. Search and navigate between matches, copy either
+          column, or export the result as TXT.
         </p>
       </div>
       <div
         class="case-gallery product-workflow-gallery"
         aria-label="ChatGPT Session Saver export workflow"
       >
-        <img src="/images/tools/session-saver/workflow/01-choose-export-scope.webp" alt="Choose whether to export the entire ChatGPT chat, recent Q&A pairs, or start from the current position" width="1280" height="765" loading="lazy" />
+        <img src="/images/tools/session-saver/workflow/01-choose-export-scope.webp" alt="Export scope menu with Entire Chat, Last 10, 20 or 30 pairs, and Current Position Up or Down" width="1280" height="765" loading="lazy" />
         <img src="/images/tools/session-saver/workflow/02-extraction-in-progress.webp" alt="ChatGPT Session Saver extracting questions and answers from a long conversation" width="1280" height="768" loading="lazy" />
         <img src="/images/tools/session-saver/workflow/03-review-qa-pairs.webp" alt="Search and review extracted ChatGPT questions and answers before export" width="1280" height="768" loading="lazy" />
         <img src="/images/tools/session-saver/workflow/04-export-txt.webp" alt="ChatGPT conversation exported and downloaded as a TXT file" width="1230" height="800" loading="lazy" />
@@ -244,9 +273,14 @@ const structuredData = {
         <p class="eyebrow">Privacy-first by design</p>
         <h2>Your conversations stay on your device</h2>
         <p>
-          Session Saver processes the active conversation locally in your
-          browser. It does not require a ChatGPT API key and does not send your
-          exported chats to a separate processing server.
+          Session Saver processes conversation content locally in your browser.
+          It does not send conversation text, questions, answers, titles,
+          conversation URLs or conversation IDs to the developer's servers.
+        </p>
+        <p>
+          Optional usage and performance analytics are <strong>off by default</strong>.
+          They require your explicit opt-in, can be disabled at any time,
+          and do not include conversation content.
         </p>
         <a class="text-link" href="/tools/session-saver/privacy-policy/">
           Read the Privacy Policy
@@ -588,6 +622,28 @@ const structuredData = {
     .use-cases-grid p {
       margin: 0;
       font-size: 16px;
+    }
+
+    .reliability-note {
+      margin-top: 20px;
+      padding: 20px 22px;
+      border-left: 3px solid var(--green-dark);
+      border-radius: 0 16px 16px 0;
+      background: var(--panel);
+    }
+
+    .reliability-note p {
+      max-width: 880px;
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .reliability-note p + p {
+      margin-top: 6px;
+    }
+
+    .reliability-note strong {
+      color: var(--ink);
     }
 
     .workflow-section .section-heading {
