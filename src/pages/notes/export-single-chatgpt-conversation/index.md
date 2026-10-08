@@ -48,7 +48,11 @@ OpenAI's **Data Export** is different: it is an account-level export request tha
 3. For local TXT/Q&A notes, open [ChatGPT Session Saver](/tools/session-saver/) while the chat is active and export the conversation.
 4. Check that the opening prompt and final answer are included, then store the file with a clear name.
 
-> **Save one chat as local notes:** [Try ChatGPT Session Saver](/tools/session-saver/).
+<blockquote>
+  <p><strong>Save one chat as local notes:</strong></p>
+  <p><strong><a href="https://chromewebstore.google.com/detail/chatgpt-session-saver/negkdfmbiophoipcalliiemalkghlidj" target="_blank" rel="noopener noreferrer" data-cta-location="article_direct_install">Install free Chrome extension →</a></strong></p>
+  <p><a href="/tools/session-saver/" data-cta-location="article_learn_more">Learn more about Session Saver →</a></p>
+</blockquote>
 
 If the active conversation is a Temporary Chat, save or export it before leaving: [How to Save or Export a Temporary Chat in ChatGPT](/notes/save-export-chatgpt-temporary-chat/).
 

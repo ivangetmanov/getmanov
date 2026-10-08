@@ -59,7 +59,11 @@ If you have a long ChatGPT conversation open right now, save it before you lose 
 3. Use [ChatGPT Session Saver](/tools/session-saver/) to save one active long conversation as structured local TXT/Q&A notes.
 4. Confirm that the earliest prompt and latest answer are present before closing the chat.
 
-> **Save the current conversation as local notes:** [Try ChatGPT Session Saver](/tools/session-saver/).
+<blockquote>
+  <p><strong>Save the current conversation as local notes:</strong></p>
+  <p><strong><a href="https://chromewebstore.google.com/detail/chatgpt-session-saver/negkdfmbiophoipcalliiemalkghlidj" target="_blank" rel="noopener noreferrer" data-cta-location="article_direct_install">Install free Chrome extension →</a></strong></p>
+  <p><a href="/tools/session-saver/" data-cta-location="article_learn_more">Learn more about Session Saver →</a></p>
+</blockquote>
 
 ## Start here
 
