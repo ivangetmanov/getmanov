@@ -22,7 +22,7 @@ export function petSittingWebsiteEntity() {
     "@id": petSittingSchemaIds.website,
     url: `${siteOrigin}/`,
     name: "GETMANOV",
-    inLanguage: ["en", "ru"],
+    inLanguage: ["en", "ru", "sr-Latn"],
     publisher: { "@id": petSittingSchemaIds.ivan },
   };
 }

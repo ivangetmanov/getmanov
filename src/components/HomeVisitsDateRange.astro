@@ -1,17 +1,18 @@
 ---
-const { locale = "ru" } = Astro.props as { locale?: "ru" | "en" };
+const { locale = "ru" } = Astro.props as { locale?: "ru" | "en" | "sr" };
 const isEnglish = locale === "en";
+const isSerbian = locale === "sr";
 ---
 
 <div class="visit-dates" data-home-visit-dates data-locale={locale}>
   <div class="visit-dates__header">
     <div>
-      <strong>{isEnglish ? "Dates" : "Даты"}</strong>
-      <p data-date-status aria-live="polite">{isEnglish ? "Choose the first day." : "Сначала выберите первый день."}</p>
+      <strong>{isEnglish ? "Dates" : isSerbian ? "Datumi" : "Даты"}</strong>
+      <p data-date-status aria-live="polite">{isEnglish ? "Choose the first day." : isSerbian ? "Najpre izaberite prvi dan." : "Сначала выберите первый день."}</p>
     </div>
-    <div class="visit-dates__controls" aria-label={isEnglish ? "Month navigation" : "Навигация по месяцам"}>
-      <button type="button" data-date-prev aria-label={isEnglish ? "Previous month" : "Предыдущий месяц"}>←</button>
-      <button type="button" data-date-next aria-label={isEnglish ? "Next month" : "Следующий месяц"}>→</button>
+    <div class="visit-dates__controls" aria-label={isEnglish ? "Month navigation" : isSerbian ? "Promena meseca" : "Навигация по месяцам"}>
+      <button type="button" data-date-prev aria-label={isEnglish ? "Previous month" : isSerbian ? "Prethodni mesec" : "Предыдущий месяц"}>←</button>
+      <button type="button" data-date-next aria-label={isEnglish ? "Next month" : isSerbian ? "Sledeći mesec" : "Следующий месяц"}>→</button>
     </div>
   </div>
   <div class="visit-dates__month" data-date-month></div>
@@ -24,6 +25,7 @@ const isEnglish = locale === "en";
     if (root.dataset.ready === 'true') return;
     root.dataset.ready = 'true';
     const isEnglish = root.dataset.locale === 'en';
+    const isSerbian = root.dataset.locale === 'sr';
     const monthNode = root.querySelector('[data-date-month]');
     const status = root.querySelector('[data-date-status]');
     const fromInput = root.querySelector('[data-date-from]');
@@ -35,8 +37,10 @@ const isEnglish = locale === "en";
     let end = '';
     const monthNames = isEnglish
       ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-      : ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-    const weekdays = isEnglish ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+      : isSerbian
+        ? ['januar', 'februar', 'mart', 'april', 'maj', 'jun', 'jul', 'avgust', 'septembar', 'oktobar', 'novembar', 'decembar']
+        : ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    const weekdays = isEnglish ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : isSerbian ? ['pon', 'uto', 'sre', 'čet', 'pet', 'sub', 'ned'] : ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
     function toKey(year, month, day) {
       return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -46,7 +50,7 @@ const isEnglish = locale === "en";
       return new Date(year, month - 1, day);
     }
     function formatDate(key) {
-      return new Intl.DateTimeFormat(isEnglish ? 'en-GB' : 'ru-RU', { day: 'numeric', month: 'long' }).format(fromKey(key));
+      return new Intl.DateTimeFormat(isEnglish ? 'en-GB' : isSerbian ? 'sr-Latn' : 'ru-RU', { day: 'numeric', month: 'long' }).format(fromKey(key));
     }
     function sync() {
       root.dataset.dateFrom = start;
@@ -56,9 +60,9 @@ const isEnglish = locale === "en";
       fromInput.setAttribute('value', start);
       toInput.setAttribute('value', end);
       status.textContent = !start
-        ? isEnglish ? 'Choose the first day.' : 'Сначала выберите первый день.'
+        ? isEnglish ? 'Choose the first day.' : isSerbian ? 'Najpre izaberite prvi dan.' : 'Сначала выберите первый день.'
         : !end
-          ? isEnglish ? `${formatDate(start)} — now choose the last day.` : `${formatDate(start)} — теперь выберите последний день.`
+          ? isEnglish ? `${formatDate(start)} — now choose the last day.` : isSerbian ? `${formatDate(start)} — sada izaberite poslednji dan.` : `${formatDate(start)} — теперь выберите последний день.`
           : `${formatDate(start)} — ${formatDate(end)}`;
       root.dispatchEvent(new CustomEvent('homevisit-dates-change', { bubbles: true, detail: { dateFrom: start, dateTo: end } }));
       render();
@@ -100,7 +104,7 @@ const isEnglish = locale === "en";
         button.classList.toggle('is-start', key === start);
         button.classList.toggle('is-end', key === end);
         button.classList.toggle('is-range', Boolean(start && end && key > start && key < end));
-        button.setAttribute('aria-label', new Intl.DateTimeFormat(isEnglish ? 'en-GB' : 'ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(year, month, day)));
+        button.setAttribute('aria-label', new Intl.DateTimeFormat(isEnglish ? 'en-GB' : isSerbian ? 'sr-Latn' : 'ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(year, month, day)));
         button.addEventListener('click', () => selectDate(key));
         grid.append(button);
       }

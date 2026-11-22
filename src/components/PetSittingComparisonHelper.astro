@@ -1,6 +1,7 @@
 ---
-const { locale, articleSlug } = Astro.props as { locale: "ru" | "en"; articleSlug: string };
+const { locale, articleSlug } = Astro.props as { locale: "ru" | "en" | "sr"; articleSlug: string };
 const isEnglish = locale === "en";
+const isSerbian = locale === "sr";
 const copy = isEnglish
   ? {
       eyebrow: "Quick decision helper",
@@ -17,7 +18,21 @@ const copy = isEnglish
       unknown: "We do not know yet",
       show: "Show options",
     }
-  : {
+  : isSerbian ? {
+      eyebrow: "Brz vodič za izbor",
+      title: "Koji oblik brige bi trebalo da uporedite?",
+      description: "Odgovorite na četiri pitanja. Rezultat ne može lično da proceni vašeg ljubimca, ali može da suzi izbor.",
+      alone: "Može li vaš ljubimac mirno da ostane sam?",
+      newPlace: "Da li mu novo mesto izaziva veliki stres?",
+      company: "Da li mu je potrebna osoba u blizini tokom većeg dela dana?",
+      care: "Da li su potrebni često praćenje ili lekovi?",
+      yes: "Da",
+      sometimes: "Ne uvek",
+      no: "Ne",
+      usuallyNo: "Obično ne",
+      unknown: "Još ne znamo",
+      show: "Prikažite opcije",
+    } : {
       eyebrow: "Небольшая подсказка",
       title: "Какой формат ухода стоит сравнить?",
       description: "Ответьте на четыре вопроса. Результат не заменяет личную оценку питомца, но поможет сузить варианты.",
@@ -80,6 +95,7 @@ const copy = isEnglish
     const result = root.querySelector<HTMLElement>('[data-tool-result]');
     if (!form || !result) return;
     const isEnglish = root.dataset.locale === 'en';
+    const isSerbian = root.dataset.locale === 'sr';
     let started = false;
     const track = (name: string) => {
       if (typeof window.gtag !== 'function') return;
@@ -97,25 +113,33 @@ const copy = isEnglish
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       const values = Object.fromEntries(new FormData(form));
-      let heading = isEnglish ? 'It makes sense to compare several care arrangements.' : 'Имеет смысл сравнить несколько форматов ухода.';
+      let heading = isEnglish ? 'It makes sense to compare several care arrangements.' : isSerbian ? 'Vredi uporediti nekoliko načina brige o ljubimcu.' : 'Имеет смысл сравнить несколько форматов ухода.';
       let explanation = isEnglish
         ? 'Compare where your pet can keep its normal routine and receive the attention it needs.'
-        : 'Посмотрите, где питомцу будет проще сохранить привычный режим и получить нужное внимание.';
+        : isSerbian
+          ? 'Razmotrite gde ljubimac može da zadrži uobičajeni ritam i dobije pažnju koja mu je potrebna.'
+          : 'Посмотрите, где питомцу будет проще сохранить привычный режим и получить нужное внимание.';
       if (values.company === 'yes' || values.care === 'yes') {
-        heading = isEnglish ? 'A live-in sitter in your home may be particularly suitable.' : 'Ситтер с проживанием у вас дома может быть особенно подходящим вариантом.';
+        heading = isEnglish ? 'A live-in sitter in your home may be particularly suitable.' : isSerbian ? 'Pet sitter koji boravi u vašem domu mogao bi posebno da odgovara.' : 'Ситтер с проживанием у вас дома может быть особенно подходящим вариантом.';
         explanation = isEnglish
           ? 'Your pet remains in familiar surroundings while a person stays nearby and follows the agreed routine. Discuss medication and monitoring requirements separately with the sitter.'
-          : 'Питомец останется в знакомой обстановке, а человек сможет быть рядом и соблюдать согласованный режим. Требования к лекарствам и контролю лучше отдельно обсудить с ситтером.';
+          : isSerbian
+            ? 'Ljubimac ostaje u poznatom okruženju, dok je osoba u blizini i prati dogovoreni raspored. O lekovima i potrebnom praćenju razgovarajte posebno sa pet sitterom.'
+            : 'Питомец останется в знакомой обстановке, а человек сможет быть рядом и соблюдать согласованный режим. Требования к лекарствам и контролю лучше отдельно обсудить с ситтером.';
       } else if (values.newPlace === 'high' && values.alone === 'yes') {
-        heading = isEnglish ? 'Start by considering drop-in visits.' : 'В первую очередь стоит рассмотреть визиты зооняни.';
+        heading = isEnglish ? 'Start by considering drop-in visits.' : isSerbian ? 'Najpre razmotrite obilaske ljubimca kod kuće.' : 'В первую очередь стоит рассмотреть визиты зооняни.';
         explanation = isEnglish
           ? 'Your pet can stay alone comfortably, and visits avoid changing the familiar environment. Compare the visit frequency with the normal routine.'
-          : 'Питомец спокойно остаётся один, а визиты позволяют не менять знакомую обстановку. Сравните частоту визитов с его обычным режимом.';
+          : isSerbian
+            ? 'Ljubimac može mirno da ostane sam, a obilasci čuvaju poznato okruženje. Uporedite učestalost poseta s njegovim uobičajenim ritmom.'
+            : 'Питомец спокойно остаётся один, а визиты позволяют не менять знакомую обстановку. Сравните частоту визитов с его обычным режимом.';
       } else if (values.newPlace === 'low' || values.newPlace === 'unknown') {
-        heading = isEnglish ? 'It makes sense to consider home boarding.' : 'Имеет смысл посмотреть домашнюю передержку.';
+        heading = isEnglish ? 'It makes sense to consider home boarding.' : isSerbian ? 'Vredi razmotriti čuvanje ljubimca u tuđem domu.' : 'Имеет смысл посмотреть домашнюю передержку.';
         explanation = isEnglish
           ? 'This may suit a pet that needs company and a home environment. Check compatibility and discuss the normal routine before booking.'
-          : 'Этот формат может подойти, если питомцу нужны компания и домашняя обстановка. До бронирования стоит проверить совместимость и обсудить привычный режим.';
+          : isSerbian
+            ? 'Ovaj način može odgovarati ljubimcu kome prijaju društvo i kućno okruženje. Pre dogovora proverite kako se životinje slažu i razgovarajte o uobičajenom ritmu.'
+            : 'Этот формат может подойти, если питомцу нужны компания и домашняя обстановка. До бронирования стоит проверить совместимость и обсудить привычный режим.';
       }
       result.replaceChildren();
       const strong = document.createElement('strong');

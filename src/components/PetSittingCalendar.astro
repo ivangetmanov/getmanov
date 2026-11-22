@@ -2,6 +2,7 @@
 import { petSittingConfig, type PetSittingPageKind } from "../data/pet-sitting";
 import { petSittingBillingFaq } from "../data/pet-sitting-faq";
 import { petSittingBusiness } from "../lib/pet-sitting-business.mjs";
+import PetMessagingLinks from "./PetMessagingLinks.astro";
 
 const {
   locale = "ru",
@@ -10,13 +11,14 @@ const {
   articleSlug = "",
   toolType = "full_enquiry",
 } = Astro.props as {
-  locale?: "ru" | "en";
+  locale?: "ru" | "en" | "sr";
   kind?: PetSittingPageKind;
   sourcePage?: string;
   articleSlug?: string;
   toolType?: string;
 };
 const isEnglish = locale === "en";
+const isSerbian = locale === "sr";
 const isArticle = Boolean(articleSlug);
 const defaultAnimal = kind === "cats" ? "cat" : "dog";
 const billingFaq = petSittingBillingFaq[locale];
@@ -37,14 +39,14 @@ const config = {
   id="dates"
   class:list={["availability", { "availability--article": isArticle }]}
   aria-labelledby={isArticle ? undefined : "availability-title"}
-  aria-label={isArticle ? (isEnglish ? "Availability calendar and enquiry" : "Календарь доступности и заявка") : undefined}
+  aria-label={isArticle ? (isEnglish ? "Availability calendar and enquiry" : isSerbian ? "Kalendar dostupnosti i upit" : "Календарь доступности и заявка") : undefined}
   data-pet-calendar={JSON.stringify(config)}
 >
   {!isArticle && (
     <div class="availability__intro">
-      <p class="eyebrow">{isEnglish ? "Availability" : "Календарь"}</p>
-      <h2 id="availability-title">{isEnglish ? "Check available dates" : "Проверить даты"}</h2>
-      <p>{isEnglish ? "Choose approximate dates for the stay. We update the calendar manually and will confirm availability in Telegram." : "Выберите примерные даты проживания. Календарь обновляем вручную: свободные даты окончательно подтвердим в Telegram."}</p>
+      <p class="eyebrow">{isEnglish ? "Availability" : isSerbian ? "Dostupnost" : "Календарь"}</p>
+      <h2 id="availability-title">{isEnglish ? "Check available dates" : isSerbian ? "Proverite slobodne termine" : "Проверить даты"}</h2>
+      <p>{isEnglish ? "Choose approximate dates for the stay. We update the calendar manually and will confirm availability in Telegram." : isSerbian ? "Izaberite okvirne datume boravka. Kalendar ažuriramo ručno, a dostupnost ćemo potvrditi na Telegramu." : "Выберите примерные даты проживания. Календарь обновляем вручную: свободные даты окончательно подтвердим в Telegram."}</p>
     </div>
   )}
 
@@ -52,19 +54,19 @@ const config = {
     <div class="calendar-panel__calendar">
       <div class="calendar-panel__header">
         <div>
-          <strong>{isEnglish ? "Choose arrival and departure" : "Выберите заезд и выезд"}</strong>
-          <p id="calendar-status" aria-live="polite">{isEnglish ? "First choose an arrival date." : "Сначала выберите дату заезда."}</p>
+          <strong>{isEnglish ? "Choose arrival and departure" : isSerbian ? "Izaberite dolazak i odlazak" : "Выберите заезд и выезд"}</strong>
+          <p id="calendar-status" aria-live="polite">{isEnglish ? "First choose an arrival date." : isSerbian ? "Najpre izaberite datum dolaska." : "Сначала выберите дату заезда."}</p>
         </div>
-        <div class="calendar-controls" aria-label={isEnglish ? "Month navigation" : "Навигация по месяцам"}>
-          <button type="button" class="calendar-nav" data-calendar-prev aria-label={isEnglish ? "Previous month" : "Предыдущий месяц"}>←</button>
-          <button type="button" class="calendar-nav" data-calendar-next aria-label={isEnglish ? "Next month" : "Следующий месяц"}>→</button>
+        <div class="calendar-controls" aria-label={isEnglish ? "Month navigation" : isSerbian ? "Promena meseca" : "Навигация по месяцам"}>
+          <button type="button" class="calendar-nav" data-calendar-prev aria-label={isEnglish ? "Previous month" : isSerbian ? "Prethodni mesec" : "Предыдущий месяц"}>←</button>
+          <button type="button" class="calendar-nav" data-calendar-next aria-label={isEnglish ? "Next month" : isSerbian ? "Sledeći mesec" : "Следующий месяц"}>→</button>
         </div>
       </div>
       <div class="calendar-months" data-calendar-months></div>
     </div>
 
     <form class="inquiry-form" data-inquiry-form novalidate>
-      <div class="inquiry-summary" data-inquiry-summary>{isEnglish ? "No dates selected yet." : "Даты пока не выбраны."}</div>
+      <div class="inquiry-summary" data-inquiry-summary>{isEnglish ? "No dates selected yet." : isSerbian ? "Datumi još nisu izabrani." : "Даты пока не выбраны."}</div>
       <div class="inquiry-price" data-inquiry-price hidden aria-live="polite"></div>
       <a class="inquiry-price-help" data-inquiry-price-help href="#boarding-days" hidden>
         {billingFaq.helpLabel}
@@ -72,36 +74,37 @@ const config = {
       <div class="inquiry-details" data-inquiry-details>
         <label class="checkbox-label">
           <input type="checkbox" name="flexible" />
-          <span>{isEnglish ? "Approximate dates — we can move them slightly" : "Даты примерные, можем немного сдвинуть"}</span>
+          <span>{isEnglish ? "Approximate dates — we can move them slightly" : isSerbian ? "Okvirni datumi — možemo ih malo pomeriti" : "Даты примерные, можем немного сдвинуть"}</span>
         </label>
         <div class="inquiry-fields">
-          <label>{isEnglish ? "Pet" : "Питомец"}
+          <label>{isEnglish ? "Pet" : isSerbian ? "Ljubimac" : "Питомец"}
             <select name="animal">
-              <option value="dog" selected={defaultAnimal === "dog"}>{isEnglish ? "dog" : "собака"}</option>
-              <option value="cat" selected={defaultAnimal === "cat"}>{isEnglish ? "cat" : "кошка"}</option>
+              <option value="dog" selected={defaultAnimal === "dog"}>{isEnglish ? "dog" : isSerbian ? "pas" : "собака"}</option>
+              <option value="cat" selected={defaultAnimal === "cat"}>{isEnglish ? "cat" : isSerbian ? "mačka" : "кошка"}</option>
             </select>
           </label>
-          <label>{isEnglish ? "Number of pets" : "Количество"}
+          <label>{isEnglish ? "Number of pets" : isSerbian ? "Broj ljubimaca" : "Количество"}
             <select name="quantity">
               <option value="1">1</option>
               <option value="2">2</option>
             </select>
           </label>
-          <label>{isEnglish ? "Your Telegram" : "Ваш Telegram"}
+          <label>{isEnglish ? "Your Telegram" : isSerbian ? "Vaš Telegram" : "Ваш Telegram"}
             <input name="username" type="text" inputmode="text" autocomplete="username" placeholder="@username" pattern="@?[A-Za-z0-9_]{5,32}" required aria-describedby="telegram-help" />
-            <small id="telegram-help">{isEnglish ? "Anna needs this to reply quickly." : "Нужен, чтобы Анна могла быстро ответить."}</small>
+            <small id="telegram-help">{isEnglish ? "Anna needs this to reply quickly." : isSerbian ? "Ani je potreban da bi vam brzo odgovorila." : "Нужен, чтобы Анна могла быстро ответить."}</small>
           </label>
         </div>
         <div class="inquiry-honeypot" aria-hidden="true">
-          <label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+          <label>{isSerbian ? "Sajt" : "Website"}<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
         </div>
-        <button class="enquiry-submit" type="submit" data-enquiry-submit disabled>{isEnglish ? "Send enquiry" : "Отправить заявку"}</button>
-        <p class="form-note" data-form-note role="status" aria-live="polite">{isEnglish ? "Choose dates and enter your Telegram username." : "Выберите даты и укажите Telegram username."}</p>
+        <button class="enquiry-submit" type="submit" data-enquiry-submit disabled>{isEnglish ? "Send enquiry" : isSerbian ? "Pošaljite upit" : "Отправить заявку"}</button>
+        <p class="form-note" data-form-note role="status" aria-live="polite">{isEnglish ? "Choose dates and enter your Telegram username." : isSerbian ? "Izaberite datume i unesite svoje Telegram korisničko ime." : "Выберите даты и укажите Telegram username."}</p>
 
         <div class="direct-contact" data-direct-contact-group>
-          <p>{isEnglish ? "Or message us directly" : "Или написать напрямую"}</p>
+          <p>{isEnglish ? "Or message us directly" : isSerbian ? "Ili nam pišite direktno" : "Или написать напрямую"}</p>
           <div class="direct-contact__links">
             <a href={telegramDirectUrl} data-direct-contact data-channel="telegram" target="_blank" rel="noreferrer">Telegram · @{petSittingConfig.telegramUsername}</a>
+            {(isEnglish || isSerbian) && <PetMessagingLinks locale={isEnglish ? "en" : "sr"} />}
           </div>
         </div>
       </div>
@@ -111,12 +114,13 @@ const config = {
 
 <script>
   import { isDateUnavailable, rangeHasUnavailable } from "../lib/pet-sitting-calendar.mjs";
-  import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration } from "../lib/pet-sitting-business.mjs";
+  import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration, formatSerbianStayDuration } from "../lib/pet-sitting-business.mjs";
 
   const root = document.querySelector('[data-pet-calendar]');
   if (root) {
     const settings = JSON.parse(root.dataset.petCalendar || '{}');
     const isEnglish = settings.locale === 'en';
+    const isSerbian = settings.locale === 'sr';
     const monthsNode = root.querySelector('[data-calendar-months]');
     const status = root.querySelector('#calendar-status');
     const summary = root.querySelector('[data-inquiry-summary]');
@@ -131,8 +135,10 @@ const config = {
     const unavailable = settings.unavailablePeriods || [];
     const monthNames = isEnglish
       ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-      : ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-    const weekdays = isEnglish ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+      : isSerbian
+        ? ['januar', 'februar', 'mart', 'april', 'maj', 'jun', 'jul', 'avgust', 'septembar', 'oktobar', 'novembar', 'decembar']
+        : ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    const weekdays = isEnglish ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] : isSerbian ? ['pon', 'uto', 'sre', 'čet', 'pet', 'sub', 'ned'] : ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     const initialMonthMatch = /^(\d{4})-(0[1-9]|1[0-2])$/.exec(settings.initialMonth || '');
     const configuredInitialMonth = initialMonthMatch
@@ -158,7 +164,8 @@ const config = {
     }
     function isPast(key) { return key < todayKey; }
     function formatDate(key) {
-      return new Intl.DateTimeFormat(isEnglish ? 'en-GB' : 'ru-RU', { day: 'numeric', month: 'long' }).format(fromKey(key));
+      const dateLocale = isEnglish ? 'en-GB' : isSerbian ? 'sr-Latn' : 'ru-RU';
+      return new Intl.DateTimeFormat(dateLocale, { day: 'numeric', month: 'long' }).format(fromKey(key));
     }
     function normalizeUsername(value) {
       const trimmed = value.trim();
@@ -180,36 +187,39 @@ const config = {
       if (!quote) return;
 
       priceSummary.append(createPriceLine(
-        isEnglish ? `${quote.billableDays} days of stay` : formatRussianStayDuration(quote.billableDays),
+        isEnglish ? `${quote.billableDays} days of stay` : isSerbian ? formatSerbianStayDuration(quote.billableDays) : formatRussianStayDuration(quote.billableDays),
         'inquiry-price__duration',
       ));
       if (quote.individualPricing) {
         priceSummary.append(createPriceLine(
-          isEnglish ? "For longer stays, we'll agree the price individually." : 'Для длительной передержки цену обсуждаем отдельно.',
+          isEnglish ? "For longer stays, we'll agree the price individually." : isSerbian ? 'Za duže boravke cenu dogovaramo pojedinačno.' : 'Для длительной передержки цену обсуждаем отдельно.',
         ));
         return;
       }
 
       const quantityLabel = isEnglish
         ? quote.quantity === 1 ? '1 pet' : '2 pets'
-        : quote.quantity === 1 ? '1 животное' : '2 животных';
-      const rate = `${formatRsd(quote.dailyRate, settings.locale)} RSD/${isEnglish ? 'day' : 'день'}`;
+        : isSerbian ? quote.quantity === 1 ? '1 ljubimac' : '2 ljubimca'
+          : quote.quantity === 1 ? '1 животное' : '2 животных';
+      const rate = `${formatRsd(quote.dailyRate, settings.locale)} RSD/${isEnglish ? 'day' : isSerbian ? 'dan' : 'день'}`;
       priceSummary.append(createPriceLine(`${quantityLabel} · ${rate}`));
       priceSummary.append(createPriceLine(
-        isEnglish ? `Estimated price: ${formatRsd(quote.total, 'en')} RSD` : `Предварительная стоимость: ${formatRsd(quote.total, 'ru')} RSD`,
+        isEnglish ? `Estimated price: ${formatRsd(quote.total, 'en')} RSD` : isSerbian ? `Okvirna cena: ${formatRsd(quote.total, 'sr')} RSD` : `Предварительная стоимость: ${formatRsd(quote.total, 'ru')} RSD`,
         'inquiry-price__total',
       ));
     }
     function directMessage(quote, username) {
       const animalValue = form.querySelector('[name="animal"]').value;
-      const animal = isEnglish ? animalValue : animalValue === 'dog' ? 'собака' : 'кошка';
-      const flexible = form.querySelector('[name="flexible"]').checked ? (isEnglish ? 'yes' : 'да') : (isEnglish ? 'no' : 'нет');
+      const animal = isEnglish ? animalValue : isSerbian ? animalValue === 'dog' ? 'pas' : 'mačka' : animalValue === 'dog' ? 'собака' : 'кошка';
+      const flexible = form.querySelector('[name="flexible"]').checked ? (isEnglish ? 'yes' : isSerbian ? 'da' : 'да') : (isEnglish ? 'no' : isSerbian ? 'ne' : 'нет');
       const price = quote.individualPricing
-        ? isEnglish ? 'discuss individually' : 'обсуждается отдельно'
+        ? isEnglish ? 'discuss individually' : isSerbian ? 'dogovara se pojedinačno' : 'обсуждается отдельно'
         : `${formatRsd(quote.total, settings.locale)} RSD`;
       return isEnglish
         ? `Hello! I'd like to ask about pet boarding.\n\nDates: ${formatDate(start)} — ${formatDate(end)}\nLength: ${quote.billableDays} days of stay\nPet: ${animal}\nNumber of pets: ${quote.quantity}\nDates flexible: ${flexible}\nEstimated price: ${price}\nMy Telegram: ${username}`
-        : `Здравствуйте! Хочу уточнить передержку.\n\nДаты: ${formatDate(start)} — ${formatDate(end)}\nСрок: ${formatRussianStayDuration(quote.billableDays)}\nПитомец: ${animal}\nКоличество: ${quote.quantity}\nДаты примерные: ${flexible}\nРасчётная цена: ${price}\nМой Telegram: ${username}`;
+        : isSerbian
+          ? `Zdravo! Želeo/la bih da pitam za čuvanje ljubimca.\n\nDatumi: ${formatDate(start)} — ${formatDate(end)}\nTrajanje: ${formatSerbianStayDuration(quote.billableDays)}\nLjubimac: ${animal}\nBroj ljubimaca: ${quote.quantity}\nDatumi su okvirni: ${flexible}\nOkvirna cena: ${price}\nMoj Telegram: ${username}`
+          : `Здравствуйте! Хочу уточнить передержку.\n\nДаты: ${formatDate(start)} — ${formatDate(end)}\nСрок: ${formatRussianStayDuration(quote.billableDays)}\nПитомец: ${animal}\nКоличество: ${quote.quantity}\nДаты примерные: ${flexible}\nРасчётная цена: ${price}\nМой Telegram: ${username}`;
     }
     function trackEvent(name, parameters = {}) {
       if (typeof window.gtag !== 'function') return;
@@ -234,17 +244,17 @@ const config = {
       formNote.classList.toggle('is-success', feedbackState === 'success');
       formNote.classList.toggle('is-error', feedbackState === 'error');
       if (feedbackState === 'sending') {
-        formNote.textContent = isEnglish ? 'Sending enquiry…' : 'Отправляем заявку…';
+        formNote.textContent = isEnglish ? 'Sending enquiry…' : isSerbian ? 'Šaljemo upit…' : 'Отправляем заявку…';
       } else if (feedbackState === 'success') {
-        formNote.textContent = isEnglish ? "Sent! We'll reply to you on Telegram." : 'Готово! Заявка отправлена. Ответим вам в Telegram.';
+        formNote.textContent = isEnglish ? "Sent! We'll reply to you on Telegram." : isSerbian ? 'Poslato! Odgovorićemo vam na Telegramu.' : 'Готово! Заявка отправлена. Ответим вам в Telegram.';
       } else if (feedbackState === 'error') {
-        formNote.textContent = isEnglish ? "Couldn't send the enquiry. You can message us directly instead." : 'Не получилось отправить заявку. Можно написать нам напрямую.';
+        formNote.textContent = isEnglish ? "Couldn't send the enquiry. You can message us directly instead." : isSerbian ? 'Upit nije poslat. Možete nam pisati direktno.' : 'Не получилось отправить заявку. Можно написать нам напрямую.';
       } else if (!start || !end) {
-        formNote.textContent = isEnglish ? 'Choose arrival and departure dates.' : 'Выберите даты заезда и выезда.';
+        formNote.textContent = isEnglish ? 'Choose arrival and departure dates.' : isSerbian ? 'Izaberite datume dolaska i odlaska.' : 'Выберите даты заезда и выезда.';
       } else if (!validUsername) {
-        formNote.textContent = isEnglish ? 'Enter your Telegram username: @username.' : 'Укажите Telegram username: @username.';
+        formNote.textContent = isEnglish ? 'Enter your Telegram username: @username.' : isSerbian ? 'Unesite svoje Telegram korisničko ime: @username.' : 'Укажите Telegram username: @username.';
       } else {
-        formNote.textContent = isEnglish ? 'Ready to send. We will reply in Telegram.' : 'Можно отправлять. Ответим в Telegram.';
+        formNote.textContent = isEnglish ? 'Ready to send. We will reply in Telegram.' : isSerbian ? 'Spremno za slanje. Odgovorićemo vam na Telegramu.' : 'Можно отправлять. Ответим в Telegram.';
       }
     }
     function updateInquiry() {
@@ -256,15 +266,17 @@ const config = {
       usernameInput.setAttribute('aria-invalid', String(rawUsername.length > 0 && !validUsername));
 
       summary.textContent = quote
-        ? isEnglish
+          ? isEnglish
           ? `Dates: ${formatDate(start)} — ${formatDate(end)} · ${quote.billableDays} days of stay`
-          : `Даты: ${formatDate(start)} — ${formatDate(end)} · ${formatRussianStayDuration(quote.billableDays)}`
-        : isEnglish ? 'No dates selected yet.' : 'Даты пока не выбраны.';
+          : isSerbian
+            ? `Datumi: ${formatDate(start)} — ${formatDate(end)} · ${formatSerbianStayDuration(quote.billableDays)}`
+            : `Даты: ${formatDate(start)} — ${formatDate(end)} · ${formatRussianStayDuration(quote.billableDays)}`
+        : isEnglish ? 'No dates selected yet.' : isSerbian ? 'Datumi još nisu izabrani.' : 'Даты пока не выбраны.';
       status.textContent = quote
-        ? isEnglish ? `Selected: ${formatDate(start)} — ${formatDate(end)}.` : `Выбрано: ${formatDate(start)} — ${formatDate(end)}.`
+        ? isEnglish ? `Selected: ${formatDate(start)} — ${formatDate(end)}.` : isSerbian ? `Izabrano: ${formatDate(start)} — ${formatDate(end)}.` : `Выбрано: ${formatDate(start)} — ${formatDate(end)}.`
         : start
-          ? isEnglish ? `Arrival: ${formatDate(start)}. Now choose a departure date.` : `Заезд: ${formatDate(start)}. Теперь выберите выезд.`
-          : isEnglish ? 'First choose an arrival date.' : 'Сначала выберите дату заезда.';
+          ? isEnglish ? `Arrival: ${formatDate(start)}. Now choose a departure date.` : isSerbian ? `Dolazak: ${formatDate(start)}. Sada izaberite datum odlaska.` : `Заезд: ${formatDate(start)}. Теперь выберите выезд.`
+          : isEnglish ? 'First choose an arrival date.' : isSerbian ? 'Najpre izaberite datum dolaska.' : 'Сначала выберите дату заезда.';
 
       renderPrice(quote);
       updateDirectLinks(quote, username);
@@ -272,8 +284,8 @@ const config = {
       const canSubmit = Boolean(quote && validUsername && !submitting && feedbackState !== 'success');
       submitButton.disabled = !canSubmit;
       submitButton.textContent = feedbackState === 'sending'
-        ? isEnglish ? 'Sending…' : 'Отправляем…'
-        : isEnglish ? 'Send enquiry' : 'Отправить заявку';
+        ? isEnglish ? 'Sending…' : isSerbian ? 'Šaljemo…' : 'Отправляем…'
+        : isEnglish ? 'Send enquiry' : isSerbian ? 'Pošaljite upit' : 'Отправить заявку';
       return { quote, username, validUsername, canSubmit };
     }
     function choose(key) {
@@ -289,7 +301,7 @@ const config = {
       } else if (key === start) {
         start = '';
       } else if (rangeHasUnavailable(start, key, unavailable)) {
-        status.textContent = isEnglish ? 'The selected range contains an unavailable date. Choose different dates.' : 'В выбранном диапазоне есть недоступная дата. Выберите другие даты.';
+        status.textContent = isEnglish ? 'The selected range contains an unavailable date. Choose different dates.' : isSerbian ? 'Izabrani period sadrži nedostupan datum. Izaberite druge datume.' : 'В выбранном диапазоне есть недоступная дата. Выберите другие даты.';
         return;
       } else {
         end = key;
@@ -315,7 +327,7 @@ const config = {
         button.textContent = String(day);
         button.dataset.date = key;
         button.disabled = isPast(key) || isUnavailable(key);
-        button.setAttribute('aria-label', `${formatDate(key)}${isUnavailable(key) ? (isEnglish ? ', unavailable' : ', недоступно') : ''}`);
+        button.setAttribute('aria-label', `${formatDate(key)}${isUnavailable(key) ? (isEnglish ? ', unavailable' : isSerbian ? ', nedostupno' : ', недоступно') : ''}`);
         if (isUnavailable(key)) button.classList.add('is-unavailable');
         if (key === start || key === end) button.classList.add('is-selected');
         if (start && end && key > start && key < end) button.classList.add('is-in-range');

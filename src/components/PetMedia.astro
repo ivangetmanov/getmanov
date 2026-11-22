@@ -4,7 +4,7 @@ interface Props {
   videos: Array<{ url: string; title?: string; featured?: boolean }>;
   label: string;
   videoLabel: string;
-  locale?: "ru" | "en";
+  locale?: "ru" | "en" | "sr";
   primaryPhotosFirst?: boolean;
 }
 
@@ -16,6 +16,7 @@ type ResolvedVideo = Props["videos"][number] & {
 
 const { photos, videos, label, videoLabel, locale = "ru", primaryPhotosFirst = false } = Astro.props;
 const isEnglish = locale === "en";
+const isSerbian = locale === "sr";
 
 function youtubeVideoId(url: string) {
   try {
@@ -59,7 +60,7 @@ const totalMedia = resolvedVideos.length + photos.length;
 const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
 ---
 
-<section class="pet-media" id="media" aria-label={isEnglish ? `Photos and videos of ${label}` : `Фото и видео ${label}`}>
+<section class="pet-media" id="media" data-locale={locale} aria-label={isEnglish ? `Photos and videos of ${label}` : isSerbian ? `Fotografije i video-snimci: ${label}` : `Фото и видео ${label}`}>
   {hasMedia ? (
     <>
       <div class="media-grid">
@@ -73,7 +74,7 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
                 data-embed-url={video.embedUrl}
                 data-video-title={video.title || `${videoLabel} ${index + 1}`}
                 title={video.title || `${videoLabel} ${index + 1}`}
-                aria-label={isEnglish ? `Watch: ${video.title || `${videoLabel} ${index + 1}`}` : `Смотреть: ${video.title || `${videoLabel} ${index + 1}`}`}
+                aria-label={isEnglish ? `Watch: ${video.title || `${videoLabel} ${index + 1}`}` : isSerbian ? `Pogledajte: ${video.title || `${videoLabel} ${index + 1}`}` : `Смотреть: ${video.title || `${videoLabel} ${index + 1}`}`}
               >
                 <img src={video.thumbnailUrl} alt="" width="480" height="360" loading="lazy" />
                 <span class="video-play" aria-hidden="true">
@@ -93,7 +94,7 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
               data-photo-open
               data-photo-src={photo.src}
               data-photo-alt={photo.alt}
-              aria-label={isEnglish ? `Open photo: ${photo.alt}` : `Открыть фото: ${photo.alt}`}
+              aria-label={isEnglish ? `Open photo: ${photo.alt}` : isSerbian ? `Otvori fotografiju: ${photo.alt}` : `Открыть фото: ${photo.alt}`}
             >
               <img src={photo.src} alt={photo.alt} width="720" height="1280" loading="lazy" />
             </button>
@@ -104,7 +105,7 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
 
       {gallerySize > 0 && (
         <details class="media-gallery">
-          <summary><span>{isEnglish ? `View all ${totalMedia} photos and videos` : `Смотреть все ${totalMedia} фото и видео`}</span></summary>
+        <summary><span>{isEnglish ? `View all ${totalMedia} photos and videos` : isSerbian ? `Pogledajte svih ${totalMedia} fotografija i video-snimaka` : `Смотреть все ${totalMedia} фото и видео`}</span></summary>
           <div class="media-gallery-grid">
             {galleryPhotos.map((photo) => (
               <figure>
@@ -114,7 +115,7 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
                   data-photo-open
                   data-photo-src={photo.src}
                   data-photo-alt={photo.alt}
-                  aria-label={isEnglish ? `Open photo: ${photo.alt}` : `Открыть фото: ${photo.alt}`}
+                  aria-label={isEnglish ? `Open photo: ${photo.alt}` : isSerbian ? `Otvori fotografiju: ${photo.alt}` : `Открыть фото: ${photo.alt}`}
                 >
                   <img src={photo.src} alt={photo.alt} width="720" height="1280" loading="lazy" />
                 </button>
@@ -135,7 +136,7 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
                       data-embed-url={video.embedUrl}
                       data-video-title={title}
                       title={title}
-                      aria-label={isEnglish ? `Watch: ${title}` : `Смотреть: ${title}`}
+                      aria-label={isEnglish ? `Watch: ${title}` : isSerbian ? `Pogledajte: ${title}` : `Смотреть: ${title}`}
                     >
                       <img src={video.thumbnailUrl} alt="" width="480" height="360" loading="lazy" />
                       <span class="video-play" aria-hidden="true">
@@ -153,16 +154,16 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
       )}
 
       {photos.length > 0 && (
-        <dialog class="photo-lightbox" data-photo-dialog aria-label={isEnglish ? "Photo viewer" : "Просмотр фотографии"}>
-          <button class="photo-lightbox-close" type="button" data-photo-close aria-label={isEnglish ? "Close photo" : "Закрыть фотографию"}>×</button>
+        <dialog class="photo-lightbox" data-photo-dialog aria-label={isEnglish ? "Photo viewer" : isSerbian ? "Pregled fotografije" : "Просмотр фотографии"}>
+          <button class="photo-lightbox-close" type="button" data-photo-close aria-label={isEnglish ? "Close photo" : isSerbian ? "Zatvori fotografiju" : "Закрыть фотографию"}>×</button>
           <img data-photo-view src="" alt="" />
         </dialog>
       )}
     </>
   ) : (
     <div class="media-empty">
-      <strong>{isEnglish ? `Real photos and videos of ${label} will appear here.` : `Здесь будут реальные фото и видео ${label}.`}</strong>
-      <span>{isEnglish ? "Only real material will be added." : "Места уже подготовлены; добавим только настоящие материалы."}</span>
+      <strong>{isEnglish ? `Real photos and videos of ${label} will appear here.` : isSerbian ? `Ovde će biti fotografije i video-snimci: ${label}.` : `Здесь будут реальные фото и видео ${label}.`}</strong>
+      <span>{isEnglish ? "Only real material will be added." : isSerbian ? "Dodaćemo samo stvarne fotografije i snimke." : "Места уже подготовлены; добавим только настоящие материалы."}</span>
     </div>
   )}
 </section>
@@ -204,7 +205,8 @@ const hasMedia = photos.length > 0 || resolvedVideos.length > 0;
 
     const iframe = document.createElement("iframe");
     iframe.src = embedUrl;
-    iframe.title = trigger.dataset.videoTitle || "Видео на YouTube";
+    const locale = trigger.closest<HTMLElement>(".pet-media")?.dataset.locale;
+    iframe.title = trigger.dataset.videoTitle || (locale === "en" ? "YouTube video" : locale === "sr" ? "YouTube video-snimak" : "Видео на YouTube");
     iframe.loading = "lazy";
     iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
     iframe.allowFullscreen = true;

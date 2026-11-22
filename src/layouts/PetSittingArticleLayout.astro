@@ -11,15 +11,19 @@ import {
 } from "../lib/pet-sitting-seo.mjs";
 
 const frontmatter = Astro.props.frontmatter ?? {};
-const locale = frontmatter.locale === "ru" ? "ru" : "en";
+const locale = frontmatter.locale === "ru" ? "ru" : frontmatter.locale === "sr" ? "sr" : "en";
 const isRussian = locale === "ru";
+const isSerbian = locale === "sr";
 const canonical = frontmatter.canonical ?? Astro.url.pathname;
 const canonicalUrl = new URL(canonical, "https://getmanov.com").href;
-const alternatePath = frontmatter.alternate;
-const alternateLocale = isRussian ? "en" : "ru";
+const alternatePaths = {
+  ru: canonical.replace(/^\/(?:ru|en|sr)(?=\/)/, "/ru"),
+  en: canonical.replace(/^\/(?:ru|en|sr)(?=\/)/, "/en"),
+  sr: canonical.replace(/^\/(?:ru|en|sr)(?=\/)/, "/sr"),
+};
 const faqItems = frontmatter.faq ?? [];
 const servicePath = frontmatter.servicePath ?? `/${locale}/novi-sad/pet-sitting/`;
-const serviceName = isRussian ? "Передержка животных в Нови-Саде" : "Pet boarding in Novi Sad";
+const serviceName = isRussian ? "Передержка животных в Нови-Саде" : isSerbian ? "Čuvanje ljubimaca u Novom Sadu" : "Pet boarding in Novi Sad";
 const serviceKind = servicePath.endsWith("/dogs/") ? "dogs" : servicePath.endsWith("/cats/") ? "cats" : "main";
 const datePublished = frontmatter.datePublished;
 const dateModified = frontmatter.dateModified ?? datePublished;
@@ -50,7 +54,7 @@ const articleSchema = {
   "@id": articleId,
   headline,
   description: frontmatter.description,
-  inLanguage: locale,
+  inLanguage: isSerbian ? "sr-Latn" : locale,
   url: canonicalUrl,
   mainEntityOfPage: { "@id": webPageId },
   ...(imageId ? { image: { "@id": imageId } } : {}),
@@ -76,7 +80,7 @@ const structuredData = {
       url: canonicalUrl,
       name: frontmatter.title,
       description: frontmatter.description,
-      inLanguage: locale,
+      inLanguage: isSerbian ? "sr-Latn" : locale,
       isPartOf: { "@id": petSittingSchemaIds.website },
       ...(imageId ? { primaryImageOfPage: { "@id": imageId } } : {}),
       mainEntity: { "@id": articleId },
@@ -105,7 +109,7 @@ const structuredData = {
         {
           "@type": "ListItem",
           position: 1,
-          name: isRussian ? "Главная" : "Home",
+          name: isRussian ? "Главная" : isSerbian ? "Početna" : "Home",
           item: "https://getmanov.com/",
         },
         {
@@ -125,22 +129,23 @@ const structuredData = {
   ],
 };
 
-const articleGuides = petSittingArticleGuides.map((guide) => isRussian ? guide.ru : guide.en);
+const articleGuides = petSittingArticleGuides
+  .filter((guide) => !("excludeFromRelatedArticles" in guide && guide.excludeFromRelatedArticles))
+  .map((guide) => isRussian ? guide.ru : isSerbian ? guide.sr : guide.en);
 const relatedGuides = articleGuides.filter((guide) => guide.href !== canonical);
-const alternates = alternatePath
-  ? [
-      { hreflang: locale, href: canonical },
-      { hreflang: alternateLocale, href: alternatePath },
-      { hreflang: "x-default", href: isRussian ? alternatePath : canonical },
-    ]
-  : [];
+const alternates = [
+  { hreflang: "ru", href: alternatePaths.ru },
+  { hreflang: "en", href: alternatePaths.en },
+  { hreflang: "sr-Latn", href: alternatePaths.sr },
+  { hreflang: "x-default", href: alternatePaths.en },
+];
 ---
 
 <BaseLayout
   title={frontmatter.title}
   description={frontmatter.description}
   canonical={canonical}
-  lang={locale}
+  lang={isSerbian ? "sr-Latn" : locale}
   alternates={alternates}
   structuredData={structuredData}
   image={frontmatter.heroImage}
@@ -153,33 +158,35 @@ const alternates = alternatePath
 >
   <div class="pet-article">
     <div class="pet-article__topline">
-      <nav class="pet-article__breadcrumbs" aria-label={isRussian ? "Навигация" : "Breadcrumbs"}>
+      <nav class="pet-article__breadcrumbs" aria-label={isRussian ? "Навигация" : isSerbian ? "Putanja stranice" : "Breadcrumbs"}>
         <a href={servicePath}>{serviceName}</a>
         <span aria-hidden="true">/</span>
-        <span>{isRussian ? "Гайд" : "Guide"}</span>
+        <span>{isRussian ? "Гайд" : isSerbian ? "Vodič" : "Guide"}</span>
       </nav>
-      {alternatePath && (
-        <a class="pet-article__locale" href={alternatePath} hreflang={alternateLocale}>
-          {isRussian ? "EN" : "RU"}
-        </a>
-      )}
+      <nav class="pet-article__locale" aria-label={isRussian ? "Язык страницы" : isSerbian ? "Jezik stranice" : "Page language"}>
+        <a href={alternatePaths.ru} hreflang="ru" aria-current={isRussian ? "page" : undefined}>RU</a>
+        <span aria-hidden="true"> | </span>
+        <a href={alternatePaths.en} hreflang="en" aria-current={locale === "en" ? "page" : undefined}>EN</a>
+        <span aria-hidden="true"> | </span>
+        <a href={alternatePaths.sr} hreflang="sr-Latn" aria-current={isSerbian ? "page" : undefined}>SR</a>
+      </nav>
     </div>
 
     <slot />
 
     <aside class="pet-article__service" aria-labelledby="pet-service-title">
       <div>
-        <p>{isRussian ? "Домашняя передержка в Петроварадине" : "Home boarding in Petrovaradin"}</p>
+        <p>{isRussian ? "Домашняя передержка в Петроварадине" : isSerbian ? "Čuvanje ljubimaca u Petrovaradinu" : "Home boarding in Petrovaradin"}</p>
         <h2 id="pet-service-title">
-          {isRussian ? "Посмотрите условия и свободные даты" : "Check conditions and available dates"}
+          {isRussian ? "Посмотрите условия и свободные даты" : isSerbian ? "Pogledajte uslove i slobodne termine" : "Check conditions and available dates"}
         </h2>
       </div>
-      <a href={servicePath}>{isRussian ? "Перейти к передержке" : "View boarding details"}<span aria-hidden="true">→</span></a>
+      <a href={servicePath}>{isRussian ? "Перейти к передержке" : isSerbian ? "Pogledajte detalje čuvanja" : "View boarding details"}<span aria-hidden="true">→</span></a>
     </aside>
 
     <aside class="pet-article__related" aria-labelledby="pet-related-title">
-      <p>{isRussian ? "Другие полезные гайды" : "Related practical guides"}</p>
-      <h2 id="pet-related-title">{isRussian ? "Подготовьтесь к передержке" : "Prepare for the stay"}</h2>
+      <p>{isRussian ? "Другие полезные гайды" : isSerbian ? "Još korisnih vodiča" : "Related practical guides"}</p>
+      <h2 id="pet-related-title">{isRussian ? "Подготовьтесь к передержке" : isSerbian ? "Priprema za čuvanje" : "Prepare for the stay"}</h2>
       <nav>
         {relatedGuides.map((guide) => (
           <a href={guide.href}><span>{guide.title}</span><b aria-hidden="true">→</b></a>
@@ -309,6 +316,11 @@ const alternates = alternatePath
   }
   .pet-article strong { color:#183f33; }
   .pet-article table {
+    display:block;
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
     border:1px solid var(--pet-line);
     border-radius:14px;
     background:#fff;

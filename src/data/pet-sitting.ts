@@ -29,6 +29,7 @@ export const petSittingConfig = {
       nameEn: "Pablo",
       description: "Очень дружелюбный и любопытный. Обычно ему интересно, кто приехал, и он хочет познакомиться.",
       descriptionEn: "Very friendly and curious. He is usually interested in new guests and likes to see who has arrived.",
+      descriptionSr: "Veoma je druželjubiv i radoznao. Obično želi da vidi ko je došao i da se upozna.",
       image: "/images/pet-sitting/pablo.webp",
     },
     {
@@ -36,6 +37,7 @@ export const petSittingConfig = {
       nameEn: "Sweet",
       description: "Более пугливая. Чаще сама уходит куда-нибудь подальше и спокойно чиллит отдельно.",
       descriptionEn: "More cautious. She usually chooses somewhere away from the action and relaxes on her own.",
+      descriptionSr: "Opreznija je. Obično se skloni na mirno mesto i odmara sama.",
       image: "/images/pet-sitting/sweet.webp",
     },
   ],
@@ -45,22 +47,23 @@ export const petSittingConfig = {
     cats: "/images/pet-sitting/cats-hero.webp",
   } as Record<PetSittingPageKind, string>,
   guestPhotos: [
-    { src: "/images/pet-sitting/dog-guest-01.webp", alt: "Собака-гость во время домашней передержки", altEn: "Guest dog during a stay in our home", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Собака-гость отдыхает дома", altEn: "Guest dog resting at home", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-03.webp", alt: "Собака-гость дома", altEn: "Guest dog staying in our home", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Собака-гость во время игры", altEn: "Guest dog during play", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-05.webp", alt: "Собака-гость играет дома", altEn: "Guest dog playing at home", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-06.webp", alt: "Собака-гость у окна", altEn: "Guest dog by the window", kind: "dogs" },
-    { src: "/images/pet-sitting/dog-guest-07.webp", alt: "Собака-гость во время домашней передержки", altEn: "Guest dog during home boarding", kind: "dogs" },
-    { src: "/images/pet-sitting/cat-guest-01.webp", alt: "Кошки отдыхают дома", altEn: "Cats resting at home", kind: "cats" },
-    { src: "/images/pet-sitting/cat-guest-02.webp", alt: "Кошка-гость дома", altEn: "Guest cat staying in our home", kind: "cats" },
-    { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Кошка-гость отдыхает рядом с человеком", altEn: "Guest cat resting next to a person", kind: "cats" },
-    { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Кошки отдыхают на кровати", altEn: "Cats resting on the bed", kind: "cats" },
-    { src: "/images/pet-sitting/cat-guest-05.webp", alt: "Кошка-гость спит", altEn: "Guest cat sleeping", kind: "cats" },
+    { src: "/images/pet-sitting/dog-guest-01.webp", alt: "Собака-гость во время домашней передержки", altEn: "Guest dog during a stay in our home", altSr: "Pas koji boravi kod nas", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-02.webp", alt: "Собака-гость отдыхает дома", altEn: "Guest dog resting at home", altSr: "Pas odmara kod nas", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-03.webp", alt: "Собака-гость дома", altEn: "Guest dog staying in our home", altSr: "Pas koji boravi kod nas", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-04.webp", alt: "Собака-гость во время игры", altEn: "Guest dog during play", altSr: "Pas se igra kod nas", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-05.webp", alt: "Собака-гость играет дома", altEn: "Guest dog playing at home", altSr: "Pas se igra kod nas", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-06.webp", alt: "Собака-гость у окна", altEn: "Guest dog by the window", altSr: "Pas pored prozora", kind: "dogs" },
+    { src: "/images/pet-sitting/dog-guest-07.webp", alt: "Собака-гость во время домашней передержки", altEn: "Guest dog during home boarding", altSr: "Pas tokom boravka kod nas", kind: "dogs" },
+    { src: "/images/pet-sitting/cat-guest-01.webp", alt: "Кошки отдыхают дома", altEn: "Cats resting at home", altSr: "Mačke odmaraju kod nas", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-02.webp", alt: "Кошка-гость дома", altEn: "Guest cat staying in our home", altSr: "Mačka koja boravi kod nas", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-03.webp", alt: "Кошка-гость отдыхает рядом с человеком", altEn: "Guest cat resting next to a person", altSr: "Mačka odmara pored Ane", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-04.webp", alt: "Кошки отдыхают на кровати", altEn: "Cats resting on the bed", altSr: "Mačke odmaraju na krevetu", kind: "cats" },
+    { src: "/images/pet-sitting/cat-guest-05.webp", alt: "Кошка-гость спит", altEn: "Guest cat sleeping", altSr: "Mačka spava", kind: "cats" },
   ] as Array<{
     src: string;
     alt: string;
     altEn: string;
+    altSr: string;
     kind?: PetSittingPageKind;
   }>,
   guestVideos: [
@@ -77,6 +80,10 @@ export const petSittingConfig = {
     { url: "https://youtube.com/shorts/YKHKXpjGzpA?si=BmaubqQsftRyvwio", animal: "dog" },
     { url: "https://youtube.com/shorts/HiwjWxa9qfM?si=xqmauQOeDt5Fsh2O", animal: "dog" },
     { url: "https://youtube.com/shorts/gzEpuT0el14?feature=share", animal: "cat" },
+    { url: "https://youtube.com/shorts/I3BhAy-cihk", animal: "cat" },
+    { url: "https://youtube.com/shorts/NxRSlW0QHEM", animal: "cat" },
+    { url: "https://youtube.com/shorts/D5RhmfSyBcw", animal: "cat" },
+    { url: "https://youtube.com/shorts/zvSrI_TzmTk", animal: "cat" },
     { url: "https://youtube.com/shorts/unefUKL2sv8?feature=share", animal: "dog" },
   ] as Array<{
     url: string;
@@ -147,6 +154,33 @@ export const petSittingPagesEn: typeof petSittingPages = {
   },
 };
 
+export const petSittingPagesSr: typeof petSittingPages = {
+  main: {
+    path: petSittingBusiness.pagePaths.sr.main,
+    title: "Čuvanje pasa i mačaka u Novom Sadu kod nas",
+    description: "Kućno čuvanje pasa i mačaka u Petrovaradinu. Vaš ljubimac boravi kod Ane i Ivana, zajedno sa njihove dve mačke.",
+    h1: "Čuvanje pasa i mačaka u Novom Sadu",
+    lead: "Vaš ljubimac boravi kod nas u Petrovaradinu. Trudimo se da mu svakodnevica ostane što sličnija: pratimo uobičajeni raspored šetnji i obroka i vodimo računa o njegovom karakteru i navikama.",
+    focus: "Čuvanje ljubimaca",
+  },
+  dogs: {
+    path: petSittingBusiness.pagePaths.sr.dogs,
+    title: "Čuvanje pasa u Novom Sadu | Petrovaradin",
+    description: "Kućno čuvanje pasa u Petrovaradinu. Pas boravi sa Anom i Ivanom i njihove dve mačke, uz poznatu rutinu šetnji i hranjenja.",
+    h1: "Čuvanje pasa u Novom Sadu",
+    lead: "Pas boravi kod nas u Petrovaradinu i, koliko je moguće, nastavlja svoju uobičajenu rutinu. Šetamo ga i hranimo po njegovom rasporedu, uzimajući u obzir njegove navike.",
+    focus: "Čuvanje pasa",
+  },
+  cats: {
+    path: petSittingBusiness.pagePaths.sr.cats,
+    title: "Čuvanje mačaka u Novom Sadu | Petrovaradin",
+    description: "Kućno čuvanje mačaka u Petrovaradinu. Vaša mačka boravi kod Ane i Ivana, uz poznatu hranu, posip i miran prostor po potrebi.",
+    h1: "Čuvanje mačaka u Novom Sadu",
+    lead: "Mačka ne mora da bude druželjubiva da bi joj bilo prijatno. Zadržavamo poznatu hranu, posip i rutinu, uz mogućnost da se povuče u svoj miran prostor.",
+    focus: "Čuvanje mačaka",
+  },
+};
+
 export const petSittingArticleGuides = [
   {
     slug: "pet-sitter-vs-boarding",
@@ -160,6 +194,11 @@ export const petSittingArticleGuides = [
       href: "/en/novi-sad/pet-sitting/pet-sitter-vs-boarding/",
       title: "Pet sitter, home boarding, or pet hotel",
       description: "Compare four care arrangements for your pet while you are away.",
+    },
+    sr: {
+      href: "/sr/novi-sad/pet-sitting/pet-sitter-vs-boarding/",
+      title: "Pet sitter, čuvanje kod kuće ili hotel za ljubimce",
+      description: "Uporedite četiri načina da zbrinete ljubimca dok ste na putu.",
     },
   },
   {
@@ -175,6 +214,11 @@ export const petSittingArticleGuides = [
       title: "Can a cat stay alone for a week?",
       description: "Compare visits, a live-in sitter, and home boarding.",
     },
+    sr: {
+      href: "/sr/novi-sad/pet-sitting/can-cat-stay-alone-for-a-week/",
+      title: "Može li mačka da ostane sama nedelju dana?",
+      description: "Uporedite obilaske, čuvara koji boravi u domu i čuvanje kod nas.",
+    },
   },
   {
     slug: "prepare-dog-for-boarding",
@@ -189,6 +233,11 @@ export const petSittingArticleGuides = [
       title: "How to prepare a dog for boarding",
       description: "Routines, food, walks, familiar belongings, and a trial visit.",
     },
+    sr: {
+      href: "/sr/novi-sad/pet-sitting/prepare-dog-for-boarding/",
+      title: "Kako pripremiti psa za prvi boravak kod čuvara",
+      description: "Rutina, hrana, šetnje, poznate stvari i probni boravak.",
+    },
   },
   {
     slug: "prepare-cat-for-boarding",
@@ -202,6 +251,48 @@ export const petSittingArticleGuides = [
       href: "/en/novi-sad/pet-sitting/prepare-cat-for-boarding/",
       title: "How to prepare a cat for boarding",
       description: "Food, litter, familiar belongings, and a quiet adaptation plan.",
+    },
+    sr: {
+      href: "/sr/novi-sad/pet-sitting/prepare-cat-for-boarding/",
+      title: "Kako pripremiti mačku za boravak kod čuvara",
+      description: "Hrana, posip, poznate stvari i mirno privikavanje.",
+    },
+  },
+  {
+    slug: "prices",
+    kinds: ["main", "dogs", "cats"] as PetSittingPageKind[],
+    excludeFromRelatedArticles: true,
+    titleByKind: {
+      ru: {
+        main: "Сколько стоит передержка и уход за животными в Нови-Саде?",
+        dogs: "Сколько стоит передержка собаки в Нови-Саде?",
+        cats: "Сколько стоит передержка кошки в Нови-Саде?",
+      },
+      en: {
+        main: "How much does pet sitting and boarding cost in Novi Sad?",
+        dogs: "How much does dog boarding cost in Novi Sad?",
+        cats: "How much does cat boarding cost in Novi Sad?",
+      },
+      sr: {
+        main: "Koliko košta čuvanje ljubimaca u Novom Sadu?",
+        dogs: "Koliko košta čuvanje pasa u Novom Sadu?",
+        cats: "Koliko košta čuvanje mačaka u Novom Sadu?",
+      },
+    },
+    ru: {
+      href: "/ru/novi-sad/pet-sitting/prices/",
+      title: "Цены на передержку и петситтинг в Нови-Саде",
+      description: "Сравнение опубликованных цен на визиты, передержку и зоогостиницы.",
+    },
+    en: {
+      href: "/en/novi-sad/pet-sitting/prices/",
+      title: "Pet sitting and boarding prices in Novi Sad",
+      description: "Compare published prices for home visits, boarding, and pet hotels.",
+    },
+    sr: {
+      href: "/sr/novi-sad/pet-sitting/prices/",
+      title: "Cene čuvanja ljubimaca u Novom Sadu",
+      description: "Uporedite objavljene cene obilazaka, čuvanja i hotela za ljubimce.",
     },
   },
 ] as const;

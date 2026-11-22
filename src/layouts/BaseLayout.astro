@@ -1,6 +1,7 @@
 ---
 import { readFile } from "node:fs/promises";
 import { telegramUrl } from "../data/pet-sitting";
+import PetMessagingLinks from "../components/PetMessagingLinks.astro";
 
 const frontmatter = Astro.props.frontmatter ?? {};
 const title = Astro.props.title ?? frontmatter.title ?? "getmanov.com";
@@ -41,23 +42,28 @@ const hasCaseGalleries = galleryPages.has(Astro.url.pathname);
 const currentPath = Astro.url.pathname.endsWith("/")
   ? Astro.url.pathname
   : `${Astro.url.pathname}/`;
-const petSittingSectionMatch = currentPath.match(/^\/(ru|en)\/novi-sad\/pet-sitting\//);
+const petSittingSectionMatch = currentPath.match(/^\/(ru|en|sr)\/novi-sad\/pet-sitting\//);
 const isPetSittingSection = Boolean(petSittingSectionMatch);
-const petSectionLocale = petSittingSectionMatch?.[1] === "ru" ? "ru" : "en";
+const petSectionLocale = (petSittingSectionMatch?.[1] ?? "en") as "ru" | "en" | "sr";
 const petSectionBase = `/${petSectionLocale}/novi-sad/pet-sitting/`;
+const petSectionPathForLocale = (locale: "ru" | "en" | "sr") => currentPath.replace(/^\/(?:ru|en|sr)(?=\/)/, `/${locale}`);
 const isHomeVisitsPage = currentPath === `${petSectionBase}home-visits/`;
-const petSectionAlternatePath = currentPath.replace(
-  `/${petSectionLocale}/`,
-  petSectionLocale === "ru" ? "/en/" : "/ru/",
-);
+const petSectionLabels = {
+  ru: { nav: "Уход за питомцами", home: "Главная", dogs: "Собаки", cats: "Кошки", visits: "Выезды домой", guides: "Полезное", explore: "Раздел", all: "Все условия", guideList: "Полезные статьи", boarding: "Домашняя передержка", homeVisits: "Выезды к питомцам домой", city: "Нови-Сад", area: "Петроварадин, Нови-Сад", homeVisitsNote: "Питомец остаётся дома, а мы приезжаем к нему.", boardingNote: "Собаки и кошки живут у нас дома.", contact: "Связаться с Аней", language: "Язык страницы", ru: "Русский", en: "English", sr: "Srpski", author: "Автор", toc: "Содержание" },
+  en: { nav: "Pet care", home: "Home", dogs: "Dogs", cats: "Cats", visits: "Home visits", guides: "Guides", explore: "Explore", all: "All details", guideList: "Useful guides", boarding: "Home boarding", homeVisits: "In-home pet sitting", city: "Novi Sad", area: "Petrovaradin, Novi Sad", homeVisitsNote: "Your pet stays home, and we come to them.", boardingNote: "Dogs and cats stay with us in our home.", contact: "Contact Anna", language: "Page language", ru: "Русский", en: "English", sr: "Srpski", author: "Written by", toc: "Table of contents" },
+  sr: { nav: "Briga o ljubimcima", home: "Početna", dogs: "Psi", cats: "Mačke", visits: "Obilasci", guides: "Korisno", explore: "Usluge", all: "Svi detalji", guideList: "Korisni vodiči", boarding: "Čuvanje ljubimaca kod nas", homeVisits: "Obilasci ljubimaca kod kuće", city: "Novi Sad", area: "Petrovaradin, Novi Sad", homeVisitsNote: "Ljubimac ostaje kod kuće, a mi dolazimo kod njega.", boardingNote: "Psi i mačke borave kod nas.", contact: "Kontakt sa Anom", language: "Jezik stranice", ru: "Русский", en: "English", sr: "Srpski", author: "Autor", toc: "Sadržaj" },
+}[petSectionLocale];
+const petSectionLocaleNames = petSectionLocale === "sr"
+  ? { ru: "RU", en: "EN", sr: "SR" }
+  : { ru: petSectionLabels.ru, en: petSectionLabels.en, sr: petSectionLabels.sr };
 const petSectionTelegram = telegramUrl();
 const petSittingArticleMatch = currentPath.match(
-  /^\/(ru|en)\/novi-sad\/pet-sitting\/([^/]+)\/$/,
+  /^\/(ru|en|sr)\/novi-sad\/pet-sitting\/([^/]+)\/$/,
 );
 const isPetSittingArticle = Boolean(
   petSittingArticleMatch && !["cats", "dogs", "home-visits"].includes(petSittingArticleMatch[2]),
 );
-const petArticleLocale = petSittingArticleMatch?.[1] === "ru" ? "ru" : "en";
+const petArticleLocale = (petSittingArticleMatch?.[1] ?? "en") as "ru" | "en" | "sr";
 const petArticleSlug = petSittingArticleMatch?.[2] ?? "";
 const petArticleServiceKind = petArticleSlug.includes("cat")
   ? "cats"
@@ -82,13 +88,20 @@ const articleCta = isB2BSeoArticle
       title: "Try the SEO ROI Calculator",
       description: "Estimate CAC, LTV, payback, and ROI with your own numbers.",
     }
-  : isPetSittingArticle
+    : isPetSittingArticle
     ? petArticleLocale === "ru"
       ? {
           href: petArticleServicePath,
           eyebrow: "Домашняя передержка",
           title: petArticleServiceKind === "cats" ? "Передержка кошек" : petArticleServiceKind === "dogs" ? "Передержка собак" : "Передержка в Нови-Саде",
           description: "Условия, свободные даты, цены и реальные фото гостей.",
+        }
+      : petArticleLocale === "sr"
+      ? {
+          href: petArticleServicePath,
+          eyebrow: "Čuvanje ljubimaca",
+          title: petArticleServiceKind === "cats" ? "Čuvanje mačaka" : petArticleServiceKind === "dogs" ? "Čuvanje pasa" : "Čuvanje ljubimaca u Novom Sadu",
+          description: "Pogledajte uslove, cene i slobodne termine.",
         }
       : {
           href: petArticleServicePath,
@@ -126,7 +139,7 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
     ))}
     <meta name="robots" content={robots} />
     <meta property="og:type" content={ogType} />
-    <meta property="og:locale" content={lang === "ru" ? "ru_RU" : "en_US"} />
+    <meta property="og:locale" content={lang === "ru" ? "ru_RU" : lang.startsWith("sr") ? "sr_RS" : "en_US"} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
@@ -227,23 +240,30 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
       </div>
     )}
 
-    <a class="skip-link" href="#content">Skip to content</a>
+    <a class="skip-link" href="#content">{lang === "ru" ? "К основному содержимому" : lang.startsWith("sr") ? "Pređite na glavni sadržaj" : "Skip to content"}</a>
 
     <header class:list={["site-header", { "site-header--pet": isPetSittingSection }]}>
       <div class="container header-inner">
         <a class="brand" href={isPetSittingSection ? petSectionBase : "/"}>
           <span class="brand-mark">GETMANOV</span>
-          {isPetSittingSection && <span class="pet-brand-context">Pet sitting</span>}
+          {isPetSittingSection && <span class="pet-brand-context">{petSectionLocale === "ru" ? "Уход за питомцами" : petSectionLocale === "sr" ? "Čuvanje ljubimaca" : "Pet sitting"}</span>}
         </a>
 
         {isPetSittingSection ? (
-          <nav class="nav pet-nav" aria-label={petSectionLocale === "ru" ? "Уход за питомцами" : "Pet care"}>
-            <a href={petSectionBase} aria-current={currentPath === petSectionBase ? "page" : undefined}>{petSectionLocale === "ru" ? "Главная" : "Home"}</a>
-            <a href={`${petSectionBase}dogs/`} aria-current={currentPath === `${petSectionBase}dogs/` ? "page" : undefined}>{petSectionLocale === "ru" ? "Собаки" : "Dogs"}</a>
-            <a href={`${petSectionBase}cats/`} aria-current={currentPath === `${petSectionBase}cats/` ? "page" : undefined}>{petSectionLocale === "ru" ? "Кошки" : "Cats"}</a>
-            <a href={`${petSectionBase}home-visits/`} aria-current={currentPath === `${petSectionBase}home-visits/` ? "page" : undefined}>{petSectionLocale === "ru" ? "Выезды домой" : "Home visits"}</a>
-            <a href={isHomeVisitsPage ? "#guides" : `${petSectionBase}#guides`}>{petSectionLocale === "ru" ? "Полезное" : "Guides"}</a>
-            <a class="pet-nav__locale" href={petSectionAlternatePath} hreflang={petSectionLocale === "ru" ? "en" : "ru"}>{petSectionLocale === "ru" ? "EN" : "RU"}</a>
+          <nav class="nav pet-nav" aria-label={petSectionLabels.nav}>
+            <a href={petSectionBase} aria-current={currentPath === petSectionBase ? "page" : undefined}>{petSectionLabels.home}</a>
+            <a href={`${petSectionBase}dogs/`} aria-current={currentPath === `${petSectionBase}dogs/` ? "page" : undefined}>{petSectionLabels.dogs}</a>
+            <a href={`${petSectionBase}cats/`} aria-current={currentPath === `${petSectionBase}cats/` ? "page" : undefined}>{petSectionLabels.cats}</a>
+            <a href={`${petSectionBase}home-visits/`} aria-current={currentPath === `${petSectionBase}home-visits/` ? "page" : undefined}>{petSectionLabels.visits}</a>
+            <a href={isHomeVisitsPage ? "#guides" : `${petSectionBase}#guides`}>{petSectionLabels.guides}</a>
+            <span class="pet-nav__locales" aria-label={petSectionLabels.language}>
+              {(["ru", "en", "sr"] as const).map((locale, index) => (
+                <>
+                  {index > 0 && <span aria-hidden="true">|</span>}
+                  <a href={petSectionPathForLocale(locale)} hreflang={locale === "sr" ? "sr-Latn" : locale} aria-current={petSectionLocale === locale ? "page" : undefined}>{locale.toUpperCase()}</a>
+                </>
+              ))}
+            </span>
           </nav>
         ) : (
           <nav class="nav">
@@ -267,7 +287,7 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
           <slot />
           {hasArticleNavigation && (
             <details class="article-mobile-toc">
-              <summary>{lang === "ru" ? "Содержание" : "Table of contents"}</summary>
+              <summary>{lang === "ru" ? "Содержание" : lang.startsWith("sr") ? "Sadržaj" : "Table of contents"}</summary>
               <ol class="article-mobile-toc__list"></ol>
             </details>
           )}
@@ -275,7 +295,7 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
 
         {hasArticleNavigation && (
           <aside class="article-toc" aria-labelledby="article-toc-title">
-            <a class="article-author" href="/" aria-label="About Ivan Getmanov">
+            <a class="article-author" href="/" aria-label={lang === "ru" ? "Об Иване Гетманове" : lang.startsWith("sr") ? "O Ivanu Getmanovu" : "About Ivan Getmanov"}>
               <img
                 src="/images/ivan-getmanov.webp"
                 alt=""
@@ -284,14 +304,14 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
                 loading="eager"
               />
               <span>
-                <small>{lang === "ru" ? "Автор" : "Written by"}</small>
+                <small>{lang === "ru" ? "Автор" : lang.startsWith("sr") ? "Autor" : "Written by"}</small>
                 <strong>Ivan Getmanov</strong>
               </span>
             </a>
 
             <nav>
               <p id="article-toc-title" class="article-toc__title">
-                {lang === "ru" ? "Содержание" : "Table of contents"}
+                {lang === "ru" ? "Содержание" : lang.startsWith("sr") ? "Sadržaj" : "Table of contents"}
               </p>
               <ol class="article-toc__list"></ol>
             </nav>
@@ -301,7 +321,7 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
                 <small>{articleCta.eyebrow}</small>
                 <strong>{articleCta.title}</strong>
                 <span>{articleCta.description}</span>
-                <b aria-hidden="true">{isPetSittingArticle ? lang === "ru" ? "Посмотреть условия →" : "View boarding details →" : "Open tool →"}</b>
+                <b aria-hidden="true">{isPetSittingArticle ? lang === "ru" ? "Посмотреть условия →" : lang.startsWith("sr") ? "Pogledajte uslove →" : "View boarding details →" : "Open tool →"}</b>
               </a>
             )}
           </aside>
@@ -313,24 +333,26 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
       {isPetSittingSection ? (
         <div class="container footer-grid pet-footer-grid">
           <div>
-            <div class="footer-title">{isHomeVisitsPage ? petSectionLocale === "ru" ? "Выезды к питомцам домой" : "In-home pet sitting" : petSectionLocale === "ru" ? "Домашняя передержка" : "Home pet boarding"}</div>
-            <div class="footer-text">{isHomeVisitsPage ? petSectionLocale === "ru" ? "Нови-Сад" : "Novi Sad" : petSectionLocale === "ru" ? "Петроварадин, Нови-Сад" : "Petrovaradin, Novi Sad"}<br />{isHomeVisitsPage ? petSectionLocale === "ru" ? "Питомец остаётся дома, а мы приезжаем к нему." : "Your pet stays home, and we come to them." : petSectionLocale === "ru" ? "Собаки и кошки живут у нас дома." : "Dogs and cats stay with us in our home."}</div>
+            <div class="footer-title">{isHomeVisitsPage ? petSectionLabels.homeVisits : petSectionLabels.boarding}</div>
+            <div class="footer-text">{isHomeVisitsPage ? petSectionLabels.city : petSectionLabels.area}<br />{isHomeVisitsPage ? petSectionLabels.homeVisitsNote : petSectionLabels.boardingNote}</div>
           </div>
           <div>
-            <div class="footer-title">{petSectionLocale === "ru" ? "Раздел" : "Explore"}</div>
+            <div class="footer-title">{petSectionLabels.explore}</div>
             <nav class="footer-text pet-footer-links">
-              <a href={petSectionBase}>{petSectionLocale === "ru" ? "Все условия" : "Pet boarding"}</a>
-              <a href={`${petSectionBase}dogs/`}>{petSectionLocale === "ru" ? "Собаки" : "Dogs"}</a>
-              <a href={`${petSectionBase}cats/`}>{petSectionLocale === "ru" ? "Кошки" : "Cats"}</a>
-              <a href={`${petSectionBase}home-visits/`}>{petSectionLocale === "ru" ? "Выезды домой" : "Home visits"}</a>
-              <a href={`${petSectionBase}#guides`}>{petSectionLocale === "ru" ? "Полезные статьи" : "Useful guides"}</a>
+              <a href={petSectionBase}>{petSectionLabels.all}</a>
+              <a href={`${petSectionBase}dogs/`}>{petSectionLabels.dogs}</a>
+              <a href={`${petSectionBase}cats/`}>{petSectionLabels.cats}</a>
+              <a href={`${petSectionBase}home-visits/`}>{petSectionLabels.visits}</a>
+              <a href={`${petSectionBase}#guides`}>{petSectionLabels.guideList}</a>
             </nav>
           </div>
           <div>
-            <div class="footer-title">{petSectionLocale === "ru" ? "Связаться с Аней" : "Contact Anna"}</div>
+            <div class="footer-title">{petSectionLabels.contact}</div>
             <div class="footer-text">
               <a href={petSectionTelegram} target="_blank" rel="noreferrer">Telegram</a><br />
-              <a href={petSectionAlternatePath} hreflang={petSectionLocale === "ru" ? "en" : "ru"}>{petSectionLocale === "ru" ? "English version" : "Русская версия"}</a>
+              {(petSectionLocale === "en" || petSectionLocale === "sr") && <PetMessagingLinks locale={petSectionLocale} />}
+              {(petSectionLocale === "en" || petSectionLocale === "sr") && <br />}
+              <span class="footer-locales" aria-label={petSectionLabels.language}>{(["ru", "en", "sr"] as const).map((locale, index) => <>{index > 0 && " | "}<a href={petSectionPathForLocale(locale)} hreflang={locale === "sr" ? "sr-Latn" : locale}>{petSectionLocaleNames[locale]}</a></>)}</span>
             </div>
           </div>
         </div>

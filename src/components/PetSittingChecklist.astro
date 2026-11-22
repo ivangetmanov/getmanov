@@ -1,6 +1,7 @@
 ---
-const { locale, animal, articleSlug } = Astro.props as { locale: "ru" | "en"; animal: "dog" | "cat"; articleSlug: string };
+const { locale, animal, articleSlug } = Astro.props as { locale: "ru" | "en" | "sr"; animal: "dog" | "cat"; articleSlug: string };
 const isEnglish = locale === "en";
+const isSerbian = locale === "sr";
 const isDog = animal === "dog";
 const itemsByLocale = {
   ru: {
@@ -49,18 +50,41 @@ const itemsByLocale = {
       "Explained how the cat behaves around other animals",
     ],
   },
+  sr: {
+    dog: [
+      "Hrana za ceo boravak",
+      "Povodac, am ili ogrlica",
+      "Lekovi i uputstvo",
+      "Objasnili ste uobičajeni ritam šetnji",
+      "Objasnili ste uobičajeni ritam hranjenja",
+      "Razgovarali ste o tome da li pas može da ostane sam",
+      "Objasnili ste kako se pas ponaša prema mačkama",
+      "Spakovali ste poznat predmet ili igračku, ako je potrebno",
+      "Dogovorili ste upoznavanje ili probni boravak, ako je potrebno",
+    ],
+    cat: [
+      "Proverili ste da li su vakcine važeće",
+      "Spakovali ste uobičajenu hranu",
+      "Spakovali ste uobičajeni posip",
+      "Odlučili ste da li ćete poneti mačji toalet",
+      "Spakovali ste lekove i uputstvo",
+      "Spakovali ste poznat predmet, ćebence ili igračku",
+      "Objasnili ste navike i strahove mačke",
+      "Objasnili ste kako se mačka ponaša prema drugim životinjama",
+    ],
+  },
 };
 const items = itemsByLocale[locale][animal];
 ---
 
 <section class="pet-article-tool pet-article-checklist" data-article-checklist data-tool-type={`${animal}_preparation_checklist`} data-article-slug={articleSlug} data-locale={locale} aria-labelledby={`${animal}-checklist-title`}>
-  <p class="pet-article-tool__eyebrow">{isEnglish ? "Pre-trip checklist" : "Чек-лист перед поездкой"}</p>
-  <h2 id={`${animal}-checklist-title`}>{isEnglish ? isDog ? "Check your dog's preparation" : "Check your cat's preparation" : isDog ? "Проверьте подготовку собаки" : "Проверьте подготовку кошки"}</h2>
-  <p data-checklist-progress aria-live="polite">{isEnglish ? `Checked: 0 of ${items.length}` : `Отмечено: 0 из ${items.length}`}</p>
+  <p class="pet-article-tool__eyebrow">{isEnglish ? "Pre-trip checklist" : isSerbian ? "Kontrolna lista pred put" : "Чек-лист перед поездкой"}</p>
+  <h2 id={`${animal}-checklist-title`}>{isEnglish ? isDog ? "Check your dog's preparation" : "Check your cat's preparation" : isSerbian ? isDog ? "Priprema psa za boravak" : "Priprema mačke za boravak" : isDog ? "Проверьте подготовку собаки" : "Проверьте подготовку кошки"}</h2>
+  <p data-checklist-progress aria-live="polite">{isEnglish ? `Checked: 0 of ${items.length}` : isSerbian ? `Označeno: 0 od ${items.length}` : `Отмечено: 0 из ${items.length}`}</p>
   <div class="pet-article-checklist__items">
     {items.map((item) => <label><input type="checkbox" /><span>{item}</span></label>)}
   </div>
-  <p class="pet-article-checklist__note">{isEnglish ? "Selections are stored only on this page and reset when it is reloaded." : "Отметки хранятся только на этой странице и сбросятся после обновления."}</p>
+  <p class="pet-article-checklist__note">{isEnglish ? "Selections are stored only on this page and reset when it is reloaded." : isSerbian ? "Oznake se čuvaju samo na ovoj stranici i brišu se kada je ponovo učitate." : "Отметки хранятся только на этой странице и сбросятся после обновления."}</p>
 </section>
 
 <script>
@@ -68,9 +92,10 @@ const items = itemsByLocale[locale][animal];
     const inputs = [...root.querySelectorAll<HTMLInputElement>('input[type="checkbox"]')];
     const progress = root.querySelector<HTMLElement>('[data-checklist-progress]');
     const isEnglish = root.dataset.locale === 'en';
+    const isSerbian = root.dataset.locale === 'sr';
     inputs.forEach((input) => input.addEventListener('change', () => {
       const checked = inputs.filter((item) => item.checked).length;
-      if (progress) progress.textContent = isEnglish ? `Checked: ${checked} of ${inputs.length}` : `Отмечено: ${checked} из ${inputs.length}`;
+      if (progress) progress.textContent = isEnglish ? `Checked: ${checked} of ${inputs.length}` : isSerbian ? `Označeno: ${checked} od ${inputs.length}` : `Отмечено: ${checked} из ${inputs.length}`;
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'pet_sitting_article_checklist_interaction', {
           article_slug: root.dataset.articleSlug,

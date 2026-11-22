@@ -6,7 +6,7 @@ import PetSittingComparisonHelper from "./PetSittingComparisonHelper.astro";
 import { petSittingBillingFaq } from "../data/pet-sitting-faq";
 import type { PetSittingPageKind } from "../data/pet-sitting";
 
-type Locale = "ru" | "en";
+type Locale = "ru" | "en" | "sr";
 type Placement = "helper" | "booking";
 type Tool = "comparison" | "cat-options" | "dog-checklist" | "cat-checklist";
 
@@ -25,6 +25,7 @@ const configuration = configurations[articleSlug];
 const billingFaq = petSittingBillingFaq[locale];
 const sourcePage = `/${locale}/novi-sad/pet-sitting/${articleSlug}/`;
 const isEnglish = locale === "en";
+const isSerbian = locale === "sr";
 ---
 
 {configuration && placement === "helper" && (
@@ -39,10 +40,12 @@ const isEnglish = locale === "en";
 {configuration && placement === "booking" && (
   <section class="pet-article-booking" data-article-interaction="booking" data-article-slug={articleSlug} aria-labelledby={`article-availability-${articleSlug}`}>
     <div class="pet-article-booking__context">
-      <h2 id={`article-availability-${articleSlug}`}>{isEnglish ? "Check available dates" : "Проверьте свободные даты"}</h2>
+      <h2 id={`article-availability-${articleSlug}`}>{isEnglish ? "Check available dates" : isSerbian ? "Proverite slobodne termine" : "Проверьте свободные даты"}</h2>
       <p>{isEnglish
         ? "Choose approximate dates to see availability and an estimated price. We’ll confirm everything in Telegram."
-        : "Выберите примерные даты — сразу покажем доступность и стоимость. Окончательно подтвердим всё в Telegram."}</p>
+        : isSerbian
+          ? "Izaberite okvirne datume da biste proverili dostupnost i okvirnu cenu. Sve ćemo potvrditi na Telegramu."
+          : "Выберите примерные даты — сразу покажем доступность и стоимость. Окончательно подтвердим всё в Telegram."}</p>
     </div>
     <PetSittingCalendar
       locale={locale}

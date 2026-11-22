@@ -12,7 +12,8 @@
     "check:pet-inquiry": "node scripts/check-pet-sitting-inquiry.mjs",
     "check:pet-articles": "node scripts/check-pet-sitting-articles.mjs",
     "check:pet-seo": "node scripts/check-pet-sitting-seo.mjs",
-    "verify": "npm run build && npm run check:links && npm run check:analytics && npm run check:pet-calendar && npm run check:pet-inquiry && npm run check:pet-articles && npm run check:pet-seo"
+    "check:pet-prices": "node scripts/check-pet-sitting-prices.mjs",
+    "verify": "npm run build && npm run check:links && npm run check:analytics && npm run check:pet-calendar && npm run check:pet-inquiry && npm run check:pet-articles && npm run check:pet-seo && npm run check:pet-prices"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.9",

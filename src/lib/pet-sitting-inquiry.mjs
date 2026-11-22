@@ -3,7 +3,7 @@ import { calendarDayDifference, isCalendarDateKey, rangeHasUnavailable } from ".
 import { calculateHomeVisitQuote, calculatePetSittingQuote, formatRsd, formatRussianStayDuration, isAllowedPetSittingSourcePage, petSittingBusiness } from "./pet-sitting-business.mjs";
 
 const animals = new Set(["dog", "cat"]);
-const locales = new Set(["ru", "en"]);
+const locales = new Set(["ru", "en", "sr"]);
 const pageKinds = new Set(["main", "dogs", "cats"]);
 const homeVisitAnimals = new Set(petSittingBusiness.homeVisits.animals);
 
@@ -125,7 +125,9 @@ export function prepareHomeVisitInquiry(payload) {
 function formatCalendarDate(key, locale) {
   const months = locale === "en"
     ? ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-    : ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+    : locale === "sr"
+      ? ["januara", "februara", "marta", "aprila", "maja", "juna", "jula", "avgusta", "septembra", "oktobra", "novembra", "decembra"]
+      : ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
   const [, month, day] = key.split("-").map(Number);
   return `${day} ${months[month - 1]}`;
 }
@@ -140,12 +142,14 @@ function sanitizePlainText(value, maxLength = 240) {
 export function buildPetSittingTelegramMessage(inquiry, submittedAt = new Date().toISOString()) {
   if (inquiry.serviceType === "home_visit") return buildHomeVisitTelegramMessage(inquiry, submittedAt);
   const isEnglish = inquiry.locale === "en";
+  const isSerbian = inquiry.locale === "sr";
   const animal = isEnglish
     ? inquiry.pet
-    : inquiry.pet === "dog" ? "собака" : "кошка";
-  const flexible = inquiry.flexible ? (isEnglish ? "yes" : "да") : (isEnglish ? "no" : "нет");
+    : isSerbian ? inquiry.pet === "dog" ? "pas" : "mačka"
+      : inquiry.pet === "dog" ? "собака" : "кошка";
+  const flexible = inquiry.flexible ? (isEnglish ? "yes" : isSerbian ? "da" : "да") : (isEnglish ? "no" : isSerbian ? "ne" : "нет");
   const price = inquiry.quote.individualPricing
-    ? isEnglish ? "discuss individually" : "обсуждается отдельно"
+    ? isEnglish ? "discuss individually" : isSerbian ? "dogovara se pojedinačno" : "обсуждается отдельно"
     : `${formatRsd(inquiry.quote.total, inquiry.locale)} RSD`;
   const sourceUrl = `https://getmanov.com${inquiry.sourcePage}`;
 
@@ -163,6 +167,20 @@ export function buildPetSittingTelegramMessage(inquiry, submittedAt = new Date()
     "Language: EN",
     `Source: ${sourceUrl}`,
     `Submitted: ${submittedAt}`,
+  ] : isSerbian ? [
+    "🐾 Novi upit za čuvanje ljubimca",
+    "",
+    `Stranica: ${inquiry.pageLabel}`,
+    `Datumi: ${formatCalendarDate(inquiry.arrival, "sr")} — ${formatCalendarDate(inquiry.departure, "sr")}`,
+    `Trajanje boravka: ${inquiry.quote.billableDays} dana`,
+    `Ljubimac: ${animal}`,
+    `Broj ljubimaca: ${inquiry.quantity}`,
+    `Okvirni datumi: ${flexible}`,
+    `Okvirna cena: ${price}`,
+    `Telegram korisnika: ${inquiry.telegramUsername}`,
+    "Jezik: SR",
+    `Izvor: ${sourceUrl}`,
+    `Poslato: ${submittedAt}`,
   ] : [
     "🐾 Новая заявка на передержку",
     "",
@@ -184,14 +202,17 @@ export function buildPetSittingTelegramMessage(inquiry, submittedAt = new Date()
 
 export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().toISOString()) {
   const isEnglish = inquiry.locale === "en";
+  const isSerbian = inquiry.locale === "sr";
   const animal = isEnglish
     ? inquiry.animal === "cat_and_dog" ? "cat and dog" : inquiry.animal
-    : inquiry.animal === "dog" ? "собака" : inquiry.animal === "cat" ? "кошка" : "кошка и собака";
+    : isSerbian
+      ? inquiry.animal === "dog" ? "pas" : inquiry.animal === "cat" ? "mačka" : "mačka i pas"
+      : inquiry.animal === "dog" ? "собака" : inquiry.animal === "cat" ? "кошка" : "кошка и собака";
   const sourceUrl = `https://getmanov.com${inquiry.sourcePage}`;
   const price = !inquiry.quote || inquiry.quote.needsConfirmation
     ? isEnglish
       ? "confirm after contact"
-      : "подтвердить после связи"
+      : isSerbian ? "potvrditi nakon dogovora" : "подтвердить после связи"
     : `${formatRsd(inquiry.quote.total, inquiry.locale)} RSD (${formatRsd(inquiry.quote.perVisit, inquiry.locale)} RSD × ${inquiry.quote.visitCount})`;
   const location = inquiry.approximateLocation
     ? `${inquiry.approximateLocation.latitude}, ${inquiry.approximateLocation.longitude}`
@@ -213,6 +234,23 @@ export function buildHomeVisitTelegramMessage(inquiry, submittedAt = new Date().
     "Language: EN",
     `Source: ${sourceUrl}`,
     `Submitted: ${submittedAt}`,
+  ] : isSerbian ? [
+    "🏠 Novi upit za obilazak ljubimca kod kuće",
+    "",
+    "Vrsta usluge: home_visit",
+    `Stranica: ${inquiry.pageLabel}`,
+    `Datumi: ${inquiry.dateFrom} — ${inquiry.dateTo}`,
+    `Ljubimac: ${animal}`,
+    `Poseta dnevno: ${inquiry.visitsPerDay}`,
+    `Šetnja psa je potrebna: ${inquiry.dogWalk ? "da" : "ne"}`,
+    `Zona usluge: ${inquiry.serviceZone || "mapa nije dostupna"}`,
+    `Približna lokacija: ${location}`,
+    `Napomena: ${inquiry.notes || "nije navedena"}`,
+    `Okvirna cena: ${price}`,
+    `Telegram korisnika: ${inquiry.telegramUsername}`,
+    "Jezik: SR",
+    `Izvor: ${sourceUrl}`,
+    `Poslato: ${submittedAt}`,
   ] : [
     "🏠 Новый запрос на выезд к питомцу",
     "",

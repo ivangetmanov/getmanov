@@ -421,9 +421,14 @@ async function filesBelow(directory) {
 }
 
 const privatePhoneDigits = ["381", "628", "426", "881"].join("");
+const approvedMessagingUrls = [
+  "https://wa.me/381628426881",
+  "viber://chat?number=%2B381628426881",
+];
 for (const file of await filesBelow(new URL("dist/", projectRoot))) {
-  const contents = await readFile(file);
-  assert.equal(contents.includes(Buffer.from(privatePhoneDigits)), false, `Private phone number leaked into ${file.pathname}`);
+  let contents = await readFile(file, "utf8");
+  for (const url of approvedMessagingUrls) contents = contents.replaceAll(url, "");
+  assert.equal(contents.includes(privatePhoneDigits), false, `Private phone number leaked outside approved messaging links in ${file.pathname}`);
 }
 
 console.log(`Pet-sitting SEO checks passed for 8 money pages and ${articles.length} discovered localized support articles.`);

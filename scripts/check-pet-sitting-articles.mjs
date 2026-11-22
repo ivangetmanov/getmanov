@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { JSDOM } from "jsdom";
 
 const root = new URL("../", import.meta.url);
@@ -41,14 +41,14 @@ const slugs = [
 
 const copyHashes = {
   ru: {
-    "pet-sitter-vs-boarding": "9fdc38326879b841dff6f01c8916fb56087591e9f550b8ec4d45676fb6e1f0a2",
-    "can-cat-stay-alone-for-a-week": "48b65c05094ecf6296df8c86f0cd33e090149fa69b83c3f1b191b09decbb725f",
+    "pet-sitter-vs-boarding": "0792faf03fac4b194f852b405485b0d2b2e874ddc930a1ca0fb13eb28ded89b1",
+    "can-cat-stay-alone-for-a-week": "a9b90d528a1643e17bad7f998796341d484db36fd21d822325dc1abe9ddec860",
     "prepare-dog-for-boarding": "34ffafe3646ef0564b08d653761977f37fc4f0f5e930a007cce59cffcfbe7e56",
     "prepare-cat-for-boarding": "23983a566099ab53970e888a1cfe69aafe65a48406bd4443e271dae8ae3a63f9",
   },
   en: {
-    "pet-sitter-vs-boarding": "1217e5f820a1ac6fbf1ce1005254fc91ef892ad761bf4eb3bfad6172fb7c6afa",
-    "can-cat-stay-alone-for-a-week": "55e1c49213327cc98faf1b340dca4f3b2fe0a0bbc7e5ae5ffdd2095590af95a4",
+    "pet-sitter-vs-boarding": "d9b2845b27193884fceafef33cc6f073d2de358bcb020fe465b36d6013850cdd",
+    "can-cat-stay-alone-for-a-week": "1e63cadec2fd8010cf647090ddbc85d073dc67da0f979d6f9eeb80f07cdef5a2",
     "prepare-dog-for-boarding": "f3d37349b6acea2c6f17e65f55cead9fe74ad3664d9c62b6b2b0e75392a0bb38",
     "prepare-cat-for-boarding": "beea7d8d96f5ed16925b2edf63337bc7a7ce513afdd064d8f4b0fe8ac2e5fabe",
   },
@@ -233,10 +233,10 @@ for (const locale of ["ru", "en"]) {
     assert(!html.includes("[MEDIA"), `${path} contains a media placeholder`);
     assert(!html.includes("?autoplay="), `${path} must not autoplay video`);
     if (mediaVideos.length) {
-      const scriptSources = [...document.querySelectorAll('script[src^="/_astro/"]')]
-        .map((script) => script.getAttribute("src"));
       const bundledScripts = await Promise.all(
-        scriptSources.map((src) => readFile(new URL(`dist${src}`, root), "utf8")),
+        (await readdir(new URL("dist/_astro/", root)))
+          .filter((filename) => filename.endsWith(".js"))
+          .map((filename) => readFile(new URL(`dist/_astro/${filename}`, root), "utf8")),
       );
       assert(
         bundledScripts.some((source) => source.includes("www.youtube-nocookie.com/embed/")),
@@ -537,11 +537,17 @@ for (const page of moneyPageCases) {
   }
 
   const heroActions = [...document.querySelectorAll(".pet-hero .pet-actions a")];
-  assert.equal(heroActions.length, 2, path + " needs exactly two hero actions");
+  assert.equal(heroActions.length, page.locale === "en" ? 4 : 2, path + " needs the expected primary and messaging actions");
   assert.equal(heroActions[0].getAttribute("href"), "#dates");
   assert.equal(heroActions[1].getAttribute("href"), "https://t.me/ya_kushka");
   assert.equal(heroActions[0].textContent.trim(), page.locale === "ru" ? "Проверить даты" : "Check available dates");
   assert.equal(heroActions[1].textContent.trim(), page.locale === "ru" ? "Написать Ане в Telegram" : "Message Anna on Telegram");
+  if (page.locale === "en") {
+    assert.equal(heroActions[2].getAttribute("href"), "https://wa.me/381628426881", path + " needs the approved WhatsApp link");
+    assert.equal(heroActions[3].getAttribute("href"), "viber://chat?number=%2B381628426881", path + " needs the approved Viber link");
+    assert(heroActions[2].getAttribute("aria-label")?.includes("WhatsApp"), path + " WhatsApp icon needs an accessible label");
+    assert(heroActions[3].getAttribute("aria-label")?.includes("Viber"), path + " Viber icon needs an accessible label");
+  }
 
   const proof = document.querySelector(".early-media");
   assert.equal(proof?.querySelector("h2")?.textContent.trim(), page.locale === "ru" ? "Фото и видео каждый день" : "Photos and videos every day");
@@ -559,9 +565,13 @@ for (const page of moneyPageCases) {
   assert(!locationMap?.getAttribute("src")?.includes("marker="), path + " must not publish an exact home pin");
 
   const finalActions = [...document.querySelectorAll(".final-cta .pet-actions a")];
-  assert.equal(finalActions.length, 2, path + " needs two compact final actions");
+  assert.equal(finalActions.length, page.locale === "en" ? 4 : 2, path + " needs the expected compact contact actions");
   assert.equal(finalActions[0].getAttribute("href"), "#dates");
   assert.equal(finalActions[1].getAttribute("href"), "https://t.me/ya_kushka");
+  if (page.locale === "en") {
+    assert.equal(finalActions[2].getAttribute("href"), "https://wa.me/381628426881", path + " final CTA needs WhatsApp");
+    assert.equal(finalActions[3].getAttribute("href"), "viber://chat?number=%2B381628426881", path + " final CTA needs Viber");
+  }
 
   const details = [...document.querySelectorAll(".faq-list details")];
   const visibleQuestions = details.map((item) => item.querySelector("summary")?.textContent.trim());
@@ -572,8 +582,9 @@ for (const page of moneyPageCases) {
   assert(details.filter((item) => item !== billingDetails).every((item) => !item.hasAttribute("open")), path + " should collapse secondary FAQs");
 
   const guideLinks = [...document.querySelectorAll(".useful-guides nav a")];
-  assert(guideLinks.length >= 2 && guideLinks.length <= 3, path + " needs two or three useful guide links");
+  assert(guideLinks.length >= 2 && guideLinks.length <= 4, path + " needs two to four useful guide links");
   assert(guideLinks.every((link) => link.getAttribute("href")?.startsWith(`/${page.locale}/novi-sad/pet-sitting/`)), path + " guide links must stay in the localized pet-sitting section");
+  assert(guideLinks.some((link) => link.getAttribute("href") === `/${page.locale}/novi-sad/pet-sitting/prices/`), path + " must link to its localized pricing guide");
 
   const petNav = document.querySelector(".site-header--pet .pet-nav");
   assert(petNav, path + " needs the contextual pet-sitting header");

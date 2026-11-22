@@ -2,8 +2,9 @@
 import "leaflet/dist/leaflet.css";
 import { petSittingBusiness } from "../lib/pet-sitting-business.mjs";
 
-const { locale = "ru" } = Astro.props as { locale?: "ru" | "en" };
+const { locale = "ru" } = Astro.props as { locale?: "ru" | "en" | "sr" };
 const isEnglish = locale === "en";
+const isSerbian = locale === "sr";
 const area = petSittingBusiness.homeVisits.serviceArea;
 ---
 
@@ -20,14 +21,14 @@ const area = petSittingBusiness.homeVisits.serviceArea;
     data-map-canvas
     role="application"
     tabindex="0"
-    aria-label={isEnglish ? "Interactive map of the home-visit service area in Novi Sad" : "Интерактивная карта зоны выезда по Нови-Саду"}
+    aria-label={isEnglish ? "Interactive map of the home-visit service area in Novi Sad" : isSerbian ? "Interaktivna mapa zone kućnih obilazaka u Novom Sadu" : "Интерактивная карта зоны выезда по Нови-Саду"}
   ></div>
-  <div class="service-map-legend" aria-label={isEnglish ? "Map legend" : "Легенда карты"}>
+  <div class="service-map-legend" aria-label={isEnglish ? "Map legend" : isSerbian ? "Legenda mape" : "Легенда карты"}>
     <div><span class="swatch swatch--base" aria-hidden="true"></span><span>{area.legend.base[locale]}</span></div>
     <div><span class="swatch swatch--extended" aria-hidden="true"></span><span>{area.legend.extended[locale]}</span></div>
     <div><span class="swatch swatch--other" aria-hidden="true"></span><span>{area.legend.other[locale]}</span></div>
   </div>
-  <p class="service-map-status" data-map-status aria-live="polite">{isEnglish ? "Interactive map loading…" : "Загружаем интерактивную карту…"}</p>
+  <p class="service-map-status" data-map-status aria-live="polite">{isEnglish ? "Interactive map loading…" : isSerbian ? "Učitava se interaktivna mapa…" : "Загружаем интерактивную карту…"}</p>
 </div>
 
 <script>
@@ -120,15 +121,18 @@ const area = petSittingBusiness.homeVisits.serviceArea;
           fillOpacity: 0.64,
         }).addTo(map);
         const isEnglish = root.dataset.locale === 'en';
+        const isSerbian = root.dataset.locale === 'sr';
         status.hidden = false;
         status.classList.add('is-selection');
         status.textContent = zone === 'green'
-          ? isEnglish ? 'Selected: green area · base price' : 'Выбрано: зелёная зона · базовая цена'
+          ? isEnglish ? 'Selected: green area · base price' : isSerbian ? 'Izabrano: zelena zona · osnovna cena' : 'Выбрано: зелёная зона · базовая цена'
           : zone === 'yellow'
-            ? isEnglish ? 'Selected: yellow area · +500 RSD per visit' : 'Выбрано: жёлтая зона · +500 RSD за визит'
+            ? isEnglish ? 'Selected: yellow area · +500 RSD per visit' : isSerbian ? 'Izabrano: žuta zona · +500 RSD po poseti' : 'Выбрано: жёлтая зона · +500 RSD за визит'
             : isEnglish
               ? 'This location is outside our usual service area. Message us—we may still be able to arrange a visit.'
-              : 'Это место за пределами нашей обычной зоны выезда. Напишите нам — возможно, сможем договориться.';
+              : isSerbian
+                ? 'Ova lokacija je van naše uobičajene zone. Pišite nam — možda ipak možemo da dogovorimo posetu.'
+                : 'Это место за пределами нашей обычной зоны выезда. Напишите нам — возможно, сможем договориться.';
         window.dispatchEvent(new CustomEvent('homevisit-location-selected', { detail: { zone, latitude, longitude } }));
       };
       zones.on('click', selectLocation);
@@ -136,9 +140,11 @@ const area = petSittingBusiness.homeVisits.serviceArea;
       requestAnimationFrame(() => map.invalidateSize());
     } catch {
       root.classList.add('has-error');
-      status.textContent = root.closest('[lang="en"]')
+      status.textContent = root.dataset.locale === 'en'
         ? 'We could not load the map. Enter your approximate neighborhood in the form below.'
-        : 'Не получилось загрузить карту. Укажите примерный район в форме ниже.';
+        : root.dataset.locale === 'sr'
+          ? 'Mapa nije mogla da se učita. Unesite približno naselje u obrazac ispod.'
+          : 'Не получилось загрузить карту. Укажите примерный район в форме ниже.';
       window.dispatchEvent(new CustomEvent('homevisit-map-error'));
     }
   };

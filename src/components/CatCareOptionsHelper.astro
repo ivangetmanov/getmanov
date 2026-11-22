@@ -1,6 +1,7 @@
 ---
-const { locale, articleSlug } = Astro.props as { locale: "ru" | "en"; articleSlug: string };
+const { locale, articleSlug } = Astro.props as { locale: "ru" | "en" | "sr"; articleSlug: string };
 const isEnglish = locale === "en";
+const isSerbian = locale === "sr";
 const copy = isEnglish
   ? {
       eyebrow: "Compare the options",
@@ -20,7 +21,24 @@ const copy = isEnglish
       noOrUnknown: "No or we do not know",
       show: "Show options",
     }
-  : {
+  : isSerbian ? {
+      eyebrow: "Uporedite mogućnosti",
+      title: "Koji način brige o mački vredi razmotriti?",
+      description: "Odgovori služe za planiranje, ne kao medicinski savet. Uzmite u obzir karakter, zdravlje i navike svoje mačke.",
+      duration: "Koliko dugo ćete biti odsutni?",
+      visits: "Hoće li neko redovno dolaziti?",
+      alone: "Može li mačka mirno da ostane sama?",
+      care: "Da li su potrebni lekovi ili češće praćenje?",
+      choose: "Izaberite",
+      short: "Do dva dana",
+      medium: "3–6 dana",
+      week: "Nedelju dana ili duže",
+      yes: "Da",
+      no: "Ne",
+      usuallyYes: "Uglavnom da",
+      noOrUnknown: "Ne ili ne znamo",
+      show: "Prikažite opcije",
+    } : {
       eyebrow: "Сравнить варианты",
       title: "Какой уход за кошкой имеет смысл рассмотреть?",
       description: "Ответы дают ориентир, а не медицинскую рекомендацию. Учитывайте характер, здоровье и привычки конкретной кошки.",
@@ -73,6 +91,7 @@ const copy = isEnglish
     const result = root.querySelector<HTMLElement>('[data-tool-result]');
     if (!form || !result) return;
     const isEnglish = root.dataset.locale === 'en';
+    const isSerbian = root.dataset.locale === 'sr';
     let started = false;
     const track = (name: string) => {
       if (typeof window.gtag !== 'function') return;
@@ -87,18 +106,20 @@ const copy = isEnglish
       event.preventDefault();
       const values = Object.fromEntries(new FormData(form));
       const options: string[] = [];
-      if (values.visits === 'yes' && values.alone === 'yes' && values.care === 'no') options.push(isEnglish ? 'regular drop-in visits' : 'регулярные визиты зооняни на дом');
-      if (values.care === 'yes' || values.alone === 'no') options.push(isEnglish ? 'a live-in sitter in your home' : 'ситтера с проживанием у вас дома');
-      if (values.duration !== 'short' || values.visits === 'no') options.push(isEnglish ? 'home boarding with a separate safe space' : 'домашнюю передержку с отдельным безопасным пространством');
-      if (!options.length) options.push(isEnglish ? 'regular drop-in visits and home boarding' : 'регулярные визиты зооняни и домашнюю передержку');
+      if (values.visits === 'yes' && values.alone === 'yes' && values.care === 'no') options.push(isEnglish ? 'regular drop-in visits' : isSerbian ? 'redovne kućne obilaske' : 'регулярные визиты зооняни на дом');
+      if (values.care === 'yes' || values.alone === 'no') options.push(isEnglish ? 'a live-in sitter in your home' : isSerbian ? 'pet sittera koji boravi u vašem domu' : 'ситтера с проживанием у вас дома');
+      if (values.duration !== 'short' || values.visits === 'no') options.push(isEnglish ? 'home boarding with a separate safe space' : isSerbian ? 'čuvanje u drugom domu uz odvojen, bezbedan prostor' : 'домашнюю передержку с отдельным безопасным пространством');
+      if (!options.length) options.push(isEnglish ? 'regular drop-in visits and home boarding' : isSerbian ? 'redovne kućne obilaske i čuvanje u drugom domu' : 'регулярные визиты зооняни и домашнюю передержку');
       const uniqueOptions = [...new Set(options)];
       result.replaceChildren();
       const strong = document.createElement('strong');
-      strong.textContent = isEnglish ? `Consider comparing: ${uniqueOptions.join(', ')}.` : `Имеет смысл сравнить: ${uniqueOptions.join(', ')}.`;
+      strong.textContent = isEnglish ? `Consider comparing: ${uniqueOptions.join(', ')}.` : isSerbian ? `Vredi uporediti: ${uniqueOptions.join(', ')}.` : `Имеет смысл сравнить: ${uniqueOptions.join(', ')}.`;
       const paragraph = document.createElement('p');
       paragraph.textContent = isEnglish
         ? 'Check which option best preserves your cat’s routine and provides the required level of observation. Discuss medication and health needs with the person providing care.'
-        : 'Проверьте, какой вариант лучше сохраняет привычный режим кошки и обеспечивает нужную частоту наблюдения. Лекарства и особенности здоровья заранее обсудите с человеком, который будет ухаживать за питомцем.';
+        : isSerbian
+          ? 'Proverite koji način najbolje čuva rutinu vaše mačke i pruža joj potrebnu pažnju. O lekovima i zdravstvenim potrebama unapred razgovarajte s osobom koja će brinuti o njoj.'
+          : 'Проверьте, какой вариант лучше сохраняет привычный режим кошки и обеспечивает нужную частоту наблюдения. Лекарства и особенности здоровья заранее обсудите с человеком, который будет ухаживать за питомцем.';
       result.append(strong, paragraph);
       result.hidden = false;
       track('pet_sitting_article_tool_result');

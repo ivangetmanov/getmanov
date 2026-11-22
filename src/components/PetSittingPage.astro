@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PetMedia from "./PetMedia.astro";
+import PetMessagingLinks from "./PetMessagingLinks.astro";
 import PetLocation from "./PetLocation.astro";
 import PetPricing from "./PetPricing.astro";
 import PetSittingCalendar from "./PetSittingCalendar.astro";
@@ -11,6 +12,7 @@ import {
   petSittingArticleGuides,
   petSittingPages,
   petSittingPagesEn,
+  petSittingPagesSr,
   telegramUrl,
   type PetSittingPageKind,
 } from "../data/pet-sitting";
@@ -24,19 +26,22 @@ import {
   primaryImageEntity,
 } from "../lib/pet-sitting-seo.mjs";
 
-const { kind, locale = "ru" } = Astro.props as { kind: PetSittingPageKind; locale?: "ru" | "en" };
+const { kind, locale = "ru" } = Astro.props as { kind: PetSittingPageKind; locale?: "ru" | "en" | "sr" };
 const isEnglish = locale === "en";
-const localizedPages = isEnglish ? petSittingPagesEn : petSittingPages;
+const isSerbian = locale === "sr";
+const localizedPages = isEnglish ? petSittingPagesEn : isSerbian ? petSittingPagesSr : petSittingPages;
 const page = localizedPages[kind];
 const telegram = telegramUrl();
 const isMain = kind === "main";
 const isDogs = kind === "dogs";
 const isCats = kind === "cats";
-const priceLabel = isEnglish ? "From 1,500 RSD per day." : "От 1 500 RSD в сутки";
+const priceLabel = isEnglish ? "From 1,500 RSD per day." : isSerbian ? "Od 1.500 RSD dnevno" : "От 1 500 RSD в сутки";
 const heroPhoto = petSittingConfig.heroPhotos[kind];
 const heroPhotoWidth = isMain ? 1290 : 720;
 const heroPhotoHeight = isMain ? 1039 : 1280;
-const heroAlt = isEnglish
+const heroAlt = isSerbian
+  ? isDogs ? "Pas gost odmara u našem stanu u Petrovaradinu" : isCats ? "Dve mačke odmaraju u našem stanu u Petrovaradinu" : "Ana drži jednu od naših mačaka"
+  : isEnglish
   ? isDogs
     ? "A guest dog relaxing in our Petrovaradin apartment"
     : isCats
@@ -48,17 +53,17 @@ const heroAlt = isEnglish
       ? "Два кота отдыхают у нас дома в Петроварадине"
       : "Аня с нашим котом";
 const videoLabel = isDogs
-  ? isEnglish ? "Video of a dog staying with us" : "Видео с собакой на домашней передержке"
+  ? isEnglish ? "Video of a dog staying with us" : isSerbian ? "Snimak psa koji boravi kod nas" : "Видео с собакой на домашней передержке"
   : isCats
-    ? isEnglish ? "Video of a cat staying with us" : "Видео с кошкой на домашней передержке"
-    : isEnglish ? "Video of a pet staying with us" : "Видео с питомцем на домашней передержке";
+    ? isEnglish ? "Video of a cat staying with us" : isSerbian ? "Snimak mačke koja boravi kod nas" : "Видео с кошкой на домашней передержке"
+    : isEnglish ? "Video of a pet staying with us" : isSerbian ? "Snimak ljubimca koji boravi kod nas" : "Видео с питомцем на домашней передержке";
 const guestPhotos = petSittingConfig.guestPhotos.filter(
   (photo) => !photo.kind || photo.kind === kind || kind === "main",
-).map((photo) => ({ src: photo.src, alt: isEnglish ? photo.altEn : photo.alt }));
+).map((photo) => ({ src: photo.src, alt: isEnglish ? photo.altEn : isSerbian ? photo.altSr : photo.alt }));
 const residentCatPhotos = isMain
   ? petSittingConfig.residentCats.map((cat) => ({
       src: cat.image,
-      alt: isEnglish ? `${cat.nameEn}, our resident cat` : `${cat.name}, наш домашний питомец`,
+      alt: isEnglish ? `${cat.nameEn}, our resident cat` : isSerbian ? `${cat.nameEn}, naša mačka` : `${cat.name}, наш домашний питомец`,
     }))
   : [];
 const photos = [...guestPhotos, ...residentCatPhotos];
@@ -66,15 +71,20 @@ const videos = (isMain
   ? petSittingConfig.guestVideos
   : petSittingConfig.guestVideos.filter((video) => video.animal === (isDogs ? "dog" : "cat"))
 ).sort((first, second) => Number(Boolean(second.featured)) - Number(Boolean(first.featured)));
-const mediaHeading = isEnglish ? "Photos and videos every day" : "Фото и видео каждый день";
-const mediaPromise = isEnglish ? "We send photos and videos at least three times a day." : "Минимум 3 раза в день присылаем фото и видео.";
+const mediaHeading = isEnglish ? "Photos and videos every day" : isSerbian ? "Fotografije i video-snimci svakog dana" : "Фото и видео каждый день";
+const mediaPromise = isEnglish ? "We send photos and videos at least three times a day." : isSerbian ? "Šaljemo fotografije i video-snimke najmanje tri puta dnevno." : "Минимум 3 раза в день присылаем фото и видео.";
 const mediaLabel = isEnglish
   ? isDogs ? "guest dogs" : isCats ? "guest cats" : "guest pets"
-  : isDogs ? "собак-гостей" : isCats ? "кошек-гостей" : "гостей";
+  : isSerbian ? isDogs ? "pasa koji borave kod nas" : isCats ? "mačaka koje borave kod nas" : "ljubimaca koje čuvamo"
+    : isDogs ? "собак-гостей" : isCats ? "кошек-гостей" : "гостей";
 const mediaCopy = isEnglish
   ? isCats
     ? "You see how your cat eats, sleeps, plays, relaxes, and gradually gets comfortable—not just a message saying everything is fine."
     : "You see how your pet eats, sleeps, walks, plays, relaxes, and gets comfortable—not just a message saying everything is fine."
+  : isSerbian
+    ? isCats
+      ? "Pokazujemo kako mačka jede, spava, igra se, odmara i postepeno se privikava na novo okruženje."
+      : "Pokazujemo kako ljubimac jede, spava, šeta, igra se, odmara i privikava na novi prostor."
   : isCats
     ? "Показываем, как кошка ест, спит, играет, отдыхает и постепенно осваивается, — а не просто пишем, что всё хорошо."
     : "Показываем, как питомец ест, спит, гуляет, играет, отдыхает и осваивается, — а не просто пишем, что всё хорошо.";
@@ -84,6 +94,12 @@ const heroCopy = isEnglish
     : isCats
       ? "Looking for a cat sitter in Novi Sad? We’re Anna and Ivan, offering cat sitting and home cat boarding in our Petrovaradin apartment. Your cat stays with us and our two cats; we host up to two cats from one household and provide a separate room when needed."
       : "We’re Anna and Ivan. We provide home pet boarding and pet sitting in our Petrovaradin apartment, where your pet stays with us and our two cats. We host up to two guest pets from the same household."
+  : isSerbian
+    ? isDogs
+      ? "Tražite čuvanje psa u Novom Sadu? Mi smo Ana i Ivan. Pas boravi kod nas u stanu u Petrovaradinu, zajedno sa naše dve mačke. Primamo najviše dva psa iz istog domaćinstva."
+      : isCats
+        ? "Tražite čuvanje mačke u Novom Sadu? Mi smo Ana i Ivan. Mačka boravi kod nas u stanu u Petrovaradinu, zajedno sa naše dve mačke. Primamo najviše dve mačke iz istog domaćinstva i po potrebi im obezbeđujemo zasebnu sobu."
+        : "Mi smo Ana i Ivan. Čuvamo ljubimce u svom stanu u Petrovaradinu, gde borave zajedno sa naše dve mačke. Istovremeno primamo najviše dva ljubimca iz istog domaćinstva."
   : isDogs
     ? "Мы — Аня и Ваня. Собака живёт с нами в квартире в Петроварадине вместе с нашими двумя котами. Берём максимум двух собак — от одних хозяев, гуляем и кормим по привычному графику."
     : isCats
@@ -198,9 +214,63 @@ const faqByPageEn: Record<PetSittingPageKind, string[][]> = {
     ["What’s the difference between cat sitting and cat boarding?", "Cat sitting often means someone visits and cares for your cat at home, while cat boarding means your cat stays with the sitter. We offer home cat boarding in Petrovaradin: your cat stays with us in our apartment."],
   ],
 };
+const faqByPageSr: Record<PetSittingPageKind, string[][]> = {
+  main: [
+    ["Ko smo mi?", "Mi smo Ana i Ivan, bračni par. Tri godine smo živeli u Vijetnamu, gde smo udomili naše dve mačke iz azila, a sada živimo zajedno s njima u Petrovaradinu. Oboje radimo od kuće — Ivan u marketingu, a Ana kao CSM — pa je neko od nas gotovo uvek kod kuće."],
+    ["Zašto se bavimo čuvanjem ljubimaca?", "Gotovo smo uvek kod kuće i zaista volimo kada nam u goste dođu različite životinje. Drago nam je da budemo njihove „tetka i teča“ kod kojih mogu da borave, dobiju pažnju i osećaju se mirno i prijatno. Volimo i da gledamo kako naše mačke upoznaju nove pse i mačke."],
+    ["Kako održavate uobičajenu rutinu mog ljubimca?", "Svaki ljubimac ima svoje navike i ne menjamo ih samo zato što je vlasnik otputovao. Ako pas obično ide u tri šetnje dnevno, tako ćemo i nastaviti. Ako spava na krevetu, može i ovde. Ponesite mačkinu uobičajenu posudu za pesak i pesak. Ako ljubimcu treba više pažnje ili mir i prostor za sebe, prilagodićemo mu boravak."],
+    ["Kako izgleda vaš dom?", "Živimo u stanu u Petrovaradinu sa tri odvojene sobe, pa možemo da razdvojimo životinje kojima treba sopstveni prostor. Nemamo dvorište ni balkon, a pse šetamo napolju po njihovom uobičajenom rasporedu. Kreveti i kauči su dozvoljeni, a mačke mogu na police i ormane. Sa nama žive Pablo i Svit, obe mačke imaju četiri godine. Pablo je druželjubiv i radoznao, a Svit je opreznija i najčešće se odmara malo dalje. Obe su navikle na pse i druge mačke. Vaš ljubimac ne mora da se druži s njima — možemo da ih razdvojimo i svakom obezbedimo svoj prostor."],
+    ["Šta ako se moj ljubimac ne sprijatelji s vašim mačkama?", "To nije problem. Ne moraju da se druže. Ako je vašem ljubimcu prijatnije odvojeno, smestićemo ga u miran prostor za sebe."],
+    ["Da li je u redu da u domu već žive druge životinje?", "Jeste, ako svaka ima dovoljno prostora i niko nije primoran na druženje. Naše mačke su navikle na goste. Neke životinje se upoznaju i provode vreme zajedno, a neke se jednostavno ignorišu. Obe mogućnosti su sasvim u redu."],
+    ["Koliko ljubimaca čuvate istovremeno?", "Primamo najviše dva ljubimca iz istog domaćinstva. Nećemo smestiti nepoznatu životinju drugog klijenta uz vašeg ljubimca."],
+    ["Možemo li prvo da se upoznamo?", "Pre prvog boravka možete besplatno da dođete kod nas i vidite stan i prostor u kom će ljubimac boraviti. Psa možete povesti da upozna nas i mačke. Ne preporučujemo da mačku dovodite samo na kratko upoznavanje, jer bi joj nepoznat prostor mogao doneti dodatni stres, a poseta ne bi pokazala kako bi joj bilo tokom dužeg boravka."],
+    ["Može li ljubimac prvo da dođe na probni boravak?", "Pas može da ostane kod nas tri do četiri sata kako biste videli kako se snalazi bez vas. Probni boravak košta 1.000 RSD. Mačkama ne preporučujemo kratku probnu posetu, jer im može biti stresna i ne govori mnogo o dužem boravku."],
+    ["Šta treba da ponesem?", "Ponesite ono što ljubimcu pomaže da se oseća kao kod kuće: hranu, činije, povodac ili transporter, lekove, igračke i omiljeni krevetić ako ga koristi. Za mačku ponesite uobičajenu posudu za pesak i pesak. Recite nam ako ima poseban raspored ili naviku."],
+    ["Da li ćete slati fotografije i video-snimke?", "Da. Šaljemo fotografije i video-snimke najmanje tri puta dnevno i ostajemo u kontaktu."],
+    ["Šta ako moj ljubimac ima posebnu rutinu?", "Recite nam kakva je. Ne očekujemo da svi ljubimci budu isti i potrudićemo se da održimo njegov uobičajeni ritam, ako možemo da ga ispratimo."],
+    ["Šta ako nešto pođe po zlu?", "Odmah ćemo vas kontaktirati i zajedno ćemo odlučiti šta dalje. Ako je situacija hitna i čekanje nije bezbedno za ljubimca, postupićemo odmah, po potrebi se obratiti veterinaru i javiti vam što pre."],
+    ["Koja je razlika između pet sittera, čuvanja kod kuće i hotela za ljubimce?", "Pet sitter je širi pojam za osobu koja brine o ljubimcu. Kod obilazaka, čuvar dolazi u vaš dom; kod čuvanja kod nas ljubimac boravi u domu čuvara. Hotel ili pansion za ljubimce je poseban objekat. Mi nudimo kućno čuvanje: ljubimac boravi s nama u stanu u Petrovaradinu."],
+  ],
+  dogs: [
+    ["Ko smo mi?", "Mi smo Ana i Ivan, bračni par. Tri godine smo živeli u Vijetnamu, gde smo udomili naše dve mačke iz azila, a sada živimo zajedno s njima u Petrovaradinu. Oboje radimo od kuće — Ivan u marketingu, a Ana kao CSM — pa je neko od nas gotovo uvek kod kuće."],
+    ["Zašto se bavimo čuvanjem ljubimaca?", "Gotovo smo uvek kod kuće i zaista volimo kada nam u goste dođu različite životinje. Drago nam je da budemo njihove „tetka i teča“ kod kojih mogu da borave, dobiju pažnju i osećaju se mirno i prijatno. Volimo i da gledamo kako naše mačke upoznaju nove pse i mačke."],
+    ["Moj pas juri mačke. Da li možete da ga čuvate?", "Ako ne znate kako vaš pas reaguje na mačke, najbolje je da to proverimo pre boravka. Radoznalost, njuškanje i želja za upoznavanjem ili igrom sami po sebi nisu prepreka. Ako pas lovi mačke, ne može da se smiri ili pokazuje ozbiljnu agresiju, bolje je izabrati čuvara koji nema mačke. Zato nudimo besplatno upoznavanje pre prvog boravka."],
+    ["Šta ako se moj pas ne sprijatelji s vašim mačkama?", "Nema problema. U stanu imamo tri odvojene sobe i životinje ne moraju da postanu najbolji prijatelji. Možemo da ih razdvojimo i svakom obezbedimo siguran prostor, dok pas i dalje provodi vreme s nama, ide u šetnje i prati svoju rutinu."],
+    ["Moj pas nikada nije ostajao kod nepoznatih ljudi. Šta da radim?", "Najpre dođite da se upoznamo. Ako želite, posle toga pas može da ostane kod nas nekoliko sati, pre nego što se odlučite za duži boravak."],
+    ["Moj pas ne može da ostane sam.", "Recite nam to pre rezervacije. Ponekad možemo da organizujemo boravak tako da neko od nas bude kod kuće. Potrebno je da se o tome dogovorimo unapred kako bismo mogli da isplaniramo vreme."],
+    ["Koliko često ćete šetati mog psa?", "Pre dolaska pitamo kako pas inače živi i trudimo se da zadržimo sličnu rutinu. Recite nam koliko šetnji ima, kada i koliko jede, gde spava, da li ostaje sam i da li uzima lekove. Nemamo pravilo da svaki pas mora da ima tačno dve šetnje od po dvadeset minuta — pratimo njegov uobičajeni raspored koliko god možemo."],
+    ["Mogu li da ponesem njegovu uobičajenu hranu?", "Da. Uglavnom je bolje ne menjati hranu na koju je pas navikao bez posebnog razloga."],
+    ["Možete li da mu dajete lekove?", "Da. Recite nam šta treba da damo, kada i na koji način."],
+    ["Može li pas na kauč ili krevet?", "Može, ako je na to navikao kod kuće. Ponesite njegov krevetić ako u njemu spava. Ako se odmara na kauču ili spava s vama u krevetu, i ovde je to u redu."],
+    ["Možemo li da se upoznamo pre boravka?", "Pre prvog boravka možete besplatno da dođete kod nas na oko pola sata. Pas će upoznati nas, stan i naše mačke, a vi ćete videti gde će boraviti."],
+    ["Može li pas da dođe na probni boravak?", "Može da ostane kod nas nekoliko sati kako biste proverili kako se oseća bez vas. Probni boravak košta 1.000 RSD."],
+    ["Šta da ponesem za psa?", "Ponesite njegovu hranu, činije, povodac, lekove, igračke i krevetić ako ga koristi. Recite nam ako ima poseban raspored ili naviku."],
+    ["Da li ćete slati fotografije i video-snimke?", "Da. Šaljemo fotografije i video-snimke najmanje tri puta dnevno."],
+    ["Šta ako se desi nešto hitno?", "Odmah ćemo vas kontaktirati i pozabaviti se situacijom. Ako je problem zdravstvene prirode i hitan, postupićemo u interesu psa, po potrebi pozvati veterinara i odmah vam javiti."],
+    ["Koja je razlika između obilazaka i čuvanja psa kod čuvara?", "Kod obilazaka neko dolazi u vaš dom da brine o psu, dok pas kod čuvanja boravi u domu čuvara. Mi nudimo kućno čuvanje pasa u Petrovaradinu."],
+  ],
+  cats: [
+    ["Ko smo mi?", "Mi smo Ana i Ivan, bračni par. Tri godine smo živeli u Vijetnamu, gde smo udomili naše dve mačke iz azila, a sada živimo zajedno s njima u Petrovaradinu. Oboje radimo od kuće — Ivan u marketingu, a Ana kao CSM — pa je neko od nas gotovo uvek kod kuće."],
+    ["Zašto se bavimo čuvanjem ljubimaca?", "Gotovo smo uvek kod kuće i zaista volimo kada nam u goste dođu različite životinje. Drago nam je da budemo njihove „tetka i teča“ kod kojih mogu da borave, dobiju pažnju i osećaju se mirno i prijatno. Volimo i da gledamo kako naše mačke upoznaju nove pse i mačke."],
+    ["Koje vakcine su potrebne?", "Potrebne su važeća osnovna vakcina i vakcina protiv besnila, obe primljene u poslednjih 12 meseci."],
+    ["Moja mačka ne voli druge mačke. Da li je to problem?", "Ne mora da bude. Sa nama žive mačak i mačka, ali vaš ljubimac ne mora da se druži s njima. U stanu su tri odvojene sobe, pa mačka može da boravi sama u svom prostoru."],
+    ["Šta ako se moja mačka sakrije i ne izlazi?", "Pustićemo je da se privikava svojim tempom. Nećemo je izvlačiti iz skrovišta niti terati na druženje. Ako želi da se krije prvih dana ili joj treba mirna zasebna soba, to je u redu."],
+    ["Da li moja mačka mora da upozna vaše mačke?", "Ne. Naše mačke su navikle na druge životinje, ali gost može da boravi u svojoj sobi i da se ne upozna s njima. Pablo je druželjubiv i radoznao, dok se Svit obično skloni i odmara sama. Obe su navikle na pse i mačke. Vaša mačka ne mora da se sprijatelji s njima."],
+    ["Mogu li da ponesem njenu posudu za pesak i posip?", "Da. To je obično najbolja opcija ako je mačka navikla na njih."],
+    ["Mogu li da ponesem njenu uobičajenu hranu?", "Da. Recite nam kako je hranite kod kuće i ponesite njenu hranu. Pratićemo njenu rutinu i nećemo uvoditi novu hranu bez dogovora s vama."],
+    ["Šta ako moja mačka ima posebnu rutinu?", "Nećemo namerno menjati njene navike zato što boravi kod nas. Recite nam šta joj odgovara, pa ćemo se potruditi da održimo poznat raspored i mirno mesto za odmor."],
+    ["Možete li da joj dajete lekove?", "Da. Recite nam šta treba da damo, kada i na koji način."],
+    ["Može li da spava na kauču ili krevetu?", "Može, ako joj je to dozvoljeno i kod kuće."],
+    ["Da li treba da dovedem mačku da se unapred upozna s vama?", "Vi možete besplatno da dođete kod nas na oko pola sata i vidite stan. Ne preporučujemo da mačku vodite na kratko upoznavanje, jer bi joj nepoznat prostor mogao biti stresan. Ako želite, može da ostane kod nas nekoliko sati na probnom boravku, koji košta 1.000 RSD."],
+    ["Šta treba da ponesem?", "Ponesite njenu hranu, činije, posudu za pesak, uobičajeni posip, igračke i lekove — sve što joj pomaže da se oseća kao kod kuće."],
+    ["Da li ćete slati fotografije i video-snimke?", "Da. Šaljemo ih najmanje tri puta dnevno, čak i ako mačka radije provodi vreme u skrovištu."],
+    ["Šta ako se moja mačka iznenada razboli?", "Odmah ćemo vas kontaktirati, objasniti šta se dešava i dogovoriti se s vama šta dalje. Ako je situacija hitna, pobrinućemo se za mačku i po potrebi se obratiti veterinaru, bez čekanja da se vratite."],
+    ["Koja je razlika između obilazaka i čuvanja mačke kod čuvara?", "Kod obilazaka neko dolazi u vaš dom da brine o mački, dok mačka kod čuvanja boravi u domu čuvara. Mi nudimo kućno čuvanje mačaka u Petrovaradinu."],
+  ],
+};
 const billingFaq = petSittingBillingFaq[locale];
 const boardingDaysFaq = [billingFaq.question, billingFaq.answer];
-const faq = [boardingDaysFaq, ...(isEnglish ? faqByPageEn : faqByPage)[kind]];
+const faq = [boardingDaysFaq, ...(isEnglish ? faqByPageEn : isSerbian ? faqByPageSr : faqByPage)[kind]];
 const faqGroupIndexes: Record<PetSittingPageKind, [number[], number[]]> = {
   main: [[1, 2, 4, 5, 6, 7, 8, 9], [0, 3, 10, 11, 12, 13, 14]],
   dogs: [[1, 2, 3, 4, 5, 6, 10, 11, 12], [0, 7, 8, 9, 13, 14, 15, 16]],
@@ -208,29 +278,38 @@ const faqGroupIndexes: Record<PetSittingPageKind, [number[], number[]]> = {
 };
 const faqGroupTitles = isEnglish
   ? [isDogs ? "Your dog and our home" : isCats ? "Your cat and our home" : "Your pet and our home", "Routine and care"]
-  : [isDogs ? "Собака и наш дом" : isCats ? "Кошка и наш дом" : "Питомец и наш дом", "Режим и уход"];
+  : isSerbian
+    ? [isDogs ? "Vaš pas i naš dom" : isCats ? "Vaša mačka i naš dom" : "Vaš ljubimac i naš dom", "Rutina i nega"]
+    : [isDogs ? "Собака и наш дом" : isCats ? "Кошка и наш дом" : "Питомец и наш дом", "Режим и уход"];
 const faqGroups = faqGroupIndexes[kind].map((indexes, groupIndex) => ({
   title: faqGroupTitles[groupIndex],
   items: indexes.map((index) => faq[index]),
 }));
 const guideSlugs: Record<PetSittingPageKind, string[]> = {
-  main: ["pet-sitter-vs-boarding", "prepare-dog-for-boarding", "prepare-cat-for-boarding"],
-  dogs: ["prepare-dog-for-boarding", "pet-sitter-vs-boarding"],
-  cats: ["prepare-cat-for-boarding", "can-cat-stay-alone-for-a-week", "pet-sitter-vs-boarding"],
+  main: ["pet-sitter-vs-boarding", "prepare-dog-for-boarding", "prepare-cat-for-boarding", "prices"],
+  dogs: ["prepare-dog-for-boarding", "pet-sitter-vs-boarding", "prices"],
+  cats: ["prepare-cat-for-boarding", "can-cat-stay-alone-for-a-week", "pet-sitter-vs-boarding", "prices"],
 };
 const relatedGuides = guideSlugs[kind].flatMap((slug) => {
   const guide = petSittingArticleGuides.find((item) => item.slug === slug);
-  return guide ? [isEnglish ? guide.en : guide.ru] : [];
+  if (!guide) return [];
+  const localizedGuide = isEnglish ? guide.en : isSerbian ? guide.sr : guide.ru;
+  const title = "titleByKind" in guide
+    ? guide.titleByKind[isEnglish ? "en" : isSerbian ? "sr" : "ru"][kind]
+    : localizedGuide.title;
+  return [{ ...localizedGuide, title }];
 });
 const serviceName = isEnglish
   ? isMain ? "Home pet boarding in Novi Sad" : isDogs ? "Dog boarding in Novi Sad" : "Cat boarding in Novi Sad"
   : page.h1;
 const serviceType = isEnglish
   ? isMain ? "Home pet boarding and pet sitting" : isDogs ? "Home dog boarding and dog sitting" : "Home cat boarding and cat sitting"
-  : isMain ? "Домашняя передержка и петситтинг" : isDogs ? "Домашняя передержка собак" : "Домашняя передержка кошек";
+  : isSerbian ? isMain ? "Kućno čuvanje ljubimaca i pet sitting" : isDogs ? "Kućno čuvanje pasa" : "Kućno čuvanje mačaka"
+    : isMain ? "Домашняя передержка и петситтинг" : isDogs ? "Домашняя передержка собак" : "Домашняя передержка кошек";
 const alternates = [
   { hreflang: "ru", href: petSittingPages[kind].path },
   { hreflang: "en", href: petSittingPagesEn[kind].path },
+  { hreflang: "sr-Latn", href: petSittingPagesSr[kind].path },
   { hreflang: "x-default", href: petSittingPagesEn[kind].path },
 ];
 const canonicalUrl = absoluteSiteUrl(page.path);
@@ -253,7 +332,7 @@ const structuredData = {
       url: canonicalUrl,
       name: page.title,
       description: page.description,
-      inLanguage: locale,
+      inLanguage: isSerbian ? "sr-Latn" : locale,
       isPartOf: { "@id": petSittingSchemaIds.website },
       primaryImageOfPage: { "@id": imageId },
       mainEntity: { "@id": serviceId },
@@ -277,8 +356,8 @@ const structuredData = {
       "@type": "BreadcrumbList",
       "@id": breadcrumbId,
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: isEnglish ? "Home" : "Главная", item: "https://getmanov.com/" },
-        { "@type": "ListItem", position: 2, name: isEnglish ? "Pet boarding in Novi Sad" : "Передержка животных", item: mainServiceUrl },
+        { "@type": "ListItem", position: 1, name: isEnglish ? "Home" : isSerbian ? "Početna" : "Главная", item: "https://getmanov.com/" },
+        { "@type": "ListItem", position: 2, name: isEnglish ? "Pet boarding in Novi Sad" : isSerbian ? "Čuvanje ljubimaca u Novom Sadu" : "Передержка животных", item: mainServiceUrl },
         ...(isMain ? [] : [{ "@type": "ListItem", position: 3, name: page.focus, item: canonicalUrl }]),
       ],
     },
@@ -300,7 +379,7 @@ const structuredData = {
   title={page.title}
   description={page.description}
   canonical={page.path}
-  lang={locale}
+  lang={isSerbian ? "sr-Latn" : locale}
   structuredData={structuredData}
   alternates={alternates}
   image={heroPhoto}
@@ -311,7 +390,7 @@ const structuredData = {
   <div class:list={["pet-page", `pet-page--${kind}`]}>
     <section class="pet-hero">
       <div class="pet-hero__heading">
-        <p class="eyebrow">{isEnglish ? "Petrovaradin · Novi Sad" : "Петроварадин · Нови-Сад"}</p>
+        <p class="eyebrow">{isEnglish ? "Petrovaradin · Novi Sad" : isSerbian ? "Petrovaradin · Novi Sad" : "Петроварадин · Нови-Сад"}</p>
         <h1>{page.h1}</h1>
       </div>
       <div class="hero-media">
@@ -321,15 +400,16 @@ const structuredData = {
         <p class="pet-hero__lead">{heroCopy}</p>
         <p class="pet-hero__price"><strong>{priceLabel}</strong></p>
         <div class="pet-actions">
-          <a class="pet-button pet-button--primary" href="#dates">{isEnglish ? "Check available dates" : "Проверить даты"}</a>
-          <a class="pet-button" href={telegram} target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : "Написать Ане в Telegram"}</a>
+          <a class="pet-button pet-button--primary" href="#dates">{isEnglish ? "Check available dates" : isSerbian ? "Proverite slobodne termine" : "Проверить даты"}</a>
+          <a class="pet-button" href={telegram} target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : isSerbian ? "Pišite Ani na Telegramu" : "Написать Ане в Telegram"}</a>
+          {(isEnglish || isSerbian) && <PetMessagingLinks locale={isEnglish ? "en" : "sr"} />}
         </div>
       </div>
     </section>
 
     <section class="early-media">
       <div>
-        <h2>{mediaHeading}</h2>
+      <h2>{mediaHeading}</h2>
         <p class="media-promise">{mediaPromise}</p>
         <p>{mediaCopy}</p>
       </div>
@@ -342,15 +422,15 @@ const structuredData = {
 
     <aside class="cross-service" aria-labelledby="home-visits-link-title">
       <div>
-        <p class="eyebrow">{isEnglish ? "Another care format" : "Другой формат ухода"}</p>
-        <h2 id="home-visits-link-title">{isEnglish ? "Would your pet be more comfortable staying at home?" : "Питомцу спокойнее остаться дома?"}</h2>
-        <p>{isEnglish ? "We can visit your cat or dog in their own home in Novi Sad." : "Мы можем приезжать к кошке или собаке домой в Нови-Саде."}</p>
+        <p class="eyebrow">{isEnglish ? "Another care format" : isSerbian ? "Još jedan način brige" : "Другой формат ухода"}</p>
+        <h2 id="home-visits-link-title">{isEnglish ? "Would your pet be more comfortable staying at home?" : isSerbian ? "Da li bi vašem ljubimcu više prijalo da ostane kod kuće?" : "Питомцу спокойнее остаться дома?"}</h2>
+        <p>{isEnglish ? "We can visit your cat or dog in their own home in Novi Sad." : isSerbian ? "Možemo da obilazimo vašu mačku ili psa u njihovom domu u Novom Sadu." : "Мы можем приезжать к кошке или собаке домой в Нови-Саде."}</p>
       </div>
-      <a class="pet-button" href={petSittingBusiness.pagePaths[locale].homeVisits}>{isEnglish ? "See in-home pet sitting" : "Посмотреть выезды домой"}</a>
+      <a class="pet-button" href={petSittingBusiness.pagePaths[locale].homeVisits}>{isEnglish ? "See in-home pet sitting" : isSerbian ? "Pogledajte obilaske ljubimaca kod kuće" : "Посмотреть выезды домой"}</a>
     </aside>
 
     <section class="faq-section" id="faq">
-      <div><p class="eyebrow">{isEnglish ? "Frequently asked questions" : "Частые вопросы"}</p><h2>{isEnglish ? isDogs ? "Dog boarding FAQ" : isCats ? "Cat boarding FAQ" : "Pet boarding FAQ" : isDogs ? "О передержке собак" : isCats ? "О передержке кошек" : "Что обычно спрашивают"}</h2></div>
+      <div><p class="eyebrow">{isEnglish ? "Frequently asked questions" : isSerbian ? "Česta pitanja" : "Частые вопросы"}</p><h2>{isEnglish ? isDogs ? "Dog boarding FAQ" : isCats ? "Cat boarding FAQ" : "Pet boarding FAQ" : isSerbian ? isDogs ? "Čuvanje pasa — pitanja" : isCats ? "Čuvanje mačaka — pitanja" : "Najčešća pitanja" : isDogs ? "О передержке собак" : isCats ? "О передержке кошек" : "Что обычно спрашивают"}</h2></div>
       <div class="faq-columns">
         {faqGroups.map((group) => (
           <section class="faq-group" aria-labelledby={`faq-${kind}-${group.title === faqGroupTitles[0] ? "home" : "care"}`}>
@@ -369,19 +449,20 @@ const structuredData = {
 
     <section class="useful-guides" id="guides" aria-labelledby="useful-guides-title">
       <div>
-        <p class="eyebrow">{isEnglish ? "Useful before the stay" : "Полезно перед передержкой"}</p>
-        <h2 id="useful-guides-title">{isEnglish ? "Short practical guides" : "Короткие практические гайды"}</h2>
+        <p class="eyebrow">{isEnglish ? "Useful before the stay" : isSerbian ? "Korisno pre boravka" : "Полезно перед передержкой"}</p>
+        <h2 id="useful-guides-title">{isEnglish ? "Short practical guides" : isSerbian ? "Kratki praktični vodiči" : "Короткие практические гайды"}</h2>
       </div>
-      <nav aria-label={isEnglish ? "Useful pet boarding guides" : "Полезные статьи о передержке"}>
+      <nav aria-label={isEnglish ? "Useful pet boarding guides" : isSerbian ? "Korisni vodiči o čuvanju ljubimaca" : "Полезные статьи о передержке"}>
         {relatedGuides.map((guide) => <a href={guide.href}><span>{guide.title}</span><b aria-hidden="true">→</b></a>)}
       </nav>
     </section>
 
     <section class="final-cta">
-      <div><p class="eyebrow">{isEnglish ? "Next step" : "Следующий шаг"}</p><h2>{isEnglish ? "Need pet boarding?" : "Нужна передержка?"}</h2></div>
+      <div><p class="eyebrow">{isEnglish ? "Next step" : isSerbian ? "Sledeći korak" : "Следующий шаг"}</p><h2>{isEnglish ? "Need pet boarding?" : isSerbian ? "Treba vam čuvanje ljubimca?" : "Нужна передержка?"}</h2></div>
       <div class="pet-actions">
-        <a class="pet-button pet-button--primary" href="#dates">{isEnglish ? "Check available dates" : "Проверить даты"}</a>
-        <a class="pet-button" href={telegram} target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : "Написать Ане в Telegram"}</a>
+        <a class="pet-button pet-button--primary" href="#dates">{isEnglish ? "Check available dates" : isSerbian ? "Proverite slobodne termine" : "Проверить даты"}</a>
+        <a class="pet-button" href={telegram} target="_blank" rel="noreferrer">{isEnglish ? "Message Anna on Telegram" : isSerbian ? "Pišite Ani na Telegramu" : "Написать Ане в Telegram"}</a>
+        {(isEnglish || isSerbian) && <PetMessagingLinks locale={isEnglish ? "en" : "sr"} />}
       </div>
     </section>
   </div>
