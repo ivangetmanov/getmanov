@@ -272,6 +272,7 @@ const structuredData = {
 
 <script>
   import { calculateHomeVisitQuote, formatRsd } from '../lib/pet-sitting-business.mjs';
+  import { trackAcceptedPetSittingEnquiry } from '../lib/pet-sitting-inquiry-response.mjs';
 
   const root = document.querySelector('[data-home-visits-form-root]');
   if (root) {
@@ -293,9 +294,10 @@ const structuredData = {
       estimate: (value) => `Ориентировочно: ${formatRsd(value, 'ru')} RSD`, confirm: 'Стоимость подтвердим после связи.', choose: 'Выберите даты и отметьте место на карте, чтобы увидеть примерную стоимость.', green: 'Зелёная зона · базовая цена', yellow: 'Жёлтая зона · +500 RSD за визит', outside: 'За пределами обычной зоны · стоимость по запросу', change: 'Изменить на карте', mapError: 'Укажите примерный район ниже.', dateError: 'Выберите первый и последний день.', locationError: 'Отметьте примерное место на карте выше.', telegramError: 'Укажите корректный Telegram username: @username.', sending: 'Отправляем…', sent: 'Готово! Ответим в Telegram.', failed: 'Не получилось отправить запрос. Напишите Ане напрямую в Telegram.',
     };
     let started = false;
+    let submitting = false;
     const track = (name, extra = {}) => {
       if (typeof window.gtag !== 'function') return;
-      window.gtag('event', name, { source_page: root.dataset.sourcePage, locale: root.dataset.locale, service_type: 'home_visit', ...extra });
+      window.gtag('event', name, { source_page: root.dataset.sourcePage, locale: root.dataset.locale, service_type: 'home_visits', ...extra });
     };
     const markStarted = () => { if (!started) { started = true; track('home_visits_form_start'); } };
     const values = () => {
@@ -347,10 +349,10 @@ const structuredData = {
       locationFallback.querySelector('input').required = true;
       locationSummary.textContent = text.mapError;
     });
-    document.querySelectorAll('[data-home-telegram]').forEach((link) => link.addEventListener('click', () => track('home_visits_telegram_click', { cta_location: link.dataset.ctaLocation || 'content' })));
     updateForm();
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
+      if (submitting) return;
       const data = new FormData(form);
       const current = values();
       const dateFrom = current.dateFrom;
@@ -363,6 +365,7 @@ const structuredData = {
       const usernameRaw = String(data.get('telegramUsername') || '').trim();
       const telegramUsername = usernameRaw.startsWith('@') ? usernameRaw : `@${usernameRaw}`;
       if (!/^@[A-Za-z0-9_]{5,32}$/.test(telegramUsername)) { status.textContent = text.telegramError; status.className = 'form-status is-error'; return; }
+      submitting = true;
       submit.disabled = true;
       status.textContent = text.sending;
       status.className = 'form-status';
@@ -372,14 +375,15 @@ const structuredData = {
       track('home_visits_form_submit', { pet_type: petType, service_zone: serviceZone || 'fallback' });
       try {
         const response = await fetch('/.netlify/functions/pet-sitting-inquiry', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ service_type: 'home_visit', sourcePage: root.dataset.sourcePage, locale: root.dataset.locale, date_from: dateFrom, date_to: dateTo, pet_type: petType, visits_per_day: visitsPerDay, dog_walk: dogWalk, service_zone: serviceZone, approximate_location: serviceZone ? { latitude: Number(root.dataset.approximateLatitude), longitude: Number(root.dataset.approximateLongitude) } : undefined, neighborhood, telegram_username: telegramUsername, optional_comment: String(data.get('optionalComment') || ''), website: String(data.get('website') || '') }) });
-        if (!response.ok) throw new Error('request_failed');
+        const accepted = await trackAcceptedPetSittingEnquiry(response, track, 'home_visits_form_success', { pet_type: petType, service_zone: serviceZone || 'fallback' });
+        if (!accepted) throw new Error('request_failed');
         status.textContent = text.sent;
         status.className = 'form-status is-success';
         form.reset();
       } catch {
         status.textContent = text.failed;
         status.className = 'form-status is-error';
-      } finally { submit.disabled = false; }
+      } finally { submitting = false; submit.disabled = false; }
     });
   }
 </script>

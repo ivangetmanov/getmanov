@@ -1,6 +1,17 @@
 import assert from "node:assert/strict";
 import { handler } from "../netlify/functions/pet-sitting-inquiry.mjs";
 import { buildPetSittingTelegramMessage, preparePetSittingInquiry } from "../src/lib/pet-sitting-inquiry.mjs";
+import { trackAcceptedPetSittingEnquiry } from "../src/lib/pet-sitting-inquiry-response.mjs";
+
+const recordedSuccessEvents = [];
+const trackSuccess = (...args) => recordedSuccessEvents.push(args);
+assert.equal(await trackAcceptedPetSittingEnquiry({ ok: true, json: async () => ({ ok: true, accepted: true }) }, trackSuccess, "test_success"), true);
+assert.deepEqual(recordedSuccessEvents, [["test_success", undefined]]);
+assert.equal(await trackAcceptedPetSittingEnquiry({ ok: false, json: async () => ({ ok: true, accepted: true }) }, trackSuccess, "test_failure"), false);
+assert.equal(await trackAcceptedPetSittingEnquiry({ ok: true, json: async () => ({ ok: true, accepted: false }) }, trackSuccess, "test_ignored"), false);
+assert.equal(await trackAcceptedPetSittingEnquiry({ ok: true, json: async () => { throw new Error("bad_json"); } }, trackSuccess, "test_invalid_response"), false);
+assert.equal(await trackAcceptedPetSittingEnquiry(undefined, trackSuccess, "test_network_error"), false);
+assert.equal(recordedSuccessEvents.length, 1, "Failed, ignored, malformed, and network-error responses must not emit a success event");
 
 const validPayload = {
   arrival: "2026-09-07",
@@ -171,7 +182,7 @@ globalThis.fetch = async (url, options) => {
 try {
   const accepted = await handler({ httpMethod: "POST", body: JSON.stringify(validPayload) });
   assert.equal(accepted.statusCode, 200);
-  assert.deepEqual(JSON.parse(accepted.body), { ok: true });
+  assert.deepEqual(JSON.parse(accepted.body), { ok: true, accepted: true });
   assert.equal(fetchCalls.length, 1);
   assert.match(fetchCalls[0].url, /test-only-bot-token\/sendMessage$/);
   const telegramBody = JSON.parse(fetchCalls[0].options.body);
@@ -181,6 +192,7 @@ try {
 
   const acceptedHomeVisit = await handler({ httpMethod: "POST", body: JSON.stringify(validHomeVisitPayload) });
   assert.equal(acceptedHomeVisit.statusCode, 200);
+  assert.deepEqual(JSON.parse(acceptedHomeVisit.body), { ok: true, accepted: true });
   assert.equal(fetchCalls.length, 2);
   const homeVisitTelegramBody = JSON.parse(fetchCalls[1].options.body);
   assert.match(homeVisitTelegramBody.text, /Service type: home_visit/);
@@ -206,7 +218,14 @@ try {
     body: JSON.stringify({ ...validPayload, website: "spam.example" }),
   });
   assert.equal(honeypot.statusCode, 200);
+  assert.deepEqual(JSON.parse(honeypot.body), { ok: true, accepted: false });
   assert.equal(fetchCalls.length, 2);
+
+  globalThis.fetch = async () => ({ ok: false, status: 500 });
+  const deliveryFailed = await handler({ httpMethod: "POST", body: JSON.stringify(validPayload) });
+  assert.equal(deliveryFailed.statusCode, 502);
+  assert.equal(await trackAcceptedPetSittingEnquiry({ ok: false, json: async () => JSON.parse(deliveryFailed.body) }, trackSuccess, "delivery_failed"), false);
+  assert.equal(recordedSuccessEvents.length, 1, "Backend delivery failures must not emit success events");
 
   delete process.env.PET_SITTING_TELEGRAM_BOT_TOKEN;
   delete process.env.PET_SITTING_TELEGRAM_CHAT_ID;

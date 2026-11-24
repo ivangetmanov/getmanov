@@ -142,4 +142,33 @@ const sitemapFiles = (await readdir(new URL("dist/", root))).filter((name) => /^
 const sitemapText = (await Promise.all(sitemapFiles.map((name) => readFile(new URL(`dist/${name}`, root), "utf8")))).join("\n");
 for (const locale of locales) assert(sitemapText.includes(`https://getmanov.com${route(locale, "prices")}`), `${locale} pricing article must be in the sitemap`);
 
+const viberLogo = await readFile(new URL("public/images/viber-icon.svg", root), "utf8");
+assert.match(viberLogo, /fill="#7360F2"/i, "Use the official Viber brand icon asset");
+const messagingPageSlugs = [
+  "",
+  "dogs",
+  "cats",
+  "home-visits",
+  "pet-sitter-vs-boarding",
+  "can-cat-stay-alone-for-a-week",
+  "prepare-dog-for-boarding",
+  "prepare-cat-for-boarding",
+  "prices",
+];
+for (const locale of locales) {
+  for (const slug of messagingPageSlugs) {
+    const path = route(locale, slug);
+    const document = new JSDOM(await html(path)).window.document;
+    const viberLinks = [...document.querySelectorAll('.pet-messaging-links a[aria-label*="Viber"]')];
+    if (locale === "ru") {
+      assert.equal(viberLinks.length, 0, `${path} must not add messaging links to the Russian UI`);
+      continue;
+    }
+    assert(viberLinks.length > 0, `${path} needs the localized Viber contact icon`);
+    for (const link of viberLinks) {
+      assert.equal(link.querySelector("img.viber-logo")?.getAttribute("src"), "/images/viber-icon.svg", `${path} must use the real Viber logo`);
+    }
+  }
+}
+
 console.log("Pet-sitting pricing guide checks passed for RU, EN, and SR routes.");

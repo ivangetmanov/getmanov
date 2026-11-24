@@ -218,6 +218,32 @@ const criticalStyles = `${globalStyles}\n${markdownStyles}`;
         if (targetUrl.hostname === 'chromewebstore.google.com') {
           window.gtag('event', 'chrome_store_click', parameters);
         }
+
+        const petPage = /^\/(ru|en|sr)\/novi-sad\/pet-sitting(?:\/|$)/.exec(window.location.pathname);
+        if (petPage) {
+          const protocol = targetUrl.protocol.toLowerCase();
+          const hostname = targetUrl.hostname.toLowerCase();
+          const messagingPlatform =
+            protocol === 'tg:' || hostname === 't.me' || hostname === 'telegram.me' || hostname === 'www.telegram.me'
+              ? 'telegram'
+              : protocol === 'whatsapp:' || hostname === 'wa.me' || hostname === 'api.whatsapp.com' || hostname.endsWith('.whatsapp.com')
+                ? 'whatsapp'
+                : protocol === 'viber:' || hostname === 'viber.com' || hostname.endsWith('.viber.com')
+                  ? 'viber'
+                  : '';
+
+          if (messagingPlatform) {
+            const section = link.closest('[data-page-section]');
+            const messagingCtaLocation = link.dataset.ctaLocation || articleHeading || section?.dataset.pageSection || (link.closest('.availability') ? 'calendar' : link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : 'content');
+            window.gtag('event', 'pet_sitting_direct_contact_click', {
+              source_page: window.location.pathname,
+              locale: petPage[1],
+              service_type: window.location.pathname.includes('/home-visits/') ? 'home_visits' : 'boarding',
+              messaging_platform: messagingPlatform,
+              cta_location: String(messagingCtaLocation).slice(0, 100),
+            });
+          }
+        }
       });
     </script>
 

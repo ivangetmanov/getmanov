@@ -115,6 +115,7 @@ const config = {
 <script>
   import { isDateUnavailable, rangeHasUnavailable } from "../lib/pet-sitting-calendar.mjs";
   import { calculatePetSittingQuote, formatRsd, formatRussianStayDuration, formatSerbianStayDuration } from "../lib/pet-sitting-business.mjs";
+  import { trackAcceptedPetSittingEnquiry } from "../lib/pet-sitting-inquiry-response.mjs";
 
   const root = document.querySelector('[data-pet-calendar]');
   if (root) {
@@ -226,6 +227,7 @@ const config = {
       window.gtag('event', name, {
         source_page: settings.sourcePage,
         locale: settings.locale,
+        service_type: 'boarding',
         article_slug: settings.articleSlug || undefined,
         tool_type: settings.toolType,
         ...parameters,
@@ -383,10 +385,9 @@ const config = {
             sourcePage: settings.sourcePage,
           }),
         });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok || !result.ok) throw new Error('submission_failed');
+        const accepted = await trackAcceptedPetSittingEnquiry(response, trackEvent, 'pet_sitting_enquiry_success');
+        if (!accepted) throw new Error('submission_failed');
         feedbackState = 'success';
-        trackEvent('pet_sitting_enquiry_success');
       } catch {
         feedbackState = 'error';
         trackEvent('pet_sitting_enquiry_error');
@@ -394,9 +395,6 @@ const config = {
         submitting = false;
         updateInquiry();
       }
-    });
-    root.querySelectorAll('[data-direct-contact]').forEach((link) => {
-      link.addEventListener('click', () => trackEvent('pet_sitting_direct_contact_click', { channel: link.dataset.channel }));
     });
     render();
     updateInquiry();

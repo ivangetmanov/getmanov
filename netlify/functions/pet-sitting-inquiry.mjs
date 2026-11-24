@@ -25,7 +25,7 @@ export async function handler(event) {
 
   const prepared = preparePetSittingInquiry(payload);
   if (!prepared.ok) return jsonResponse(400, { ok: false, error: "invalid_enquiry" });
-  if (prepared.ignored) return jsonResponse(200, { ok: true });
+  if (prepared.ignored) return jsonResponse(200, { ok: true, accepted: false });
 
   const botToken = process.env.PET_SITTING_TELEGRAM_BOT_TOKEN;
   const chatId = process.env.PET_SITTING_TELEGRAM_CHAT_ID;
@@ -49,5 +49,5 @@ export async function handler(event) {
     return jsonResponse(502, { ok: false, error: "delivery_failed" });
   }
 
-  return jsonResponse(200, { ok: true });
+  return jsonResponse(200, { ok: true, accepted: true });
 }
