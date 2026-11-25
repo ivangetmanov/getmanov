@@ -199,12 +199,25 @@ const archiveLinks = [
       </div>
 
       <div class="archive-grid">
-        {archiveLinks.map((item) => (
-          <a class="archive-link" href={item.href}>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-          </a>
-        ))}
+        {archiveLinks.map((item) =>
+          item.href === "/ru/novi-sad/pet-sitting/" ? (
+            <div class="archive-link">
+              <a class="archive-link__main" href={item.href}>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </a>
+              <nav class="archive-link__locales" aria-label="Pet-sitting pages">
+                <a href="/en/novi-sad/pet-sitting/">English</a>
+                <a href="/sr/novi-sad/pet-sitting/">Srpski</a>
+              </nav>
+            </div>
+          ) : (
+            <a class="archive-link" href={item.href}>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </a>
+          ),
+        )}
       </div>
     </section>
   </div>
@@ -516,6 +529,19 @@ const archiveLinks = [
 
     .archive-link {
       padding: 20px;
+    }
+
+    .archive-link__main {
+      color: inherit;
+      display: block;
+      text-decoration: none;
+    }
+
+    .archive-link__locales {
+      display: flex;
+      gap: 14px;
+      margin-top: 12px;
+      font-size: 14px;
     }
 
     @media (max-width: 920px) {
